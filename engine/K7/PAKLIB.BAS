@@ -54,13 +54,11 @@ NEXT f&
 IF filenum& = 0 THEN LoadFromPAK = 1: EXIT FUNCTION
 
 ' ***** LOAD FILE *****
-
-  FSeek PakHandle, PAKFileOffset&(filenum&), 0
-  SELECT CASE array
-   CASE scrbuf
-    FGet PakHandle, VARSEG(scr(0)), VARPTR(scr(0)), PAKFileLength&(filenum&)
-  END SELECT
-
+FSeek PakHandle, PAKFileOffset&(filenum&), 0
+SELECT CASE array
+ CASE scrbuf
+  FGet PakHandle, VARSEG(scr(0)), VARPTR(scr(0)), PAKFileLength&(filenum&)
+END SELECT
 
 END FUNCTION
 

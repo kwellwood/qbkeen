@@ -16,7 +16,6 @@ DECLARE SUB DoTimers ()
 DECLARE SUB ErrorHandlerSub (e)
 DECLARE SUB InitEngine ()
 DECLARE SUB MainLoop ()
-DECLARE SUB MovePlayer (d)
 DECLARE SUB SetPalette ()
 
 TYPE hues
@@ -30,6 +29,7 @@ TYPE playertype
  y AS SINGLE
  xv AS SINGLE
  yv AS SINGLE
+ xdir AS INTEGER
  xmax AS SINGLE
  ymax AS SINGLE
  sframe AS LONG
@@ -38,8 +38,11 @@ TYPE playertype
  delay AS INTEGER
  xsize AS INTEGER
  ysize AS INTEGER
+ onground AS INTEGER
+ adelay AS INTEGER
 END TYPE
 
 COMMON SHARED player() AS playertype, scr(), file() AS STRING * 12
 COMMON SHARED biti() AS INTEGER, bitl() AS LONG, pal() AS hues
+COMMON SHARED pframe() AS LONG
 

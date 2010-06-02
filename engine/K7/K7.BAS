@@ -9,13 +9,14 @@ DEFINT A-Z
 
 RANDOMIZE TIMER
 ON ERROR GOTO ErrorHandler
-a = DQBinit(4, 0, 0): IF a THEN ErrorHandlerSub 0
-a = InitPAKLib: IF a THEN ErrorHandlerSub 0
+a = DQBinit(4, 0, 0): IF a THEN ErrorHandlerSub 99 + a
+a = InitPAKLib: IF a THEN ErrorHandlerSub 104
 AllocXMS
 
 '--------- Core Engine ---------
 DIM SHARED player(0) AS playertype, scr(32004), file(0) AS STRING * 12
 DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
+DIM SHARED pframe(11) AS LONG
 
 '-------- Render System --------
 DIM SHARED camera(0) AS camtype
@@ -36,15 +37,15 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 2)."
+PRINT "Powered by K7 Engine technology (Build 3)."
 PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
-PRINT "Compiled October 18, 2000"
+PRINT "Compiled October 22, 2000"
 END
 
 '============================================================================
 ErrorHandler:
 e = ERR
-ErrorHandlerSub 0
+ErrorHandlerSub e
 RESUME NEXT
 
 REM $STATIC
@@ -52,25 +53,25 @@ SUB AllocXMS
 
 '===========[ Tiles System ]===========
 BiosXOpen 4, TileTypeHandle, a
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 105
 BiosXOpen 4, AnmLengthHandle, a
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 106
 BiosXOpen 4, AnmDelayHandle, a
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 107
 
 '=========[ Graphics System ]==========
 BiosXOpen 2048, ArtHandle, a
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 108
 BiosXOpen 8, ArtOffsetHandle, a
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 109
 BiosXOpen 8, ArtLengthHandle, a
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 110
 
 '============[ Map System ]============
 BiosXOpen 1024, MapHandle, a
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 111
 BiosXOpen 1024, MapFGHandle, a
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 112
 
 END SUB
 
@@ -100,7 +101,7 @@ SELECT CASE gamemode
   IF DQBkey(keyleft) THEN MovePlayer left
   IF DQBkey(keyup) THEN MovePlayer up
   IF DQBkey(keydown) THEN MovePlayer down
-  IF DQBkey(keyesc) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .1
+  IF DQBkey(keyesc) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .2
  CASE inmenu
   IF DQBkey(keyesc) THEN HandleMenu keyesc
   IF DQBkey(keyup) THEN HandleMenu keyup
@@ -123,12 +124,24 @@ END SUB
 SUB ErrorHandlerSub (e)
 
 DQBinitText
-SCREEN 0: WIDTH 80, 25
-PRINT "Powered by K7 Engine technology (Build 2)."
-PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
-PRINT "Compiled October 18, 2000"
+SCREEN 0: WIDTH 80, 25: CLS
 
-PRINT "Error"; e
+f = FREEFILE
+OPEN "errors.dat" FOR INPUT AS f
+  DO
+    INPUT #f, k
+    INPUT #f, errtext$
+    IF k = e THEN errfound = 1
+    IF k = 999 THEN errfound = 1
+  LOOP UNTIL errfound
+CLOSE f
+
+PRINT "Powered by K7 Engine technology (Build 3)."
+PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
+PRINT "Compiled October 22, 2000"
+
+PRINT "Error (" + LTRIM$(STR$(e)) + "):"
+PRINT "* " + errtext$
 
 DQBremoveKeyboard
 DeallocXMS
@@ -142,7 +155,7 @@ SUB InitEngine
 
 OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, ver
-  IF ver <> enginever THEN ErrorHandlerSub 0
+  IF ver <> enginever THEN ErrorHandlerSub 125
   INPUT #1, ts
   INPUT #1, maxfps
   INPUT #1, player(0).xmax
@@ -152,12 +165,28 @@ OPEN "engine.dat" FOR INPUT AS 1
 CLOSE 1
 gamemode = ingame
 
+OPEN "player.dat" FOR INPUT AS 1
+  INPUT #1, player(0).adelay  ' animation speed
+  INPUT #1, pframe(0)   ' stand left
+  INPUT #1, pframe(1)   ' walk left start
+  INPUT #1, pframe(2)   ' walk left frames
+  INPUT #1, pframe(3)   ' stand right
+  INPUT #1, pframe(4)   ' walk right start
+  INPUT #1, pframe(5)   ' walk right frames
+  INPUT #1, pframe(6)   ' left jump up
+  INPUT #1, pframe(7)   ' left jump apex
+  INPUT #1, pframe(8)   ' left falling
+  INPUT #1, pframe(9)   ' right jump up
+  INPUT #1, pframe(10)  ' right jump apex
+  INPUT #1, pframe(11)  ' right falling
+CLOSE 1
+
 DEF SEG = VARSEG(pal(0))
 BLOAD "palette.dat", 0
 DEF SEG
 
 a = DQBloadFont("font.dat")
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 125 + a
 
 DQBinstallKeyboard
 
@@ -172,21 +201,12 @@ DO
   IF DQBframeReady THEN
     DoInput
     DoPhysics
+    CheckOnGround
+    DoPlayerFrame
     DoCamera
     DrawScreen
   END IF
 LOOP UNTIL quitgame
-
-END SUB
-
-SUB MovePlayer (d)
-
-SELECT CASE d
- CASE up: player(0).yv = player(0).yv - 2
- CASE down: player(0).yv = player(0).yv + 2
- CASE left: player(0).xv = player(0).xv - 2
- CASE right: player(0).xv = player(0).xv + 2
-END SELECT
 
 END SUB
 

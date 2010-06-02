@@ -12,7 +12,7 @@ ON ERROR GOTO ErrorHandler
 '============================================================================
 ErrorHandler:
 e = ERR
-ErrorHandlerSub 0
+ErrorHandlerSub e
 RESUME NEXT
 
 REM $STATIC
@@ -20,14 +20,14 @@ SUB LoadMap (file$)
 
 OPEN file$ FOR BINARY AS 1
   GET #1, , version
-  IF version <> mapsysver THEN ErrorHandlerSub 0
+  IF version <> mapsysver THEN ErrorHandlerSub 130
  
   GET #1, , mapxsize
   GET #1, , mapysize
   GET #1, , file(0)
  
   a = LoadFromPAK(RTRIM$(file(0)), scrbuf)
-  IF a THEN ErrorHandlerSub 0
+  IF a THEN ErrorHandlerSub 130 + a
   DQBput backdroppage, 0, 0, VARSEG(scr(0)), VARPTR(scr(0))
 
   FOR ry = 1 TO mapysize
@@ -43,14 +43,13 @@ OPEN file$ FOR BINARY AS 1
  
   GET #1, , player(0).x: GET #1, , player(0).y
   camera(0).x = player(0).x: camera(0).y = player(0).y
-  player(0).frame = 6
+  player(0).xdir = right
 CLOSE 1
 
 END SUB
 
 FUNCTION Map& (x, y)
 
-IF y = 0 THEN OPEN "error.dat" FOR OUTPUT AS 1: PRINT #1, "error": CLOSE 1
 BiosXRead MapHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 Map& = bitl(0)
 

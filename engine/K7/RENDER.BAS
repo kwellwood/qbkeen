@@ -12,7 +12,7 @@ ON ERROR GOTO ErrorHandler
 '============================================================================
 ErrorHandler:
 e = ERR
-ErrorHandlerSub 0
+ErrorHandlerSub e
 RESUME NEXT
 
 REM $STATIC
@@ -38,6 +38,7 @@ camera(0).vx1 = camera(0).vx2 - 319: camera(0).vy1 = camera(0).vy2 - 199
 END SUB
 
 SUB DrawHUD
+
 '=================[ CLIP POINTS ON PLAYER ]=================
 DQBpset drawpage, player(0).x - camera(0).vx1, player(0).y - camera(0).vy1, 15
 px1 = player(0).x - (player(0).xsize / 2)
@@ -46,26 +47,16 @@ px2 = player(0).x + (player(0).xsize / 2)
 py2 = player(0).y + (player(0).ysize / 2)
 DQBpset drawpage, px1 - camera(0).vx1, py1 - camera(0).vy1, 15
 DQBpset drawpage, px2 - camera(0).vx1, py1 - camera(0).vy1, 15
+DQBpset drawpage, px1 - camera(0).vx1, player(0).y - camera(0).vy1, 15
+DQBpset drawpage, px2 - camera(0).vx1, player(0).y - camera(0).vy1, 15
 DQBpset drawpage, px1 - camera(0).vx1, py2 - camera(0).vy1, 15
 DQBpset drawpage, px2 - camera(0).vx1, py2 - camera(0).vy1, 15
-DQBpset drawpage, player(0).x - camera(0).vx1, (player(0).y - player(0).ysize / 2) - camera(0).vy1, 15
-DQBpset drawpage, player(0).x - camera(0).vx1, (player(0).y + player(0).ysize / 2) - camera(0).vy1, 15
+DQBpset drawpage, player(0).x - camera(0).vx1, py1 - camera(0).vy1, 15
+DQBpset drawpage, player(0).x - camera(0).vx1, py2 - camera(0).vy1, 15
 
 '=================[ MISC TEXT INFO ]=================
-'DQBprint drawpage, STR$(player(0).xv) + " " + STR$(player(0).yv), 0, 0, 15
-
-'ptopx! = player(0).x: ptopy! = player(0).y - (player(0).ysize / 2)
-'pbotx! = player(0).x: pboty! = player(0).y + (player(0).ysize / 2)
-'DQBprint drawpage, "PTOP: " + STR$(ptopx!) + " " + STR$(ptopy!), 0, 10, 15
-'DQBprint drawpage, "PBOT: " + STR$(pbotx!) + " " + STR$(pboty!), 0, 20, 15
-'tptopx = INT(ptopx! / ts) + 1: tptopy = INT(ptopy! / ts) + 1
-'tpbotx = INT(pbotx! / ts) + 1: tpboty = INT(pboty! / ts) + 1
-'DQBprint drawpage, "TPTOP: " + STR$(tptopx) + " " + STR$(tptopy), 0, 30, 15
-'DQBprint drawpage, "TPBOT: " + STR$(tpbotx) + " " + STR$(tpboty), 0, 40, 15
-'IF TileType(Map&(tptopx, tptopy)) THEN p5 = 1 ELSE p5 = 0
-'IF TileType(Map&(tpbotx, tpboty)) THEN p6 = 1 ELSE p6 = 0
-'DQBprint drawpage, "TILETOP: " + STR$(TileType(Map&(tptopx, tptopy))), 0, 50, 15
-'DQBprint drawpage, "TILEBOT: " + STR$(TileType(Map&(tpbotx, tpboty))), 0, 60, 15
+'DQBprint drawpage, "player(0).y: " + STR$(player(0).y) + " player(0).x: " + STR$(player(0).x), 0, 0, 14
+'DQBprint drawpage, "player(0).yv: " + STR$(player(0).yv) + " player(0).xv: " + STR$(player(0).xv), 0, 10, 14
 
 END SUB
 

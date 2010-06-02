@@ -12,7 +12,7 @@ ON ERROR GOTO ErrorHandler
 '============================================================================
 ErrorHandler:
 e = ERR
-ErrorHandlerSub 0
+ErrorHandlerSub e
 RESUME NEXT
 
 REM $STATIC
@@ -34,7 +34,7 @@ SUB LoadTiles
 
 xmspos& = 0
 a = MountPAK("graphics.gpk")
-IF a THEN ErrorHandlerSub 0
+IF a THEN ErrorHandlerSub 132 + a
 OPEN "graphics.dat" FOR INPUT AS 1
   INPUT #1, numtiles&
   FOR t& = 1 TO numtiles&

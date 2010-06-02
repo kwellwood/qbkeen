@@ -12,7 +12,7 @@ ON ERROR GOTO ErrorHandler
 '============================================================================
 ErrorHandler:
 e = ERR
-ErrorHandlerSub 0
+ErrorHandlerSub e
 RESUME NEXT
 
 REM $STATIC
@@ -66,7 +66,7 @@ SELECT CASE k
   menudelay! = TIMER + .1
  CASE keyesc
   IF menu <> main THEN menu = main ELSE gamemode = ingame
-  menudelay! = TIMER + .1
+  menudelay! = TIMER + .2
 END SELECT
 
 END SUB
@@ -75,7 +75,7 @@ SUB InitMenu
 
 OPEN "menu.dat" FOR INPUT AS 1
   INPUT #1, filever
-  IF filever <> menusysver THEN ErrorHandlerSub 0
+  IF filever <> menusysver THEN ErrorHandlerSub 137
 
   INPUT #1, menutile&
   INPUT #1, selectorstartfrm&

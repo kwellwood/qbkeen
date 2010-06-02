@@ -9,4 +9,7 @@ DEFINT A-Z
 '$INCLUDE: 'menu.bi'
 '$INCLUDE: 'scores.bi'
 '$INCLUDE: 'items.bi'
+'$INCLUDE: 'sound.bi'
+'$INCLUDE: 'weapons.bi'
+'$INCLUDE: 'switches.bi'
 

@@ -1,18 +1,26 @@
 1
-1
-2
+1 ,24,32
+2 ,24,32
 4
-6
-7
+6 ,24,32
+7 ,24,32
 4
-11
-12
-13
-14
-15
-16
-25
-26
+11,24,32
+12,24,32
+13,24,32
+14,24,32
+15,24,32
+16,24,32
+25,24,32
+26,24,32
+28,40,32
+29,28,32
+30,32,48
+31,40,32
+32,28,32
+33,32,48
+34,32,32
+35,24,32
 
 animation delay
 stand left
@@ -29,3 +37,11 @@ right jump apex
 right falling
 looking up
 looking down
+shoot walk left
+shoot walk right
+shoot up
+shoot jump left
+shoot jump right
+shoot jump up
+shoot jump down
+flip switch

@@ -66,8 +66,8 @@ player(0).x = player(0).x + player(0).xv
 player(0).y = player(0).y + player(0).yv
 
 '=======[ FRICTION ]=======
-player(0).xv = player(0).xv * (8 / 10)
-player(0).yv = player(0).yv * (8 / 10)
+player(0).xv = player(0).xv * friction!
+player(0).yv = player(0).yv * friction!
 IF player(0).xv < .2 AND player(0).xv > 0 THEN player(0).xv = 0
 IF player(0).xv > -.2 AND player(0).xv < 0 THEN player(0).xv = 0
 IF player(0).yv < .2 AND player(0).yv > 0 THEN player(0).yv = 0
@@ -113,54 +113,90 @@ END SUB
 
 SUB DoPlayerFrame
 
-'ad = AnmDelay(t&)
-'t& = (INT(anmcounter / ad) MOD al) + t&
-
-'IF player(0).looking <> 0 THEN
-'  IF player(0).looking = -1 THEN player(0).frame = pframe(12)
-'  IF player(0).looking > 0 THEN
-'    player(0).looking = player(0).looking + 1
-'    IF player(0).looking > 10 THEN player(0).looking = 10
-'    IF player(0).looking < 10 THEN player(0).frame = pframe(13)
-'    IF player(0).looking = 10 THEN player(0).frame = pframe(13) + 1
-'  END IF
-'  EXIT SUB
-'END IF
-
-SELECT CASE player(0).xdir
- CASE left
-  IF player(0).yv = 0 AND player(0).onground THEN
-    IF player(0).xv < 0 THEN       ' walk left
-      player(0).frame = pframe(1) + (INT(anmcounter / player(0).adelay) MOD pframe(2))
-     ELSE
-      player(0).frame = pframe(0)  ' stand left
-    END IF
-   ELSE
-    IF player(0).yv < -(player(0).ymax / 4) THEN
-      player(0).frame = pframe(6)  ' fast jump left
-     ELSEIF player(0).yv > (player(0).ymax / 4) THEN
-      player(0).frame = pframe(8)  ' fast fall left
-     ELSEIF player(0).yv >= -(player(0).ymax / 4) AND player(0).yv <= (player(0).ymax / 4) THEN
-      player(0).frame = pframe(7)  ' slow jump/fall left
-    END IF
-  END IF
- CASE right
-  IF player(0).yv = 0 AND player(0).onground THEN
-    IF player(0).xv > 0 THEN       ' walk right
-      player(0).frame = pframe(4) + (INT(anmcounter / player(0).adelay) MOD pframe(5))
-     ELSE
-      player(0).frame = pframe(3)  ' stand left
-    END IF
-   ELSE
-    IF player(0).yv < -(player(0).ymax / 4) THEN
-      player(0).frame = pframe(9)   ' fast jump left
-     ELSEIF player(0).yv > (player(0).ymax / 4) THEN
-      player(0).frame = pframe(11)  ' fast fall left
-     ELSEIF player(0).yv >= -(player(0).ymax / 4) AND player(0).yv <= (player(0).ymax / 4) THEN
-      player(0).frame = pframe(10)  ' slow jump/fall left
-    END IF
-  END IF
+'===========================[ NEW FRAME SYSTEM ]=============================
+SELECT CASE player(0).action
+ CASE moving
+  MovingFrames
+ CASE shooting
+  ShootingFrames
+ CASE switching
+  SwitchingFrames
 END SELECT
+
+'===========================[ NEW FRAME SYSTEM ]=============================
+'IF player(0).shooting THEN
+'  SELECT CASE player(0).shootingframe
+'   CASE groundleft: framedataslot = 14
+'   CASE groundright: framedataslot = 15
+'   CASE groundup: framedataslot = 16
+'   CASE airleft: framedataslot = 17
+'   CASE airright: framedataslot = 18
+'   CASE airup: framedataslot = 19
+'   CASE airdown: framedataslot = 20
+'  END SELECT
+'
+'  player(0).frame = pframe(framedataslot)
+'  player(0).txsize = fsize(framedataslot).x
+'  player(0).tysize = fsize(framedataslot).y
+' ELSE
+'
+'SELECT CASE player(0).xdir
+' CASE left
+'    IF player(0).yv = 0 AND player(0).onground THEN
+'      IF player(0).xv < 0 THEN       ' walk left
+'        player(0).frame = pframe(1) + (INT(anmcounter / player(0).adelay) MOD pframe(2))
+'        player(0).txsize = fsize(1).x
+'        player(0).tysize = fsize(1).y
+'       ELSE
+'        player(0).frame = pframe(0)  ' stand left
+'        player(0).txsize = fsize(0).x
+'        player(0).tysize = fsize(0).y
+'      END IF
+'     ELSE
+'      IF player(0).yv < -(player(0).ymax / 4) THEN
+'        player(0).frame = pframe(6)  ' fast jump left
+'        player(0).txsize = fsize(6).x
+'        player(0).tysize = fsize(6).y
+'       ELSEIF player(0).yv > (player(0).ymax / 4) THEN
+'        player(0).frame = pframe(8)  ' fast fall left
+'        player(0).txsize = fsize(8).x
+'        player(0).tysize = fsize(8).y
+'       ELSEIF player(0).yv >= -(player(0).ymax / 4) AND player(0).yv <= (player(0).ymax / 4) THEN
+'        player(0).frame = pframe(7)  ' slow jump/fall left
+'        player(0).txsize = fsize(7).x
+'        player(0).tysize = fsize(7).y
+'      END IF
+'    END IF
+'
+' CASE right
+'    IF player(0).yv = 0 AND player(0).onground THEN
+'      IF player(0).xv > 0 THEN       ' walk right
+'        player(0).frame = pframe(4) + (INT(anmcounter / player(0).adelay) MOD pframe(5))
+'        player(0).txsize = fsize(4).x
+'        player(0).tysize = fsize(4).y
+'       ELSE
+'        player(0).frame = pframe(3)  ' stand left
+'        player(0).txsize = fsize(3).x
+'        player(0).tysize = fsize(3).y
+'      END IF
+'     ELSE
+'      IF player(0).yv < -(player(0).ymax / 4) THEN
+'        player(0).frame = pframe(9)   ' fast jump left
+'        player(0).txsize = fsize(9).x
+'        player(0).tysize = fsize(9).y
+'       ELSEIF player(0).yv > (player(0).ymax / 4) THEN
+'        player(0).frame = pframe(11)  ' fast fall left
+'        player(0).txsize = fsize(11).x
+'        player(0).tysize = fsize(11).y
+'       ELSEIF player(0).yv >= -(player(0).ymax / 4) AND player(0).yv <= (player(0).ymax / 4) THEN
+'        player(0).frame = pframe(10)  ' slow jump/fall left
+'        player(0).txsize = fsize(10).x
+'        player(0).tysize = fsize(10).y
+'      END IF
+'    END IF
+'
+'END SELECT
+'END IF
 
 'pframe(0)  - stand left
 'pframe(1)  - walk left start
@@ -176,47 +212,21 @@ END SELECT
 'pframe(11) - right falling
 'pframe(12) - looking up
 'pframe(13) - looking down
+'pframe(14) - shoot walk left
+'pframe(15) - shoot walk right
+'pframe(16) - shoot stand up
+'pframe(17) - shoot jump left
+'pframe(18) - shoot jump right
+'pframe(19) - shoot jump up
+'pframe(20) - shoot jump down
 
 END SUB
 
 FUNCTION HitPoint (p)
 
-'SELECT CASE p
-' CASE 1
-'  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1
-'  my = INT((player(0).y - (player(0).ysize / 2)) / ts) + 1
-' CASE 2
-'  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1
-'  my = INT((player(0).y - (player(0).ysize / 2)) / ts) + 1
-' CASE 3
-'  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1
-'  my = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
-' CASE 4
-'  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1
-'  my = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
-' CASE 5
-'  mx = INT(player(0).x / ts) + 1
-'  my = INT((player(0).y - (player(0).ysize / 2)) / ts) + 1
-' CASE 6
-'  mx = INT(player(0).x / ts) + 1
-'  my = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
-' CASE 7
-'  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1
-'  my = INT((player(0).y - (player(0).ysize / 4)) / ts) + 1
-' CASE 8
-'  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1
-'  my = INT((player(0).y - (player(0).ysize / 4)) / ts) + 1
-' CASE 9
-'  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1       '
-'  my = INT((player(0).y + (player(0).ysize / 4)) / ts) + 1       '
-' CASE 10
-'  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1       '
-'  my = INT((player(0).y + (player(0).ysize / 4)) / ts) + 1       '
-'END SELECT
-
 mx = INT(ClipPoint(p).x / ts) + 1
 my = INT(ClipPoint(p).y / ts) + 1
-IF TileType(Map&(mx, my)) THEN HitPoint = 1 ELSE HitPoint = 0
+IF TileType(Map&(mx, my)) = 1 THEN HitPoint = 1 ELSE HitPoint = 0
 
 END FUNCTION
 
@@ -257,21 +267,119 @@ UpdateClipPoints
 
 END SUB
 
-SUB MovePlayer (d)
+SUB MovePlayer (D)
 
-SELECT CASE d
+SELECT CASE D
  CASE up
   IF (player(0).yv < 0) OR (player(0).yv = 0 AND player(0).onground) THEN
     IF player(0).canjump THEN player(0).yv = player(0).yv - 2
   END IF
  CASE down: player(0).yv = player(0).yv + 2
- CASE left: player(0).xv = player(0).xv - 2: player(0).xdir = left
- CASE right: player(0).xv = player(0).xv + 2: player(0).xdir = right
+ 'CASE left: IF player(0).shooting = 0 OR player(0).shootingframe <> groundup THEN player(0).xv = player(0).xv - 2: player(0).xdir = left
+ CASE left: IF player(0).frozen = 0 THEN player(0).xv = player(0).xv - 2: player(0).xdir = left
+ 'CASE right: IF player(0).shooting = 0 OR player(0).shootingframe <> groundup THEN player(0).xv = player(0).xv + 2: player(0).xdir = right
+ CASE right: IF player(0).frozen = 0 THEN player(0).xv = player(0).xv + 2: player(0).xdir = right
  'CASE lookup: camera(0).y = camera(0).y - 2: player(0).looking = -1
  'CASE lookdown
  ' camera(0).y = camera(0).y + 2
  ' IF player(0).looking <= 0 THEN player(0).looking = 1
 END SELECT
+
+END SUB
+
+SUB MovingFrames
+
+IF player(0).onground THEN         ' player is standing
+  IF player(0).xdir = left THEN
+    IF player(0).xv < 0 THEN       ' walk left
+      framedataslot = 1
+      anmframe = INT(anmcounter / player(0).adelay) MOD pframe(2)
+      'player(0).frame = pframe(1) + (INT(anmcounter / player(0).adelay) MOD pframe(2))
+      'player(0).txsize = fsize(1).x
+      'player(0).tysize = fsize(1).y
+     ELSE
+      framedataslot = 0: anmframe = 0
+      'player(0).frame = pframe(0)  ' stand left
+      'player(0).txsize = fsize(0).x
+      'player(0).tysize = fsize(0).y
+    END IF
+   ELSEIF player(0).xdir = right THEN
+    IF player(0).xv > 0 THEN       ' walk right
+      framedataslot = 4
+      anmframe = INT(anmcounter / player(0).adelay) MOD pframe(5)
+      'player(0).frame = pframe(4) + (INT(anmcounter / player(0).adelay) MOD pframe(5))
+      'player(0).txsize = fsize(4).x
+      'player(0).tysize = fsize(4).y
+     ELSE
+      framedataslot = 3: anmframe = 0
+      'player(0).frame = pframe(3)  ' stand right
+      'player(0).txsize = fsize(3).x
+      'player(0).tysize = fsize(3).y
+    END IF
+  END IF
+ ELSE                             ' player is jumping/falling
+  IF player(0).xdir = left THEN
+    IF player(0).yv < -(player(0).ymax / 4) THEN
+      framedataslot = 6: anmframe = 0
+      'player(0).frame = pframe(6)  ' fast jump left
+      'player(0).txsize = fsize(6).x
+      'player(0).tysize = fsize(6).y
+     ELSEIF player(0).yv > (player(0).ymax / 4) THEN
+      framedataslot = 8: anmframe = 0
+      'player(0).frame = pframe(8)  ' fast fall left
+      'player(0).txsize = fsize(8).x
+      'player(0).tysize = fsize(8).y
+     ELSEIF player(0).yv >= -(player(0).ymax / 4) AND player(0).yv <= (player(0).ymax / 4) THEN
+      framedataslot = 7: anmframe = 0
+      'player(0).frame = pframe(7)  ' slow jump/fall left (apogee of jump)
+      'player(0).txsize = fsize(7).x
+      'player(0).tysize = fsize(7).y
+    END IF
+   ELSEIF player(0).xdir = right THEN
+    IF player(0).yv < -(player(0).ymax / 4) THEN
+      framedataslot = 9: anmframe = 0
+      'player(0).frame = pframe(9)   ' fast jump right
+      'player(0).txsize = fsize(9).x
+      'player(0).tysize = fsize(9).y
+     ELSEIF player(0).yv > (player(0).ymax / 4) THEN
+      framedataslot = 11: anmframe = 0
+      'player(0).frame = pframe(11)  ' fast fall right
+      'player(0).txsize = fsize(11).x
+      'player(0).tysize = fsize(11).y
+     ELSEIF player(0).yv >= -(player(0).ymax / 4) AND player(0).yv <= (player(0).ymax / 4) THEN
+      framedataslot = 10: anmframe = 0
+      'player(0).frame = pframe(10)  ' slow jump/fall right (apogee of jump)
+      'player(0).txsize = fsize(10).x
+      'player(0).tysize = fsize(10).y
+    END IF
+  END IF
+END IF
+
+'anmframe is the number of frames to add for an animated pose.
+'based on anmcounter.
+
+player(0).frame = pframe(framedataslot) + anmframe
+player(0).txsize = fsize(framedataslot).x
+player(0).tysize = fsize(framedataslot).y
+
+END SUB
+
+SUB PlayerState
+
+' if a special action is happening, decrease time remaining
+IF player(0).actiontime THEN
+  player(0).actiontime = player(0).actiontime - 1
+  IF player(0).actiontime = 0 THEN player(0).action = moving
+END IF
+
+' if player is moving, then he's never frozen. unfreeze.
+IF player(0).action = moving THEN player(0).frozen = 0
+
+' update the player's frame
+DoPlayerFrame
+
+'========[ WEAPONS PLUGIN ]========
+IF player(0).reload THEN player(0).reload = player(0).reload - 1
 
 END SUB
 

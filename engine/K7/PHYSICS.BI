@@ -1,12 +1,16 @@
 DEFINT A-Z
 '$DYNAMIC
 
+COMMON SHARED friction!
+
 DECLARE SUB CheckJumpHeight ()
 DECLARE SUB CheckOnGround ()
 DECLARE SUB DoPhysics ()
 DECLARE SUB DoPlayerFrame ()
 DECLARE SUB HitWall (p, hx!, hy!)
-DECLARE SUB MovePlayer (d)
+DECLARE SUB MovingFrames ()
+DECLARE SUB MovePlayer (D)
+DECLARE SUB PlayerState ()
 DECLARE SUB UpdateClipPoints ()
 DECLARE FUNCTION HitPoint (p)
 

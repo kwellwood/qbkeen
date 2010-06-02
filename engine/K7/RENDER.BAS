@@ -51,9 +51,14 @@ DQBprint drawpage, "Camera(0).v2: (" + STR$(camera(0).vx2) + "," + STR$(camera(0
 DQBline drawpage, 198, 19, 318, 19, 15
 DQBprint drawpage, "ActiveItemStack(0):" + STR$(LEN(activeitemstack(0))), 200, 22, 15
 DQBprint drawpage, "ActiveSpriteStack(0):" + STR$(LEN(activespritestack(0))), 200, 32, 15
+totalshots = 0: FOR s = 1 TO 5: totalshots = totalshots + shot(s).active: NEXT s
+DQBprint drawpage, "ActiveShots:" + STR$(totalshots), 200, 42, 15
+DQBline drawpage, 198, 50, 318, 50, 15
+DQBprint drawpage, "Player(0).action:" + STR$(player(0).action), 200, 53, 15
+DQBprint drawpage, "Player(0).actiontime:" + STR$(player(0).actiontime), 200, 63, 15
 
-
-DQBprint drawpage, "anmcounter:" + STR$(anmcounter), 0, 191, 15
+'=================[ ANIMATION TICKER ]===============
+DQBprint drawpage, "anmcounter:" + STR$(anmcounter), 1, 192, 15
 
 END SUB
 
@@ -92,14 +97,17 @@ FOR y = miny TO maxy
         ad = AnmDelay(t&)
         t& = (INT(anmcounter / ad) MOD al) + t&
       END IF
+      '----- switches plugin -----
+      IF TileType(t&) = 4 THEN t& = t& + switch(SwitchTag(x, y))
+      '---------------------------
       PutSprite t&, px, py, drawpage
     END IF
   NEXT x
 NEXT y
 
-'=========[ DRAW SPRITES ]========
+'=========[ DRAW SPRITES CLASSES ]========
+DrawShots
 DrawItems
-DrawSprites
 
 '=========[ DRAW PLAYER ]=========
 px = player(0).x - camera(0).vx1 - (player(0).txsize / 2)
@@ -123,6 +131,9 @@ FOR y = miny TO maxy
     END IF
   NEXT x
 NEXT y
+
+'========[ SPRITE CLASSES ABOVE FOREGROUND ]========
+DrawSprites
 
 DrawScoreboard
 IF DQBkey(59) THEN DrawHUD

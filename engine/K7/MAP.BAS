@@ -42,13 +42,22 @@ GET #1, , version
       BiosXWrite MapHandle, ((ry * mapxsize - mapxsize) + rx) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
       bitl(0) = t2&
       BiosXWrite MapFGHandle, ((ry * mapxsize - mapxsize) + rx) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+   
+      '========[ SWITCHES PLUGIN ]========
+      IF TileType(t1&) = 4 THEN
+        GET #1, , s
+        SetSwitchTag rx, ry, s
+       ELSE SetSwitchTag rx, ry, 0
+      END IF
+      '===================================
     NEXT rx
   NEXT ry
 
   GET #1, , player(0).x: GET #1, , player(0).y
   camera(0).x = player(0).x: camera(0).y = player(0).y
-  player(0).xdir = right
+  player(0).xdir = right: player(0).action = moving
 
+  '========[ ITEMS PLUGIN ]========
   activeitemstack(0) = ""    'clear item stack
   activespritestack(0) = ""  'clear sprite stack
   unusedspritestack(0) = ""  'clear unused sprite stack
@@ -70,6 +79,8 @@ GET #1, , version
     item(i).scored = 0
     activeitemstack(0) = activeitemstack(0) + CHR$(i)
   NEXT i
+  '================================
+
 CLOSE 1
 
 END SUB

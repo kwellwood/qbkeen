@@ -9,14 +9,14 @@ DEFINT A-Z
 
 RANDOMIZE TIMER
 ON ERROR GOTO ErrorHandler
-a = DQBinit(4, 0, 0): IF a THEN ErrorHandlerSub 99 + a
+a = DQBinit(4, maxsounds, 0): IF a THEN ErrorHandlerSub 99 + a
 a = InitPAKLib: IF a THEN ErrorHandlerSub 104
 AllocXMS
 
 '--------- Core Engine ---------
 DIM SHARED player(0) AS playertype, scr(32004), file(0) AS STRING * 12
 DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
-DIM SHARED pframe(13) AS LONG
+DIM SHARED pframe(21) AS LONG, fsize(21) AS intcoordinate
 
 '-------- Render System --------
 DIM SHARED camera(0) AS camtype
@@ -29,13 +29,28 @@ DIM SHARED item(1 TO 255) AS itemclass, bonus(1 TO 10) AS itemtypeclass
 DIM SHARED activeitemstack(0) AS STRING, activespritestack(0) AS STRING
 DIM SHARED sprite(1 TO 100) AS spriteclass, unusedspritestack(0) AS STRING
 
+'-------- Weapons System -------
+DIM SHARED shot(1 TO 5) AS shottype
+
+'------- Switches System -------
+DIM SHARED switch(1 TO 25)
+
 PRINT "Loading...";
 InitEngine
+
+'--plugins--
 InitMenu
 InitScoreboard
 InitItems
+InitWeapons
+InitSound
+'-----------
+
+'--core assets--
 LoadTiles
 LoadMap "keen7.map"
+'---------------
+
 PRINT "Ok"
 
 DQBinitVGA: SCREEN 13
@@ -49,9 +64,9 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 4)."
-PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
-PRINT "Compiled November 20, 2000"
+PRINT "Powered by K7 Engine technology (Build 5)."
+PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
+PRINT "Compiled January 7, 2001"
 END
 
 '============================================================================
@@ -85,6 +100,10 @@ IF a THEN ErrorHandlerSub 111
 BiosXOpen 1024, MapFGHandle, a
 IF a THEN ErrorHandlerSub 112
 
+'=========[ SWITCHES PLUGIN ]==========
+BiosXOpen 512, SwitchTagHandle, ErrCode
+IF ErrCode THEN ErrorHandlerSub 113
+
 END SUB
 
 SUB DeallocXMS
@@ -103,6 +122,9 @@ BiosXClose ArtLengthHandle
 BiosXClose MapHandle
 BiosXClose MapFGHandle
 
+'=========[ Switches Plugin ]==========
+BiosXClose SwitchTagHandle
+
 END SUB
 
 SUB DebugLog (t$)
@@ -117,16 +139,23 @@ END SUB
 
 SUB DoInput
 
+player(0).aim = -1  ' dont aim up or down
+
 SELECT CASE gamemode
  CASE ingame
+  IF DQBkey(30) THEN player(0).ammo = 50
   IF DQBkey(keyright) THEN MovePlayer right
   IF DQBkey(keyleft) THEN MovePlayer left
-  IF DQBkey(keyup) THEN MovePlayer up
-  'IF DQBkey(keydown) AND player(0).onground AND player(0).xv = 0 THEN MovePlayer lookdown ELSE player(0).looking = 0
-  'IF DQBkey(keyup) AND player(0).onground AND player(0).xv = 0 THEN MovePlayer lookup ELSE player(0).looking = 0
+  IF DQBkey(keyup) THEN player(0).aim = up: CheckSwitch
+  IF DQBkey(keydown) AND player(0).onground = 0 THEN player(0).aim = down
+  IF DQBkey(keyctrl) THEN MovePlayer up   ' (ie: jump)
   IF DQBkey(keyesc) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .2
   IF DQBkey(73) THEN camera(0).y = camera(0).y - 2
   IF DQBkey(81) THEN camera(0).y = camera(0).y + 2
+  IF DQBkey(keyspace) THEN SpawnPlayerShot
+ 
+  'IF DQBkey(keydown) AND player(0).onground AND player(0).xv = 0 THEN MovePlayer lookdown ELSE player(0).looking = 0
+  'IF DQBkey(keyup) AND player(0).onground AND player(0).xv = 0 THEN MovePlayer lookup ELSE player(0).looking = 0
  CASE inmenu
   IF DQBkey(keyesc) THEN HandleMenu keyesc
   IF DQBkey(keyup) THEN HandleMenu keyup
@@ -161,9 +190,9 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 4)."
-PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
-PRINT "Compiled November 20, 2000"
+PRINT "Powered by K7 Engine technology (Build 5)."
+PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
+PRINT "Compiled January 7, 2001"
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
@@ -183,7 +212,10 @@ OPEN "engine.dat" FOR INPUT AS 1
   IF ver <> enginever THEN CLOSE 1: ErrorHandlerSub 125
   INPUT #1, ts
   INPUT #1, maxfps
+  INPUT #1, friction!    ' velocity friction co-efficient
   INPUT #1, tileset$
+  INPUT #1, soundset$
+  INPUT #1, maxchannels
   INPUT #1, player(0).xmax
   INPUT #1, player(0).ymax
   INPUT #1, player(0).jumpheight
@@ -193,23 +225,29 @@ OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, player(0).tysize
 CLOSE 1
 gamemode = ingame
+SoundEnabled = 0
 
 OPEN "player.dat" FOR INPUT AS 1
   INPUT #1, player(0).adelay  ' animation speed
-  INPUT #1, pframe(0)   ' stand left
-  INPUT #1, pframe(1)   ' walk left start
-  INPUT #1, pframe(2)   ' walk left frames
-  INPUT #1, pframe(3)   ' stand right
-  INPUT #1, pframe(4)   ' walk right start
-  INPUT #1, pframe(5)   ' walk right frames
-  INPUT #1, pframe(6)   ' left jump up
-  INPUT #1, pframe(7)   ' left jump apex
-  INPUT #1, pframe(8)   ' left falling
-  INPUT #1, pframe(9)   ' right jump up
-  INPUT #1, pframe(10)  ' right jump apex
-  INPUT #1, pframe(11)  ' right falling
-  INPUT #1, pframe(12)  ' looking up
-  INPUT #1, pframe(13)  ' looking down
+  INPUT #1, pframe(0)
+  INPUT #1, fsize(0).x
+  INPUT #1, fsize(0).y
+  INPUT #1, pframe(1)
+  INPUT #1, fsize(1).x
+  INPUT #1, fsize(1).y
+  INPUT #1, pframe(2)
+  INPUT #1, pframe(3)
+  INPUT #1, fsize(3).x
+  INPUT #1, fsize(3).y
+  INPUT #1, pframe(4)
+  INPUT #1, fsize(4).x
+  INPUT #1, fsize(4).y
+  INPUT #1, pframe(5)
+  FOR f = 6 TO 21
+    INPUT #1, pframe(f)
+    INPUT #1, fsize(f).x
+    INPUT #1, fsize(f).y
+  NEXT f
 CLOSE 1
 
 DEF SEG = VARSEG(pal(0))
@@ -236,7 +274,8 @@ DO
     CheckJumpHeight
     DoSprites
     DoItems
-    DoPlayerFrame
+    DoShots
+    PlayerState
     DoCamera
     DrawScreen
   END IF

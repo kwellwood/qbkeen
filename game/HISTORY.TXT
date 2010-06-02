@@ -63,3 +63,20 @@ Changes since Build 3B:
 - 10 clip points on player
 - debug HUD shown with F1 key
 - camera panned up and down with PG UP, DOWN
+
+Build 5 (01-07-2001):
+   The first build of the new year! Keen7 is not only looking like Keen but
+feeling like Keen now too. The physics have really paid off. Physics.bas is
+actually twice the size of K7.bas, the core module. Hopefully there will be
+some new artwork in the next build with inclined slopes and maybe an enemy or
+two. Things are rolling along beautifully! If only dqb wouldnt keep saying
+the sound files were the wrong format. To flip switches, stand in front of
+them and press the up arrow. To refill ammo to 50, just press 'a'.
+
+Changes since Build 4:
+- new player animation frames
+- entirely new animation system
+- weapons system complete
+- switches system complete
+- slight changes to HUD
+- ammo pickup items

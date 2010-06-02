@@ -39,16 +39,22 @@ echo K7.BAS...       (Main routines)
 bc k7.bas /e/x/o/t/c:512; > k7.cmp
 echo PHYSICS.BAS...  (Player movement)
 bc physics.bas /e/x/o/t/c:512; > physics.cmp
-echo MENU.BAS...     (Menu System)
+echo MENU.BAS...     (Menu system)
 bc menu.bas /e/x/o/t/c:512; > menu.cmp
 echo SCORES.BAS...   (Display scoreboard)
 bc scores.bas /e/x/o/t/c:512; > scores.cmp
 echo ITEMS.BAS...    (Player bonuses)
 bc items.bas /e/x/o/t/c:512; > items.cmp
+echo WEAPONS.BAS...  (Player weapons)
+bc weapons.bas /e/x/o/t/c:512; > weapons.cmp
+echo SWITCHES.BAS... (Switches)
+bc switches.bas /e/x/o/t/c:512; > switches.cmp
+echo SOUND.BAS...    (Sound system)
+bc sound.bas /e/x/o/t/c:512; > sound.cmp
 
 echo * Linking Objects *
 echo KEEN7.EXE...    (Main program)
-link /ex/noe k7 physics menu scores items,keen7,,dqb xms k7core paklib bcom45 brun45; > link.cmp
+link /ex/noe k7 physics menu scores items weapons switches sound,keen7,,dqb xms k7core paklib bcom45 brun45; > link.cmp
 
 echo * Checking For Errors *
 CALL CheckErr modules.dat
@@ -56,6 +62,7 @@ CALL CheckErr modules.dat
 echo * Cleaning Up *
 move keen7.exe ..\..\game > nul
 del k7core.lib
+del k7core.bak
 del keen7.map
 del *.obj
 del *.cmp

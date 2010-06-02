@@ -10,7 +10,7 @@ CONST lookup = 4, lookdown = 5
 CONST drawpage = 0, backdroppage = 0, menupage = 0   ' delete this line
 'CONST drawpage = 1, backdroppage = 2, menupage = 3  ' use this one
 CONST moving = 0, shooting = 1, switching = 2, dying = 3, teleporting = 4
-CONST climbing = 5
+CONST climbing = 5, pogo = 6
 CONST running = 1, paused = 2
 
 DECLARE SUB AllocXMS ()
@@ -69,10 +69,13 @@ TYPE playertype
  shooting AS INTEGER      ' time to display shooting frame
  shootingframe AS LONG    ' shooting frame to show
  aim AS INTEGER           ' aiming to shoot up or down
- action AS INTEGER        ' moving, shooting, climbing, flipping switch
+ action AS INTEGER        ' moving, shooting, climbing, flipping switch, pogo
  actiontime AS INTEGER    ' time left to complete action
  frozen AS INTEGER        ' cant move left or right
  usingportal AS INTEGER   ' if walking into a portal find destination x,y
+ changeaction AS INTEGER  ' so cant switch between actions too fast
+ holdingjump AS INTEGER   ' player is actively jumping up
+ stoppedjump AS INTEGER   ' no longer holding the jump button
 END TYPE
 
 COMMON SHARED player() AS playertype, scr(), file() AS STRING * 12

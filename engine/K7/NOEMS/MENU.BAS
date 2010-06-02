@@ -38,7 +38,7 @@ IF TIMER < menudelay! THEN EXIT SUB
 
 SELECT CASE k
  CASE keyup
-  IF menuopt > 1 THEN menuopt = menuopt - 1: menudelay! = TIMER + .2
+  IF menuopt > 1 THEN menuopt = menuopt - 1: menudelay! = TIMER + .1
  CASE keydown
   SELECT CASE menu
    CASE main: max = 5
@@ -46,7 +46,7 @@ SELECT CASE k
    CASE load: max = 1
    CASE options: max = 1
   END SELECT
-  IF menuopt < max THEN menuopt = menuopt + 1: menudelay! = TIMER + .2
+  IF menuopt < max THEN menuopt = menuopt + 1: menudelay! = TIMER + .1
  CASE keyenter
   SELECT CASE menu
    CASE main
@@ -62,11 +62,11 @@ SELECT CASE k
    CASE load
    CASE options
   END SELECT
-  menudelay! = TIMER + .2
+  menudelay! = TIMER + .1
  CASE keyesc
   IF player(0).action <> dying THEN
     IF menu <> main THEN menu = main ELSE gamemode = ingame
-    menudelay! = TIMER + .2
+    menudelay! = TIMER + .1
   END IF
 END SELECT
 

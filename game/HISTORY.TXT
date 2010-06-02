@@ -165,3 +165,20 @@ Changes since Build 8:
 - Limited number of lives
 - Loading screen with level names
 - Level 2 added
+
+BUILD 10 (08-09-2001)
+   The primary reason for this release is the completion of the pogostick.
+Keen is now equipped with his trusty sidekick and all of the previously
+unreachable items in levels two and three are available. Other minor
+changes have been made which greatly enhance the gameplay. The moving physics
+of Keen should now feel much better. The upcoming build will add the final
+ability to Keen: grabbing onto ledges! Hopefully the moving platforms will
+be complete too.
+
+Changes Since Build 9:
+- Enhanced player movement
+- Pogostick
+- Secret area added to level 2 map
+- Player clip bounds clipped to map edge
+- Fixed mid-air jumping bug
+- Grab poles using the down and up arrow keys

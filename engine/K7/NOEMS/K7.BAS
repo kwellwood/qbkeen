@@ -16,7 +16,7 @@ AllocXMS
 
 '--------- Core Engine ---------
 DIM SHARED player(0) AS playertype, scr(32004), file(0) AS STRING * 12
-DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
+DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, Pal(255) AS hues
 DIM SHARED pframe(40) AS LONG, fsize(40) AS intcoordinate
 
 '-------- Render System --------
@@ -75,10 +75,10 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 9)."
+PRINT "Powered by K7 Engine technology (Build 10)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
 PRINT "EMS memory use disabled."
-PRINT "Compiled July 13, 2001"
+PRINT "Compiled August 9, 2001"
 END
 
 '============================================================================
@@ -162,10 +162,10 @@ SELECT CASE gamemode
  CASE ingame
   IF gameplay = running THEN
     IF DQBkey(30) THEN player(0).ammo = 99
-    IF DQBkey(KEYRIGHT) THEN MovePlayer right
-    IF DQBkey(KEYLEFT) THEN MovePlayer left
+    IF DQBkey(KEYRIGHT) THEN MovePlayer RIGHT
+    IF DQBkey(KEYLEFT) THEN MovePlayer LEFT
     IF DQBkey(KEYUP) THEN
-      player(0).aim = up                   ' player wants to aim up
+      player(0).aim = UP                   ' player wants to aim up
       IF player(0).action = climbing THEN  ' climb up a pole
         ClimbUp
        ELSE
@@ -175,11 +175,17 @@ SELECT CASE gamemode
       END IF
     END IF
     IF DQBkey(KEYDOWN) THEN
-      IF player(0).onground = 0 OR player(0).action = climbing THEN player(0).aim = down
+      IF player(0).onground = 0 OR player(0).action = climbing THEN player(0).aim = DOWN
       IF player(0).action = climbing THEN ClimbDown
+      IF player(0).action <> climbing AND player(0).onground THEN CheckClimb
     END IF
-    IF DQBkey(KEYCTRL) THEN MovePlayer up    ' (ie: jump)
-
+    IF DQBkey(KEYCTRL) THEN
+      MovePlayer UP    ' (ie: jump)
+     ELSEIF player(0).holdingjump THEN
+      player(0).holdingjump = 0
+      player(0).stoppedjump = 1
+    END IF
+    IF DQBkey(KEYALT) THEN TogglePogo        ' Get on/off pogostick
     IF DQBkey(73) THEN camera(0).y = camera(0).y - 2
     IF DQBkey(81) THEN camera(0).y = camera(0).y + 2
     IF DQBkey(KEYSPACE) THEN SpawnPlayerShot
@@ -225,10 +231,10 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 9)."
+PRINT "Powered by K7 Engine technology (Build 10)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
 PRINT "EMS memory use disabled."
-PRINT "Compiled July 13, 2001"
+PRINT "Compiled August 9, 2001"
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
@@ -249,6 +255,7 @@ OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, ts
   INPUT #1, maxfps
   INPUT #1, friction!    ' velocity friction co-efficient
+  INPUT #1, gravity!
   INPUT #1, tileset$
   INPUT #1, soundset$
   INPUT #1, maxchannels
@@ -271,7 +278,7 @@ OPEN "player.dat" FOR INPUT AS 1
   NEXT f
 CLOSE 1
 
-DEF SEG = VARSEG(pal(0))
+DEF SEG = VARSEG(Pal(0))
 BLOAD "palette.dat", 0
 DEF SEG
 
@@ -344,7 +351,7 @@ END SUB
 SUB NextLevel
 
 curlevel = curlevel + 1
-PutSprite 74, 49, 57, video
+PutSprite 74, 49, 57, VIDEO
 
 OPEN "levels.dat" FOR INPUT AS 1
   INPUT #1, numlevels
@@ -381,7 +388,7 @@ SUB SetPalette
 OUT &H3C8, 0
 
 FOR i = 0 TO 255
-  OUT &H3C9, pal(i).red: OUT &H3C9, pal(i).grn: OUT &H3C9, pal(i).blu
+  OUT &H3C9, Pal(i).red: OUT &H3C9, Pal(i).grn: OUT &H3C9, Pal(i).blu
 NEXT
 
 END SUB

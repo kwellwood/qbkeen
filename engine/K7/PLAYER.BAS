@@ -90,6 +90,12 @@ IF player(0).onground = 0 AND oldonground = 1 THEN
   END IF
 END IF
 
+'-- Allow player to jump again --
+IF player(0).onground THEN
+  player(0).holdingjump = 0
+  player(0).stoppedjump = 0
+END IF
+
 'if player is jumping or not moving at all
 '  (mapx,mapy)=bottom of player's coordinates in tiles
 '  if tile directly under player is a wall
@@ -127,39 +133,51 @@ END SUB
 
 SUB DoPhysics
 
-UpdateClipPoints
 IF player(0).action = climbing THEN EXIT SUB
 
+UpdateClipPoints
+'=======[ POGO STICK ]=======
+IF player(0).action = pogo THEN HandlePogoStick
+
 '=======[ GRAVITY ]=======
-IF player(0).onground = 0 THEN player(0).yv = player(0).yv + 1
+IF player(0).onground = 0 THEN player(0).yv = player(0).yv + gravity!
 
 '=======[ MAX SPEED ]=======
 IF player(0).xv > player(0).xmax THEN player(0).xv = player(0).xmax
+'IF player(0).action = pogo THEN
+'  IF player(0).yv > player(0).ymax * 1.5 THEN player(0).yv = player(0).ymax * 1.5
+' ELSEIF player(0).yv > player(0).ymax THEN player(0).yv = player(0).ymax
+'END IF
 IF player(0).yv > player(0).ymax THEN player(0).yv = player(0).ymax
 IF player(0).xv < -player(0).xmax THEN player(0).xv = -player(0).xmax
+'IF player(0).action = pogo THEN
+'  IF player(0).yv < -player(0).ymax * 1.5 THEN player(0).yv = -player(0).ymax * 1.5
+' ELSEIF player(0).yv < -player(0).ymax THEN player(0).yv = -player(0).ymax
+'END IF
 IF player(0).yv < -player(0).ymax THEN player(0).yv = -player(0).ymax
-
 '=======[ MOVE PLAYER ]=======
 player(0).x = player(0).x + player(0).xv
 player(0).y = player(0).y + player(0).yv
 
 '=======[ FRICTION ]=======
-player(0).xv = player(0).xv * friction!
-'player(0).yv = player(0).yv * friction!
+IF player(0).action <> pogo THEN player(0).xv = player(0).xv * friction!
 IF player(0).xv < .2 AND player(0).xv > 0 THEN player(0).xv = 0
 IF player(0).xv > -.2 AND player(0).xv < 0 THEN player(0).xv = 0
-'IF player(0).yv < .2 AND player(0).yv > 0 THEN player(0).yv = 0
-'IF player(0).yv > -.2 AND player(0).yv < 0 THEN player(0).yv = 0
 
 '=======[ ROUND PLAYER LOCATION ]=======
 IF player(0).xv = 0 THEN player(0).x = INT(player(0).x)
 IF player(0).yv = 0 THEN player(0).y = INT(player(0).y)
 
 '=======[ BOUNDARIES ]=======
-IF player(0).x < 0 THEN player(0).x = 0: player(0).xv = 0
-IF player(0).y < 0 THEN player(0).y = 0: player(0).yv = 0
-IF player(0).x > (mapxsize * ts) - 1 THEN player(0).x = (mapxsize * ts) - 1: player(0).xv = 0
-IF player(0).y > (mapysize * ts) - 1 THEN player(0).y = (mapysize * ts) - 1: player(0).yv = 0
+UpdateClipPoints
+'IF player(0).x < 0 THEN player(0).x = 0: player(0).xv = 0
+'IF player(0).y < 0 THEN player(0).y = 0: player(0).yv = 0
+'IF player(0).x > (mapxsize * ts) - 1 THEN player(0).x = (mapxsize * ts) - 1: player(0).xv = 0
+'IF player(0).y > (mapysize * ts) - 1 THEN player(0).y = (mapysize * ts) - 1: player(0).yv = 0
+IF player(0).x - player(0).xsize / 2 < 0 THEN player(0).x = player(0).xsize / 2: player(0).xv = 0
+IF player(0).y - player(0).ysize / 2 < 0 THEN player(0).y = player(0).ysize / 2: player(0).yv = 0
+IF player(0).x + player(0).xsize / 2 > (mapxsize * ts) - 1 THEN player(0).x = (mapxsize * ts) - 1 - (player(0).xsize / 2)
+IF player(0).y + player(0).ysize / 2 > (mapysize * ts) - 1 THEN player(0).y = (mapysize * ts) - 1 - (player(0).ysize / 2)
 
 '===============================[ CLIPPING ]=================================
 ' 3--1--4
@@ -193,6 +211,8 @@ SELECT CASE player(0).action
   TeleportingFrames
  CASE climbing
   ClimbingFrames
+ CASE pogo
+  PogoFrames
 END SELECT
 
 IF player(0).shooting THEN ShootingFrames
@@ -229,6 +249,19 @@ player(0).tysize = fsize(22).y
 
 END SUB
 
+SUB HandlePogoStick
+
+IF player(0).onground THEN
+  player(0).yv = player(0).yv - player(0).ymax * 2
+  player(0).canjump = ts * player(0).jumpheight * 2
+  player(0).holdingjump = 0
+  player(0).stoppedjump = 0
+END IF
+
+IF player(0).yv > -player(0).ymax AND player(0).holdingjump = 0 THEN player(0).stoppedjump = 1
+
+END SUB
+
 FUNCTION HitPoint (p)
 
 'fg =Foreground Tag 1
@@ -260,6 +293,8 @@ IF h THEN
   player(0).yv = 0
   player(0).onground = 1
   player(0).onslope = 1
+  player(0).holdingjump = 0
+  player(0).stoppedjump = 0
   UpdateClipPoints
 END IF
 
@@ -331,9 +366,14 @@ SELECT CASE d
   IF player(0).frozen = 0 THEN
     'IF player(0).action = climbing THEN player(0).action = moving
     IF (player(0).yv < 0) OR (player(0).yv = 0 AND player(0).onground) OR (player(0).action = climbing) THEN
-      IF player(0).canjump THEN
-        player(0).yv = player(0).yv - 2
-        player(0).action = moving     ' stop actions like climbing
+      IF player(0).canjump AND player(0).stoppedjump = 0 THEN 'AND player(0).changeaction = 0 THEN
+        player(0).holdingjump = 1
+        player(0).yv = -player(0).ymax   'player(0).yv - 2
+        IF player(0).action = climbing THEN
+          player(0).changeaction = maxfps / 3
+          player(0).yv = player(0).yv / 4  ' 1/4 jump power from a pole
+        END IF
+        IF player(0).action <> pogo THEN player(0).action = moving
       END IF
     END IF
   END IF
@@ -344,7 +384,14 @@ SELECT CASE d
    ELSE
     IF player(0).frozen = 0 THEN
       player(0).xdir = left
-      IF player(0).onground THEN player(0).xv = player(0).xv - 2 ELSE player(0).xv = player(0).xv - 1
+      'player(0).xv = player(0).xv - 2
+      IF player(0).onground THEN
+        player(0).xv = player(0).xv - 2
+       ELSEIF player(0).action = pogo THEN
+        player(0).xv = player(0).xv - .3
+       ELSE
+        player(0).xv = player(0).xv - 1'.5
+      END IF
     END IF
   END IF
  CASE right
@@ -353,7 +400,14 @@ SELECT CASE d
    ELSE
     IF player(0).frozen = 0 THEN
       player(0).xdir = right
-      IF player(0).onground THEN player(0).xv = player(0).xv + 2 ELSE player(0).xv = player(0).xv + 1
+      'player(0).xv = player(0).xv + 2
+      IF player(0).onground THEN
+        player(0).xv = player(0).xv + 2
+       ELSEIF player(0).action = pogo THEN
+        player(0).xv = player(0).xv + .3
+       ELSE
+        player(0).xv = player(0).xv + 1'.5
+      END IF
     END IF
   END IF
 END SELECT
@@ -418,6 +472,10 @@ SUB PlayerState
 IF player(0).actiontime THEN player(0).actiontime = player(0).actiontime - 1
 IF player(0).actiontime < 0 THEN player(0).actiontime = 0
 
+' if player has changed actions recently, decrease time left to change again
+IF player(0).changeaction THEN player(0).changeaction = player(0).changeaction - 1
+IF player(0).changeaction < 0 THEN player(0).changeaction = 0
+
 ' if player is shooting decrease time for frame shown
 IF player(0).shooting THEN player(0).shooting = player(0).shooting - 1
 
@@ -436,10 +494,24 @@ END IF
 IF player(0).action = teleporting AND player(0).actiontime = 0 THEN TeleportPlayer
 
 ' resume walking when finished an action
-IF player(0).actiontime = 0 AND player(0).action <> climbing THEN player(0).action = moving
+IF player(0).actiontime = 0 THEN
+  IF player(0).action <> climbing AND player(0).action <> pogo THEN player(0).action = moving
+END IF
 
 ' if player is moving, then he's never frozen. unfreeze.
 IF player(0).action = moving AND player(0).shooting = 0 THEN player(0).frozen = 0
+
+' if player is on a pole then kill the stoppedjump flag
+IF player(0).action = climbing THEN
+  player(0).holdingjump = 0
+  player(0).stoppedjump = 0
+END IF
+
+' only let the player face the direction he's actually going
+IF player(0).action = moving OR player(0).action = pogo THEN
+  IF player(0).xv < 0 THEN player(0).xdir = left
+  IF player(0).xv > 0 THEN player(0).xdir = right
+END IF
 
 ' update the player's frame
 DoPlayerFrame
@@ -447,6 +519,37 @@ DoPlayerFrame
 '========[ WEAPONS PLUGIN ]========
 ' decrease reload wait time
 IF player(0).reload THEN player(0).reload = player(0).reload - 1
+
+END SUB
+
+SUB PogoFrames
+
+SELECT CASE player(0).xdir
+ CASE left
+  IF player(0).yv < -player(0).ymax / 2 THEN framedataslot = 37 ELSE framedataslot = 38
+ CASE right
+  IF player(0).yv < -player(0).ymax / 2 THEN framedataslot = 39 ELSE framedataslot = 40
+END SELECT
+
+player(0).frame = pframe(framedataslot) + anmframe
+player(0).txsize = fsize(framedataslot).x
+player(0).tysize = fsize(framedataslot).y
+
+END SUB
+
+SUB TogglePogo
+
+IF player(0).changeaction > 0 THEN EXIT SUB
+IF player(0).frozen THEN EXIT SUB
+
+IF player(0).action <> pogo THEN
+  player(0).action = pogo
+  player(0).changeaction = maxfps / 5
+ ELSE
+  player(0).action = moving
+  player(0).actiontime = 0
+  player(0).changeaction = maxfps / 5
+END IF
 
 END SUB
 

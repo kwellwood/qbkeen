@@ -1,19 +1,22 @@
 8
 16
-50
+40
 0.8
-KEEN7.DAT
+0.9
+KEEN16.DAT
 SOUNDS.DAT
 16
-2.5
-4
-3.7
+3.5
+8.0
+2.7
 8
 32
 
 engine version
 tilesize
 max fps
+friction
+gravity
 tileset file
 soundset file
 max sound channels

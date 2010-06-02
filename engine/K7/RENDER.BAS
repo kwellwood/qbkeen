@@ -73,6 +73,7 @@ SELECT CASE player(0).action
  CASE dying: act$ = "die"
  CASE teleporting: act$ = "teleport"
  CASE climbing: act$ = "climb"
+ CASE pogo: act$ = "pogo"
 END SELECT
 DQBprint drawpage, "Player(0).x,y:" + STR$(INT(player(0).x)) + "," + STR$(INT(player(0).y)), 2, 2, 15
 DQBprint drawpage, "Player(0).xv:" + STR$(INT(player(0).xv)), 2, 12, 15
@@ -88,11 +89,28 @@ DQBprint drawpage, "Player(0).reload:" + STR$(player(0).reload), 2, 102, 15
 DQBprint drawpage, "Player(0).aim:" + STR$(player(0).aim), 2, 112, 15
 DQBprint drawpage, "Player(0).frozen:" + STR$(player(0).frozen), 2, 122, 15
 DQBprint drawpage, "Player(0).usingportal:" + STR$(player(0).usingportal), 2, 132, 15
+DQBprint drawpage, "Player(0).changeaction:" + STR$(player(0).changeaction), 2, 142, 15
+DQBprint drawpage, "Player(0).holdingjump:" + STR$(player(0).holdingjump), 2, 152, 15
+DQBprint drawpage, "Player(0).stoppedjump:" + STR$(player(0).stoppedjump), 2, 162, 15
 
 END SUB
 
 SUB DrawScreen
 
+'uncomment the following lines
+'=========[ BACKGROUND ]========
+'IF backgroundused THEN
+'  x = (camera(0).vx1 / 2) MOD 320
+'  IF x = 0 THEN
+'    DQBcopyLayer backdroppage, drawpage
+'   ELSE
+'    DQBget backdroppage, 0, 0, x - 1, 199, VARSEG(scr(0)), VARPTR(scr(0))
+'    DQBput drawpage, 320 - x, 0, VARSEG(scr(0)), VARPTR(scr(0))
+'    DQBget backdroppage, x, 0, 319, 199, VARSEG(scr(0)), VARPTR(scr(0))
+'    DQBput drawpage, 0, 0, VARSEG(scr(0)), VARPTR(scr(0))
+'  END IF
+' ELSE DQBclearLayer drawpage
+'END IF
 DQBclearLayer drawpage
 
 '=======[ TRANSLATE CAMERA ]=======
@@ -144,7 +162,6 @@ DrawEnemies
 px = player(0).x - camera(0).vx1 - (player(0).txsize / 2)
 py = player(0).y - camera(0).vy1 - (player(0).tysize / 2)
 PutSprite player(0).frame, px, py, drawpage
-DQBwait 1
 
 '========[ DRAW FOREGROUND ]========
 FOR y = miny TO maxy
@@ -165,7 +182,7 @@ FOR y = miny TO maxy
 NEXT y
 
 '========[ SPRITE CLASSES ABOVE FOREGROUND ]========
-IF DQBkey(61) THEN DrawScoreboard
+DrawScoreboard
 IF DQBkey(59) THEN DrawHUD
 IF DQBkey(60) THEN DrawPlayerHUD
 

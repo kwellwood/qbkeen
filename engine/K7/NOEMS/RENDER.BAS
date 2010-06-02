@@ -73,6 +73,7 @@ SELECT CASE player(0).action
  CASE dying: act$ = "die"
  CASE teleporting: act$ = "teleport"
  CASE climbing: act$ = "climb"
+ CASE pogo: act$ = "pogo"
 END SELECT
 DQBprint drawpage, "Player(0).x,y:" + STR$(INT(player(0).x)) + "," + STR$(INT(player(0).y)), 2, 2, 15
 DQBprint drawpage, "Player(0).xv:" + STR$(INT(player(0).xv)), 2, 12, 15
@@ -88,6 +89,9 @@ DQBprint drawpage, "Player(0).reload:" + STR$(player(0).reload), 2, 102, 15
 DQBprint drawpage, "Player(0).aim:" + STR$(player(0).aim), 2, 112, 15
 DQBprint drawpage, "Player(0).frozen:" + STR$(player(0).frozen), 2, 122, 15
 DQBprint drawpage, "Player(0).usingportal:" + STR$(player(0).usingportal), 2, 132, 15
+DQBprint drawpage, "Player(0).changeaction:" + STR$(player(0).changeaction), 2, 142, 15
+DQBprint drawpage, "Player(0).holdingjump:" + STR$(player(0).holdingjump), 2, 152, 15
+DQBprint drawpage, "Player(0).stoppedjump:" + STR$(player(0).stoppedjump), 2, 162, 15
 
 END SUB
 

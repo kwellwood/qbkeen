@@ -110,6 +110,10 @@ GET #1, , version
     GET #1, , portal(p).desty
   NEXT p
   '================================
+
+  '=======[ SWITCHES PLUGIN ]======
+  FOR s = 1 TO 25: switch(s) = 0: NEXT s
+  '================================
 CLOSE 1
 
 END SUB

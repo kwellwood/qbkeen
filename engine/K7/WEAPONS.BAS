@@ -98,16 +98,17 @@ SUB SetShootingFrame
 'found in shootingframe to select the tile to display.
 
 IF player(0).action = climbing THEN
-  IF player(0).aim = -1 THEN
+  SELECT CASE player(0).aim
+   CASE -1
     IF player(0).xdir = left THEN player(0).shootingframe = poleleft
     IF player(0).xdir = right THEN player(0).shootingframe = poleright
-   ELSEIF player(0).aim = up THEN
+   CASE up
     IF player(0).xdir = left THEN player(0).shootingframe = poleleftup
     IF player(0).xdir = right THEN player(0).shootingframe = polerightup
-   ELSEIF player(0).aim = down THEN
+   CASE down
     IF player(0).xdir = left THEN player(0).shootingframe = poleleftdown
     IF player(0).xdir = right THEN player(0).shootingframe = polerightdown
-  END IF
+  END SELECT
   EXIT SUB
 END IF
 
@@ -219,9 +220,8 @@ FOR s = 1 TO 5
     shot(s).active = 1
     player(0).ammo = player(0).ammo - 1
     player(0).reload = maxfps / 4
-    'player(0).action = shooting
-    'player(0).actiontime = maxfps / 5
     player(0).shooting = maxfps / 5
+    IF player(0).action = pogo THEN player(0).action = moving
     IF player(0).onground AND player(0).action <> climbing THEN player(0).frozen = 1
     EXIT FOR
   END IF

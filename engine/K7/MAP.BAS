@@ -19,7 +19,7 @@ REM $STATIC
 SUB LoadMap (file$)
 
 OPEN file$ FOR BINARY AS 1
-  GET #1, , version
+  GET #1, , version: PRINT version: SLEEP 3
   IF version <> mapsysver THEN ErrorHandlerSub 130
  
   GET #1, , mapxsize

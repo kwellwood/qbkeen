@@ -1,6 +1,7 @@
 DEFINT A-Z
 '$DYNAMIC
 
+DECLARE SUB CheckJumpHeight ()
 DECLARE SUB CheckOnGround ()
 DECLARE SUB DoPhysics ()
 DECLARE SUB DoPlayerFrame ()

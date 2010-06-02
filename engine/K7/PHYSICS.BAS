@@ -16,6 +16,14 @@ ErrorHandlerSub e
 RESUME NEXT
 
 REM $STATIC
+SUB CheckJumpHeight
+
+IF player(0).onground THEN player(0).canjump = ts * player(0).jumpheight
+IF player(0).yv < 0 THEN player(0).canjump = player(0).canjump + player(0).yv
+IF player(0).canjump < 0 THEN player(0).canjump = 0
+
+END SUB
+
 SUB CheckOnGround
 
 'no vertical movement
@@ -182,7 +190,7 @@ IF TileType(Map&(mx, my)) THEN HitPoint = 1 ELSE HitPoint = 0
 END FUNCTION
 
 SUB HitWall (p, hx!, hy!)
-
+            
 side = -1
 
 IF p = 5 THEN
@@ -220,7 +228,10 @@ END SUB
 SUB MovePlayer (d)
 
 SELECT CASE d
- CASE up: IF (player(0).yv < 0) OR (player(0).yv = 0 AND player(0).onground) THEN player(0).yv = player(0).yv - 2
+ CASE up
+  IF (player(0).yv < 0) OR (player(0).yv = 0 AND player(0).onground) THEN
+    IF player(0).canjump THEN player(0).yv = player(0).yv - 2
+  END IF
  CASE down: player(0).yv = player(0).yv + 2
  CASE left: player(0).xv = player(0).xv - 2: player(0).xdir = left
  CASE right: player(0).xv = player(0).xv + 2: player(0).xdir = right

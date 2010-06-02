@@ -14,3 +14,33 @@ of TED uses build 2 of the engine technology.
 Changes since Build 1:
 - clipping for the player
 - working menu system
+
+Build 3 (10-22-2000):
+   The major addition in build 3 is a working physics system in progress. The
+player uses 8 clip points spaced around the tile size of the player. Gravity
+is present, although the player can jump up until he hits his head and comes
+back down. All player artwork is new, and an animation system has been set up.
+Looking much better than build 2 already. Future builds may look very good!
+
+Changes since Build 2:
+- 8 clip points on player
+- all new player artwork
+- player animation system
+- physics partly working
+- specific error messages
+
+Build 3B (11-10-2000):
+   This build was released because its at the end of several additions from
+the previous builds and I want to move ahead with using real Commander Keen
+artwork. That means future builds will use 16x16 tiles instead of 20x20.
+All that requires, however, is to change the tile size variable in engine.dat
+and redraw art. The physics system is now fully working with very few bugs.
+Clip points on the player are no longer displayed and the map has been
+changed some. The player is also no longer clipped by its tile size. The
+size of the player frame and clip box are independent.
+
+Changes since Build 3:
+- map changes
+- physics complete
+- clip points independent of player tile size
+- clip points not displayed

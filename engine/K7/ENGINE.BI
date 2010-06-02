@@ -38,8 +38,12 @@ TYPE playertype
  delay AS INTEGER
  xsize AS INTEGER
  ysize AS INTEGER
+ txsize AS INTEGER
+ tysize AS INTEGER
  onground AS INTEGER
  adelay AS INTEGER
+ canjump AS INTEGER
+ jumpheight AS SINGLE
 END TYPE
 
 COMMON SHARED player() AS playertype, scr(), file() AS STRING * 12

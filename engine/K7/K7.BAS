@@ -24,7 +24,7 @@ DIM SHARED camera(0) AS camtype
 InitEngine
 InitMenu
 LoadTiles
-LoadMap "test.map"
+LoadMap "keen16.map"
 
 DQBinitVGA: SCREEN 13
 SetPalette
@@ -37,9 +37,9 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 3)."
+PRINT "Powered by K7 Engine technology (Build 3B)."
 PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
-PRINT "Compiled October 22, 2000"
+PRINT "Compiled November 10, 2000"
 END
 
 '============================================================================
@@ -136,9 +136,9 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 3)."
+PRINT "Powered by K7 Engine technology (Build 3B)."
 PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
-PRINT "Compiled October 22, 2000"
+PRINT "Compiled November 10, 2000"
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
@@ -158,10 +158,14 @@ OPEN "engine.dat" FOR INPUT AS 1
   IF ver <> enginever THEN ErrorHandlerSub 125
   INPUT #1, ts
   INPUT #1, maxfps
+  INPUT #1, tileset$
   INPUT #1, player(0).xmax
   INPUT #1, player(0).ymax
+  INPUT #1, player(0).jumpheight
   INPUT #1, player(0).xsize
   INPUT #1, player(0).ysize
+  INPUT #1, player(0).txsize
+  INPUT #1, player(0).tysize
 CLOSE 1
 gamemode = ingame
 
@@ -202,6 +206,7 @@ DO
     DoInput
     DoPhysics
     CheckOnGround
+    CheckJumpHeight
     DoPlayerFrame
     DoCamera
     DrawScreen

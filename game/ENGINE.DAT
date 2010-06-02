@@ -1,15 +1,23 @@
 1
 20
-70
+50
+GRAPHICS.DAT
 2
-4
+6
+3.0
+8
+32
 24
 32
 
 engine version
 tilesize
 max fps
+tileset file
 max x vel
 max y vel
-player xsize
-player ysize
+player jump height (in tiles)
+player clip xsize
+player clip ysize
+player tile xsize
+player tile ysize

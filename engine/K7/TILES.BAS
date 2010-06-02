@@ -33,9 +33,11 @@ END FUNCTION
 SUB LoadTiles
 
 xmspos& = 0
-a = MountPAK("graphics.gpk")
-IF a THEN ErrorHandlerSub 132 + a
-OPEN "graphics.dat" FOR INPUT AS 1
+OPEN tileset$ FOR INPUT AS 1
+  INPUT #1, gfxarchive$
+  a = MountPAK(gfxarchive$)
+  IF a THEN ErrorHandlerSub 132 + a
+ 
   INPUT #1, numtiles&
   FOR t& = 1 TO numtiles&
     INPUT #1, file$

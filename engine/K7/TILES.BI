@@ -2,7 +2,7 @@ DEFINT A-Z
 '$DYNAMIC
 
 COMMON SHARED TileTypeHandle, AnmLengthHandle, AnmDelayHandle
-COMMON SHARED numtiles&
+COMMON SHARED numtiles&, tileset$
 
 DECLARE SUB LoadTiles ()
 DECLARE SUB SetTileType (t&, v)

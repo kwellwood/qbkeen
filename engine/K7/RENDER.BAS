@@ -40,23 +40,24 @@ END SUB
 SUB DrawHUD
 
 '=================[ CLIP POINTS ON PLAYER ]=================
-DQBpset drawpage, player(0).x - camera(0).vx1, player(0).y - camera(0).vy1, 15
-px1 = player(0).x - (player(0).xsize / 2)
-py1 = player(0).y - (player(0).ysize / 2)
-px2 = player(0).x + (player(0).xsize / 2)
-py2 = player(0).y + (player(0).ysize / 2)
-DQBpset drawpage, px1 - camera(0).vx1, py1 - camera(0).vy1, 15
-DQBpset drawpage, px2 - camera(0).vx1, py1 - camera(0).vy1, 15
-DQBpset drawpage, px1 - camera(0).vx1, player(0).y - camera(0).vy1, 15
-DQBpset drawpage, px2 - camera(0).vx1, player(0).y - camera(0).vy1, 15
-DQBpset drawpage, px1 - camera(0).vx1, py2 - camera(0).vy1, 15
-DQBpset drawpage, px2 - camera(0).vx1, py2 - camera(0).vy1, 15
-DQBpset drawpage, player(0).x - camera(0).vx1, py1 - camera(0).vy1, 15
-DQBpset drawpage, player(0).x - camera(0).vx1, py2 - camera(0).vy1, 15
+'DQBpset drawpage, player(0).x - camera(0).vx1, player(0).y - camera(0).vy1, 15
+'px1 = player(0).x - (player(0).xsize / 2)
+'py1 = player(0).y - (player(0).ysize / 2)
+'px2 = player(0).x + (player(0).xsize / 2)
+'py2 = player(0).y + (player(0).ysize / 2)
+'DQBpset drawpage, px1 - camera(0).vx1, py1 - camera(0).vy1, 15
+'DQBpset drawpage, px2 - camera(0).vx1, py1 - camera(0).vy1, 15
+'DQBpset drawpage, px1 - camera(0).vx1, player(0).y - camera(0).vy1, 15
+'DQBpset drawpage, px2 - camera(0).vx1, player(0).y - camera(0).vy1, 15
+'DQBpset drawpage, px1 - camera(0).vx1, py2 - camera(0).vy1, 15
+'DQBpset drawpage, px2 - camera(0).vx1, py2 - camera(0).vy1, 15
+'DQBpset drawpage, player(0).x - camera(0).vx1, py1 - camera(0).vy1, 15
+'DQBpset drawpage, player(0).x - camera(0).vx1, py2 - camera(0).vy1, 15
 
 '=================[ MISC TEXT INFO ]=================
 'DQBprint drawpage, "player(0).y: " + STR$(player(0).y) + " player(0).x: " + STR$(player(0).x), 0, 0, 14
 'DQBprint drawpage, "player(0).yv: " + STR$(player(0).yv) + " player(0).xv: " + STR$(player(0).xv), 0, 10, 14
+'DQBprint drawpage, "player(0).canjump: " + STR$(player(0).canjump), 0, 0, 15
 
 END SUB
 
@@ -101,8 +102,8 @@ FOR y = miny TO maxy
 NEXT y
 
 '=========[ DRAW PLAYER ]=========
-px = player(0).x - camera(0).vx1 - (player(0).xsize / 2)
-py = player(0).y - camera(0).vy1 - (player(0).ysize / 2)
+px = player(0).x - camera(0).vx1 - (player(0).txsize / 2)
+py = player(0).y - camera(0).vy1 - (player(0).tysize / 2)
 PutSprite player(0).frame, px, py, drawpage
 
 '========[ DRAW FOREGROUND ]========

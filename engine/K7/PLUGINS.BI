@@ -1,9 +1,12 @@
 DEFINT A-Z
 '$DYNAMIC
 
-'$include: 'physics.bi'
+'$INCLUDE: 'physics.bi'
 '$INCLUDE: 'tiles.bi'
 '$INCLUDE: 'graphics.bi'
 '$INCLUDE: 'map.bi'
 '$INCLUDE: 'render.bi'
 '$INCLUDE: 'menu.bi'
+'$INCLUDE: 'scores.bi'
+'$INCLUDE: 'items.bi'
+

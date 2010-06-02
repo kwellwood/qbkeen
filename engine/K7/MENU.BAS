@@ -30,8 +30,6 @@ PutSprite t&, 0, 0, drawpage
 frame& = (INT(anmcounter / selectordelay) MOD selectorframes) + selectorstartfrm&
 PutSprite frame&, menux, menuy + ((menuopt - 1) * selectionpixels), drawpage
 
-'DQBcopyTransLayer menupage, drawpage
-
 END SUB
 
 SUB HandleMenu (k)

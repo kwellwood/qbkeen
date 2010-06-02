@@ -14,7 +14,8 @@ ON ERROR GOTO ErrorHandler
 
 '----------------------------------------------------------------------------
 ErrorHandler:
-ErrorHandlerSub 0
+e = ERR
+ErrorHandlerSub e
 RESUME NEXT
 
 REM $STATIC

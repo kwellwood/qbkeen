@@ -50,6 +50,8 @@ END SUB
 
 SUB DoPhysics
 
+UpdateClipPoints
+
 '=======[ GRAVITY ]=======
 IF player(0).onground = 0 THEN player(0).yv = player(0).yv + 1
 
@@ -82,22 +84,30 @@ IF player(0).x > (mapxsize * ts) - 1 THEN player(0).x = (mapxsize * ts) - 1: pla
 IF player(0).y > (mapysize * ts) - 1 THEN player(0).y = (mapysize * ts) - 1: player(0).yv = 0
 
 '===============================[ CLIPPING ]=================================
+UpdateClipPoints
 
 ' 1--5--2
 ' |     |
 ' 7     8
 ' |     |
+' 9     10
+' |     |
 ' 3--6--4
 
-IF HitPoint(5) THEN HitWall 5, player(0).x, player(0).y - (player(0).ysize / 2)
-IF HitPoint(6) THEN HitWall 6, player(0).x, player(0).y + (player(0).ysize / 2)
+IF HitPoint(5) THEN HitWall 5, ClipPoint(5).x, ClipPoint(5).y
+IF HitPoint(6) THEN HitWall 6, ClipPoint(6).x, ClipPoint(6).y
 
-IF HitPoint(1) THEN HitWall 1, player(0).x - (player(0).xsize / 2), player(0).y - (player(0).ysize / 2)
-IF HitPoint(2) THEN HitWall 2, player(0).x + (player(0).xsize / 2), player(0).y - (player(0).ysize / 2)
-IF HitPoint(7) THEN HitWall 7, player(0).x - (player(0).xsize / 2), player(0).y
-IF HitPoint(8) THEN HitWall 8, player(0).x + (player(0).xsize / 2), player(0).y
-IF HitPoint(3) THEN HitWall 3, player(0).x - (player(0).xsize / 2), player(0).y + (player(0).ysize / 2)
-IF HitPoint(4) THEN HitWall 4, player(0).x + (player(0).xsize / 2), player(0).y + (player(0).ysize / 2)
+IF HitPoint(1) THEN HitWall 1, ClipPoint(1).x, ClipPoint(1).y
+IF HitPoint(2) THEN HitWall 2, ClipPoint(2).x, ClipPoint(2).y
+
+IF HitPoint(7) THEN HitWall 7, ClipPoint(7).x, ClipPoint(7).y
+IF HitPoint(8) THEN HitWall 8, ClipPoint(8).x, ClipPoint(8).y
+
+IF HitPoint(9) THEN HitWall 9, ClipPoint(9).x, ClipPoint(9).y
+IF HitPoint(10) THEN HitWall 10, ClipPoint(10).x, ClipPoint(10).y
+
+IF HitPoint(3) THEN HitWall 3, ClipPoint(3).x, ClipPoint(3).y
+IF HitPoint(4) THEN HitWall 4, ClipPoint(4).x, ClipPoint(4).y
 
 END SUB
 
@@ -106,11 +116,22 @@ SUB DoPlayerFrame
 'ad = AnmDelay(t&)
 't& = (INT(anmcounter / ad) MOD al) + t&
 
+'IF player(0).looking <> 0 THEN
+'  IF player(0).looking = -1 THEN player(0).frame = pframe(12)
+'  IF player(0).looking > 0 THEN
+'    player(0).looking = player(0).looking + 1
+'    IF player(0).looking > 10 THEN player(0).looking = 10
+'    IF player(0).looking < 10 THEN player(0).frame = pframe(13)
+'    IF player(0).looking = 10 THEN player(0).frame = pframe(13) + 1
+'  END IF
+'  EXIT SUB
+'END IF
+
 SELECT CASE player(0).xdir
  CASE left
   IF player(0).yv = 0 AND player(0).onground THEN
     IF player(0).xv < 0 THEN       ' walk left
-      player(0).frame = (INT(anmcounter / player(0).adelay) MOD pframe(2)) + pframe(1) + 16
+      player(0).frame = pframe(1) + (INT(anmcounter / player(0).adelay) MOD pframe(2))
      ELSE
       player(0).frame = pframe(0)  ' stand left
     END IF
@@ -126,7 +147,7 @@ SELECT CASE player(0).xdir
  CASE right
   IF player(0).yv = 0 AND player(0).onground THEN
     IF player(0).xv > 0 THEN       ' walk right
-      player(0).frame = (INT(anmcounter / player(0).adelay) MOD pframe(5)) + pframe(4) + 21
+      player(0).frame = pframe(4) + (INT(anmcounter / player(0).adelay) MOD pframe(5))
      ELSE
       player(0).frame = pframe(3)  ' stand left
     END IF
@@ -141,50 +162,60 @@ SELECT CASE player(0).xdir
   END IF
 END SELECT
 
-'  INPUT #1, pframe(0)   ' stand left
-'  INPUT #1, pframe(1)   ' walk left start
-'  INPUT #1, pframe(2)   ' walk left frames
-'  INPUT #1, pframe(3)   ' stand right
-'  INPUT #1, pframe(4)   ' walk right start
-'  INPUT #1, pframe(5)   ' walk right frames
-'  INPUT #1, pframe(6)   ' left jump up
-'  INPUT #1, pframe(7)   ' left jump apex
-'  INPUT #1, pframe(8)   ' left falling
-'  INPUT #1, pframe(9)   ' right jump up
-'  INPUT #1, pframe(10)  ' right jump apex
-'  INPUT #1, pframe(11)  ' right falling
+'pframe(0)  - stand left
+'pframe(1)  - walk left start
+'pframe(2)  - walk left frames
+'pframe(3)  - stand right
+'pframe(4)  - walk right start
+'pframe(5)  - walk right frames
+'pframe(6)  - left jump up
+'pframe(7)  - left jump apex
+'pframe(8)  - left falling
+'pframe(9)  - right jump up
+'pframe(10) - right jump apex
+'pframe(11) - right falling
+'pframe(12) - looking up
+'pframe(13) - looking down
 
 END SUB
 
 FUNCTION HitPoint (p)
 
-SELECT CASE p
- CASE 1
-  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1
-  my = INT((player(0).y - (player(0).ysize / 2)) / ts) + 1
- CASE 2
-  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1
-  my = INT((player(0).y - (player(0).ysize / 2)) / ts) + 1
- CASE 3
-  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1
-  my = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
- CASE 4
-  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1
-  my = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
- CASE 5
-  mx = INT(player(0).x / ts) + 1
-  my = INT((player(0).y - (player(0).ysize / 2)) / ts) + 1
- CASE 6
-  mx = INT(player(0).x / ts) + 1
-  my = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
- CASE 7
-  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1
-  my = INT(player(0).y / ts) + 1
- CASE 8
-  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1
-  my = INT(player(0).y / ts) + 1
-END SELECT
+'SELECT CASE p
+' CASE 1
+'  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1
+'  my = INT((player(0).y - (player(0).ysize / 2)) / ts) + 1
+' CASE 2
+'  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1
+'  my = INT((player(0).y - (player(0).ysize / 2)) / ts) + 1
+' CASE 3
+'  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1
+'  my = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
+' CASE 4
+'  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1
+'  my = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
+' CASE 5
+'  mx = INT(player(0).x / ts) + 1
+'  my = INT((player(0).y - (player(0).ysize / 2)) / ts) + 1
+' CASE 6
+'  mx = INT(player(0).x / ts) + 1
+'  my = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
+' CASE 7
+'  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1
+'  my = INT((player(0).y - (player(0).ysize / 4)) / ts) + 1
+' CASE 8
+'  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1
+'  my = INT((player(0).y - (player(0).ysize / 4)) / ts) + 1
+' CASE 9
+'  mx = INT((player(0).x - (player(0).xsize / 2)) / ts) + 1       '
+'  my = INT((player(0).y + (player(0).ysize / 4)) / ts) + 1       '
+' CASE 10
+'  mx = INT((player(0).x + (player(0).xsize / 2)) / ts) + 1       '
+'  my = INT((player(0).y + (player(0).ysize / 4)) / ts) + 1       '
+'END SELECT
 
+mx = INT(ClipPoint(p).x / ts) + 1
+my = INT(ClipPoint(p).y / ts) + 1
 IF TileType(Map&(mx, my)) THEN HitPoint = 1 ELSE HitPoint = 0
 
 END FUNCTION
@@ -210,7 +241,7 @@ END IF
 SELECT CASE side
  CASE up
   player(0).yv = 0
-  player(0).y = ny! + (player(0).ysize / 2)
+  player(0).y = ny! + (player(0).ysize / 2) + 1
  CASE down
   player(0).yv = 0
   player(0).y = ny! - (player(0).ysize / 2)
@@ -222,6 +253,7 @@ SELECT CASE side
   player(0).xv = 0
   IF p = 1 OR p = 7 OR p = 3 THEN player(0).x = nx! + (player(0).xsize / 2)
 END SELECT
+UpdateClipPoints
 
 END SUB
 
@@ -235,7 +267,45 @@ SELECT CASE d
  CASE down: player(0).yv = player(0).yv + 2
  CASE left: player(0).xv = player(0).xv - 2: player(0).xdir = left
  CASE right: player(0).xv = player(0).xv + 2: player(0).xdir = right
+ 'CASE lookup: camera(0).y = camera(0).y - 2: player(0).looking = -1
+ 'CASE lookdown
+ ' camera(0).y = camera(0).y + 2
+ ' IF player(0).looking <= 0 THEN player(0).looking = 1
 END SELECT
+
+END SUB
+
+SUB UpdateClipPoints
+
+ClipPoint(1).x = player(0).x - (player(0).xsize / 2)
+ClipPoint(1).y = player(0).y - (player(0).ysize / 2)
+
+ClipPoint(2).x = player(0).x + (player(0).xsize / 2)
+ClipPoint(2).y = player(0).y - (player(0).ysize / 2)
+
+ClipPoint(3).x = player(0).x - (player(0).xsize / 2)
+ClipPoint(3).y = player(0).y + (player(0).ysize / 2)
+
+ClipPoint(4).x = player(0).x + (player(0).xsize / 2)
+ClipPoint(4).y = player(0).y + (player(0).ysize / 2)
+
+ClipPoint(5).x = player(0).x
+ClipPoint(5).y = player(0).y - (player(0).ysize / 2)
+
+ClipPoint(6).x = player(0).x
+ClipPoint(6).y = player(0).y + (player(0).ysize / 2)
+
+ClipPoint(7).x = player(0).x - (player(0).xsize / 2)
+ClipPoint(7).y = player(0).y - (player(0).ysize / 4)
+
+ClipPoint(8).x = player(0).x + (player(0).xsize / 2)
+ClipPoint(8).y = player(0).y - (player(0).ysize / 4)
+
+ClipPoint(9).x = player(0).x - (player(0).xsize / 2)
+ClipPoint(9).y = player(0).y + (player(0).ysize / 4)
+
+ClipPoint(10).x = player(0).x + (player(0).xsize / 2)
+ClipPoint(10).y = player(0).y + (player(0).ysize / 4)
 
 END SUB
 

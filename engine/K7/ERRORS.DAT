@@ -1,3 +1,4 @@
+0005, "QB: Array subscript out of range"
 0006, "QB: Calculation Overflow"
 0007, "QB: Out of local data memory"
 0009, "QB: Subscript out of range"
@@ -34,3 +35,4 @@
 0135, "LoadArtFile (): file not found in graphics archive"
 0136, "LoadArtFile (): PAKlib not initialized or archive not mounted"
 0137, "Invalid version of MENU.DAT"
+0999, "Unknown error"

@@ -1,7 +1,7 @@
 DEFINT A-Z
 '$DYNAMIC
 
-CONST mapsysver = 1
+CONST mapsysver = 2
 
 COMMON SHARED MapHandle, MapFGHandle
 COMMON SHARED mapxsize, mapysize

@@ -1,16 +1,18 @@
 1
+1
+2
+4
+6
+7
+4
+11
+12
+13
+14
 15
 16
-4
-20
-21
-4
 25
 26
-27
-28
-29
-30
 
 animation delay
 stand left
@@ -25,3 +27,5 @@ left falling
 right jump up
 right jump apex
 right falling
+looking up
+looking down

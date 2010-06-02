@@ -41,40 +41,36 @@ SUB DrawHUD
 
 '=================[ CLIP POINTS ON PLAYER ]=================
 'DQBpset drawpage, player(0).x - camera(0).vx1, player(0).y - camera(0).vy1, 15
-'px1 = player(0).x - (player(0).xsize / 2)
-'py1 = player(0).y - (player(0).ysize / 2)
-'px2 = player(0).x + (player(0).xsize / 2)
-'py2 = player(0).y + (player(0).ysize / 2)
-'DQBpset drawpage, px1 - camera(0).vx1, py1 - camera(0).vy1, 15
-'DQBpset drawpage, px2 - camera(0).vx1, py1 - camera(0).vy1, 15
-'DQBpset drawpage, px1 - camera(0).vx1, player(0).y - camera(0).vy1, 15
-'DQBpset drawpage, px2 - camera(0).vx1, player(0).y - camera(0).vy1, 15
-'DQBpset drawpage, px1 - camera(0).vx1, py2 - camera(0).vy1, 15
-'DQBpset drawpage, px2 - camera(0).vx1, py2 - camera(0).vy1, 15
-'DQBpset drawpage, player(0).x - camera(0).vx1, py1 - camera(0).vy1, 15
-'DQBpset drawpage, player(0).x - camera(0).vx1, py2 - camera(0).vy1, 15
+'FOR cp = 1 TO 10
+'  DQBpset drawpage, ClipPoint(cp).x - camera(0).vx1, ClipPoint(cp).y - camera(0).vy1, 15
+'NEXT cp
 
 '=================[ MISC TEXT INFO ]=================
-'DQBprint drawpage, "player(0).y: " + STR$(player(0).y) + " player(0).x: " + STR$(player(0).x), 0, 0, 14
-'DQBprint drawpage, "player(0).yv: " + STR$(player(0).yv) + " player(0).xv: " + STR$(player(0).xv), 0, 10, 14
-'DQBprint drawpage, "player(0).canjump: " + STR$(player(0).canjump), 0, 0, 15
+DQBprint drawpage, "Camera(0).v1: (" + STR$(camera(0).vx1) + "," + STR$(camera(0).vy1) + ")", 200, 0, 15
+DQBprint drawpage, "Camera(0).v2: (" + STR$(camera(0).vx2) + "," + STR$(camera(0).vy2) + ")", 200, 10, 15
+DQBline drawpage, 198, 19, 318, 19, 15
+DQBprint drawpage, "ActiveItemStack(0):" + STR$(LEN(activeitemstack(0))), 200, 22, 15
+DQBprint drawpage, "ActiveSpriteStack(0):" + STR$(LEN(activespritestack(0))), 200, 32, 15
+
+
+DQBprint drawpage, "anmcounter:" + STR$(anmcounter), 0, 191, 15
 
 END SUB
 
 SUB DrawScreen
 
-'=======[ CLEAR DRAW SPACE ]=======
-DQBclearLayer drawpage
-
 '=========[ BACKGROUND ]========
-x = (camera(0).vx1 / 2) MOD 320
-IF x = 0 THEN
-  DQBcopyLayer backdroppage, drawpage
- ELSE
-  DQBget backdroppage, 0, 0, x - 1, 199, VARSEG(scr(0)), VARPTR(scr(0))
-  DQBput drawpage, 320 - x, 0, VARSEG(scr(0)), VARPTR(scr(0))
-  DQBget backdroppage, x, 0, 319, 199, VARSEG(scr(0)), VARPTR(scr(0))
-  DQBput drawpage, 0, 0, VARSEG(scr(0)), VARPTR(scr(0))
+IF backgroundused THEN
+  x = (camera(0).vx1 / 2) MOD 320
+  IF x = 0 THEN
+    DQBcopyLayer backdroppage, drawpage
+   ELSE
+    DQBget backdroppage, 0, 0, x - 1, 199, VARSEG(scr(0)), VARPTR(scr(0))
+    DQBput drawpage, 320 - x, 0, VARSEG(scr(0)), VARPTR(scr(0))
+    DQBget backdroppage, x, 0, 319, 199, VARSEG(scr(0)), VARPTR(scr(0))
+    DQBput drawpage, 0, 0, VARSEG(scr(0)), VARPTR(scr(0))
+  END IF
+ ELSE DQBclearLayer drawpage
 END IF
 
 '=======[ TRANSLATE CAMERA ]=======
@@ -101,6 +97,10 @@ FOR y = miny TO maxy
   NEXT x
 NEXT y
 
+'=========[ DRAW SPRITES ]========
+DrawItems
+DrawSprites
+
 '=========[ DRAW PLAYER ]=========
 px = player(0).x - camera(0).vx1 - (player(0).txsize / 2)
 py = player(0).y - camera(0).vy1 - (player(0).tysize / 2)
@@ -124,7 +124,8 @@ FOR y = miny TO maxy
   NEXT x
 NEXT y
 
-DrawHUD
+DrawScoreboard
+IF DQBkey(59) THEN DrawHUD
 
 IF gamemode = inmenu THEN DrawMenu
 DQBcopyLayer drawpage, video

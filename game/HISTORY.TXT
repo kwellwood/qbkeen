@@ -44,3 +44,22 @@ Changes since Build 3:
 - physics complete
 - clip points independent of player tile size
 - clip points not displayed
+
+Build 4 (11-20-2000):
+   There are some major additions to build 4! Finally, its looking like
+Commander Keen should. All artwork has been redone, with the exception of the
+main menu, which will be changed in the near future. An items system has been
+added, complete with animated candies and the points rising after they are
+collected. The player is now clipped by 10 points, due to smaller tile sizes
+to reduce bugs. DebugLog(t$) allows non-critical errors to be recorded and
+greatly improves efficiency in bug hunting.
+
+Changes since Build 3B:
+- all new artwork!
+- new tile size (16x16)
+- animation in forest background
+- items and sprites system
+- debug message logging
+- 10 clip points on player
+- debug HUD shown with F1 key
+- camera panned up and down with PG UP, DOWN

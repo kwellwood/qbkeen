@@ -16,15 +16,27 @@ AllocXMS
 '--------- Core Engine ---------
 DIM SHARED player(0) AS playertype, scr(32004), file(0) AS STRING * 12
 DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
-DIM SHARED pframe(11) AS LONG
+DIM SHARED pframe(13) AS LONG
 
 '-------- Render System --------
 DIM SHARED camera(0) AS camtype
 
+'-------- Physics System -------
+DIM SHARED ClipPoint(1 TO 10) AS coordinate
+
+'--------- Items System --------
+DIM SHARED item(1 TO 255) AS itemclass, bonus(1 TO 10) AS itemtypeclass
+DIM SHARED activeitemstack(0) AS STRING, activespritestack(0) AS STRING
+DIM SHARED sprite(1 TO 100) AS spriteclass, unusedspritestack(0) AS STRING
+
+PRINT "Loading...";
 InitEngine
 InitMenu
+InitScoreboard
+InitItems
 LoadTiles
-LoadMap "keen16.map"
+LoadMap "keen7.map"
+PRINT "Ok"
 
 DQBinitVGA: SCREEN 13
 SetPalette
@@ -37,9 +49,9 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 3B)."
+PRINT "Powered by K7 Engine technology (Build 4)."
 PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
-PRINT "Compiled November 10, 2000"
+PRINT "Compiled November 20, 2000"
 END
 
 '============================================================================
@@ -93,6 +105,16 @@ BiosXClose MapFGHandle
 
 END SUB
 
+SUB DebugLog (t$)
+
+ff = FREEFILE
+OPEN "debug.log" FOR APPEND AS ff
+  t$ = "TIME: " + LTRIM$(RTRIM$(STR$(TIMER))) + "  ACTION: " + t$
+  PRINT #ff, t$
+CLOSE ff
+
+END SUB
+
 SUB DoInput
 
 SELECT CASE gamemode
@@ -100,8 +122,11 @@ SELECT CASE gamemode
   IF DQBkey(keyright) THEN MovePlayer right
   IF DQBkey(keyleft) THEN MovePlayer left
   IF DQBkey(keyup) THEN MovePlayer up
-  IF DQBkey(keydown) THEN MovePlayer down
+  'IF DQBkey(keydown) AND player(0).onground AND player(0).xv = 0 THEN MovePlayer lookdown ELSE player(0).looking = 0
+  'IF DQBkey(keyup) AND player(0).onground AND player(0).xv = 0 THEN MovePlayer lookup ELSE player(0).looking = 0
   IF DQBkey(keyesc) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .2
+  IF DQBkey(73) THEN camera(0).y = camera(0).y - 2
+  IF DQBkey(81) THEN camera(0).y = camera(0).y + 2
  CASE inmenu
   IF DQBkey(keyesc) THEN HandleMenu keyesc
   IF DQBkey(keyup) THEN HandleMenu keyup
@@ -133,12 +158,12 @@ OPEN "errors.dat" FOR INPUT AS f
     INPUT #f, errtext$
     IF k = e THEN errfound = 1
     IF k = 999 THEN errfound = 1
-  LOOP UNTIL errfound
+  LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 3B)."
+PRINT "Powered by K7 Engine technology (Build 4)."
 PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
-PRINT "Compiled November 10, 2000"
+PRINT "Compiled November 20, 2000"
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
@@ -155,7 +180,7 @@ SUB InitEngine
 
 OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, ver
-  IF ver <> enginever THEN ErrorHandlerSub 125
+  IF ver <> enginever THEN CLOSE 1: ErrorHandlerSub 125
   INPUT #1, ts
   INPUT #1, maxfps
   INPUT #1, tileset$
@@ -183,6 +208,8 @@ OPEN "player.dat" FOR INPUT AS 1
   INPUT #1, pframe(9)   ' right jump up
   INPUT #1, pframe(10)  ' right jump apex
   INPUT #1, pframe(11)  ' right falling
+  INPUT #1, pframe(12)  ' looking up
+  INPUT #1, pframe(13)  ' looking down
 CLOSE 1
 
 DEF SEG = VARSEG(pal(0))
@@ -207,6 +234,8 @@ DO
     DoPhysics
     CheckOnGround
     CheckJumpHeight
+    DoSprites
+    DoItems
     DoPlayerFrame
     DoCamera
     DrawScreen

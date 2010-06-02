@@ -7,16 +7,23 @@ COMMON SHARED quitgame
 CONST enginever = 1
 CONST inmenu = 1, ingame = 2
 'CONST up = 1, down = 2, left = 3, right = 4
+CONST lookup = 4, lookdown = 5
 CONST drawpage = 1, backdroppage = 2, menupage = 3, slopepage = 4
 
 DECLARE SUB AllocXMS ()
 DECLARE SUB DeallocXMS ()
+DECLARE SUB DebugLog (t$)
 DECLARE SUB DoInput ()
 DECLARE SUB DoTimers ()
 DECLARE SUB ErrorHandlerSub (e)
 DECLARE SUB InitEngine ()
 DECLARE SUB MainLoop ()
 DECLARE SUB SetPalette ()
+
+TYPE coordinate
+ x AS SINGLE
+ y AS SINGLE
+END TYPE
 
 TYPE hues
  red AS INTEGER
@@ -44,6 +51,9 @@ TYPE playertype
  adelay AS INTEGER
  canjump AS INTEGER
  jumpheight AS SINGLE
+ score AS LONG          ' scores.bi, items.bi
+ ammo  AS INTEGER       ' scores.bi, weapon.bi
+ lives AS INTEGER       ' scores.bi
 END TYPE
 
 COMMON SHARED player() AS playertype, scr(), file() AS STRING * 12

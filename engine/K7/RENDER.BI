@@ -1,6 +1,8 @@
 DEFINT A-Z
 '$DYNAMIC
 
+COMMON SHARED backgroundused
+
 DECLARE SUB DoCamera ()
 DECLARE SUB DrawHUD ()
 DECLARE SUB DrawScreen ()

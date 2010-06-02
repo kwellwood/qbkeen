@@ -33,6 +33,7 @@ IF switch(s) = 0 THEN switch(s) = 1 ELSE switch(s) = 0
 player(0).action = switching
 player(0).actiontime = maxfps / 3
 player(0).xv = 0: player(0).frozen = 1
+PlaySound 5
 
 END SUB
 

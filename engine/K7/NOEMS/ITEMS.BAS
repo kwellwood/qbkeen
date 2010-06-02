@@ -37,8 +37,24 @@ FOR k = 1 TO LEN(activeitemstack(0))
 
   IF TouchItem(i) THEN
     '--- award bonus' value ---
-    player(0).score = player(0).score + bonus(item(i).id).points
-    player(0).ammo = player(0).ammo + bonus(item(i).id).ammo
+    IF bonus(item(i).id).points THEN
+      player(0).score = player(0).score + bonus(item(i).id).points
+      PlaySound 13
+    END IF
+    IF bonus(item(i).id).ammo THEN
+      player(0).ammo = player(0).ammo + bonus(item(i).id).ammo
+      PlaySound 15
+    END IF
+    IF bonus(item(i).id).lifedrop THEN
+      player(0).drops = player(0).drops + bonus(item(i).id).lifedrop
+      PlaySound 14
+      IF player(0).drops > 99 THEN
+        player(0).drops = 0
+        player(0).lives = player(0).lives + 1
+        oneup = 1
+       ELSE oneup = 0
+      END IF
+    END IF
     '--- remove from active item stack ---
     activeitemstack(0) = LEFT$(activeitemstack(0), k - 1) + RIGHT$(activeitemstack(0), LEN(activeitemstack(0)) - k)
    

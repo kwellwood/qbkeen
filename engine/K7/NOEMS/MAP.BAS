@@ -27,11 +27,12 @@ GET #1, , version
   GET #1, , file(0)
 
   IF UCASE$(RTRIM$(file(0))) <> "NONE" THEN
-    a = LoadFromPAK(RTRIM$(file(0)), scrbuf)
-    IF a THEN ErrorHandlerSub 130 + a
-    DQBput backdroppage, 0, 0, VARSEG(scr(0)), VARPTR(scr(0))
-    backgroundused = 1
-   ELSE backgroundused = 0
+    LoadMusic UCASE$(RTRIM$(file(0)))
+    ' a = LoadFromPAK(RTRIM$(file(0)), scrbuf)
+    ' IF a THEN ErrorHandlerSub 130 + a
+    ' DQBput backdroppage, 0, 0, VARSEG(scr(0)), VARPTR(scr(0))
+    ' backgroundused = 1
+    'ELSE backgroundused = 0
   END IF
 
   FOR ry = 1 TO mapysize
@@ -62,7 +63,7 @@ GET #1, , version
   '========[ ITEMS PLUGIN ]========
   activeitemstack(0) = ""    'clear item stack
   ClearSprites
- 
+
   GET #1, , numitems
   IF numitems > 255 THEN DebugLog "WARNING: Items in map <" + file$ + ">:" + STR$(numitems): numitems = 255
   FOR i = 1 TO numitems
@@ -111,7 +112,11 @@ GET #1, , version
   NEXT p
   '================================
 
-  '=======[ SWITCHES PLUGIN ]======
+  '======[ WEAPONS PLUGIN ]========
+  FOR s = 1 TO 5: shot(s).active = 0: NEXT s
+  '================================
+
+  '======[ SWITCHES PLUGIN ]=======
   FOR s = 1 TO 25: switch(s) = 0: NEXT s
   '================================
 CLOSE 1

@@ -97,20 +97,6 @@ END SUB
 
 SUB DrawScreen
 
-'uncomment the following lines
-'=========[ BACKGROUND ]========
-'IF backgroundused THEN
-'  x = (camera(0).vx1 / 2) MOD 320
-'  IF x = 0 THEN
-'    DQBcopyLayer backdroppage, drawpage
-'   ELSE
-'    DQBget backdroppage, 0, 0, x - 1, 199, VARSEG(scr(0)), VARPTR(scr(0))
-'    DQBput drawpage, 320 - x, 0, VARSEG(scr(0)), VARPTR(scr(0))
-'    DQBget backdroppage, x, 0, 319, 199, VARSEG(scr(0)), VARPTR(scr(0))
-'    DQBput drawpage, 0, 0, VARSEG(scr(0)), VARPTR(scr(0))
-'  END IF
-' ELSE DQBclearLayer drawpage
-'END IF
 DQBclearLayer drawpage
 
 '=======[ TRANSLATE CAMERA ]=======

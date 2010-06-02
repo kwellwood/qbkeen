@@ -125,7 +125,7 @@ FOR cp = 1 TO 8
    CASE 2: IF cp = 2 THEN HitSlope ClipPoint(cp).x, ClipPoint(cp).y, 0
    CASE 3: KillPlayer
    CASE 8: IF cp = 2 THEN HitSlope ClipPoint(cp).x, ClipPoint(cp).y, 1
-   CASE 10: NextLevel
+   CASE 10: PlaySound 2: NextLevel
   END SELECT
 NEXT cp
 
@@ -252,6 +252,7 @@ END SUB
 SUB HandlePogoStick
 
 IF player(0).onground THEN
+  PlaySound 11
   player(0).yv = player(0).yv - player(0).ymax * 2
   player(0).canjump = ts * player(0).jumpheight * 2
   player(0).holdingjump = 0
@@ -330,6 +331,7 @@ SELECT CASE side
  CASE up
   player(0).yv = 0
   player(0).y = INT(ny! + (player(0).ysize / 2)) + 1
+  PlaySound 8
  CASE down
   player(0).yv = 0
   player(0).y = INT(ny! - (player(0).ysize / 2))
@@ -355,6 +357,7 @@ IF player(0).action <> dying THEN
   player(0).xv = 0
   player(0).yv = -20
   'maxfps = maxfps / 3
+  PlaySound 3
 END IF
 
 END SUB
@@ -367,6 +370,7 @@ SELECT CASE d
     'IF player(0).action = climbing THEN player(0).action = moving
     IF (player(0).yv < 0) OR (player(0).yv = 0 AND player(0).onground) OR (player(0).action = climbing) THEN
       IF player(0).canjump AND player(0).stoppedjump = 0 THEN 'AND player(0).changeaction = 0 THEN
+        IF player(0).holdingjump = 0 THEN PlaySound 9
         player(0).holdingjump = 1
         player(0).yv = -player(0).ymax   'player(0).yv - 2
         IF player(0).action = climbing THEN

@@ -63,6 +63,7 @@ TYPE playertype
  jumpheight AS SINGLE
  score AS LONG            ' scores.bi, items.bi
  ammo  AS INTEGER         ' scores.bi, weapon.bi
+ drops AS INTEGER         ' items.bi
  lives AS INTEGER         ' scores.bi
  reload AS INTEGER        ' time to wait for reload
  shooting AS INTEGER      ' time to display shooting frame

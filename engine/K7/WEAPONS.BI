@@ -19,6 +19,7 @@ DECLARE SUB ShootingFrames ()
 DECLARE SUB SpawnPlayerShot ()
 DECLARE FUNCTION ShotCollide (s)
 DECLARE FUNCTION ShotEnemy (s)
+DECLARE FUNCTION ShotInRange (s, range)
 
 TYPE shottype
  x AS SINGLE

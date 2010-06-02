@@ -182,3 +182,21 @@ Changes Since Build 9:
 - Player clip bounds clipped to map edge
 - Fixed mid-air jumping bug
 - Grab poles using the down and up arrow keys
+
+BUILD 11 (09-19-2001)
+   This was intended to much different than what it is right now. Instead of
+adding ledge grabbing and other cool stuff, I have instead added a sound
+engine! DirectQB wasn't cooperating so I am using DirectSound 4 QB++, a
+wonderful library by Chris Adams. The sound effects and music are all in
+128kbps .MP3 format to save space. Everything you hear was ripped directly
+from the real game, so enjoy the quality! Actually, I think this may be the
+very first collection of Keen sounds anywhere on the internet. Please don't
+distribute them apart from my game. (Same with the music) All credit goes to
+id software and Bobby Prince for creating the original sound. Make sure you
+run SETUP.EXE to toggle the sound options and mixing quality for your own
+needs. Enjoy!
+
+Changes Since Build 10:
+- New sound system! (DS4QB++)
+- Background music
+- Sound effects

@@ -76,6 +76,9 @@ shot(s).active = 0
 
 '--- add explosion to sprite stack ---
 IF LEN(unusedspritestack(0)) THEN
+  'if over 240pixels away, any direction then dont play
+  IF ShotInRange(s, 240) THEN PlaySound 6
+ 
   sp = ASC(LEFT$(unusedspritestack(0), 1))
   unusedspritestack(0) = RIGHT$(unusedspritestack(0), LEN(unusedspritestack(0)) - 1)
   activespritestack(0) = activespritestack(0) + CHR$(sp)
@@ -194,11 +197,16 @@ NEXT k
 
 END FUNCTION
 
+FUNCTION ShotInRange (s, range)
+
+IF ABS(player(0).x - shot(s).x) <= range AND ABS(player(0).y - shot(s).y) <= range THEN ShotInRange = 1
+
+END FUNCTION
+
 SUB SpawnPlayerShot
 
 IF player(0).frozen THEN EXIT SUB      'player not allowed to move
 IF player(0).reload <> 0 THEN EXIT SUB 'if already shot recently (wait reload)
-IF player(0).ammo = 0 THEN EXIT SUB       'no ammo?!
 
 FOR s = 1 TO 5
   IF shot(s).active = 0 THEN
@@ -212,13 +220,18 @@ FOR s = 1 TO 5
       shot(s).x = player(0).x: shot(s).xv = 0
     END IF
 
+    IF player(0).ammo THEN
+      PlaySound 4
+      shot(s).sframe = shotsframe&
+      shot(s).eframe = shoteframe&
+      shot(s).delay = shotframedelay
+      shot(s).frame = shot(s).sframe
+      shot(s).active = 1
+     ELSE PlaySound 5
+    END IF
+   
     SetShootingFrame  ' player(0).shootingframe=??
-    shot(s).sframe = shotsframe&
-    shot(s).eframe = shoteframe&
-    shot(s).delay = shotframedelay
-    shot(s).frame = shot(s).sframe
-    shot(s).active = 1
-    player(0).ammo = player(0).ammo - 1
+    IF player(0).ammo THEN player(0).ammo = player(0).ammo - 1
     player(0).reload = maxfps / 4
     player(0).shooting = maxfps / 5
     IF player(0).action = pogo THEN player(0).action = moving

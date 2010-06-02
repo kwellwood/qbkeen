@@ -20,7 +20,7 @@ SUB AssignEnemyFrame (e)
 
 SELECT CASE enemy(e).id
  CASE slug
-  enemy(e).xdir = left
+  enemy(e).xdir = LEFT
   enemy(e).action = slugcrawl1
   enemy(e).actiontime = 2
   enemy(e).status = crawling
@@ -31,14 +31,14 @@ SELECT CASE enemy(e).id
   enemy(e).xmax = 16: enemy(e).ymax = 16
   enemy(e).xsize = 16: enemy(e).ysize = 24
  CASE ball
-  enemy(e).xdir = left
+  enemy(e).xdir = LEFT
   enemy(e).frame = eframe(10)
   enemy(e).txsize = efsize(10).x
   enemy(e).tysize = efsize(10).y
   enemy(e).xmax = 4: enemy(e).ymax = 6
   enemy(e).xsize = 24: enemy(e).ysize = 24
  CASE mushroom
-  enemy(e).xdir = left
+  enemy(e).xdir = LEFT
   enemy(e).status = bouncehi
   enemy(e).action = 0
   enemy(e).actiontime = 0
@@ -56,9 +56,9 @@ SUB DoEnemyFrame (e)
 
 '=====[ UPDATE DIRECTION IF MOVIN ]=====
 IF enemy(e).xv < 0 THEN
-  enemy(e).xdir = left
+  enemy(e).xdir = LEFT
  ELSEIF enemy(e).xv > 0 THEN
-  enemy(e).xdir = right
+  enemy(e).xdir = RIGHT
 END IF
 
 SELECT CASE enemy(e).id
@@ -153,30 +153,30 @@ side = -1
 
 IF p = 1 THEN
   ny! = INT((hy! - (hy! MOD ts)) + ts)
-  side = up
+  side = UP
  ELSEIF p = 2 THEN
   ny! = INT((hy! - (hy! MOD ts)) - 1)
-  side = down
+  side = DOWN
  ELSEIF p = 3 THEN
   nx! = INT((hx! - (hx! MOD ts)) + ts)
-  side = right
+  side = RIGHT
  ELSEIF p = 4 THEN
   nx! = INT((hx! - (hx! MOD ts)) - 1)
-  side = left
+  side = LEFT
 END IF
 
 SELECT CASE side
- CASE up
+ CASE UP
   enemy(e).yv = 0
   enemy(e).y = ny! + (enemy(e).ysize / 2) + 1
- CASE down
+ CASE DOWN
   enemy(e).yv = 0
   enemy(e).y = ny! - (enemy(e).ysize / 2)
   enemy(e).onground = 1
- CASE left
+ CASE LEFT
   enemy(e).xv = 0
   IF p = 4 THEN enemy(e).x = nx! - (enemy(e).xsize / 2)
- CASE right
+ CASE RIGHT
   enemy(e).xv = 0
   IF p = 3 THEN enemy(e).x = nx! + (enemy(e).xsize / 2)
 END SELECT
@@ -187,6 +187,12 @@ END SELECT
 'EClipPoint(4).x = enemy(e).x + enemy(e).xsize / 2: EClipPoint(4).y = enemy(e).y
 
 END SUB
+
+FUNCTION EnemyInRange (e, range)
+
+IF ABS(player(0).x - enemy(e).x) <= range AND ABS(player(0).y - enemy(e).y) <= range THEN EnemyInRange = 1
+
+END FUNCTION
 
 SUB EnemyOnGround (e)
 
@@ -322,20 +328,22 @@ END SUB
 
 SUB MushroomAI (e)
 
-IF player(0).x > enemy(e).x THEN enemy(e).xdir = right
-IF player(0).x <= enemy(e).x THEN enemy(e).xdir = left
+IF player(0).x > enemy(e).x THEN enemy(e).xdir = RIGHT
+IF player(0).x <= enemy(e).x THEN enemy(e).xdir = LEFT
 
 IF enemy(e).actiontime THEN enemy(e).actiontime = enemy(e).actiontime - 1
 IF enemy(e).actiontime THEN enemy(e).yv = enemy(e).yv - 2
 
 IF enemy(e).onground AND enemy(e).actiontime = 0 THEN
   IF enemy(e).status = bouncehi THEN
+    IF EnemyInRange(e, 300) THEN PlaySound 20
     enemy(e).status = bouncelo
     enemy(e).action = 1
     enemy(e).actiontime = 4   ' ticks to jump
    ELSEIF enemy(e).status = bouncelo THEN
     enemy(e).action = enemy(e).action + 1
     IF enemy(e).action > 2 THEN
+      IF EnemyInRange(e, 300) THEN PlaySound 20
       enemy(e).status = bouncehi
       enemy(e).action = 0
       enemy(e).actiontime = 12
@@ -362,8 +370,8 @@ END SUB
 SUB MushroomFrames (e)
 
 SELECT CASE enemy(e).xdir                       '\/ mushroom animation delay
- CASE left: framedataslot = 17 + INT(anmcounter / 2) MOD 2
- CASE right: framedataslot = 19 + INT(anmcounter / 2) MOD 2
+ CASE LEFT: framedataslot = 17 + INT(anmcounter / 2) MOD 2
+ CASE RIGHT: framedataslot = 19 + INT(anmcounter / 2) MOD 2
 END SELECT
 
 enemy(e).frame = eframe(framedataslot)
@@ -383,7 +391,7 @@ SELECT CASE enemy(e).status
  CASE crawling
   IF enemy(e).actiontime <= 0 THEN
     IF enemy(e).action = slugcrawl1 THEN
-      IF enemy(e).xdir = left THEN enemy(e).xv = -6 ELSE enemy(e).xv = 6
+      IF enemy(e).xdir = LEFT THEN enemy(e).xv = -6 ELSE enemy(e).xv = 6
       enemy(e).action = slugcrawl2: enemy(e).actiontime = maxfps / 5
      ELSEIF enemy(e).action = slugcrawl2 THEN
       enemy(e).action = slugcrawl1: enemy(e).actiontime = maxfps / 5
@@ -391,22 +399,23 @@ SELECT CASE enemy(e).status
   END IF
   
   '====[ CLIPPOINTS FOR TURNING ]====
-  IF enemy(e).xdir = left THEN mx = INT(((enemy(e).x - enemy(e).xsize / 2) - 6) / ts) + 1
-  IF enemy(e).xdir = right THEN mx = INT(((enemy(e).x + enemy(e).xsize / 2) + 6) / ts) + 1
+  IF enemy(e).xdir = LEFT THEN mx = INT(((enemy(e).x - enemy(e).xsize / 2) - 6) / ts) + 1
+  IF enemy(e).xdir = RIGHT THEN mx = INT(((enemy(e).x + enemy(e).xsize / 2) + 6) / ts) + 1
   '----[ TURN AROUND FOR WALL OR MAP EDGE ]----
   my = INT(enemy(e).y / ts) + 1
   IF TileType(Map&(mx, my)) = 1 OR mx > mapxsize * ts OR mx < 0 THEN
-    IF enemy(e).xdir = left THEN enemy(e).xdir = right ELSE enemy(e).xdir = left
+    IF enemy(e).xdir = LEFT THEN enemy(e).xdir = RIGHT ELSE enemy(e).xdir = LEFT
   END IF
   '----[ TURN AROUND FOR DROP-OFF ]----
   my = INT(enemy(e).y / ts) + 2
   IF TileType(Map&(mx, my)) = 0 THEN
-    IF enemy(e).xdir = left THEN enemy(e).xdir = right ELSE enemy(e).xdir = left
+    IF enemy(e).xdir = LEFT THEN enemy(e).xdir = RIGHT ELSE enemy(e).xdir = LEFT
   END IF
 
   '====[ POSSIBILITY OF POOPING ]====
   p = INT(RND * 350)
   IF p = 1 THEN
+    IF EnemyInRange(e, 240) THEN PlaySound 18
     enemy(e).status = slugpooping
     enemy(e).action = slugpooping
     enemy(e).actiontime = maxfps
@@ -447,16 +456,15 @@ SUB SlugFrames (e)
 
 SELECT CASE enemy(e).action
   CASE slugcrawl1
-   IF enemy(e).xdir = left THEN framedataslot = 0 ELSE framedataslot = 3
+   IF enemy(e).xdir = LEFT THEN framedataslot = 0 ELSE framedataslot = 3
   CASE slugcrawl2
-   IF enemy(e).xdir = left THEN framedataslot = 1 ELSE framedataslot = 4
+   IF enemy(e).xdir = LEFT THEN framedataslot = 1 ELSE framedataslot = 4
   CASE slugpooping
-   IF enemy(e).xdir = left THEN framedataslot = 2 ELSE framedataslot = 5
+   IF enemy(e).xdir = LEFT THEN framedataslot = 2 ELSE framedataslot = 5
   CASE dead
    framedataslot = 7
 END SELECT
 
-'debuglog "enemy:" + STR$(e) + " frame:" + STR$(enemy(e).frame) + " slot:" + STR$(framedataslot)
 enemy(e).frame = eframe(framedataslot)
 enemy(e).txsize = efsize(framedataslot).x
 enemy(e).tysize = efsize(framedataslot).y

@@ -4,7 +4,6 @@ DEFINT A-Z
 CONST slug = 1, ball = 2, mushroom = 3
 CONST crawling = 0, bouncelo = 1, bouncehi = 2
 CONST slugcrawl1 = 0, slugcrawl2 = 1, slugpooping = 2, dead = 10
-'CONST bounce = 0, bounce1 = 1, bounce2 = 2, bounce3 = 3
 
 DECLARE SUB AssignEnemyFrame (e)
 DECLARE SUB DoEnemyFrame (e)
@@ -22,6 +21,7 @@ DECLARE SUB MushroomFrames (e)
 DECLARE SUB SlugAI (e)
 DECLARE SUB SlugFrames (e)
 DECLARE FUNCTION EnemyHitPoint (x!, y!)
+DECLARE FUNCTION EnemyInRange (e, range)
 
 TYPE enemytype
   id AS INTEGER

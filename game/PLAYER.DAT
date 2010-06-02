@@ -40,6 +40,12 @@
 658,24,32
 659,24,32
 660,24,32
+1076,22,40
+1077,22,40
+4, 0 , 0
+1091,22,40
+1092,22,40
+4, 0 , 0
 
 animation delay
 (0) stand left
@@ -83,3 +89,9 @@ animation delay
 (38) pogo left air
 (39) pogo right ground
 (40) pogo right air
+(41) hang onto a ledge left
+(42) hang onto a ledge right
+(43) climb onto a ledge left
+(44) climb left frames
+(45) climb onto a ledge right
+(46) climb right frames

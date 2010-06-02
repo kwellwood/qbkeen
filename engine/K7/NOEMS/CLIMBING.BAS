@@ -60,21 +60,21 @@ SUB ClimbingFrames
 '30=climbing down frames
 
 SELECT CASE player(0).aim
- CASE up    ' climbing up
-  IF player(0).xdir = left THEN
+ CASE UP    ' climbing up
+  IF player(0).xdir = LEFT THEN
     framedataslot = 25
     anmframe = INT(anmcounter / player(0).adelay) MOD pframe(26)
-   ELSEIF player(0).xdir = right THEN
+   ELSEIF player(0).xdir = RIGHT THEN
     framedataslot = 27
     anmframe = INT(anmcounter / player(0).adelay) MOD pframe(28)
   END IF
- CASE down  ' sliding down
+ CASE DOWN  ' sliding down
   framedataslot = 29
   anmframe = INT(anmcounter / (player(0).adelay * 2)) MOD pframe(30)
  CASE -1    ' hanging still
-  IF player(0).xdir = left THEN
+  IF player(0).xdir = LEFT THEN
     framedataslot = 25: anmframe = 0
-   ELSEIF player(0).xdir = right THEN
+   ELSEIF player(0).xdir = RIGHT THEN
     framedataslot = 27: anmframe = 0
   END IF
 END SELECT

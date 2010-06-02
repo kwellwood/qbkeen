@@ -188,6 +188,12 @@ END SELECT
 
 END SUB
 
+FUNCTION EnemyInRange (e, range)
+
+IF ABS(player(0).x - enemy(e).x) <= range AND ABS(player(0).y - enemy(e).y) <= range THEN EnemyInRange = 1
+
+END FUNCTION
+
 SUB EnemyOnGround (e)
 
 IF enemy(e).yv >= 0 THEN
@@ -330,12 +336,14 @@ IF enemy(e).actiontime THEN enemy(e).yv = enemy(e).yv - 2
 
 IF enemy(e).onground AND enemy(e).actiontime = 0 THEN
   IF enemy(e).status = bouncehi THEN
+    IF EnemyInRange(e, 300) THEN PlaySound 20
     enemy(e).status = bouncelo
     enemy(e).action = 1
     enemy(e).actiontime = 4   ' ticks to jump
    ELSEIF enemy(e).status = bouncelo THEN
     enemy(e).action = enemy(e).action + 1
     IF enemy(e).action > 2 THEN
+      IF EnemyInRange(e, 300) THEN PlaySound 20
       enemy(e).status = bouncehi
       enemy(e).action = 0
       enemy(e).actiontime = 12
@@ -407,6 +415,7 @@ SELECT CASE enemy(e).status
   '====[ POSSIBILITY OF POOPING ]====
   p = INT(RND * 350)
   IF p = 1 THEN
+    IF EnemyInRange(e, 240) THEN PlaySound 18
     enemy(e).status = slugpooping
     enemy(e).action = slugpooping
     enemy(e).actiontime = maxfps

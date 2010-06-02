@@ -20,6 +20,12 @@ echo SCORES.BAS...   (Scoreboard routines)
 bc scores.bas /e/x/o/t/c:512; > scores.cmp
 echo ITEMS.BAS...    (Items system)
 bc items.bas /e/x/o/t/c:512; > items.cmp
+echo TELEPORT.BAS... (Player teleporting)
+bc teleport.bas /e/x/o/t/c:512; > teleport.cmp
+echo WEAPONS.BAS...  (Player weapons)
+bc weapons.bas /e/x/o/t/c:512; > weapons.cmp
+echo SOUND.BAS...    (Sound system)
+bc sound.bas /e/x/o/t/c:512; > sound.cmp
 echo PAKLIB.BAS...   (Archive routines)
 bc paklib.bas /e/x/o/t/c:512; > paklib.cmp
 
@@ -44,6 +50,12 @@ echo  +SCORES.OBJ...   (Scoreboard feature)
 lib k7core.lib +scores; > scores.cmp
 echo  +ITEMS.OBJ...    (Item system)
 lib k7core.lib +items; > items.cmp
+echo  +TELEPORT.OBJ... (Player teleporting)
+lib k7core.lib +teleport; > teleport.cmp
+echo  +WEAPONS.OBJ...  (Player weapons)
+lib k7core.lib +weapons; > weapons.cmp
+echo  +SOUND.OBJ...    (Sound system)
+lib k7core.lib +sound; > sound.cmp
 echo  +PAKLIB.OBJ...   (Archive routines)
 lib k7core.lib +paklib; > paklib.cmp
 
@@ -53,22 +65,18 @@ CALL CheckErr corelib.dat
 echo * Building Objects *
 echo K7.BAS...       (Main routines)
 bc k7.bas /e/x/o/t/c:512; > k7.cmp
-echo WEAPONS.BAS...  (Player weapons)
-bc weapons.bas /e/x/o/t/c:512; > weapons.cmp
 echo SWITCHES.BAS... (Switches)
 bc switches.bas /e/x/o/t/c:512; > switches.cmp
 echo ENEMIES.BAS...  (Enemy system)
 bc enemies.bas /e/x/o/t/c:512; > enemies.cmp
-echo SOUND.BAS...    (Sound system)
-bc sound.bas /e/x/o/t/c:512; > sound.cmp
-echo TELEPORT.BAS... (Player teleporting)
-bc teleport.bas /e/x/o/t/c:512; > teleport.cmp
 echo CLIMBING.BAS... (Climbing physics)
 bc climbing.bas /e/x/o/t/c:512; > climbing.cmp
+echo DS4QBPP.BAS...  (DirectSound system)
+bc ds4qbpp.bas /e/x/o/t/c:512; > ds4qbpp.cmp
 
 echo * Linking Objects *
 echo KEEN7.EXE...    (Main program)
-link /ex/noe k7 weapons switches enemies sound teleport climbing,keen7,,dqb xms k7core paklib bcom45 brun45; >link.cmp
+link /ex/noe k7 switches enemies climbing ds4qbpp,keen7,,dqb xms k7core paklib bcom45 brun45; >link.cmp
 
 echo * Checking For Errors *
 CALL CheckErr modules.dat

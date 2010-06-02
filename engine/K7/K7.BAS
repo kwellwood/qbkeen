@@ -5,18 +5,19 @@ DEFINT A-Z
 '$INCLUDE: 'directqb.bi'
 '$INCLUDE: 'xms.bi'
 '$INCLUDE: 'paklib.bi'
+'$INCLUDE: 'dextern.bi'
 '$INCLUDE: 'plugins.bi'
 
 RANDOMIZE TIMER
 ON ERROR GOTO ErrorHandler
-A = DQBinit(3, maxsounds, 0): IF A THEN ErrorHandlerSub 99 + A
+A = DQBinit(3, 0, 0): IF A THEN ErrorHandlerSub 99 + A
 A = InitPAKLib: IF A THEN ErrorHandlerSub 104
 AllocXMS
 
 '--------- Core Engine ---------
 DIM SHARED player(0) AS playertype, scr(32004), file(0) AS STRING * 12
 DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, Pal(255) AS hues
-DIM SHARED pframe(40) AS LONG, fsize(40) AS intcoordinate
+DIM SHARED pframe(46) AS LONG, fsize(46) AS intcoordinate
 
 '-------- Render System --------
 DIM SHARED camera(0) AS camtype
@@ -33,7 +34,7 @@ DIM SHARED sprite(1 TO 100) AS spriteclass, unusedspritestack(0) AS STRING
 DIM SHARED shot(1 TO 5) AS shottype
 
 '------- Switches System -------
-DIM SHARED switch(1 TO 25)
+DIM SHARED Switch(1 TO 25)
 
 '-------- Enemies System -------
 DIM SHARED enemy(100) AS enemytype, eframe(20) AS LONG
@@ -70,13 +71,14 @@ MainLoop
 
 DQBinitText
 SCREEN 0: WIDTH 80, 25
+ShutdownSound
 DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 10)."
+PRINT "Powered by K7 Engine technology (Build 11)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled August 9, 2001"
+PRINT "Compiled September 19, 2001"
 END
 
 '============================================================================
@@ -229,9 +231,9 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 10)."
+PRINT "Powered by K7 Engine technology (Build 11)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled August 9, 2001"
+PRINT "Compiled September 19, 2001"
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
@@ -239,6 +241,7 @@ PRINT "* " + errtext$
 DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
+ShutdownSound
 DQBclose
 END
 
@@ -247,8 +250,8 @@ END SUB
 SUB InitEngine
 
 OPEN "engine.dat" FOR INPUT AS 1
-  INPUT #1, ver
-  IF ver <> enginever THEN CLOSE 1: ErrorHandlerSub 125
+  INPUT #1, v
+  IF v <> enginever THEN CLOSE 1: ErrorHandlerSub 125
   INPUT #1, ts
   INPUT #1, maxfps
   INPUT #1, friction!    ' velocity friction co-efficient
@@ -264,11 +267,11 @@ OPEN "engine.dat" FOR INPUT AS 1
 CLOSE 1
 
 curlevel = 1
-SoundEnabled = 0
+SoundEnabled = 1
 
 OPEN "player.dat" FOR INPUT AS 1
   INPUT #1, player(0).adelay  ' animation speed
-  FOR f = 0 TO 40
+  FOR f = 0 TO 46
     INPUT #1, pframe(f)
     INPUT #1, fsize(f).x
     INPUT #1, fsize(f).y
@@ -346,6 +349,8 @@ LOOP UNTIL quitgame
 END SUB
 
 SUB NextLevel
+
+DS4QB.StopMusic 1
 
 curlevel = curlevel + 1
 PutSprite 74, 49, 57, drawpage

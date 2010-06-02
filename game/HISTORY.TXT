@@ -6,6 +6,8 @@ Build 1 (09-??-2000):
 There are no existing copies of this version, due to the fact that it was
 lost during development. Build 2 is the first real build of the K7 engine.
 
+-----------------------------------------------------------------------------
+
 Build 2 (10-18-2000):
    The core foundation of the K7 engine is complete in this version and was
 converted into a level editor with minimal effort for making maps. Build 1
@@ -14,6 +16,8 @@ of TED uses build 2 of the engine technology.
 Changes since Build 1:
 - clipping for the player
 - working menu system
+
+-----------------------------------------------------------------------------
 
 Build 3 (10-22-2000):
    The major addition in build 3 is a working physics system in progress. The
@@ -28,6 +32,8 @@ Changes since Build 2:
 - player animation system
 - physics partly working
 - specific error messages
+
+-----------------------------------------------------------------------------
 
 Build 3B (11-10-2000):
    This build was released because its at the end of several additions from
@@ -44,6 +50,8 @@ Changes since Build 3:
 - physics complete
 - clip points independent of player tile size
 - clip points not displayed
+
+-----------------------------------------------------------------------------
 
 Build 4 (11-20-2000):
    There are some major additions to build 4! Finally, its looking like
@@ -64,6 +72,8 @@ Changes since Build 3B:
 - debug HUD shown with F1 key
 - camera panned up and down with PG UP, DOWN
 
+-----------------------------------------------------------------------------
+
 Build 5 (01-07-2001):
    The first build of the new year! Keen7 is not only looking like Keen but
 feeling like Keen now too. The physics have really paid off. Physics.bas is
@@ -81,6 +91,8 @@ Changes since Build 4:
 - slight changes to HUD
 - ammo pickup items
 
+-----------------------------------------------------------------------------
+
 Build 6 (01-25-2001):
    Waited a while to put the finishing touches on this one. No inclined
 slopes yet because I wanted to focus on getting atleast one enemy type in
@@ -96,6 +108,8 @@ Changes since Build 5:
 - Basic player death handling
 - Enemy system with the slug enemy!!
 - Full compliment of items from keen 4
+
+-----------------------------------------------------------------------------
 
 Build 7 (04-09-2001):
    Again, this build was a little slow. But finally slopes are now in the
@@ -118,6 +132,8 @@ Changes since Build 6:
 - Foreground tiles can be superimposed on background tiles as a single
   background tile for objects like hills and houses, saving tile space.
 
+-----------------------------------------------------------------------------
+
 BUILD 8 (05-29-2001)
    Here is the actual first game map from Commander Keen 4: Goodbye Galaxy,
 finally made possible with poles and teleporting doorways. I think the
@@ -138,6 +154,8 @@ Changes since Build 7:
 - Shots collide with sloped tiles
 - Walls drawn in the foreground map layer
 - Player can climb poles
+
+-----------------------------------------------------------------------------
 
 BUILD 9 (07-13-2001)
    One of the major bonuses of this build is the inclusion of an executable
@@ -166,6 +184,8 @@ Changes since Build 8:
 - Loading screen with level names
 - Level 2 added
 
+-----------------------------------------------------------------------------
+
 BUILD 10 (08-09-2001)
    The primary reason for this release is the completion of the pogostick.
 Keen is now equipped with his trusty sidekick and all of the previously
@@ -182,6 +202,8 @@ Changes Since Build 9:
 - Player clip bounds clipped to map edge
 - Fixed mid-air jumping bug
 - Grab poles using the down and up arrow keys
+
+-----------------------------------------------------------------------------
 
 BUILD 11 (09-19-2001)
    This was intended to much different than what it is right now. Instead of
@@ -200,6 +222,8 @@ Changes Since Build 10:
 - New sound system! (DS4QB++)
 - Background music
 - Sound effects
+
+-----------------------------------------------------------------------------
 
 BUILD 12 (12-07-2001)
    I think this is one of the biggest updates in code of the releases yet!
@@ -221,6 +245,8 @@ Changes Since Build 11:
 - Fixed minor bugs, increased speed
 - Added level 3: The Perilous Pit
 - Wrote a readme file to explain the game better
+
+-----------------------------------------------------------------------------
 
 BUILD 13 (01-20-2002)
    Another build with some big additions in game content. Three new levels
@@ -245,6 +271,8 @@ Changes Since Build 12:
 - Level skip cheat (F5)
 - Added -noems parameter
 
+-----------------------------------------------------------------------------
+
 BUILD 14 (06-09-2002)
    This build took way too long to complete because of major revisions to the
 code. Not even half of the work put in will actually be visible to the player
@@ -266,7 +294,8 @@ Changes Since Build 13:
 - New timing routines; works in Windows XP
 - Sound system disabled
 - Code optimized and debugged
-- Level editor (TED) overhauled
+
+-----------------------------------------------------------------------------
 
 BUILD 15 (08-13-2002)
    With progress going as quickly as it has been, the next build may be the
@@ -287,3 +316,26 @@ Changes Since Build 14:
 - Ancients NPCs (touching them exits the level)
 - Multiple shot types for shooting enemies to use
 - Many miscellaneous tweaks
+
+-----------------------------------------------------------------------------
+
+BUILD 16 (??-??-????)
+   ..........
+
+Changes Since Build 15:
+- Packaged in a windows installer program for easy installation
+- Loading progress meter (load speed slightly increased)
+- Top-down map to choose levels
+- New levels: Cave of Descendents, Crystalus
+- New enemies: sneaky rock, thunder cloud
+- Much more artwork
+- Help and story screens (Press F1)
+- Story sequence when game is won
+- Dialog with rescued ancients
+- A level can be restarted or abandoned on death
+- Jittery characters bug fixed
+- Disappearing tiles for Miragia
+- Take screenshots (Press F9)
+- Cheat codes can be entered from menu
+- Directqb credits animation
+- Dropdown menus for enemies, items and tiles matrices in TED

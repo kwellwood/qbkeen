@@ -31,8 +31,9 @@ TYPE spriteclass
  ticks AS INTEGER     ' set to delay and decrease for next frame
  xsize AS INTEGER
  ysize AS INTEGER
- deadly AS INTEGER   ' kill player if touched
- repeat AS INTEGER   ' dont kill sprite, loop animation
+ deadly AS INTEGER    ' kill player if touched
+ repeat AS INTEGER    ' dont kill sprite, loop animation
+ lifespan AS INTEGER  ' keep a looping sprite alive for only a time
 END TYPE
 
 TYPE itemtypeclass
@@ -83,7 +84,7 @@ ActiveSprites = LEN(activespritestack)
 
 END FUNCTION
 
-FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat)
+FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat, lifespan)
 
 '--- exit if no more empty sprite slots ---
 IF LEN(unusedspritestack) = 0 THEN EXIT FUNCTION
@@ -105,6 +106,7 @@ sprite(s).xsize = xsize
 sprite(s).ysize = ysize
 sprite(s).deadly = deadly
 sprite(s).repeat = repeat
+sprite(s).lifespan = lifespan
 
 AddSprite = s  'set to slot in sprites so another
                'function can access it later
@@ -124,6 +126,7 @@ unusedspritestack = ""   'clear unused sprite stack
 FOR s = 1 TO 100            'fill unused sprite stack
   sprite(s).deadly = 0
   sprite(s).repeat = 0
+  sprite(s).lifespan = -1
   sprite(s).delay = 0: sprite(s).ticks = 0
   sprite(s).x = 0: sprite(s).y = 0
   sprite(s).xsize = 0: sprite(s).ysize = 0
@@ -198,7 +201,7 @@ FOR k = 1 TO LEN(activeitemstack)
     activeitemstack = LEFT$(activeitemstack, k - 1) + RIGHT$(activeitemstack, LEN(activeitemstack) - k)
    
     x = item(i).x: y = item(i).y - (bonus(item(i).id).pysize / 2)
-    a = AddSprite(x, y, startframe&, endframe&, framedelay, xsize, ysize, 0, 0)
+    a = AddSprite(x, y, startframe&, endframe&, framedelay, xsize, ysize, 0, 0, -1)
 
     k = k - 1
   END IF
@@ -211,7 +214,7 @@ SUB DoSprites
 FOR k = 1 TO LEN(activespritestack)
   IF k > LEN(activespritestack) THEN EXIT FOR
   s = ASC(MID$(activespritestack, k, 1))
-  
+
   '-- if this sprite is deadly --
   IF sprite(s).deadly AND TouchSprite(s) THEN KillPlayer
  
@@ -222,16 +225,28 @@ FOR k = 1 TO LEN(activespritestack)
     sprite(s).ticks = sprite(s).delay
   END IF
 
-  '-- animation done: kill or loop --
-  IF sprite(s).frame > sprite(s).eframe THEN
-    IF sprite(s).repeat = 0 THEN
+  IF sprite(s).repeat = 0 THEN
+    '--- animation done and no repeat ---
+    IF sprite(s).frame > sprite(s).eframe THEN
+      '--- remove from active sprite stack ---
+      activespritestack = LEFT$(activespritestack, k - 1) + RIGHT$(activespritestack, LEN(activespritestack) - k)
+      unusedspritestack = unusedspritestack + CHR$(s)
+      k = k - 1
+    END IF
+   ELSE
+    '--- loop the repeating sprite ---
+    IF sprite(s).frame > sprite(s).eframe THEN
+      sprite(s).frame = sprite(s).sframe
+    END IF
+    '--- check lifespan ---
+    IF sprite(s).lifespan = 0 THEN
       '--- remove from active sprite stack ---
       activespritestack = LEFT$(activespritestack, k - 1) + RIGHT$(activespritestack, LEN(activespritestack) - k)
       unusedspritestack = unusedspritestack + CHR$(s)
       k = k - 1
      ELSE
-      '--- loop animation ---
-      sprite(s).frame = sprite(s).sframe
+      '--- decrease lifespan if its used ---
+      IF sprite(s).lifespan > 0 THEN sprite(s).lifespan = sprite(s).lifespan - 1
     END IF
   END IF
 NEXT k
@@ -384,6 +399,11 @@ IF ix1 >= px1 AND ix1 <= px2 AND iy1 >= py1 AND iy1 <= py2 THEN TouchItem = 1
 IF ix2 >= px1 AND ix2 <= px2 AND iy1 >= py1 AND iy1 <= py2 THEN TouchItem = 1
 IF ix1 >= px1 AND ix1 <= px2 AND iy2 >= py1 AND iy2 <= py2 THEN TouchItem = 1
 IF ix2 >= px1 AND ix2 <= px2 AND iy2 >= py1 AND iy2 <= py2 THEN TouchItem = 1
+IF px1 >= ix1 AND px1 <= ix2 AND py1 >= iy1 AND py1 <= iy2 THEN TouchItem = 1
+IF px2 >= ix1 AND px2 <= ix2 AND py1 >= iy1 AND py1 <= iy2 THEN TouchItem = 1
+IF px1 >= ix1 AND px1 <= ix2 AND py2 >= iy1 AND py2 <= iy2 THEN TouchItem = 1
+IF px2 >= ix1 AND px2 <= ix2 AND py2 >= iy1 AND py2 <= iy2 THEN TouchItem = 1
+
 
 END FUNCTION
 
@@ -407,6 +427,10 @@ IF sx1 >= px1 AND sx1 <= px2 AND sy1 >= py1 AND sy1 <= py2 THEN TouchSprite = 1
 IF sx2 >= px1 AND sx2 <= px2 AND sy1 >= py1 AND sy1 <= py2 THEN TouchSprite = 1
 IF sx1 >= px1 AND sx1 <= px2 AND sy2 >= py1 AND sy2 <= py2 THEN TouchSprite = 1
 IF sx2 >= px1 AND sx2 <= px2 AND sy2 >= py1 AND sy2 <= py2 THEN TouchSprite = 1
+IF px1 >= sx1 AND px2 <= sx2 AND py1 >= sy1 AND py1 <= sy2 THEN TouchSprite = 1
+IF px2 >= sx1 AND px2 <= sx2 AND py1 >= sy1 AND py1 <= sy2 THEN TouchSprite = 1
+IF px1 >= sx1 AND px1 <= sx2 AND py2 >= sy1 AND py2 <= sy2 THEN TouchSprite = 1
+IF px2 >= sx1 AND px2 <= sx2 AND py2 >= sy1 AND py2 <= sy2 THEN TouchSprite = 1
 
 END FUNCTION
 

@@ -3,6 +3,10 @@ DEFINT A-Z
 
 DECLARE SUB AncientAI (e)
 DECLARE SUB AncientFrames (e)
+DECLARE SUB CloudAI (e)
+DECLARE SUB CloudFrames (e)
+DECLARE SUB MimrockAI (e)
+DECLARE SUB MimrockFrames (e)
 DECLARE SUB ShooterAI (e)
 DECLARE SUB ShooterFrames (e)
 DECLARE SUB SnakeAI (e)

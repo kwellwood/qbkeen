@@ -5,6 +5,7 @@ DEFINT A-Z
 '$INCLUDE: 'paklib.bi'
 '$INCLUDE: 'map.bi'
 '$INCLUDE: 'tiles.bi'
+DECLARE FUNCTION CEIL (x!)
 '$STATIC
 
 ON ERROR GOTO ErrorHandler
@@ -37,6 +38,12 @@ AnmLength = biti(0)
 END FUNCTION
 
 REM $STATIC
+FUNCTION CEIL (x!)
+
+CEIL = FIX(x!) - (x! - FIX(x!) > 0)
+
+END FUNCTION
+
 SUB EntityOnGround (onground, onslope, onobject, x!, y!, yv!, ysize)
 
 '--- already standing on an object ---
@@ -139,6 +146,7 @@ fg2 = TileType2(mapfgtile&)
 bg = TileType(maptile&)
 
 IF fg2 = 10 THEN HitPoint = 10: EXIT FUNCTION   ' exit level tile
+IF fg2 = 13 THEN HitPoint = 13: EXIT FUNCTION   ' get scuba gear tile
 
 SELECT CASE fg
  CASE 2: HitPoint = 8: EXIT FUNCTION     ' slope in foreground
@@ -154,12 +162,17 @@ END FUNCTION
 REM $DYNAMIC
 SUB LoadArtFile (t&, f$)
 
-'--- load from mounted pak ---
-a = LoadFromPAK(f$, VARSEG(scr(0)), VARPTR(scr(0)))
-IF a THEN debuglog "File not found: " + f$: ErrorHandlerSub 134 + a
+IF f$ = "NO_FILE" THEN
+  '--- spaceholder tile ---
+  filesize& = 4
+ ELSE
+  '--- load from mounted pak ---
+  a = LoadFromPAK(f$, VARSEG(scr(0)), 0)
+  IF a THEN debuglog "File(" + LTRIM$(STR$(t&)) + ") not found: `" + f$ + "'": ErrorHandlerSub 134 + a
+  filesize& = PAKFileSize(f$)
+END IF
 
 '--- write to xms ---
-filesize& = PAKFileSize(f$)
 BiosXWrite ArtHandle, xmspos&, filesize&, VARSEG(scr(0)), VARPTR(scr(0))
 bitl(0) = xmspos&: BiosXWrite ArtOffSetHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 bitl(0) = filesize&: BiosXWrite ArtLengthHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
@@ -169,7 +182,10 @@ xmspos& = xmspos& + filesize&
 
 END SUB
 
+REM $STATIC
 SUB LoadTiles (tileset$)
+
+bary = CSRLIN: barx = POS(0) + 1
 
 e = InitPAKLib: IF e THEN ErrorHandlerSub 104
 
@@ -178,49 +194,80 @@ OPEN tileset$ FOR INPUT AS 1
   INPUT #1, gfxarchive$
   a = MountPAK(gfxarchive$)
   IF a THEN ErrorHandlerSub 132 + a
- 
+
   INPUT #1, numtiles&
+  ' --- Show status bar ---
+  'PRINT "[" + SPACE$(INT(numtiles& / 100)) + "]";
+  PRINT "[" + SPACE$(16) + "]";
+  loadchunk = numtiles& \ 16
+
+  LOCATE bary, barx
   FOR t& = 1 TO numtiles&
     '---[ Load artwork ]---
     DO
       INPUT #1, file$
     LOOP UNTIL LEFT$(file$, 1) <> "*"
+    file$ = UCASE$(file$)
    
     LoadArtFile t&, file$
-
     '---[ Handle tile properties ]---
-    INPUT #1, tileprop
-    IF tileprop <> 99 THEN INPUT #1, tileprop2 ELSE tileprop2 = 0
-    SetTileType t&, tileprop
-    SetTileType2 t&, tileprop2
-    SetSlopeMask t&, 0
-    SELECT CASE tileprop
-     '--- slope tile ---
-     CASE 2
-      INPUT #1, sm&: SetSlopeMask t&, sm&     'sm&=slope type
-      INPUT #1, af: ad = 0                    'af=overlay tag for slope tiles
-     '--- gem socket ---
-     CASE 7
-      INPUT #1, sm&: SetSlopeMask t&, sm&     'sm&=key color
-      INPUT #1, af                            'if animation length,
-      IF af > 0 THEN INPUT #1, ad ELSE ad = 0 ' get animation delay too
-     '--- nul tile ---
-     CASE 99
-      af = 0: ad = 0                          'nul tiles not animated
-     '--- any other tile ---
-     CASE ELSE
-      INPUT #1, af                            'if animation length,
-      IF af > 0 THEN INPUT #1, ad ELSE ad = 0 ' get animation delay too
-    END SELECT
-    SetAnmLength t&, af                       'set anm length tag
-    SetAnmDelay t&, ad                        'set anm delay tag
+    IF file$ = "NO_FILE" THEN
+      SetTileType t&, 100
+      SetTileType2 t&, 0
+      SetSlopeMask t&, 0
+      SetAnmLength t&, 0
+      SetAnmDelay t&, 0
+     ELSE
+      INPUT #1, tileprop
+      IF tileprop <> 99 THEN INPUT #1, tileprop2 ELSE tileprop2 = 0
+      SetTileType t&, tileprop
+      SetTileType2 t&, tileprop2
+      SetSlopeMask t&, 0
+      SELECT CASE tileprop
+       '--- slope tile ---
+       CASE 2
+        INPUT #1, sm&: SetSlopeMask t&, sm&     'sm&=slope type
+        INPUT #1, af: ad = 0                    'af=overlay tag for slope tiles
+       '--- gem socket ---
+       CASE 7
+        INPUT #1, sm&: SetSlopeMask t&, sm&     'sm&=key color
+        INPUT #1, af                            'if animation length,
+        IF af > 0 THEN INPUT #1, ad ELSE ad = 0 ' get animation delay too
+       '--- not-a-tile ---
+       CASE 99                              'these tiles not animated
+        af = 0: ad = 0                      '(menu screen or character frame)
+       '--- any other tile ---
+       CASE ELSE
+        IF tileprop2 = 14 THEN                 'these change into other tiles
+          INPUT #1, nt&: SetSlopeMask t&, nt&  'sm& = tile to change to
+          INPUT #1, af: ad = 0                 'af=delay before change
+         ELSE
+          INPUT #1, af                            'if animation length,
+          IF af > 0 THEN INPUT #1, ad ELSE ad = 0 ' get animation delay too
+        END IF
+      END SELECT
+      SetAnmLength t&, af                       'set anm length tag
+      SetAnmDelay t&, ad                        'set anm delay tag
+    END IF
+
+    '--- Update status bar ---
+    'IF t& / 100 = FIX(t& / 100) THEN
+    IF t& / loadchunk = FIX(t& / loadchunk) THEN
+      COLOR 10, 0
+      PRINT MID$("COMMANDER KEEN 7", t& / (numtiles& \ 16), 1);
+      'PRINT "*";
+      COLOR 7, 0
+    END IF
+
   NEXT t&
 CLOSE 1
 
 ClosePAKLib
+PRINT ""
 
 END SUB
 
+REM $DYNAMIC
 SUB PutSprite (t&, x, y, p)
 
 BiosXRead ArtOffSetHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0)): xmspos& = bitl(0)
@@ -353,8 +400,9 @@ IF a THEN ErrorHandlerSub 114
 BiosXOpen 16, SlopeMaskHandle, a
 IF a THEN ErrorHandlerSub 115
 
-BiosXOpen 2048, ArtHandle, a
+BiosXOpen 4096, ArtHandle, a
 IF a THEN ErrorHandlerSub 108
+
 BiosXOpen 16, ArtOffSetHandle, a    ' LONG elements
 IF a THEN ErrorHandlerSub 109
 BiosXOpen 16, ArtLengthHandle, a

@@ -1,18 +1,5 @@
------------------------------------------------------------------------------
-Index of files:
- engine.dat
- menu.dat
- scores.dat
- weapons.dat
- lifts.dat
- items.dat
- enemies.dat
- player.dat
- soundmp3.dat
- soundwav.dat
------------------------------------------------------------------------------
 [ENGINE.DAT]
-15
+16
 16
 40
 0.8
@@ -25,6 +12,7 @@ SOUNDMP3.DAT
 2.7
 8
 30
+5
 engine version
 tilesize
 max fps
@@ -38,9 +26,21 @@ max y vel
 player jump height (in tiles)
 player clip xsize
 player clip ysize
+number of ancients to rescue
+-----------------------------------------------------------------------------
+[ANCIENTS.DAT]
+"Oh thankyou for rescuing me! I'll return to the Oracle chamber immediately."
+"No sweat, oh guardian of wisdom!"
+"Sounds like a plan, bearded one!"
+"No problemo."
+"Great. You know, you look a lot like the last guy I rescued..."
+"Good idea, Gramps."
+"May the road rise to meet your feet, Mr. Member."
+"Wise plan of action, your ancientness."
+"You're the last one, fella. Let's both get back to the Oracle chamber!"
 -----------------------------------------------------------------------------
 [MENU.DAT]
-1
+2
 83
 703
 2
@@ -49,6 +49,11 @@ player clip ysize
 62
 22
 89
+3349
+3350
+3351
+3367
+3376
 file version
 menu tile
 selector tile
@@ -58,6 +63,11 @@ selection 1 x
 selection 1 y
 selector move pixels
 title screen tile
+help menu screen tile
+help menu cursor tile
+first instructions page
+first story page
+try level again dialog
 -----------------------------------------------------------------------------
 [SCORES.DAT]
 541
@@ -68,6 +78,12 @@ title screen tile
 49
 57
 87
+3377
+49
+57
+3378
+49
+57
 scoreboard tile
 start of digits tiles 0-9
 x location of board
@@ -76,6 +92,12 @@ tile for loading levels
 x location for loading tile
 y location for loading tile
 dropdown menu tile
+tile of an ancient speaking
+x location for ancient speaking
+y location for ancient speaking
+first tile of keen speaking (arms folded)
+x location for keen speaking
+y location for keen speaking
 -----------------------------------------------------------------------------
 [WEAPONS.DAT]
 6,705,708,1,16,16,709,710,2,16,16
@@ -198,6 +220,17 @@ gemkey (1=red,2=blue,3=green,4=yellow)
 1672,16,16
 1673,16,16
 1674,32,16
+539,24,28
+515,24,28
+519,24,28
+536,24,28
+533,24,28
+537,24,28
+534,24,28
+540,24,28
+528,64,24
+529,64,24
+531,24,70
 stars anm first frame
 stars anm last frame
 (0) slug left 1
@@ -258,6 +291,17 @@ stars anm last frame
 (55) shooter down
 (56) shooter left
 (57) shooter right
+(58) mimrock sit
+(59) mimrock sneak left
+(60) mimrock sneak right
+(61) mimrock jump left
+(62) mimrock jump right
+(63) mimrock onhead left
+(64) mimrock onhead right
+(65) mimrock dead
+(66) cloud undisturbed
+(67) cloud angry/attack 1 of 2
+(68) lightning frame 1 of 2
 -----------------------------------------------------------------------------
 [PLAYER.DAT]
 1
@@ -313,6 +357,22 @@ stars anm last frame
 2 , 0, 0
 47,24,32
 2 , 0, 0
+2413,16,16
+2416,16,16
+2419,16,16
+2422,16,16
+2425,16,16
+2428,16,16
+2431,16,16
+2434,16,16
+2437,16,16
+2439,16,16
+2441,16,16
+2443,16,16
+2445,16,16
+2447,16,16
+2449,16,16
+2451,16,16
 animation delay
 (0) stand left
 (1) walk left start
@@ -366,95 +426,19 @@ animation delay
 (49) turning page frames
 (50) standing up
 (51) standing up frames
------------------------------------------------------------------------------
-[SOUNDMP3.DAT]
-21
-.\SOUNDFX\MP3\ENTERLEV.MP3
-.\SOUNDFX\MP3\EXITLEV.MP3
-.\SOUNDFX\MP3\DIE.MP3
-.\SOUNDFX\MP3\SHOOT.MP3
-.\SOUNDFX\MP3\NOAMMO.MP3
-.\SOUNDFX\MP3\SHOTHIT.MP3
-.\SOUNDFX\MP3\FOOTSTEP.MP3
-.\SOUNDFX\MP3\BUMPROOF.MP3
-.\SOUNDFX\MP3\JUMP.MP3
-.\SOUNDFX\MP3\LAND.MP3
-.\SOUNDFX\MP3\POGO.MP3
-.\SOUNDFX\MP3\FALL.MP3
-.\SOUNDFX\MP3\CANDY.MP3
-.\SOUNDFX\MP3\LIFEDROP.MP3
-.\SOUNDFX\MP3\PISTOL.MP3
-.\SOUNDFX\MP3\GEMKEY.MP3
-.\SOUNDFX\MP3\OPENDOOR.MP3
-.\SOUNDFX\MP3\SLUGPOOP.MP3
-.\SOUNDFX\MP3\MBOUNCE1.MP3
-.\SOUNDFX\MP3\MBOUNCE2.MP3
-.\SOUNDFX\MP3\BBOUNCE.MP3
-Slots:
-1 enter level
-2 exit level
-3 keen die
-4 shoot gun
-5 no ammo click
-6 shot collide
-7 footsteps
-8 bump ceiling
-9 jump
-10 land on ground
-11 pogo bounce
-12 fall
-13 collect candy
-14 collect lifedrop
-15 collect gun
-16 collect gemkey
-17 open gem door
-18 slug poop
-19 mushroom bounce 1
-20 mushroom bounce 2
-21 bounder bounce
------------------------------------------------------------------------------
-[SOUNDWAV.DAT]
-21
-.\SOUNDFX\WAV\ENTERLEV.WAV
-.\SOUNDFX\WAV\EXITLEV.WAV
-.\SOUNDFX\WAV\DIE.WAV
-.\SOUNDFX\WAV\SHOOT.WAV
-.\SOUNDFX\WAV\NOAMMO.WAV
-.\SOUNDFX\WAV\SHOTHIT.WAV
-.\SOUNDFX\WAV\FOOTSTEP.WAV
-.\SOUNDFX\WAV\BUMPROOF.WAV
-.\SOUNDFX\WAV\JUMP.WAV
-.\SOUNDFX\WAV\LAND.WAV
-.\SOUNDFX\WAV\POGO.WAV
-.\SOUNDFX\WAV\FALL.WAV
-.\SOUNDFX\WAV\CANDY.WAV
-.\SOUNDFX\WAV\LIFEDROP.WAV
-.\SOUNDFX\WAV\PISTOL.WAV
-.\SOUNDFX\WAV\GEMKEY.WAV
-.\SOUNDFX\WAV\OPENDOOR.WAV
-.\SOUNDFX\WAV\SLUGPOOP.WAV
-.\SOUNDFX\WAV\MBOUNCE1.WAV
-.\SOUNDFX\WAV\MBOUNCE2.WAV
-.\SOUNDFX\WAV\BBOUNCE.WAV
-Slots:
-1 enter level
-2 exit level
-3 keen die
-4 shoot gun
-5 no ammo click
-6 shot collide
-7 footsteps
-8 bump ceiling
-9 jump
-10 land on ground
-11 pogo bounce
-12 fall
-13 collect candy
-14 collect lifedrop
-15 collect gun
-16 collect gemkey
-17 open gem door
-18 slug poop
-19 mushroom bounce 1
-20 mushroom bounce 2
-21 bounder bounce
+(52) mapmode walk up
+(53) mapmode walk down
+(54) mapmode walk left
+(55) mapmode walk right
+(56) mapmode walk up left
+(57) mapmode walk up right
+(58) mapmode walk down left
+(59) mapmode walk down right
+(60) mapmode swim up
+(61) mapmode swim down
+(62) mapmode swim left
+(63) mapmode swim right
+(64) mapmode swim up left
+(65) mapmode swim up right
+(66) mapmode swim down left
+(67) mapmode swim down right

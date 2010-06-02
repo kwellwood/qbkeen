@@ -18,23 +18,23 @@ DEFINT A-Z
 DECLARE SUB AllocXMS ()
 DECLARE SUB DeallocXMS ()
 DECLARE SUB DoInput ()
+DECLARE SUB DoPlayerDead ()
 DECLARE SUB DoTimers ()
+DECLARE SUB EndGame ()
+DECLARE SUB EndLevel (victory)
 DECLARE SUB InitEngine ()
+DECLARE SUB LoadPalette ()
 DECLARE SUB MainLoop ()
-DECLARE SUB NextLevel ()
+DECLARE SUB PrepareOverheadMap ()
 DECLARE SUB ReadParameters ()
 DECLARE SUB ResetTimer (tmr)
-DECLARE SUB SetPalette ()
+DECLARE SUB TakeScreenshot ()
 DECLARE FUNCTION FrameReady ()
+DECLARE FUNCTION GameComplete ()
+DECLARE FUNCTION GameOver ()
 DECLARE FUNCTION LevelComplete ()
 
-CONST enginever = 15
+CONST enginever = 16
 
-COMMON SHARED tileset$, levelcompleteflag
-
-TYPE hues
- red AS INTEGER
- grn AS INTEGER
- blu AS INTEGER
-END TYPE
+COMMON SHARED tileset$, levelcompleteflag, gamecompleteflag, gameoverflag
 

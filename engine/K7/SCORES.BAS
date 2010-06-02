@@ -13,12 +13,91 @@ ON ERROR GOTO ErrorHandler
 
 DIM SHARED Scoreboard&, Scoredigit&, boardx, boardy
 DIM SHARED loading&, loadx, loady
-DIM SHARED dropdowntile&
+DIM SHARED dropdowntile&, AncientSpeakTile&, ancspeakx, ancspeaky
+DIM SHARED KeenSpeakTile&, keenspeakx, keenspeaky
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
+
+SUB DoAncientRescued
+
+gamemode = ingame
+player(0).ancientsrescued = player(0).ancientsrescued + 1
+IF player(0).ancientsrescued = totalancients THEN
+  SetGameComplete
+ ELSE
+  SetLevelComplete
+END IF
+
+' Get the text to speak
+OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, temp$: LOOP UNTIL UCASE$(temp$) = "[ANCIENTS.DAT]"
+  INPUT #1, ancientspeech$
+  FOR a = 1 TO player(0).ancientsrescued
+    INPUT #1, keenspeech$
+  NEXT a
+CLOSE 1
+
+PutSprite AncientSpeakTile&, ancspeakx, ancspeaky, drawpage
+speech$ = ancientspeech$: textline = 0
+DO WHILE DQBlen(speech$) > 144
+  textline$ = ""
+  WHILE DQBlen(textline$ + LEFT$(speech$, INSTR(speech$, " "))) <= 144 AND INSTR(speech$, " ")
+    textline$ = textline$ + LEFT$(speech$, INSTR(speech$, " "))
+    speech$ = RIGHT$(speech$, LEN(speech$) - INSTR(speech$, " "))
+  WEND
+  DQBprint drawpage, textline$, 182 - DQBlen(textline$) / 2, 78 + textline * 10, 14
+  textline = textline + 1
+LOOP
+DQBprint drawpage, speech$, 182 - DQBlen(speech$) / 2, 78 + textline * 10, 14
+DQBcopyLayer drawpage, video
+DO: LOOP UNTIL DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL)
+WHILE DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL): WEND
+
+PutSprite KeenSpeakTile&, keenspeakx, keenspeaky, drawpage
+speech$ = keenspeech$: textline = 0
+DO WHILE DQBlen(speech$) > 144
+  textline$ = ""
+  WHILE DQBlen(textline$ + LEFT$(speech$, INSTR(speech$, " "))) <= 144 AND INSTR(speech$, " ")
+    textline$ = textline$ + LEFT$(speech$, INSTR(speech$, " "))
+    speech$ = RIGHT$(speech$, LEN(speech$) - INSTR(speech$, " "))
+  WEND
+  DQBprint drawpage, textline$, 140 - DQBlen(textline$) / 2, 78 + textline * 10, 14
+  textline = textline + 1
+LOOP
+DQBprint drawpage, speech$, 140 - DQBlen(speech$) / 2, 78 + textline * 10, 14
+DQBcopyLayer drawpage, video
+DO: LOOP UNTIL DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL)
+WHILE DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL): WEND
+
+PutSprite KeenSpeakTile& + 1, keenspeakx, keenspeaky, drawpage
+DQBcopyLayer drawpage, video
+DO: LOOP UNTIL DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL)
+WHILE DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL): WEND
+
+END SUB
+
+SUB DoCantSwim
+
+PutSprite KeenSpeakTile&, keenspeakx, keenspeaky, drawpage
+speech$ = "I can't swim!": textline = 0
+DO WHILE DQBlen(speech$) > 144
+  textline$ = ""
+  WHILE DQBlen(textline$ + LEFT$(speech$, INSTR(speech$, " "))) <= 144 AND INSTR(speech$, " ")
+    textline$ = textline$ + LEFT$(speech$, INSTR(speech$, " "))
+    speech$ = RIGHT$(speech$, LEN(speech$) - INSTR(speech$, " "))
+  WEND
+  DQBprint drawpage, textline$, 140 - DQBlen(textline$) / 2, 78 + textline * 10, 14
+  textline = textline + 1
+LOOP
+DQBprint drawpage, speech$, 140 - DQBlen(speech$) / 2, 78 + textline * 10, 14
+DQBcopyLayer drawpage, video
+DO: LOOP UNTIL DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL)
+WHILE DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL): WEND
+
+END SUB
 
 SUB DoDropdownStatus
 
@@ -39,6 +118,34 @@ IF showdropdownheight >= 0 THEN
   showdropdownheight = -181
   gameplay = running
 END IF
+
+END SUB
+
+SUB DoGetScubaGear
+
+IF player(0).scuba THEN EXIT SUB
+player(0).scuba = 1
+
+PutSprite KeenSpeakTile&, keenspeakx, keenspeaky, drawpage
+speech$ = "Cool! I can breathe underwater now!": textline = 0
+DO WHILE DQBlen(speech$) > 144
+  textline$ = ""
+  WHILE DQBlen(textline$ + LEFT$(speech$, INSTR(speech$, " "))) <= 144 AND INSTR(speech$, " ")
+    textline$ = textline$ + LEFT$(speech$, INSTR(speech$, " "))
+    speech$ = RIGHT$(speech$, LEN(speech$) - INSTR(speech$, " "))
+  WEND
+  DQBprint drawpage, textline$, 140 - DQBlen(textline$) / 2, 78 + textline * 10, 14
+  textline = textline + 1
+LOOP
+DQBprint drawpage, speech$, 140 - DQBlen(speech$) / 2, 78 + textline * 10, 14
+DQBcopyLayer drawpage, video
+DO: LOOP UNTIL DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL)
+WHILE DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL): WEND
+
+PutSprite KeenSpeakTile& + 1, keenspeakx, keenspeaky, drawpage
+DQBcopyLayer drawpage, video
+DO: LOOP UNTIL DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL)
+WHILE DQBkey(KEYENTER) OR DQBkey(KEYSPACE) OR DQBkey(KEYCTRL): WEND
 
 END SUB
 
@@ -66,6 +173,8 @@ FOR a = 1 TO player(0).ancientsrescued
   PutSprite 1341, 79 + (a * 8 - 8), 96 + y, drawpage
 NEXT a
 
+IF player(0).scuba THEN DQBprint drawpage, "Scuba Gear", 86, 145 + y, 14
+
 titleline1$ = maplocation$
 IF DQBlen(titleline1$) > 160 THEN
   totallen = DQBlen(title1line$)
@@ -84,23 +193,23 @@ DQBcopyLayer drawpage, video
 
 END SUB
 
-SUB DrawLoadingBox
+SUB DrawLoadingBox (level)
 
 PutSprite loading&, loadx, loady, drawpage
 
 OPEN "levels.dat" FOR INPUT AS 1
-  INPUT #1, numlevels
-  IF curlevel > numlevels OR curlevel <= 0 THEN
-    DebugLog "Level not in list:" + STR$(curlevel)
-    ErrorHandlerSub 129
-  END IF
-  FOR l = 1 TO numlevels
-    INPUT #1, temp1$
-    INPUT #1, maplocation$   ' global variable, used later for drawdropdown()
-    INPUT #1, mapname$
-    IF l = curlevel THEN EXIT FOR
+  INPUT #1, temp
+  FOR l = 1 TO level          ' maplocation$ is a global variable used
+    IF EOF(1) THEN CLOSE 1: ErrorHandlerSub 123
+    INPUT #1, temp$           '   later in drawdropdown()
+    INPUT #1, maplocation$: INPUT #1, mapname$
+    INPUT #1, temp: INPUT #1, temp: INPUT #1, temp
+    FOR t = 1 TO temp
+      INPUT #1, temp2: INPUT #1, temp2: INPUT #1, temp2: INPUT #1, temp2&
+    NEXT t
   NEXT l
 CLOSE 1
+
 IF DQBlen(mapname$) > 140 THEN
   totallen = DQBlen(mapname$)
   temp$ = mapname$: mapname$ = "": mapname2$ = ""
@@ -162,6 +271,12 @@ DrawNumber 2, 62, 20, a&
 
 END SUB
 
+FUNCTION GetMapLocation$
+
+GetMapLocation$ = maplocation$
+
+END FUNCTION
+
 SUB InitScoreboard
 
 OPEN "engine.dat" FOR INPUT AS 1
@@ -175,6 +290,12 @@ OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, loadx
   INPUT #1, loady
   INPUT #1, dropdowntile&
+  INPUT #1, AncientSpeakTile&
+  INPUT #1, ancspeakx
+  INPUT #1, ancspeaky
+  INPUT #1, KeenSpeakTile&
+  INPUT #1, keenspeakx
+  INPUT #1, keenspeaky
 CLOSE 1
 
 showdropdownheight = -181

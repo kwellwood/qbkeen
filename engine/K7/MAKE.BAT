@@ -22,6 +22,12 @@ echo TELEPORT.BAS... (Player teleporting)
 bc teleport.bas /e/x/o/t/c:512; > teleport.cmp
 echo WEAPONS.BAS...  (Player weapons)
 bc weapons.bas /e/x/o/t/c:512; > weapons.cmp
+echo SWITCHES.BAS... (Switches)
+bc switches.bas /e/x/o/t/c:512; > switches.cmp
+echo CLIMBING.BAS... (Climbing physics)
+bc climbing.bas /e/x/o/t/c:512; > climbing.cmp
+echo LIFTS.BAS...    (Moving platforms)
+bc lifts.bas /e/x/o/t/c:512; > lifts.cmp
 echo SOUND.BAS...    (Sound system)
 bc sound.bas /e/x/o/t/c:512; > sound.cmp
 echo PAKLIB.BAS...   (Archive routines)
@@ -50,6 +56,12 @@ echo  +TELEPORT.OBJ... (Player teleporting)
 lib k7core.lib +teleport; > teleport.cmp
 echo  +WEAPONS.OBJ...  (Player weapons)
 lib k7core.lib +weapons; > weapons.cmp
+echo  +SWITCHES.OBJ... (Switches)
+lib k7core.lib +switches; > switches.cmp
+echo  +CLIMBING.OBJ... (Climbing physics)
+lib k7core.lib +climbing; > climbing.cmp
+echo  +LIFTS.OBJ...    (Moving platforms)
+lib k7core.lib +lifts; > lifts.cmp
 echo  +SOUND.OBJ...    (Sound system)
 lib k7core.lib +sound; > sound.cmp
 echo  +PAKLIB.OBJ...   (Archive routines)
@@ -88,12 +100,6 @@ rem =========================================================================
 echo * Building Objects *
 echo K7.BAS...       (Main routines)
 bc k7.bas /e/x/o/t/c:512; > k7.cmp
-echo SWITCHES.BAS... (Switches)
-bc switches.bas /e/x/o/t/c:512; > switches.cmp
-echo CLIMBING.BAS... (Climbing physics)
-bc climbing.bas /e/x/o/t/c:512; > climbing.cmp
-echo LIFTS.BAS...    (Moving platforms)
-bc lifts.bas /e/x/o/t/c:512; > lifts.cmp
 echo DS4QBPP.BAS...  (DirectSound system)
 bc ds4qbpp.bas /e/x/o/t/c:512; > ds4qbpp.cmp
 

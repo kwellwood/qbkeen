@@ -48,6 +48,7 @@ SUB DoPlayerOnLift
 player(0).onlift = 0
 IF player(0).action = hangclimb THEN EXIT SUB
 IF player(0).action = dying THEN EXIT SUB
+
 FOR l = 1 TO numlifts
   IF LiftTouchPlayer(l) THEN player(0).onlift = l
 NEXT l
@@ -81,8 +82,8 @@ FOR l = 1 TO numlifts
   IF OnCamera(x1, y1, x2, y2) THEN
      
     '--- draw item ---
-    x = lift(l).x - CameraOrigX - (52 / 2)
-    y = lift(l).y - CameraOrigY - (16 / 2)
+    x = INT(lift(l).x - CameraOrigX - (52 / 2))
+    y = INT(lift(l).y - CameraOrigY - (16 / 2))
     IF lift(l).xv <= -1! THEN frame& = liftleft&  '1104
     IF lift(l).xv >= 1! THEN frame& = liftright&  '1106
     IF lift(l).yv <= -1! THEN frame& = liftup&    '1108

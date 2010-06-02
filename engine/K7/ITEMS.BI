@@ -16,7 +16,7 @@ DECLARE SUB WriteItemsToFile (f)
 DECLARE SUB WriteSpritesToFile (f)
 DECLARE FUNCTION ActiveItems ()
 DECLARE FUNCTION ActiveSprites ()
-DECLARE FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat)
+DECLARE FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat, lifespan)
 DECLARE FUNCTION TouchItem (i)
 DECLARE FUNCTION TouchSprite (s)
 

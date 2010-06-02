@@ -6,8 +6,8 @@ DEFINT A-Z
 '$INCLUDE: 'enemies2.bi'
 
 '--- MISC ROUTINES ---
-DECLARE FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat)
-DECLARE SUB MoveSprite (s, x, y)
+DECLARE FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat, lifespan)
+DECLARE SUB MoveSprite (S, x, y)
 DECLARE FUNCTION CameraOrigX ()
 DECLARE FUNCTION CameraOrigY ()
 DECLARE FUNCTION OnCamera (x1, y1, x2, y2)
@@ -21,7 +21,6 @@ DECLARE SUB ShiftPlayer (x!, y!)
 DECLARE FUNCTION Map& (x, y)
 DECLARE FUNCTION MapFG& (x, y)
 DECLARE FUNCTION TileType (t&)
-'$STATIC
 
 '--- PRIVATE ROUTINES ---
 DECLARE SUB DoEnemyFrame (e)
@@ -32,12 +31,14 @@ DECLARE SUB EnemyHitWall (e, p, hx!, hy!) 'point hit, clippoint hit (x, y)
 DECLARE SUB EnemyPhysics (e)
 DECLARE SUB SpawnEnemy (e)
 DECLARE FUNCTION EnemyHitPoint (x!, y!)
+'$STATIC
 '============================================================================
 CONST slug = 1, bounder = 2, mushroom = 3, lick = 4      ' enemy id constants
 CONST arachnut = 5, worm = 6, snake = 7, ancient = 8     '
 CONST spearup = 9, speardown = 10, spearleft = 11        '
 CONST spearright = 12, shooterup = 13, shooterdown = 14  '
-CONST shooterleft = 15, shooterright = 16                '
+CONST shooterleft = 15, shooterright = 16, mimrock = 17  '
+CONST cloud = 18                                         '
 
 CONST dead = 10                                          ' global constants
 CONST bouncelo = 1, bouncehi = 2                         ' mushroom constants
@@ -54,6 +55,9 @@ CONST ancientwalk1 = 0, ancientwalk2 = 1                 '
 CONST ancientbrood = 2                                   '
 CONST spearsit = 0, spearattack = 1                      ' spear constants
 CONST shooterwait = 0                                    ' shooter constants
+CONST mimrocksit = 0, mimrocksneak = 1, mimrockjump = 2  ' mimrock constants
+CONST mimrockonhead = 3                                  '
+CONST cloudsit = 0, cloudroam = 1, cloudstrike = 2       ' cloud constants
 
 ON ERROR GOTO ErrorHandler
 
@@ -92,6 +96,8 @@ SELECT CASE enemy(e).id
  CASE ancient: AncientFrames e
  CASE spearup TO spearright: SpearFrames e
  CASE shooterup TO shooterright: ShooterFrames e
+ CASE mimrock: MimrockFrames e
+ CASE cloud: CloudFrames e
 END SELECT
 
 END SUB
@@ -107,8 +113,8 @@ FOR k = 1 TO LEN(activefoestack)
   y2 = enemy(e).y + (enemy(e).tysize / 2)
   IF OnCamera(x1, y1, x2, y2) THEN
      
-    x = enemy(e).x - CameraOrigX - (enemy(e).txsize / 2)
-    y = enemy(e).y - CameraOrigY - (enemy(e).tysize / 2)
+    x = INT(enemy(e).x - CameraOrigX - (enemy(e).txsize / 2))
+    y = INT(enemy(e).y - CameraOrigY - (enemy(e).tysize / 2))
    
     frame& = enemy(e).frame
     PutSprite frame&, x, y, drawpage
@@ -131,6 +137,8 @@ SELECT CASE enemy(e).id
  CASE ancient: AncientAI e
  CASE spearup TO spearright: SpearAI e
  CASE shooterup TO shooterright: ShooterAI e
+ CASE mimrock: MimrockAI e
+ CASE cloud: CloudAI e
 END SELECT
 
 END SUB
@@ -214,6 +222,18 @@ IF ABS(player(0).x - enemy(e).x) <= range AND ABS(player(0).y - enemy(e).y) <= r
 
 END FUNCTION
 
+FUNCTION EnemyInRangeOfX (e, range1, range2)
+
+IF ABS(player(0).x - enemy(e).x) >= range1 AND ABS(player(0).x - enemy(e).x) <= range2 THEN EnemyInRangeOfX = 1
+
+END FUNCTION
+
+FUNCTION EnemyInRangeY (e, range)
+
+IF ABS(player(0).y - enemy(e).y) <= range THEN EnemyInRangeY = 1
+
+END FUNCTION
+
 SUB EnemyPhysics (e)
 
 '-- these enemies are stationary --
@@ -227,9 +247,10 @@ EnemyClipPoints e   ' update clippoints for this enemy
 
 '=======[ GRAVITY ]=======
 IF enemy(e).onground = 0 THEN
-  IF enemy(e).id = mushroom OR enemy(e).id = bounder THEN
+  IF enemy(e).id = mushroom OR enemy(e).id = bounder OR enemy(e).id = mimrock THEN
     enemy(e).yv = enemy(e).yv + .5      ' light gravity
-   ELSE enemy(e).yv = enemy(e).yv + 1   ' regular gravity
+   ELSEIF enemy(e).id <> cloud THEN     ' cloud has no gravity
+    enemy(e).yv = enemy(e).yv + 1       ' regular gravity
   END IF
 END IF
 
@@ -292,15 +313,19 @@ IF player(0).onball = e THEN ShiftPlayer (enemy(e).x - eoldx!), (enemy(e).y - eo
 
 END SUB
 
-FUNCTION EnemyShootable (id)
+FUNCTION EnemyShootable (e)
+
+id = enemy(e).id
+EnemyShootable = 1
 
 SELECT CASE id
  CASE worm: EnemyShootable = 0
  CASE ancient: EnemyShootable = 0
- CASE snake: IF enemy(e).status <> snakeattack THEN EnemyShootable = 0 ELSE EnemyShootable = 1
+ CASE snake: IF enemy(e).status <> snakeattack THEN EnemyShootable = 0
  CASE spearup TO spearright: EnemyShootable = 0
  CASE shooterup TO shooterright: EnemyShootable = 0
- CASE ELSE: EnemyShootable = 1
+ CASE mimrock: IF enemy(e).status = mimrocksit THEN EnemyShootable = 0
+ CASE cloud: IF enemy(e).status = cloud THEN EnemyShootable = 0
 END SELECT
 
 END FUNCTION
@@ -339,7 +364,7 @@ OPEN "engine.dat" FOR INPUT AS 1
   LOOP UNTIL UCASE$(Text$) = "[ENEMIES.DAT]"
   INPUT #1, starsStart&    ' first frame of stars
   INPUT #1, starsEnd&      ' last frame of stars
-  FOR f = 0 TO 57
+  FOR f = 0 TO maxenemyframes
     INPUT #1, eframe(f)
     INPUT #1, efsize(f).x
     INPUT #1, efsize(f).y
@@ -367,7 +392,7 @@ enemy(e).xv = enemy(e).xv * 4
 
 '--- add stars to sprite stack ---
 x = enemy(e).x: y = enemy(e).y - enemy(e).ysize / 2
-enemy(e).starsprite = AddSprite(x, y, starsStart&, starsEnd&, 6, 22, 15, 0, 1)
+enemy(e).starsprite = AddSprite(x, y, starsStart&, starsEnd&, 6, 22, 15, 0, 1, -1)
 
 END SUB
 
@@ -435,7 +460,7 @@ FOR k = 1 TO LEN(activefoestack)
   IF k > LEN(activefoestack) THEN EXIT FOR
   e = ASC(MID$(activefoestack, k, 1))
   IF enemy(e).status <> dead THEN
-    IF EnemyShootable(enemy(e).id) THEN
+    IF EnemyShootable(e) THEN
       ex1 = enemy(e).x - (enemy(e).txsize / 2): ey1 = enemy(e).y - (enemy(e).tysize / 2)
       ex2 = enemy(e).x + (enemy(e).txsize / 2): ey2 = enemy(e).y + (enemy(e).tysize / 2)
 
@@ -444,7 +469,11 @@ FOR k = 1 TO LEN(activefoestack)
       IF sx2 >= ex1 AND sx2 <= ex2 AND sy1 >= ey1 AND sy1 <= ey2 THEN touchenemy = 1
       IF sx1 >= ex1 AND sx1 <= ex2 AND sy2 >= ey1 AND sy2 <= ey2 THEN touchenemy = 1
       IF sx2 >= ex1 AND sx2 <= ex2 AND sy2 >= ey1 AND sy2 <= ey2 THEN touchenemy = 1
-
+      IF ex1 >= sx1 AND ex1 <= sx2 AND ey1 >= sy1 AND ey1 <= sy2 THEN touchenemy = 1
+      IF ex2 >= sx1 AND ex2 <= sx2 AND ey1 >= sy1 AND ey1 <= sy2 THEN touchenemy = 1
+      IF ex1 >= sx1 AND ex1 <= sx2 AND ey2 >= sy1 AND ey2 <= sy2 THEN touchenemy = 1
+      IF ex2 >= sx1 AND ex2 <= sx2 AND ey2 >= sy1 AND ey2 <= sy2 THEN touchenemy = 1
+      
       IF touchenemy THEN ShotEnemy = e: EXIT FOR
     END IF
   END IF
@@ -557,6 +586,24 @@ SELECT CASE enemy(e).id
   enemy(e).xsize = 16: enemy(e).ysize = 16
   IF enemy(e).id = shooterup THEN enemy(e).ysize = 32
   IF enemy(e).id = shooterright THEN enemy(e).xsize = 32
+ CASE mimrock
+  enemy(e).status = mimrocksit
+  enemy(e).action = 0
+  enemy(e).actiontime = 0
+  enemy(e).frame = eframe(58)
+  enemy(e).txsize = efsize(58).x
+  enemy(e).tysize = efsize(58).y
+  enemy(e).xsize = 24: enemy(e).ysize = 24
+  enemy(e).xmax = 5: enemy(e).ymax = 6
+ CASE cloud
+  enemy(e).status = cloudsit
+  enemy(e).action = 0
+  enemy(e).actiontime = 0
+  enemy(e).frame = eframe(66)
+  enemy(e).txsize = efsize(66).x
+  enemy(e).tysize = efsize(66).y
+  enemy(e).xsize = 64: enemy(e).ysize = 24
+  enemy(e).xmax = 1: enemy(e).ymax = 0
  CASE ELSE: ErrorHandlerSub 170
 END SELECT
 

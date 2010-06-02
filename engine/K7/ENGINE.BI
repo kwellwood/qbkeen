@@ -2,19 +2,28 @@ DEFINT A-Z
 
 CONST inmenu = 1, ingame = 2
 CONST running = 1, paused = 2, stopped = 3
+CONST jumpmode = 0, mapmode = 1
 CONST up = 0, down = 1, left = 2, right = 3
+CONST upleft = 4, downleft = 5, upright = 6, downright = 7
 CONST FrameTimer = 0, AnmTimer = 1, HiResTimer = 2
 
 COMMON SHARED anmcounter, menutimermark&
-COMMON SHARED maxfps, ts, gamemode, gameplay, curlevel, ems, dolog
+COMMON SHARED maxfps, ts, gamemode, movemode, gameplay, curlevel, ems, dolog
 COMMON SHARED quitgame, showdebughud, showdropdownheight, maplocation$
+COMMON SHARED pausedingame, totalancients
 COMMON SHARED drawpage, menupage
 
 DECLARE SUB DebugLog (t$)
 DECLARE SUB ErrorHandlerSub (e)
+DECLARE SUB FadeInPalette ()
+DECLARE SUB FadeInPaletteStep ()
 DECLARE SUB IncreaseIdleTime ()
-DECLARE SUB LoadLevel ()
+DECLARE SUB LoadLevel (level)
+DECLARE SUB StartLevel (level)
+DECLARE SUB SetGameComplete ()
+DECLARE SUB SetGameOver ()
 DECLARE SUB SetLevelComplete ()
+DECLARE SUB SetPalette ()
 DECLARE FUNCTION TimerTicked (tmr)
 DECLARE FUNCTION TimerTicks& (tmr)
 
@@ -63,9 +72,12 @@ END TYPE
 TYPE playertype
  x AS SINGLE
  y AS SINGLE
+ mapx AS SINGLE
+ mapy AS SINGLE
  xv AS SINGLE
  yv AS SINGLE
  xdir AS INTEGER
+ mapxdir AS INTEGER
  xmax AS SINGLE
  ymax AS SINGLE
  sframe AS LONG
@@ -105,7 +117,9 @@ TYPE playertype
  onball AS INTEGER        ' bouncing ball currently standing on
  idletime AS INTEGER      ' frames player hasnt pressed a key
  invincible AS INTEGER
+ dead AS INTEGER          ' finished dying sequence
  ancientsrescued AS INTEGER
+ scuba AS INTEGER
 END TYPE
 
 COMMON SHARED scr()
@@ -114,4 +128,5 @@ COMMON SHARED enemy() AS enemytype, activefoestack AS STRING
 COMMON SHARED eframe() AS LONG, efsize() AS intcoordinate
 COMMON SHARED EClipPoint() AS coordinate
 COMMON SHARED global() AS globalvars
+COMMON SHARED levelscomplete()
 

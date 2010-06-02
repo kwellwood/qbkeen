@@ -48,8 +48,8 @@ SUB CheckForLedge (s, mx, my)
 '+--+--+
 
 SELECT CASE s
- CASE left: mx = mx - 1
- CASE right: mx = mx + 1
+ CASE left: mx = mx + 1    ' left side of the tile  (not the player!)
+ CASE right: mx = mx - 1   ' right side of the tile
 END SELECT
 
 '--- check for wall in tile 1 area ---

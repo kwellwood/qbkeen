@@ -1,23 +1,35 @@
-11
+ 15
 .\LEVELS\START.MAP
-"The Main Menu?!", "Keen steps into The Main Menu"
+"The Main Menu?!", "Keen steps into The Main Menu??", 0, 0, 0
+.\LEVELS\OVERHEAD.MAP
+"Shadowlands", "Keen enters the Shadowlands", 0, 0, 0
 .\LEVELS\LEVEL01.MAP
-"Border Village", "Keen makes a run for the Border Village"
+"Border Village", "Keen makes a run for the Border Village", 847, 425, 2
+  1, 51, 29, 0
+  1, 52, 29, 0
 .\LEVELS\LEVEL02.MAP
-"Slug Village", "Keen slips into Slug Village"
+"Slug Village", "Keen slips into Slug Village", 783, 296, 2
+  1, 47, 21, 0
+  1, 48, 21, 0
 .\LEVELS\LEVEL03.MAP
-"The Perilous Pit", "Keen plummets into The Perilous Pit"
+"The Perilous Pit", "Keen plummets into The Perilous Pit", 735, 536, 0
+.\LEVELS\LEVEL04.MAP
+"Cave of the Descendents", "Keen plods down into the Cave of the Descendents", 319, 40, 0
 .\LEVELS\LEVEL06.MAP
-"Crystalus", "Keen reflects upon entering Crystalus"
+"Crystalus", "Keen reflects upon entering Crystalus", 719, 88, 0
 .\LEVELS\LEVEL07.MAP
-"Hillville", "Keen stumbles upon Hillville"
+"Hillville", "Keen stumbles upon Hillville", 463, 408, 0
 .\LEVELS\LEVEL08.MAP
-"Sand Yego", "Keen grits his teeth and enters Sand Yego"
+"Sand Yego", "Keen grits his teeth and enters Sand Yego", 127, 392, 0
+.\LEVELS\LEVEL09.MAP
+"Miragia", "Keen disappears into Miragia", 287, 312, 0
 .\LEVELS\LEVEL10.MAP
-"Lifewater Oasis", "Keen crawls into Lifewater Oasis"
+"Lifewater Oasis", "Keen crawls into Lifewater Oasis", 111, 184, 0
 .\LEVELS\LEVEL11.MAP
-"Pyramid of the Moons", "Keen backs into the Pyramid of the Moons"
+"Pyramid of the Moons", "Keen backs into the Pyramid of the Moons", 207, 600, 0
 .\LEVELS\LEVEL12.MAP
-"Pyramid of the Shadows", "Keen moves silently in the Pyramid of Shadows"
+"Pyramid of the Shadows", "Keen moves silently in the Pyramid of Shadows", 479, 680, 0
 .\LEVELS\LEVEL15.MAP
-"Isle of Tar", "Keen mucks along the Isle of Tar"
+"Isle of Tar", "Keen mucks along the Isle of Tar", 879, 680, 0
+.\LEVELS\LEVEL18.MAP
+"Bean-with-Bacon Megarocket", "Keen launches into the Bean-with-Bacon Megarocket", -1, -1, 0

@@ -6,19 +6,23 @@ DEFINT A-Z
 '00=passive           00=passive
 '01=wall              01=null
 '02=slope             02=slope
-'03=hazzard           03=null
+'03=hazzard           03=hazzard
 '04=switch            04=null
 '05=pole/ladder       05=pole/ladder
-'06=null              06=oneway floor
+'06=oneway floor      06=oneway floor
 '07=null              07=empty gem socket
 '08=[reserved]        08=[reserved]
 '09=null              09=wall
-'11=null              11=change tile +1
+'13=water in mapmode  13=null
 
 '==TILE TAG 2==
 '00=no tag
 '01=draw as overlay on bg
 '10=end level, do not draw
+'11=end level with scuba gear
+'12=enter level from map
+'14=change to tile+x after a delay
+'15=change to tile-x after a delay
 
 'Slope Types:
 '-------------------------------

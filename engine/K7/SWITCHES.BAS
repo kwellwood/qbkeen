@@ -131,6 +131,7 @@ IF hadkey THEN
   dy = INT(t& / MapWidth) + 1           'the door to open. check there to
   dx = t& - (dy * MapWidth - MapWidth)  'find the height of the door then
   dh& = SwitchTag&(dx, dy)              'change the tiles.
+  IF dh& = 0 THEN debuglog "WARNING (UnlockDoor): Door has no height"
   FOR y = dy TO dy + dh& - 1            '
     SetMapFG dx, y, MapFG&(dx, y) + 1   '
   NEXT y                                '

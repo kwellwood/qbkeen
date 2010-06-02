@@ -1,6 +1,8 @@
 DEFINT A-Z
 '$DYNAMIC
 
+CONST maxenemyframes = 68
+
 DECLARE SUB DrawEnemies ()
 DECLARE SUB HandleEnemies ()
 DECLARE SUB InitEnemies ()
@@ -13,7 +15,9 @@ DECLARE SUB SetEnemyGravity (g!)
 DECLARE SUB WriteEnemiesToFile (f)
 DECLARE FUNCTION ActiveEnemies ()
 DECLARE FUNCTION EnemyInRange (e, range)
-DECLARE FUNCTION EnemyShootable (id)
+DECLARE FUNCTION EnemyInRangeY (e, range)
+DECLARE FUNCTION EnemyInRangeOfX (e, range1, range2)
+DECLARE FUNCTION EnemyShootable (e)
 DECLARE FUNCTION EnemyTouchPlayer (e)
 DECLARE FUNCTION ShotEnemy (sx1, sy1, sx2, sy2)
 

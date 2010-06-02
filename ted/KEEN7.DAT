@@ -1,5 +1,6 @@
-KEEN7.GPK
-2412
+..\game\KEEN7.GPK
+3708
+* Do not modify this file!
 *-----------------------------*
 STANDL.ART  , 99
 WALKL1.ART  , 99
@@ -18,7 +19,7 @@ JUMPR1.ART  , 99
 JUMPR2.ART  , 99
 JUMPR3.ART  , 99
 DIE1.ART    , 99
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
 POLEL1.ART  , 99
 POLEL2.ART  , 99
@@ -37,7 +38,7 @@ SHOOTJR.ART , 99
 SHOOTJU.ART , 99
 SHOOTJD.ART , 99
 SWTCHING.ART, 99
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
 BORED1.ART  , 99
 BORED2.ART  , 99
@@ -72,10 +73,10 @@ POGOLG.ART  , 99
 POGOLA.ART  , 99
 POGORG.ART  , 99
 POGORA.ART  , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 LEDGEL1.ART , 99
 LEDGEL2.ART , 99
@@ -96,24 +97,24 @@ PAUSED.ART  , 99
 TITLE.ART   , 99
 LOADING.ART , 99
 *-----------------------------*
-BLANK.ART   , 99
+NO_FILE
 EARTH5.ART  , 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 EARTH8.ART  , 0 , 0 , 0
 EARTH9.ART  , 0 , 1 , 0
 EARTH10.ART , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 EARTH12.ART , 1 , 0 , 0
 EARTH13.ART , 0 , 0 , 0
 EARTH14.ART , 0 , 0 , 0
 EARTH15.ART , 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 EARTH17.ART , 0 , 0 , 0
 EARTH18.ART , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 EARTH19.ART , 0 , 0 , 0
 EARTH20.ART , 0 , 0 , 0
@@ -126,13 +127,13 @@ EARTH26.ART , 0 , 0 , 0
 EARTH27.ART , 1 , 0 , 0
 EARTH28.ART , 1 , 0 , 0
 EARTH29.ART , 1 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 EARTH31.ART , 9 , 1 , 0
 EARTH32.ART , 0 , 1 , 0
 EARTH48.ART , 0 , 1 , 0
 EARTH49.ART , 0 , 1 , 0
 EARTH50.ART , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
 EARTH34.ART , 0 , 0 , 0
 EARTH35.ART , 0 , 0 , 0
@@ -151,26 +152,26 @@ EARTH47.ART , 0 , 1 , 0
 EARTH51.ART , 6 , 1 , 0
 EARTH52.ART , 6 , 1 , 0
 EARTH53.ART , 6 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 FRST0101.ART, 0 , 0 , 0
 FRST0201.ART, 0 , 0 , 0
@@ -404,25 +405,25 @@ FRS20607.ART, 0 , 0 , 4 , 6
 FRS20607.ART, 0 , 0 , 0
 FRST0607.ART, 0 , 0 , 0
 FRST0607.ART, 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 FRS20707.ART, 0 , 0 , 4 , 6
 FRS20707.ART, 0 , 0 , 0
 FRST0707.ART, 0 , 0 , 0
 FRST0707.ART, 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 FRST1406.ART, 0 , 0 , 3 , 8
 FRS21406.ART, 0 , 0 , 0
 FRST1406.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 GREEN.ART   , 0 , 0 , 0
 *-----------------------------*
 FRST1206.ART, 0 , 0 , 3 ,20
 FRS21206.ART, 0 , 0 , 0
 FRS21206.ART, 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 FRST1306.ART, 0 , 0 , 3 ,20
 FRS21306.ART, 0 , 0 , 0
 FRS21306.ART, 0 , 0 , 0
@@ -441,7 +442,7 @@ DOOR002.ART , 0 , 0 , 0
 FRST1207.ART, 0 , 0 , 3 ,20
 FRS21207.ART, 0 , 0 , 0
 FRS21207.ART, 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 FRST1307.ART, 0 , 0 , 3 ,20
 FRS21307.ART, 0 , 0 , 0
 FRS21307.ART, 0 , 0 , 0
@@ -460,7 +461,7 @@ DOOR004.ART , 0 , 0 , 0
 FRST1208.ART, 0 , 0 , 3 ,20
 FRS21208.ART, 0 , 0 , 0
 FRS21208.ART, 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 FRST1308.ART, 0 , 0 , 3 ,20
 FRS21308.ART, 0 , 0 , 0
 FRS21308.ART, 0 , 0 , 0
@@ -479,12 +480,12 @@ DOOR006.ART , 0 , 0 , 0
 FRST1209.ART, 0 , 0 , 3 ,20
 FRS21209.ART, 0 , 0 , 0
 FRS21209.ART, 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 FRST1309.ART, 0 , 0 , 3 ,20
 FRS21309.ART, 0 , 0 , 0
 FRS21309.ART, 0 , 0 , 0
 FIRE4.ART   , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 FIRE5.ART   , 0 , 1 , 0
 TORCH1.ART  , 0 , 1 , 4 , 3
 TORCH2.ART  , 0 , 0 , 0
@@ -492,8 +493,8 @@ TORCH3.ART  , 0 , 0 , 0
 TORCH4.ART  , 0 , 0 , 0
 ROCK3.ART   , 0 , 0 , 0
 ROCK4.ART   , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 *-----------------------------*
 POOL01.ART  , 0 , 1 , 0
 POOL02A.ART , 0 , 1 , 2 , 1
@@ -504,15 +505,15 @@ POOL04A.ART , 0 , 1 , 2 , 1
 POOL04B.ART , 0 , 0 , 0
 POOL05.ART  , 0 , 1 , 0
 POOL06.ART  , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 DOOR101.ART , 0 , 0 , 0
 DOOR102.ART , 0 , 0 , 0
 DOOR103.ART , 0 , 0 , 0
 DOOR104.ART , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 POOL07.ART  , 0 , 1 , 0
 POOL08A.ART , 0 , 0 , 2 , 1
@@ -542,7 +543,7 @@ POOL16A.ART , 3 , 0 , 2 , 1
 POOL16B.ART , 0 , 0 , 0
 POOL17.ART  , 9 , 1 , 0
 POOL18.ART  , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 MROCKL1.ART , 99
 MROCKL2.ART , 99
 MROCKL3.ART , 99
@@ -555,13 +556,13 @@ MROCKR4.ART , 99
 POOL19.ART  , 0 , 1 , 0
 POOL20.ART  , 0 , 1 , 0
 POOL21.ART  , 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+CLOUD1.ART  , 99
+CLOUD2.ART  , 99
+CLOUD3.ART  , 99
+LITBOLT1.ART, 99
+LITBOLT2.ART, 99
 MROCKJR.ART , 99
 MROCKGR1.ART, 99
 MROCKGR2.ART, 99
@@ -586,9 +587,9 @@ DIGITNUL.ART, 99
 STARS1.ART  , 99
 STARS2.ART  , 99
 STARS3.ART  , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 JAWBRK1.ART , 99
 JAWBRK2.ART , 99
@@ -607,7 +608,7 @@ CANDBAR2.ART, 99
 100PT5.ART  , 99
 100PT6.ART  , 99
 100PT7.ART  , 99
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
 200PT1.ART  , 99
 200PT2.ART  , 99
@@ -623,10 +624,10 @@ BLANK.ART   , 99
 500PT5.ART  , 99
 500PT6.ART  , 99
 500PT7.ART  , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 1000PT1.ART , 99
 1000PT2.ART , 99
@@ -642,10 +643,10 @@ BLANK.ART   , 99
 2000PT5.ART , 99
 2000PT6.ART , 99
 2000PT7.ART , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 5000PT1.ART , 99
 5000PT2.ART , 99
@@ -690,7 +691,7 @@ SWITCH2.ART , 4 , 0 , 0
 SWITCH3.ART , 4 , 0 , 0
 SWITCH4.ART , 4 , 0 , 0
 EOL.ART     , 0 ,10 , 0
-BLANK.ART   , 99
+EXITMAP.ART , 0 ,12 , 0
 SLUGL1.ART  , 99
 SLUGL2.ART  , 99
 SLUGPOOL.ART, 99
@@ -701,8 +702,8 @@ SLUGPOOD.ART, 99
 SLUGDIE.ART , 99
 POO1.ART    , 99
 POO2.ART    , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 *-----------------------------*
 BALLL1.ART  , 99
 BALLL2.ART  , 99
@@ -711,7 +712,7 @@ BALLR2.ART  , 99
 BALLU1.ART  , 99
 BALLU2.ART  , 99
 BALLDIE.ART , 99
-BLANK.ART   , 99
+NO_FILE
 DROP1.ART   , 99
 DROP2.ART   , 99
 DROP3.ART   , 99
@@ -719,9 +720,9 @@ DROP4.ART   , 99
 DROP5.ART   , 99
 DROP6.ART   , 99
 DROP7.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 ICECONE1.ART, 99
 ICECONE2.ART, 99
@@ -739,8 +740,8 @@ LIFT5.ART   , 99
 LIFT6.ART   , 99
 LIFT7.ART   , 99
 LIFT7.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 *-----------------------------*
 GUN1.ART    , 99
 GUN2.ART    , 99
@@ -750,7 +751,7 @@ PHAZE3.ART  , 99
 PHAZE4.ART  , 99
 PHAZE5.ART  , 99
 PHAZE6.ART  , 99
-BLANK.ART   , 99
+NO_FILE
 LICKL1.ART  , 99
 LICKL2.ART  , 99
 LICKL3.ART  , 99
@@ -761,18 +762,18 @@ LICKR3.ART  , 99
 LICKR4.ART  , 99
 LICKDEAD.ART, 99
 *-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 FHILL001.ART, 0 , 1 , 0
 FHILL002.ART, 0 , 1 , 0
 FHILL003.ART, 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 FHILL004.ART, 0 , 1 , 0
 FHILL005.ART, 0 , 1 , 0
 FHILL006.ART, 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 LICKAL1.ART , 99
 LICKAL2.ART , 99
 LICKAL3.ART , 99
@@ -780,7 +781,7 @@ LICKAR1.ART , 99
 LICKAR2.ART , 99
 LICKAR3.ART , 99
 *-----------------------------*
-BLANK.ART   , 99
+NO_FILE
 FHILL007.ART, 0 , 1 , 0
 FHILL008.ART, 0 , 1 , 0
 FHILL009.ART, 2 , 1 , 5 , 0
@@ -791,22 +792,22 @@ FHILL013.ART, 2 , 0 , 8 , 0
 FHILL014.ART, 2 , 0 , 7 , 0
 FHILL015.ART, 0 , 1 , 0
 FHILL016.ART, 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 ARACH1.ART  , 99
 ARACH2.ART  , 99
 ARACH3.ART  , 99
 ARACH4.ART  , 99
 ARACH5.ART  , 99
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
-BLANK.ART   , 99
+NO_FILE
 FHILL017.ART, 2 , 0 , 5 , 0
 FHILL018.ART, 2 , 0 , 6 , 0
 FHILL019.ART, 1 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 FHILL020.ART, 1 , 0 , 0
 FHILL021.ART, 2 , 0 , 8 , 0
 FHILL022.ART, 2 , 0 , 7 , 0
@@ -820,16 +821,16 @@ SNAKEDED.ART, 99
 *-----------------------------*
 FHILL023.ART, 1 , 0 , 0
 FHILL024.ART, 1 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 FHILL025.ART, 1 , 0 , 0
 FHILL026.ART, 1 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 SNAKEAL1.ART, 99
 SNAKEAL2.ART, 99
 SNAKEAL3.ART, 99
@@ -837,14 +838,14 @@ SNAKEAR1.ART, 99
 SNAKEAR2.ART, 99
 SNAKEAR3.ART, 99
 *-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 H1-0301.ART , 0 , 1 , 0
 H1-0401.ART , 0 , 1 , 0
 H1-0501.ART , 0 , 1 , 0
 H1-0601.ART , 0 , 1 , 0
 H1-0701.ART , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 H2-0101.ART , 0 , 1 , 0
 H2-0201.ART , 0 , 1 , 0
 H2-0301.ART , 0 , 1 , 0
@@ -852,9 +853,9 @@ H2-0401.ART , 0 , 1 , 0
 H2-0501.ART , 0 , 1 , 0
 H2-0601.ART , 0 , 1 , 0
 H2-0701.ART , 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 H1-0102.ART , 0 , 1 , 0
 H1-0202.ART , 0 , 1 , 0
@@ -968,23 +969,23 @@ H2-0607.ART , 0 , 0 , 0
 H2-0707.ART , 0 , 0 , 0
 H2-0807.ART , 0 , 0 , 0
 H2-0907.ART , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
 POLE001.ART , 5 , 1 , 0
 POLE005.ART , 5 , 1 , 0
 POLE006.ART , 5 , 1 , 0
 POLE007.ART , 5 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 POLE002.ART , 0 , 0 , 0
 POLE003.ART , 5 , 0 , 0
 POLE004.ART , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 CAVE0012.ART, 6 , 0 , 0
 EARTH12.ART , 6 , 0 , 0
 SAND0004.ART, 6 , 0 , 0
@@ -993,7 +994,7 @@ POLE008.ART , 5 , 1 , 0
 POLE012.ART , 5 , 1 , 0
 POLE013.ART , 5 , 1 , 0
 POLE014.ART , 5 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 POLE009.ART , 0 , 0 , 0
 POLE010.ART , 5 , 0 , 0
 POLE011.ART , 0 , 0 , 0
@@ -1003,29 +1004,29 @@ POLE017.ART , 0 , 0 , 0
 POLE018.ART , 0 , 0 , 0
 POLE019.ART , 5 , 0 , 0
 POLE020.ART , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 CAVE0001.ART, 0 , 0 , 0
 CAVE0002.ART, 0 , 0 , 0
@@ -1082,26 +1083,26 @@ CAVE0050.ART, 0 , 1 , 0
 CAVE0051.ART, 9 , 1 , 0
 CAVE0052.ART, 0 , 1 , 0
 CAVE0053.ART, 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 SLUG0101.ART, 0 , 1 , 0
 SLUG0201.ART, 0 , 1 , 0
@@ -1119,8 +1120,8 @@ CAVE0062.ART, 1 , 0 , 0
 CAVE0063.ART, 1 , 0 , 0
 CAVE0064.ART, 1 , 0 , 0
 CAVE0065.ART, 1 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+DOOR201.ART , 0 , 0 , 0
+DOOR202.ART , 0 , 0 , 0
 *-----------------------------*
 SLUG0102.ART, 0 , 1 , 0
 SLUG0202.ART, 0 , 1 , 0
@@ -1138,17 +1139,17 @@ CAVE0066.ART, 1 , 0 , 0
 CAVE0067.ART, 1 , 0 , 0
 CAVE0068.ART, 1 , 0 , 0
 CAVE0069.ART, 1 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+DOOR203.ART , 0 , 0 , 0
+DOOR204.ART , 0 , 0 , 0
 *-----------------------------*
-BLANK.ART   , 99
+NO_FILE
 SLUG0203.ART, 0 , 1 , 0
 SLUG0303.ART, 0 , 1 , 0
 SLUG0403.ART, 0 , 0 , 0
 SLUG0503.ART, 0 , 0 , 0
 SLUG0603.ART, 0 , 0 , 0
 SLUG0703.ART, 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 FLAMEM1T.ART, 3 , 0 , 4 , 2
 FLAMEM2T.ART, 3 , 0 , 4 , 2
 FLAMEM3T.ART, 3 , 0 , 4 , 2
@@ -1156,11 +1157,11 @@ FLAMEM4T.ART, 3 , 0 , 4 , 2
 FLAMEM1T.ART, 0 , 0 , 0
 FLAMEM2T.ART, 0 , 0 , 0
 FLAMEM3T.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+DOOR205.ART , 0 , 0 , 0
+DOOR206.ART , 0 , 0 , 0
 *-----------------------------*
-BLANK.ART   , 99
+NO_FILE
 SLUG0204.ART, 0 , 1 , 0
 SLUG0304.ART, 0 , 0 , 0
 SLUG0404.ART, 0 , 0 , 0
@@ -1175,11 +1176,11 @@ FLAMEM4B.ART, 3 , 0 , 4 , 2
 FLAMEM1B.ART, 0 , 0 , 0
 FLAMEM2B.ART, 0 , 0 , 0
 FLAMEM3B.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
-BLANK.ART   , 99
+NO_FILE
 SLUG0205.ART, 0 , 1 , 0
 SLUG0305.ART, 0 , 0 , 0
 SLUG0405.ART, 0 , 0 , 0
@@ -1196,9 +1197,9 @@ TORCH24.ART , 0 , 0 , 0
 TORCH21A.ART, 0 , 0 , 3 , 2
 TORCH21B.ART, 0 , 0 , 0
 TORCH21C.ART, 0 , 0 , 0
-BLANK.ART   , 99
-*-----------------------------* ----------------
-BLANK.ART   , 99
+NO_FILE
+*-----------------------------*
+NO_FILE
 SLUG0206.ART, 0 , 1 , 0
 SLUG0306.ART, 0 , 0 , 0
 SLUG0406.ART, 0 , 0 , 0
@@ -1215,9 +1216,9 @@ TORCH26.ART , 0 , 0 , 0
 TORCH22A.ART, 0 , 0 , 3 , 2
 TORCH22B.ART, 0 , 0 , 0
 TORCH22C.ART, 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
-BLANK.ART   , 99
+NO_FILE
 SLUG0207.ART, 0 , 1 , 0
 SLUG0307.ART, 0 , 0 , 0
 SLUG0407.ART, 0 , 0 , 0
@@ -1225,16 +1226,16 @@ SLUG0507.ART, 0 , 0 , 0
 SLUG0607.ART, 0 , 0 , 0
 SLUG0707.ART, 0 , 0 , 0
 SLUG0807.ART, 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 TORCH27.ART , 0 , 0 , 0
 TORCH28.ART , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 SLUG0108.ART, 0 , 1 , 0
 SLUG0208.ART, 0 , 0 , 0
@@ -1244,16 +1245,16 @@ SLUG0508.ART, 0 , 0 , 0
 SLUG0608.ART, 0 , 0 , 0
 SLUG0708.ART, 0 , 1 , 0
 SLUG0808.ART, 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 TORCH29.ART , 0 , 0 , 0
 TORCH210.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 SLUG0109.ART, 0 , 1 , 0
 SLUG0209.ART, 0 , 0 , 0
@@ -1263,9 +1264,9 @@ SLUG0509.ART, 0 , 0 , 0
 SLUG0609.ART, 0 , 0 , 0
 SLUG0709.ART, 0 , 0 , 0
 SLUG0809.ART, 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 EARTH37.ART , 0 , 0 , 0
 EARTH38.ART , 0 , 0 , 0
 EARTH39.ART , 0 , 0 , 0
@@ -1288,29 +1289,29 @@ FHILL110.ART, 0 , 1 , 0
 FHILL111.ART, 0 , 1 , 0
 FHILL101.ART, 0 , 1 , 0
 FHILL102.ART, 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
-BLANK.ART   , 99
+NO_FILE
 SLUG0211.ART, 0 , 1 , 0
 SLUG0311.ART, 0 , 0 , 0
 SLUG0411.ART, 0 , 0 , 0
 SLUG0511.ART, 0 , 0 , 0
 SLUG0611.ART, 0 , 0 , 0
 SLUG0711.ART, 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 FHILL112.ART, 2 , 0 , 1 , 0
 FHILL113.ART, 1 , 0 , 0
 FHILL114.ART, 2 , 1 , 1 , 0
 FHILL115.ART, 1 , 0 , 0
 FHILL103.ART, 2 , 0 , 2, 0
 FHILL104.ART, 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 SLUG0112.ART, 0 , 1 , 0
 SLUG0212.ART, 0 , 1 , 0
@@ -1319,30 +1320,30 @@ SLUG0412.ART, 0 , 0 , 0
 SLUG0512.ART, 0 , 0 , 0
 SLUG0612.ART, 0 , 1 , 0
 SLUG0712.ART, 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 FHILL116.ART, 1 , 0 , 0
 FHILL117.ART, 1 , 0 , 0
-RIPPLE0.ART , 0 , 0 , 0
-BLANK.ART   , 99
+RIPPLE0.ART ,13 , 0 , 0
+NO_FILE
 FHILL105.ART, 1 , 0 , 0
 FHILL107.ART, 1 , 0 , 0
 FHILL106.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 PORTL11.ART , 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 PORTL41.ART , 0 , 1 , 0
 PORTL21A.ART, 0 , 1 , 2 , 4
 PORTL21B.ART, 0 , 1 , 0
 PORTL31A.ART, 0 , 1 , 2 , 4
 PORTL31B.ART, 0 , 1 , 0
-RIPPLE1.ART , 0 , 0 , 4 , 2
-RIPPLE2.ART , 0 , 0 , 4 , 2
-RIPPLE3.ART , 0 , 0 , 4 , 2
-RIPPLE4.ART , 0 , 0 , 4 , 2
+RIPPLE1.ART ,13 , 0 , 4 , 2
+RIPPLE2.ART ,13 , 0 , 4 , 2
+RIPPLE3.ART ,13 , 0 , 4 , 2
+RIPPLE4.ART ,13 , 0 , 4 , 2
 RIPPLE1.ART , 0 , 0 , 0
 RIPPLE2.ART , 0 , 0 , 0
 RIPPLE3.ART , 0 , 0 , 0
@@ -1386,7 +1387,7 @@ OLDMANR2.ART, 99
 OLDMANR3.ART, 99
 GATEB1.ART  , 9 , 1 , 0
 BLANK.ART   , 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
 PORTL14.ART , 0 , 1 , 0
 PORTL24.ART , 0 , 0 , 0
@@ -1399,13 +1400,13 @@ GEMGRAB4.ART, 99
 GEMGRAB5.ART, 99
 GEMGRAB6.ART, 99
 GEMGRAB7.ART, 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+BLANK.ART   , 6 , 1 , 6 , 3
+BLANK.ART   , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+SCRTBLK1.ART, 0 , 0 , 0
+SCRTBLK2.ART, 0 , 0 , 0
+SCRTBLK3.ART, 0 , 0 , 0
+NO_FILE
 *-----------------------------*
 PORTL15.ART , 0 , 1 , 0
 PORTL25.ART , 0 , 0 , 0
@@ -1416,13 +1417,13 @@ YKEYICON.ART, 99
 BKEYICON.ART, 99
 GKEYICON.ART, 99
 ANCICON.ART , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+KFLAG1.ART  , 99
+KFLAG2.ART  , 99
+KFLAG3.ART  , 99
+KFLAG4.ART  , 99
+NO_FILE
+NO_FILE
+NO_FILE
 EXIT5.ART   , 0 , 0 , 0
 EXIT6.ART   , 0 , 0 , 0
 *-----------------------------*
@@ -1433,15 +1434,15 @@ SIGN002A.ART, 0 , 0 , 0
 SIGN002B.ART, 0 , 0 , 0
 SIGN003A.ART, 0 , 0 , 0
 SIGN003B.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 EXIT7.ART   , 0 , 0 , 0
 EXIT8.ART   , 0 , 0 , 0
 *-----------------------------*
@@ -1711,7 +1712,7 @@ JUNG1614.ART, 0 , 0 , 0
 JUNG1714.ART, 0 , 0 , 0
 JUNG1814.ART, 0 , 0 , 0
 *-----------------------------*
-BLANK.ART   , 99
+NO_FILE
 CLOUD001.ART, 0 , 0 , 0
 CLOUD002.ART, 0 , 0 , 0
 CLOUD003.ART, 0 , 0 , 0
@@ -1728,13 +1729,13 @@ CLOUD101.ART, 0 , 0 , 0
 CLOUD102.ART, 0 , 0 , 0
 CLOUD103.ART, 0 , 0 , 0
 CLOUD104.ART, 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
 CLOUD006.ART, 0 , 0 , 0
 CLOUD007.ART, 0 , 0 , 0
 CLOUD008.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 CLOUD009.ART, 0 , 0 , 0
 CLOUD105.ART, 0 , 1 , 0
 CLOUD106.ART, 0 , 1 , 0
@@ -1747,7 +1748,7 @@ CLOUD105.ART, 0 , 0 , 0
 CLOUD106.ART, 0 , 0 , 0
 CLOUD107.ART, 0 , 0 , 0
 CLOUD108.ART, 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
 CLOUD010.ART, 0 , 0 , 0
 CLOUD011.ART, 0 , 0 , 0
@@ -1852,23 +1853,23 @@ SBRG05T.ART , 0 , 1 , 0
 BLANK.ART   , 0 , 0 , 0
 SBRG07T.ART , 0 , 1 , 0
 SBRG08T.ART , 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 SPIKE11.ART , 3 , 1 , 0
 SPIKE7.ART  , 3 , 1 , 0
 SPIKE9.ART  , 3 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 SBRG01B.ART , 1 , 1 , 0
 SBRG02B.ART , 1 , 1 , 0
 SBRG03B.ART , 9 , 1 , 0
 SBRG04B.ART , 0 , 1 , 0
 SBRG05B.ART , 9 , 1 , 0
-BLANK.ART   , 99
+BLANK.ART   , 0 , 0 , 0
 SBRG07B.ART , 9 , 1 , 0
 SBRG08B.ART , 0 , 0 , 0
 SBRG09B.ART , 1 , 0 , 0
@@ -1876,30 +1877,30 @@ SBRG10B.ART , 1 , 0 , 0
 SPIKE12.ART , 3 , 1 , 0
 SPIKE8.ART  , 3 , 0 , 0
 SPIKE10.ART , 3 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 SHILL01.ART , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 SHILL02.ART , 0 , 1 , 0
 SHILL03.ART , 0 , 1 , 0
 SHILL04.ART , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 SHILL101.ART, 2 , 0 , 1 , 0
 SHILL102.ART, 0 , 1 , 0
 SHILL103.ART, 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 SHILL104.ART, 0 , 1 , 0
 SHILL105.ART, 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 *-----------------------------*
 SHILL05.ART , 1 , 0 , 0
 SHILL06.ART , 0 , 1 , 0
@@ -1924,9 +1925,9 @@ SHILL16.ART , 1 , 0 , 0
 SHILL17.ART , 2 , 0 , 5 , 0
 SHILL18.ART , 2 , 0 , 6 , 0
 SHILL19.ART , 1 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 SHILL20.ART , 1 , 0 , 0
 SHILL21.ART , 1 , 0 , 0
 SHILL22.ART , 2 , 0 , 8 , 0
@@ -1954,9 +1955,9 @@ SAND0012.ART, 1 , 0 , 0
 SAND0013.ART, 1 , 0 , 0
 SAND0014.ART, 1 , 0 , 0
 SAND0015.ART, 1 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 SAND0016.ART, 1 , 0 , 0
 SAND0017.ART, 1 , 0 , 0
@@ -1980,21 +1981,21 @@ SAND0033.ART, 0 , 0 , 0
 SAND0034.ART, 0 , 0 , 0
 SAND0035.ART, 1 , 0 , 0
 SAND0036.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+SAND0037.ART, 0 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 DUNE0101.ART, 0 , 0 , 0
 DUNE0201.ART, 0 , 0 , 0
@@ -2129,24 +2130,24 @@ PYRMID34.ART, 1 , 0 , 0
 PYRMID35.ART, 9 , 1 , 0
 PYRMID36.ART, 9 , 1 , 0
 *-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 JUNG0115.ART, 0 , 0 , 0
 JUNG0215.ART, 0 , 0 , 0
@@ -2243,9 +2244,9 @@ JUNG1619.ART, 0 , 0 , 0
 JUNG1719.ART, 0 , 0 , 0
 JUNG1819.ART, 0 , 0 , 0
 *-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 TARPIT01.ART, 0 , 1 , 3 , 1
 TARPIT02.ART, 0 , 0 , 0
 TARPIT03.ART, 0 , 0 , 0
@@ -2255,12 +2256,12 @@ TARPIT06.ART, 0 , 0 , 0
 TARPIT07.ART, 0 , 1 , 3 , 1
 TARPIT08.ART, 0 , 0 , 0
 TARPIT09.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 TARPIT10.ART, 1 , 0 , 3 , 1
 TARPIT11.ART, 0 , 0 , 0
@@ -2274,12 +2275,12 @@ TARPIT18.ART, 0 , 0 , 0
 TARPIT19.ART, 1 , 0 , 3 , 1
 TARPIT20.ART, 0 , 0 , 0
 TARPIT21.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 FBRG01T.ART , 0 , 1 , 0
 FBRG02T.ART , 0 , 1 , 0
@@ -2289,59 +2290,59 @@ SBRG05T.ART , 0 , 1 , 0
 BLANK.ART   , 0 , 0 , 0
 FBRG07T.ART , 0 , 1 , 0
 FBRG08T.ART , 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
 *-----------------------------*
 FBRG01B.ART , 1 , 1 , 0
 FBRG02B.ART , 1 , 1 , 0
 FBRG03B.ART , 9 , 1 , 0
 FBRG04B.ART , 0 , 1 , 0
 SBRG05B.ART , 9 , 1 , 0
-BLANK.ART   , 99
+BLANK.ART   , 0 , 0 , 0
 FBRG07B.ART , 9 , 1 , 0
 FBRG08B.ART , 0 , 0 , 0
 FBRG09B.ART , 1 , 0 , 0
 FBRG10B.ART , 1 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+SCUBA1.ART  , 0 ,13 , 0
+SCUBA2.ART  , 0 ,13 , 0
+SCUBA3.ART  , 0 ,13 , 0
 *-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-*-----------------------------*
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+SCUBA4.ART  , 0 ,13 , 0
+SCUBA5.ART  , 0 ,13 , 0
+SCUBA6.ART  , 0 ,13 , 0
+*-----------------------------* 2215-2232
+NO_FILE
 ICE002.ART  , 0 , 1 , 0
 ICE003.ART  , 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 ICE005.ART  , 0 , 1 , 0
 ICE006.ART  , 0 , 1 , 0
 ICE007.ART  , 0 , 1 , 0
@@ -2356,7 +2357,7 @@ ICE015.ART  , 0 , 1 , 0
 ICE016.ART  , 6 , 0 , 0
 ICE017.ART  , 0 , 0 , 0
 ICE018.ART  , 0 , 0 , 0
-*-----------------------------*
+*-----------------------------* 2233-2250
 ICE019.ART  , 0 , 0 , 0
 ICE020.ART  , 1 , 0 , 0
 ICE021.ART  , 1 , 0 , 0
@@ -2375,26 +2376,26 @@ ICE033.ART  , 5 , 1 , 0
 ICE034.ART  , 5 , 1 , 0
 ICE035.ART  , 0 , 0 , 0
 ICE036.ART  , 0 , 0 , 0
-*-----------------------------*
+*-----------------------------* 2251-2268
 ICE037.ART  , 0 , 0 , 0
 ICE038.ART  , 3 , 1 , 0
 ICE039.ART  , 3 , 1 , 0
 ICE040.ART  , 1 , 0 , 0
 ICE041.ART  , 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 ICE044.ART  , 0 , 1 , 0
 ICE045.ART  , 0 , 1 , 0
 ICE046.ART  , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 ICE048.ART  , 0 , 1 , 0
 ICE049.ART  , 0 , 1 , 0
 ICE050.ART  , 0 , 1 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
 ICE053.ART  , 0 , 0 , 0
 ICE054.ART  , 0 , 0 , 0
-*-----------------------------*
+*-----------------------------* 2269-2286
 ICE055.ART  , 0 , 0 , 0
 ICE056.ART  , 3 , 0 , 0
 ICE057.ART  , 3 , 1 , 0
@@ -2413,12 +2414,12 @@ ICE069.ART  , 0 , 1 , 0
 ICE070.ART  , 0 , 1 , 0
 ICE071.ART  , 0 , 0 , 0
 ICE072.ART  , 0 , 0 , 0
-*-----------------------------*
-BLANK.ART   , 99
+*-----------------------------* 2287-2304
+NO_FILE
 ICE074.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
 ICE078.ART  , 2 , 0 , 5 , 0
 ICE079.ART  , 2 , 1 , 6 , 0
 ICE080.ART  , 0 , 1 , 0
@@ -2432,15 +2433,15 @@ ICE087.ART  , 2 , 0 , 7 , 0
 ICE088.ART  , 0 , 0 , 0
 ICE089.ART  , 0 , 0 , 0
 ICE090.ART  , 0 , 0 , 0
-*-----------------------------*
+*-----------------------------* 2305-2322
 ICE091.ART  , 1 , 0 , 0
 ICE092.ART  , 1 , 0 , 0
 ICE093.ART  , 1 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 ICE095.ART  , 9 , 1 , 0
 ICE096.ART  , 9 , 1 , 0
 ICE097.ART  , 9 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 ICE099.ART  , 1 , 0 , 0
 ICE100.ART  , 1 , 0 , 0
 ICE101.ART  , 1 , 0 , 0
@@ -2448,10 +2449,10 @@ ICE102.ART  , 1 , 0 , 0
 ICE103.ART  , 0 , 1 , 0
 ICE104.ART  , 0 , 1 , 0
 ICE105.ART  , 0 , 1 , 0
-BLANK.ART   , 99
+NO_FILE
 ICE107.ART  , 0 , 0 , 0
 ICE108.ART  , 0 , 0 , 0
-*-----------------------------*
+*-----------------------------* 2323-2340
 ICE109.ART  , 9 , 1 , 0
 ICE110.ART  , 9 , 1 , 0
 ICE111.ART  , 9 , 1 , 0
@@ -2463,86 +2464,1455 @@ ICE116.ART  , 9 , 1 , 0
 ICE117.ART  , 9 , 1 , 0
 ICE118.ART  , 9 , 1 , 0
 ICE119.ART  , 9 , 1 , 0
-ICE120.ART  , 0 , 0 , 0
-ICE121.ART  , 0 , 0 , 0
-ICE122.ART  , 0 , 0 , 0
-ICE123.ART  , 0 , 0 , 0
-BLANK.ART   , 99
+ICE120.ART  , 2 , 0 , 1 , 0
+ICE121.ART  , 9 , 0 , 0
+ICE122.ART  , 9 , 0 , 0
+ICE123.ART  , 2 , 0 , 2 , 0
+NO_FILE
 ICE125.ART  , 0 , 0 , 0
 ICE126.ART  , 0 , 0 , 0
-*-----------------------------*
+*-----------------------------* 2341-2358
+ICE116.ART  , 9 , 0 , 0
+ICE117.ART  , 9 , 0 , 0
+ICE118.ART  , 9 , 0 , 0
+ICE119.ART  , 9 , 0 , 0
+NO_FILE
+ICE132.ART  , 0 , 0 , 0
+ICE133.ART  , 9 , 0 , 0
+ICE134.ART  , 0 , 0 , 0
+ICE135.ART  , 1 , 0 , 0
+ICE136.ART  , 0 , 0 , 0
+ICE137.ART  , 0 , 0 , 0
+ICE138.ART  , 9 , 0 , 0
+ICE139.ART  , 9 , 0 , 0
+ICE140.ART  , 9 , 0 , 0
+ICE141.ART  , 9 , 0 , 0
+NO_FILE
+ICE143.ART  , 0 , 0 , 0
+ICE144.ART  , 0 , 0 , 0
+*-----------------------------* 2359-2376
 ICE116.ART  , 0 , 0 , 0
 ICE117.ART  , 0 , 0 , 0
 ICE118.ART  , 0 , 0 , 0
 ICE119.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-ICE132.ART  , 0 , 0 , 0
-ICE133.ART  , 0 , 0 , 0
-ICE134.ART  , 0 , 0 , 0
-ICE135.ART  , 0 , 0 , 0
-ICE136.ART  , 0 , 0 , 0
-ICE137.ART  , 0 , 0 , 0
-ICE138.ART  , 0 , 0 , 0
-ICE139.ART  , 0 , 0 , 0
-ICE140.ART  , 0 , 0 , 0
-ICE141.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-*-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
 ICE150.ART  , 0 , 0 , 0
-BLANK.ART   , 99
+NO_FILE
 ICE152.ART  , 1 , 0 , 0
 ICE153.ART  , 1 , 0 , 0
 ICE154.ART  , 0 , 0 , 0
 ICE155.ART  , 0 , 0 , 0
-ICE156.ART  , 0 , 0 , 0
+ICE156.ART  , 9 , 0 , 0
 ICE157.ART  , 0 , 0 , 0
 ICE158.ART  , 0 , 0 , 0
-ICE159.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-*-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+ICE159.ART  , 9 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 2377-2394
+ICE163.ART  , 9 , 1 , 0
+ICE164.ART  , 3 , 1 , 4 , 3
+ICE165.ART  , 0 , 0 , 0
+ICE166.ART  , 0 , 0 , 0
+ICE167.ART  , 0 , 0 , 0
 ICE168.ART  , 1 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-ICE174.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-ICE177.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-*-----------------------------*
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+ICE169.ART  , 0 , 0 , 0
+ICE170.ART  , 0 , 0 , 0
+ICE171.ART  , 0 , 0 , 0
+ICE172.ART  , 0 , 0 , 0
+ICE173.ART  , 0 , 0 , 0
+ICE174.ART  , 9 , 0 , 0
+NO_FILE
+NO_FILE
+ICE177.ART  , 9 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 2395-2412
+RKTLIFT1.ART, 9 , 1 , 4 , 2
+RKTLIFT2.ART, 9 , 1 , 4 , 2
+RKTLIFT3.ART, 9 , 1 , 4 , 2
+RKTLIFT4.ART, 9 , 1 , 4 , 2
+RKTLIFT1.ART, 0 , 0 , 0
+RKTLIFT2.ART, 0 , 0 , 0
+RKTLIFT3.ART, 0 , 0 , 0
+RKTLIFT5.ART, 0 , 1 , 0
+RKTLIFT6.ART, 0 , 1 , 0
+RKTLIFT7.ART, 0 , 1 , 0
+NO_FILE
 ICE192.ART  , 1 , 0 , 0
 ICE193.ART  , 1 , 0 , 0
 ICE194.ART  , 1 , 0 , 0
 ICE195.ART  , 1 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 2413-2430
+MAPWKU1.ART , 99
+MAPWKU2.ART , 99
+MAPWKU3.ART , 99
+MAPWKD1.ART , 99
+MAPWKD2.ART , 99
+MAPWKD3.ART , 99
+MAPWKL1.ART , 99
+MAPWKL2.ART , 99
+MAPWKL3.ART , 99
+MAPWKR1.ART , 99
+MAPWKR2.ART , 99
+MAPWKR3.ART , 99
+MAPWKUL1.ART, 99
+MAPWKUL2.ART, 99
+MAPWKUL3.ART, 99
+MAPWKUR1.ART, 99
+MAPWKUR2.ART, 99
+MAPWKUR3.ART, 99
+*-----------------------------* 2431-2448
+MAPWKDL1.ART, 99
+MAPWKDL2.ART, 99
+MAPWKDL3.ART, 99
+MAPWKDR1.ART, 99
+MAPWKDR2.ART, 99
+MAPWKDR3.ART, 99
+SWIMU1.ART  , 99
+SWIMU2.ART  , 99
+SWIMD1.ART  , 99
+SWIMD2.ART  , 99
+SWIML1.ART  , 99
+SWIML2.ART  , 99
+SWIMR1.ART  , 99
+SWIMR2.ART  , 99
+SWIMUL1.ART , 99
+SWIMUL2.ART , 99
+SWIMUR1.ART , 99
+SWIMUR2.ART , 99
+*-----------------------------* 2449-2466
+SWIMDL1.ART , 99
+SWIMDL2.ART , 99
+SWIMDR1.ART , 99
+SWIMDR2.ART , 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 2467-2484
+MAP-001.ART , 0 , 0 , 0
+MAP-002.ART , 1 , 0 , 0
+MAP-003.ART , 1 , 0 , 0
+MAP-004.ART , 0 , 0 , 0
+MAP-005.ART , 0 , 0 , 0
+MAP-006.ART , 1 , 0 , 0
+MAP-007.ART , 1 , 0 , 0
+MAP-008.ART , 0 , 0 , 0
+MAP-009.ART , 0 , 0 , 0
+MAP-010.ART , 1 , 0 , 0
+MAP-011.ART , 1 , 0 , 0
+MAP-012.ART , 0 , 0 , 0
+MAP-013.ART , 0 , 0 , 0
+MAP-014.ART , 1 , 0 , 0
+MAP-015.ART , 1 , 0 , 0
+MAP-016.ART , 0 , 0 , 0
+MAP-017.ART , 0 , 0 , 0
+MAP-018.ART , 0 , 0 , 0
+*-----------------------------* 2485-2502
+MAP-019.ART , 1 , 0 , 0
+MAP-020.ART , 1 , 0 , 0
+MAP-021.ART , 1 , 0 , 0
+MAP-022.ART , 1 , 0 , 0
+MAP-023.ART , 1 , 0 , 0
+MAP-024.ART , 1 , 0 , 0
+MAP-025.ART , 1 , 0 , 0
+MAP-026.ART , 1 , 0 , 0
+MAP-027.ART , 1 , 0 , 0
+MAP-028.ART , 1 , 0 , 0
+MAP-029.ART , 1 , 0 , 0
+MAP-030.ART , 1 , 0 , 0
+MAP-031.ART , 1 , 0 , 0
+MAP-032.ART , 1 , 0 , 0
+MAP-033.ART , 1 , 0 , 0
+MAP-034.ART , 1 , 0 , 0
+MAP-035.ART , 0 , 0 , 0
+MAP-036.ART , 0 , 0 , 0
+*-----------------------------* 2503-2520
+MAP-037.ART , 1 , 0 , 0
+MAP-038.ART , 1 , 0 , 0
+MAP-039.ART , 1 , 0 , 0
+MAP-040.ART , 1 , 0 , 0
+MAP-041.ART , 1 , 0 , 0
+MAP-042.ART , 1 , 0 , 0
+MAP-043.ART , 1 , 0 , 0
+MAP-044.ART , 1 , 0 , 0
+MAP-045.ART , 1 , 0 , 0
+MAP-046.ART , 1 , 0 , 0
+MAP-047.ART , 1 , 0 , 0
+MAP-048.ART , 1 , 0 , 0
+MAP-049.ART , 1 , 0 , 0
+MAP-050.ART , 1 , 0 , 0
+MAP-051.ART , 1 , 0 , 0
+MAP-052.ART , 1 , 0 , 0
+MAP-053.ART , 0 , 0 , 0
+MAP-054.ART , 0 , 0 , 0
+*-----------------------------* 2521-2538
+MAP-055.ART , 0 , 0 , 0
+MAP-056.ART , 1 , 0 , 0
+MAP-057.ART , 1 , 0 , 0
+MAP-058.ART , 0 , 0 , 0
+MAP-059.ART , 0 , 0 , 0
+MAP-060.ART , 1 , 0 , 0
+MAP-061.ART , 1 , 0 , 0
+MAP-062.ART , 0 , 0 , 0
+MAP-063.ART , 0 , 0 , 0
+MAP-064.ART , 1 , 0 , 0
+MAP-065.ART , 1 , 0 , 0
+MAP-066.ART , 0 , 0 , 0
+MAP-067.ART , 0 , 0 , 0
+MAP-068.ART , 1 , 0 , 0
+MAP-069.ART , 1 , 0 , 0
+MAP-070.ART , 0 , 0 , 0
+MAP-071.ART , 9 , 1 , 0
+MAP-072.ART , 9 , 1 , 0
+*-----------------------------* 2539-2556
+MAP-073.ART , 0 , 0 , 0
+MAP-074.ART , 1 , 0 , 0
+MAP-075.ART , 1 , 0 , 0
+MAP-076.ART , 1 , 0 , 0
+MAP-077.ART , 1 , 0 , 0
+MAP-078.ART , 1 , 0 , 0
+MAP-079.ART , 1 , 0 , 0
+MAP-080.ART , 1 , 0 , 0
+MAP-081.ART , 1 , 0 , 0
+MAP-082.ART , 1 , 0 , 0
+MAP-083.ART , 1 , 0 , 0
+MAP-084.ART , 1 , 0 , 0
+MAP-085.ART , 1 , 0 , 0
+MAP-086.ART , 1 , 0 , 0
+MAP-087.ART , 1 , 0 , 0
+MAP-088.ART , 1 , 0 , 0
+MAP-089.ART , 0 , 0 , 0
+MAP-090.ART , 0 , 0 , 0
+*-----------------------------* 2557-2574
+MAP-091.ART , 1 , 0 , 0
+MAP-092.ART , 1 , 0 , 0
+MAP-093.ART , 1 , 0 , 0
+MAP-094.ART , 1 , 0 , 0
+MAP-095.ART , 1 , 0 , 0
+MAP-096.ART , 1 , 0 , 0
+MAP-097.ART , 1 , 0 , 0
+MAP-098.ART , 1 , 0 , 0
+MAP-099.ART , 1 , 0 , 0
+MAP-100.ART , 1 , 0 , 0
+MAP-101.ART , 1 , 0 , 0
+MAP-102.ART , 1 , 0 , 0
+MAP-103.ART , 1 , 0 , 0
+MAP-104.ART , 1 , 0 , 0
+MAP-105.ART , 1 , 0 , 0
+MAP-106.ART , 1 , 0 , 0
+MAP-009.ART , 0 ,12 , 0
+NO_FILE
+*-----------------------------* 2575-2592
+MAP-109.ART , 1 , 0 , 0
+MAP-110.ART , 1 , 0 , 0
+MAP-111.ART , 1 , 0 , 0
+MAP-112.ART , 1 , 0 , 0
+MAP-113.ART , 1 , 0 , 0
+MAP-114.ART , 1 , 0 , 0
+MAP-115.ART , 0 , 0 , 0
+MAP-116.ART , 0 , 0 , 0
+MAP-117.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-121.ART , 1 , 0 , 0
+MAP-122.ART , 1 , 0 , 0
+MAP-123.ART , 1 , 0 , 0
+MAP-124.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+*-----------------------------* 2593-2610
+MAP-127.ART , 0 , 0 , 0
+MAP-128.ART , 1 , 0 , 0
+MAP-129.ART , 1 , 0 , 0
+MAP-130.ART , 1 , 0 , 0
+MAP-131.ART , 1 , 0 , 0
+NO_FILE
+MAP-133.ART , 0 , 0 , 0
+MAP-134.ART , 0 , 0 , 0
+NO_FILE
+MAP-136.ART , 1 , 0 , 0
+MAP-137.ART , 1 , 0 , 0
+MAP-138.ART , 1 , 0 , 0
+NO_FILE
+MAP-140.ART , 1 , 0 , 0
+MAP-141.ART , 1 , 0 , 0
+MAP-142.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+*-----------------------------* 2611-2628
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-149.ART , 1 , 0 , 0
+NO_FILE
+MAP-151.ART , 0 , 0 , 0
+MAP-152.ART , 0 , 0 , 0
+MAP-153.ART , 0 , 0 , 0
+MAP-154.ART , 1 , 0 , 0
+MAP-155.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-158.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 2629-2646
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-167.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-171.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-174.ART , 0 , 0 , 0
+MAP-175.ART , 0 , 0 , 0
+MAP-176.ART , 0 , 0 , 0
+MAP-177.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 2647-2664
+MAP-181.ART , 1 , 0 , 2 , 2
+MAP-182.ART , 0 , 0 , 0
+MAP-183.ART , 1 , 0 , 2 , 2
+MAP-184.ART , 0 , 0 , 0
+MAP-185.ART , 1 , 0 , 2 , 2
+MAP-186.ART , 0 , 0 , 0
+MAP-187.ART , 1 , 0 , 2 , 2
+MAP-188.ART , 0 , 0 , 0
+MAP-189.ART , 1 , 0 , 2 , 2
+MAP-190.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-194.ART , 0 , 0 , 0
+MAP-195.ART , 0 , 0 , 0
+MAP-196.ART , 0 , 0 , 0
+MAP-197.ART , 0 , 0 , 0
+NO_FILE
+*-----------------------------* 2665-2682
+MAP-199.ART , 1 , 0 , 2 , 2
+MAP-200.ART , 0 , 0 , 0
+MAP-201.ART , 1 , 0 , 2 , 2
+MAP-202.ART , 0 , 0 , 0
+MAP-203.ART , 1 , 0 , 2 , 2
+MAP-204.ART , 0 , 0 , 0
+MAP-205.ART , 1 , 0 , 2 , 2
+MAP-206.ART , 0 , 0 , 0
+MAP-207.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-210.ART ,13 , 0 , 0
+MAP-211.ART , 1 , 0 , 0
+MAP-212.ART , 0 , 0 , 0
+MAP-213.ART , 0 , 0 , 0
+MAP-214.ART , 0 , 0 , 0
+MAP-215.ART , 0 , 0 , 0
+NO_FILE
+*-----------------------------* 2683-2700
+MAP-217.ART , 1 , 0 , 2 , 2
+MAP-218.ART , 0 , 0 , 0
+MAP-219.ART , 1 , 0 , 2 , 2
+MAP-220.ART , 0 , 0 , 0
+MAP-221.ART , 1 , 0 , 2 , 2
+MAP-222.ART , 0 , 0 , 0
+MAP-223.ART , 0 , 0 , 2 , 2
+MAP-224.ART , 0 , 0 , 0
+MAP-225.ART , 0 , 0 , 0
+MAP-226.ART , 0 , 0 , 0
+MAP-227.ART , 0 , 0 , 0
+MAP-228.ART , 1 , 0 , 0
+MAP-229.ART , 1 , 0 , 0
+NO_FILE
+MAP-231.ART , 1 , 0 , 0
+MAP-232.ART , 1 , 0 , 0
+MAP-233.ART , 1 , 0 , 0
+NO_FILE
+*-----------------------------* 2701-2718
+MAP-235.ART , 1 , 0 , 2 , 2
+MAP-236.ART , 0 , 0 , 0
+MAP-237.ART , 1 , 0 , 2 , 2
+MAP-238.ART , 0 , 0 , 0
+MAP-239.ART , 1 , 0 , 2 , 2
+MAP-240.ART , 0 , 0 , 0
+MAP-241.ART , 1 , 0 , 2 , 2
+MAP-242.ART , 0 , 0 , 0
+MAP-243.ART , 0 , 0 , 0
+MAP-244.ART , 0 , 0 , 0
+MAP-245.ART ,13 , 0 , 0
+MAP-246.ART , 1 , 0 , 0
+MAP-247.ART , 1 , 0 , 0
+MAP-248.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-251.ART , 1 , 0 , 0
+NO_FILE
+*-----------------------------* 2719-2736
+NO_FILE
+MAP-254.ART , 0 , 0 , 0
+MAP-255.ART , 1 , 0 , 0
+MAP-256.ART , 1 , 0 , 0
+NO_FILE
+MAP-258.ART , 1 , 0 , 0
+MAP-259.ART , 1 , 0 , 0
+MAP-260.ART , 1 , 0 , 2 , 2
+MAP-261.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-264.ART ,13 , 0 , 0
+MAP-265.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-268.ART , 1 , 0 , 0
+MAP-269.ART , 1 , 0 , 0
+NO_FILE
+*-----------------------------* 2737-2754
+NO_FILE
+MAP-272.ART , 1 , 0 , 0
+MAP-273.ART , 1 , 0 , 0
+MAP-274.ART , 1 , 0 , 0
+MAP-275.ART , 1 , 0 , 0
+MAP-276.ART , 1 , 0 , 0
+MAP-277.ART , 1 , 0 , 0
+MAP-278.ART , 1 , 0 , 2 , 2
+MAP-279.ART , 0 , 0 , 0
+MAP-280.ART , 1 , 0 , 2 , 2
+MAP-281.ART , 0 , 0 , 0
+MAP-282.ART , 1 , 0 , 0
+MAP-283.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-286.ART , 1 , 0 , 0
+MAP-287.ART , 1 , 0 , 0
+NO_FILE
+*-----------------------------* 2755-2772
+MAP-289.ART , 0 , 0 , 0
+MAP-290.ART , 1 , 0 , 0
+MAP-291.ART , 0 , 0 , 0
+MAP-292.ART , 0 , 0 , 0
+MAP-293.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-296.ART , 1 , 0 , 2 , 2
+MAP-297.ART , 0 , 0 , 0
+MAP-298.ART , 1 , 0 , 2 , 2
+MAP-299.ART , 0 , 0 , 0
+MAP-300.ART , 1 , 0 , 0
+MAP-301.ART , 1 , 0 , 0
+MAP-302.ART , 1 , 0 , 0
+MAP-303.ART , 1 , 0 , 0
+MAP-304.ART , 1 , 0 , 0
+MAP-305.ART , 1 , 0 , 0
+NO_FILE
+*-----------------------------* 2773-2790
+MAP-307.ART , 0 , 0 , 0
+MAP-308.ART , 0 , 0 , 0
+MAP-309.ART , 0 , 0 , 0
+MAP-310.ART , 1 , 0 , 0
+MAP-311.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-314.ART , 1 , 0 , 2 , 2
+MAP-315.ART , 0 , 0 , 0
+MAP-316.ART , 1 , 0 , 2 , 2
+MAP-317.ART , 0 , 0 , 0
+MAP-318.ART , 1 , 0 , 0
+MAP-319.ART , 1 , 0 , 0
+MAP-320.ART , 1 , 0 , 0
+MAP-321.ART , 1 , 0 , 0
+MAP-322.ART , 1 , 0 , 0
+MAP-323.ART , 1 , 0 , 0
+NO_FILE
+*-----------------------------* 2791-2808
+MAP-325.ART , 0 , 0 , 0
+MAP-326.ART , 0 , 0 , 0
+MAP-327.ART , 0 , 0 , 0
+MAP-328.ART ,13 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-334.ART , 0 , 0 , 0
+MAP-335.ART , 0 , 0 , 0
+NO_FILE
+MAP-337.ART , 1 , 0 , 0
+MAP-338.ART , 1 , 0 , 0
+MAP-339.ART , 0 , 0 , 0
+MAP-340.ART , 0 , 0 , 0
+MAP-341.ART , 0 , 0 , 0
+MAP-342.ART , 0 , 0 , 0
+*-----------------------------* 2809-2826
+MAP-343.ART , 1 , 0 , 0
+MAP-344.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-347.ART , 1 , 0 , 0
+MAP-348.ART , 1 , 0 , 0
+MAP-349.ART , 1 , 0 , 0
+NO_FILE
+MAP-351.ART , 0 , 0 , 0
+MAP-352.ART , 0 , 0 , 0
+MAP-353.ART , 0 , 0 , 0
+MAP-354.ART , 0 , 0 , 0
+MAP-355.ART , 0 , 0 , 0
+MAP-356.ART , 0 , 0 , 0
+MAP-357.ART , 0 , 0 , 0
+MAP-358.ART , 0 , 0 , 0
+MAP-359.ART , 0 , 0 , 0
+MAP-360.ART , 1 , 0 , 0
+*-----------------------------* 2827-2844
+MAP-361.ART , 1 , 0 , 0
+MAP-362.ART , 1 , 0 , 0
+MAP-363.ART , 0 , 0 , 0
+MAP-364.ART , 0 , 0 , 0
+MAP-365.ART , 1 , 0 , 0
+MAP-366.ART , 1 , 0 , 0
+MAP-367.ART , 1 , 0 , 0
+NO_FILE
+MAP-369.ART , 9 , 0 , 0
+MAP-370.ART , 0 , 0 , 0
+MAP-371.ART , 0 , 0 , 0
+MAP-372.ART , 9 , 0 , 0
+MAP-373.ART , 0 , 0 , 0
+NO_FILE
+MAP-375.ART ,13 , 0 , 0
+MAP-376.ART ,13 , 0 , 0
+MAP-377.ART ,13 , 0 , 0
+MAP-378.ART ,13 , 0 , 0
+*-----------------------------* 2845-2862
+MAP-379.ART , 1 , 0 , 0
+MAP-380.ART , 1 , 0 , 0
+MAP-381.ART , 0 , 0 , 0
+MAP-382.ART , 0 , 0 , 0
+MAP-383.ART , 1 , 0 , 0
+MAP-384.ART , 1 , 0 , 0
+MAP-385.ART , 1 , 0 , 0
+MAP-386.ART , 9 , 1 , 0
+MAP-387.ART , 1 , 0 , 0
+MAP-388.ART , 0 , 0 , 0
+MAP-389.ART , 0 , 0 , 0
+MAP-390.ART , 1 , 0 , 0
+MAP-391.ART , 9 , 1 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 2863-2880
+MAP-397.ART , 1 , 0 , 0
+MAP-398.ART , 1 , 0 , 0
+MAP-399.ART , 0 , 0 , 0
+MAP-400.ART , 0 , 0 , 0
+MAP-401.ART , 1 , 0 , 0
+MAP-402.ART , 1 , 0 , 0
+MAP-403.ART , 1 , 0 , 0
+MAP-404.ART , 9 , 1 , 0
+MAP-405.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-408.ART , 1 , 0 , 0
+MAP-409.ART , 9 , 1 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 2881-2898
+MAP-415.ART , 1 , 0 , 0
+MAP-416.ART , 1 , 0 , 0
+MAP-417.ART , 9 , 0 , 0
+MAP-418.ART , 9 , 0 , 0
+MAP-419.ART , 1 , 0 , 0
+MAP-420.ART , 1 , 0 , 0
+MAP-421.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-427.ART , 0 , 0 , 0
+MAP-428.ART , 0 , 0 , 0
+MAP-429.ART , 0 , 0 , 0
+MAP-430.ART , 0 , 0 , 0
+MAP-431.ART , 0 , 0 , 0
+MAP-432.ART , 0 , 0 , 0
+*-----------------------------* 2899-2916
+NO_FILE
+MAP-434.ART , 0 , 0 , 0
+MAP-435.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-439.ART , 0 , 1 , 0
+MAP-440.ART , 0 , 1 , 0
+MAP-441.ART , 0 , 1 , 0
+MAP-442.ART , 0 , 1 , 0
+MAP-443.ART , 0 , 1 , 0
+MAP-444.ART , 0 , 1 , 0
+MAP-445.ART , 9 , 0 , 0
+MAP-446.ART , 9 , 0 , 0
+MAP-447.ART , 9 , 0 , 0
+MAP-448.ART , 9 , 0 , 0
+MAP-449.ART , 9 , 0 , 0
+MAP-450.ART , 9 , 0 , 0
+*-----------------------------* 2917-2934
+NO_FILE
+MAP-452.ART , 0 , 0 , 0
+MAP-453.ART , 0 , 0 , 0
+MAP-454.ART , 0 , 0 , 0
+MAP-455.ART , 0 , 0 , 0
+MAP-456.ART , 0 , 0 , 0
+MAP-457.ART , 0 , 1 , 0
+MAP-458.ART , 9 , 1 , 0
+MAP-459.ART , 9 , 1 , 0
+MAP-460.ART , 9 , 1 , 0
+MAP-461.ART , 9 , 1 , 0
+MAP-462.ART , 0 , 1 , 0
+MAP-463.ART , 9 , 0 , 0
+MAP-464.ART , 9 , 0 , 0
+MAP-465.ART , 9 , 0 , 0
+MAP-466.ART , 9 , 0 , 0
+MAP-467.ART , 9 , 0 , 0
+MAP-468.ART , 9 , 0 , 0
+*-----------------------------* 2935-2952
+MAP-469.ART , 0 , 0 , 0
+MAP-470.ART , 1 , 0 , 0
+MAP-471.ART , 1 , 0 , 0
+MAP-472.ART , 1 , 0 , 0
+MAP-473.ART , 1 , 0 , 0
+MAP-474.ART , 9 , 0 , 0
+MAP-475.ART , 9 , 1 , 0
+MAP-476.ART , 9 , 1 , 0
+MAP-477.ART , 9 , 1 , 0
+MAP-478.ART , 9 , 1 , 0
+MAP-479.ART , 9 , 1 , 0
+MAP-480.ART , 9 , 1 , 0
+MAP-481.ART , 9 , 0 , 0
+MAP-482.ART , 9 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-485.ART , 9 , 0 , 0
+MAP-486.ART , 9 , 0 , 0
+*-----------------------------* 2953-2970
+MAP-487.ART , 9 , 0 , 0
+MAP-488.ART , 1 , 0 , 0
+MAP-489.ART , 1 , 0 , 0
+MAP-490.ART , 1 , 0 , 0
+MAP-491.ART , 1 , 0 , 0
+MAP-492.ART , 9 , 0 , 0
+MAP-493.ART , 9 , 1 , 0
+MAP-494.ART , 9 , 1 , 0
+MAP-495.ART , 9 , 1 , 0
+MAP-496.ART , 9 , 1 , 0
+MAP-497.ART , 9 , 1 , 0
+MAP-498.ART , 9 , 1 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-503.ART , 1 , 0 , 0
+MAP-504.ART , 1 , 0 , 0
+*-----------------------------* 2971-2988
+MAP-505.ART , 9 , 0 , 0
+MAP-506.ART , 9 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-509.ART , 9 , 0 , 0
+MAP-510.ART , 9 , 0 , 0
+MAP-511.ART , 9 , 1 , 0
+MAP-512.ART , 9 , 1 , 0
+NO_FILE
+NO_FILE
+MAP-515.ART , 9 , 1 , 0
+MAP-516.ART , 9 , 1 , 0
+NO_FILE
+NO_FILE
+MAP-519.ART , 0 , 0 , 0
+MAP-520.ART , 0 , 0 , 0
+MAP-521.ART , 0 , 0 , 0
+MAP-522.ART , 0 , 0 , 0
+*-----------------------------* 2989-3006
+MAP-523.ART , 1 , 0 , 0
+MAP-524.ART , 1 , 0 , 0
+MAP-525.ART , 1 , 0 , 0
+MAP-526.ART , 1 , 0 , 0
+MAP-527.ART , 1 , 0 , 0
+MAP-528.ART , 1 , 0 , 0
+MAP-529.ART , 1 , 0 , 0
+MAP-530.ART , 1 , 0 , 0
+MAP-531.ART , 1 , 0 , 0
+MAP-532.ART , 1 , 0 , 0
+MAP-533.ART , 1 , 0 , 0
+MAP-534.ART , 1 , 0 , 0
+MAP-535.ART , 0 , 0 , 0
+MAP-536.ART , 0 , 0 , 0
+MAP-537.ART , 0 , 0 , 0
+MAP-538.ART , 0 , 0 , 0
+MAP-539.ART , 0 , 0 , 0
+NO_FILE
+*-----------------------------* 3007-3024
+MAP-541.ART , 1 , 0 , 0
+MAP-542.ART , 1 , 0 , 0
+MAP-543.ART , 0 , 0 , 0
+MAP-544.ART , 0 , 0 , 0
+MAP-545.ART , 1 , 0 , 0
+MAP-546.ART , 1 , 0 , 0
+MAP-547.ART , 1 , 0 , 0
+MAP-548.ART , 1 , 0 , 0
+MAP-549.ART , 1 , 0 , 0
+MAP-550.ART , 0 , 0 , 0
+MAP-551.ART , 1 , 0 , 0
+MAP-552.ART , 1 , 0 , 0
+MAP-553.ART , 0 , 0 , 0
+MAP-554.ART , 9 , 0 , 0
+MAP-555.ART , 1 , 0 , 0
+MAP-556.ART , 1 , 0 , 0
+MAP-557.ART , 9 , 0 , 0
+MAP-558.ART , 9 , 0 , 0
+*-----------------------------* 3025-3042
+MAP-559.ART , 1 , 0 , 0
+MAP-560.ART , 1 , 0 , 0
+MAP-561.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-564.ART , 0 , 0 , 0
+MAP-565.ART , 0 , 0 , 0
+MAP-566.ART , 0 , 0 , 0
+MAP-567.ART , 9 , 0 , 0
+MAP-568.ART , 1 , 0 , 0
+MAP-569.ART , 0 , 0 , 0
+MAP-570.ART , 0 , 0 , 0
+MAP-571.ART , 9 , 0 , 0
+MAP-572.ART , 1 , 0 , 0
+MAP-573.ART , 0 , 0 , 0
+MAP-574.ART , 0 , 0 , 0
+MAP-575.ART , 1 , 0 , 0
+MAP-576.ART , 9 , 0 , 0
+*-----------------------------* 3043-3060
+MAP-577.ART , 1 , 0 , 0
+MAP-578.ART , 1 , 0 , 0
+MAP-579.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-583.ART , 0 , 0 , 0
+MAP-584.ART , 9 , 0 , 0
+MAP-585.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+MAP-589.ART , 9 , 0 , 0
+MAP-590.ART , 9 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-593.ART , 9 , 0 , 0
+MAP-594.ART , 9 , 0 , 0
+*-----------------------------* 3061-3078
+MAP-595.ART , 1 , 0 , 0
+MAP-596.ART , 0 , 0 , 0
+MAP-597.ART , 0 , 0 , 0
+MAP-598.ART , 0 , 0 , 0
+MAP-599.ART , 0 , 0 , 0
+MAP-600.ART , 9 , 0 , 0
+MAP-601.ART , 9 , 0 , 0
+MAP-602.ART , 0 , 0 , 0
+MAP-603.ART , 0 , 0 , 0
+MAP-604.ART , 0 , 0 , 0
+MAP-605.ART , 1 , 0 , 0
+MAP-606.ART , 1 , 0 , 0
+MAP-607.ART , 0 , 0 , 0
+MAP-608.ART , 0 , 0 , 0
+MAP-609.ART , 0 , 0 , 0
+MAP-610.ART , 0 , 0 , 0
+MAP-611.ART , 0 , 0 , 0
+NO_FILE
+*-----------------------------* 3079-3096
+MAP-613.ART , 1 , 0 , 0
+MAP-614.ART , 1 , 0 , 0
+MAP-615.ART , 1 , 0 , 0
+MAP-616.ART , 0 , 0 , 0
+MAP-617.ART , 0 , 0 , 0
+MAP-618.ART , 1 , 0 , 0
+MAP-619.ART , 1 , 0 , 0
+MAP-620.ART , 1 , 0 , 0
+MAP-621.ART , 1 , 0 , 0
+MAP-622.ART , 0 , 0 , 0
+MAP-623.ART , 0 , 0 , 0
+MAP-624.ART , 1 , 0 , 0
+MAP-625.ART , 0 , 0 , 0
+MAP-626.ART , 0 , 0 , 0
+NO_FILE
+MAP-628.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+*-----------------------------* 3097-3114
+MAP-631.ART , 1 , 0 , 0
+MAP-632.ART , 1 , 0 , 0
+MAP-633.ART , 1 , 0 , 0
+MAP-634.ART , 0 , 0 , 0
+MAP-635.ART , 0 , 0 , 0
+MAP-636.ART , 1 , 0 , 0
+MAP-637.ART , 1 , 0 , 0
+MAP-638.ART , 1 , 0 , 0
+MAP-639.ART , 1 , 0 , 0
+MAP-640.ART , 0 , 0 , 0
+MAP-641.ART , 0 , 0 , 0
+MAP-642.ART , 1 , 0 , 0
+NO_FILE
+MAP-644.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3115-3132
+MAP-649.ART , 1 , 0 , 0
+MAP-650.ART , 1 , 0 , 0
+MAP-651.ART , 0 , 0 , 0
+MAP-652.ART , 0 , 0 , 0
+MAP-653.ART , 0 , 0 , 0
+MAP-654.ART , 1 , 0 , 0
+MAP-655.ART , 1 , 0 , 0
+MAP-656.ART , 0 , 0 , 0
+MAP-657.ART , 0 , 0 , 0
+MAP-658.ART , 0 , 0 , 0
+MAP-659.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+MAP-662.ART , 0 , 0 , 0
+MAP-663.ART , 0 , 0 , 0
+MAP-664.ART , 0 , 0 , 0
+MAP-665.ART , 0 , 0 , 0
+NO_FILE
+*-----------------------------* 3133-3150
+MAP-667.ART , 1 , 0 , 0
+MAP-668.ART , 1 , 0 , 0
+MAP-669.ART , 0 , 0 , 0
+MAP-670.ART , 0 , 0 , 0
+MAP-671.ART , 0 , 0 , 0
+MAP-672.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3151-3168
+MAP-685.ART , 0 , 0 , 9 , 6
+MAP-686.ART , 0 , 0 , 0
+MAP-687.ART , 0 , 0 , 0
+MAP-688.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-690.ART , 0 , 0 , 0
+MAP-691.ART , 0 , 0 , 0
+MAP-692.ART , 0 , 0 , 0
+MAP-693.ART , 0 , 0 , 0
+MAP-694.ART , 0 , 0 , 9 , 6
+MAP-695.ART , 0 , 0 , 0
+MAP-696.ART , 0 , 0 , 0
+MAP-697.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-699.ART , 0 , 0 , 0
+MAP-700.ART , 0 , 0 , 0
+MAP-701.ART , 0 , 0 , 0
+MAP-702.ART , 0 , 0 , 0
+*-----------------------------* 3169-3186
+MAP-703.ART , 9 , 1 , 9 , 6
+MAP-704.ART , 0 , 0 , 0
+MAP-705.ART , 0 , 0 , 0
+MAP-706.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-708.ART , 0 , 0 , 0
+MAP-709.ART , 0 , 0 , 0
+MAP-710.ART , 0 , 0 , 0
+MAP-711.ART , 0 , 0 , 0
+MAP-712.ART , 9 , 1 , 9 , 6
+MAP-713.ART , 0 , 0 , 0
+MAP-714.ART , 0 , 0 , 0
+MAP-715.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-717.ART , 0 , 0 , 0
+MAP-718.ART , 0 , 0 , 0
+MAP-719.ART , 0 , 0 , 0
+MAP-720.ART , 0 , 0 , 0
+*-----------------------------* 3187-3204
+MAP-721.ART , 0 , 1 , 9 , 6
+MAP-722.ART , 0 , 0 , 0
+MAP-723.ART , 0 , 0 , 0
+MAP-724.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-726.ART , 0 , 0 , 0
+MAP-727.ART , 0 , 0 , 0
+MAP-728.ART , 0 , 0 , 0
+MAP-729.ART , 0 , 0 , 0
+MAP-730.ART , 0 , 1 , 9 , 6
+MAP-731.ART , 0 , 0 , 0
+MAP-732.ART , 0 , 0 , 0
+MAP-733.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-735.ART , 0 , 0 , 0
+MAP-736.ART , 0 , 0 , 0
+MAP-737.ART , 0 , 0 , 0
+MAP-738.ART , 0 , 0 , 0
+*-----------------------------* 3205-3222
+MAP-739.ART , 0 , 0 , 9 , 6
+MAP-740.ART , 0 , 0 , 0
+MAP-741.ART , 0 , 0 , 0
+MAP-742.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-744.ART , 0 , 0 , 0
+MAP-745.ART , 0 , 0 , 0
+MAP-746.ART , 0 , 0 , 0
+MAP-747.ART , 0 , 0 , 0
+MAP-748.ART , 0 , 0 , 9 , 6
+MAP-749.ART , 0 , 0 , 0
+MAP-750.ART , 0 , 0 , 0
+MAP-751.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-753.ART , 0 , 0 , 0
+MAP-754.ART , 0 , 0 , 0
+MAP-755.ART , 0 , 0 , 0
+MAP-756.ART , 0 , 0 , 0
+*-----------------------------* 3223-3240
+MAP-757.ART , 9 , 0 , 9 , 6
+MAP-758.ART , 0 , 0 , 0
+MAP-759.ART , 0 , 0 , 0
+MAP-760.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-762.ART , 0 , 0 , 0
+MAP-763.ART , 0 , 0 , 0
+MAP-764.ART , 0 , 0 , 0
+MAP-765.ART , 0 , 0 , 0
+MAP-766.ART , 9 , 0 , 9 , 6
+MAP-767.ART , 0 , 0 , 0
+MAP-768.ART , 0 , 0 , 0
+MAP-769.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-771.ART , 0 , 0 , 0
+MAP-772.ART , 0 , 0 , 0
+MAP-773.ART , 0 , 0 , 0
+MAP-774.ART , 0 , 0 , 0
+*-----------------------------* 3241-3258
+MAP-775.ART , 9 , 0 , 9 , 6
+MAP-776.ART , 0 , 0 , 0
+MAP-777.ART , 0 , 0 , 0
+MAP-778.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-780.ART , 0 , 0 , 0
+MAP-781.ART , 0 , 0 , 0
+MAP-782.ART , 0 , 0 , 0
+MAP-783.ART , 0 , 0 , 0
+MAP-784.ART , 9 , 0 , 9 , 6
+MAP-785.ART , 0 , 0 , 0
+MAP-786.ART , 0 , 0 , 0
+MAP-787.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-789.ART , 0 , 0 , 0
+MAP-790.ART , 0 , 0 , 0
+MAP-791.ART , 0 , 0 , 0
+MAP-792.ART , 0 , 0 , 0
+*-----------------------------* 3259-3276
+MAP-793.ART , 9 , 0 , 9 , 6
+MAP-794.ART , 0 , 0 , 0
+MAP-795.ART , 0 , 0 , 0
+MAP-796.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-798.ART , 0 , 0 , 0
+MAP-799.ART , 0 , 0 , 0
+MAP-800.ART , 0 , 0 , 0
+MAP-801.ART , 0 , 0 , 0
+MAP-802.ART , 0 , 1 , 9 , 6
+MAP-803.ART , 0 , 0 , 0
+MAP-804.ART , 0 , 0 , 0
+MAP-805.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-807.ART , 0 , 0 , 0
+MAP-808.ART , 0 , 0 , 0
+MAP-809.ART , 0 , 0 , 0
+MAP-810.ART , 0 , 0 , 0
+*-----------------------------* 3277-3294
+MAP-811.ART , 0 , 0 , 9 , 6
+MAP-812.ART , 0 , 0 , 0
+MAP-813.ART , 0 , 0 , 0
+MAP-814.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-816.ART , 0 , 0 , 0
+MAP-817.ART , 0 , 0 , 0
+MAP-818.ART , 0 , 0 , 0
+MAP-819.ART , 0 , 0 , 0
+MAP-820.ART , 0 , 0 , 9 , 6
+MAP-821.ART , 0 , 0 , 0
+MAP-822.ART , 0 , 0 , 0
+MAP-823.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-825.ART , 0 , 0 , 0
+MAP-826.ART , 0 , 0 , 0
+MAP-827.ART , 0 , 0 , 0
+MAP-828.ART , 0 , 0 , 0
+*-----------------------------* 3295-3312
+MAP-829.ART , 9 , 0 , 9 , 6
+MAP-830.ART , 0 , 0 , 0
+MAP-831.ART , 0 , 0 , 0
+MAP-832.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-834.ART , 0 , 0 , 0
+MAP-835.ART , 0 , 0 , 0
+MAP-836.ART , 0 , 0 , 0
+MAP-837.ART , 0 , 0 , 0
+MAP-838.ART , 9 , 0 , 9 , 6
+MAP-839.ART , 0 , 0 , 0
+MAP-840.ART , 0 , 0 , 0
+MAP-841.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-843.ART , 0 , 0 , 0
+MAP-844.ART , 0 , 0 , 0
+MAP-845.ART , 0 , 0 , 0
+MAP-846.ART , 0 , 0 , 0
+*-----------------------------* 3313-3330
+MAP-847.ART , 9 , 0 , 9 , 6
+MAP-848.ART , 0 , 0 , 0
+MAP-849.ART , 0 , 0 , 0
+MAP-850.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-852.ART , 0 , 0 , 0
+MAP-853.ART , 0 , 0 , 0
+MAP-854.ART , 0 , 0 , 0
+MAP-855.ART , 0 , 0 , 0
+MAP-856.ART , 9 , 0 , 9 ,  6
+MAP-857.ART , 0 , 0 , 0
+MAP-858.ART , 0 , 0 , 0
+MAP-859.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-861.ART , 0 , 0 , 0
+MAP-862.ART , 0 , 0 , 0
+MAP-863.ART , 0 , 0 , 0
+MAP-864.ART , 0 , 0 , 0
+*-----------------------------* 3331-3348
+MAP-865.ART , 0 , 1 , 9 , 6
+MAP-866.ART , 0 , 0 , 0
+MAP-867.ART , 0 , 0 , 0
+MAP-868.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-870.ART , 0 , 0 , 0
+MAP-871.ART , 0 , 0 , 0
+MAP-872.ART , 0 , 0 , 0
+MAP-873.ART , 0 , 0 , 0
+MAP-874.ART , 9 , 0 , 9 , 6
+MAP-875.ART , 0 , 0 , 0
+MAP-876.ART , 0 , 0 , 0
+MAP-877.ART , 0 , 0 , 0
+BLANK.ART   , 0 , 0 , 0
+MAP-879.ART , 0 , 0 , 0
+MAP-880.ART , 0 , 0 , 0
+MAP-881.ART , 0 , 0 , 0
+MAP-882.ART , 0 , 0 , 0
+*-----------------------------* 3349-3366
+HELPMENU.ART, 99
+HELPHAND.ART, 99
+HELP01.ART  , 99
+HELP02.ART  , 99
+HELP03.ART  , 99
+HELP04.ART  , 99
+HELP05.ART  , 99
+HELP06.ART  , 99
+HELP07.ART  , 99
+HELP08.ART  , 99
+HELP09.ART  , 99
+HELP10.ART  , 99
+HELP11.ART  , 99
+HELP12.ART  , 99
+HELP13.ART  , 99
+HELP14.ART  , 99
+HELP15.ART  , 99
+HELP16.ART  , 99
+*-----------------------------* 3367-3384
+STORY01.ART , 99
+STORY02.ART , 99
+STORY03.ART , 99
+STORY04.ART , 99
+STORY05.ART , 99
+STORY06.ART , 99
+STORY07.ART , 99
+STORY08.ART , 99
+STORY09.ART , 99
+TRYAGAIN.ART, 99
+RESCUED1.ART, 99
+RESCUED2.ART, 99
+RESCUED3.ART, 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+DQBLOGO.ART , 99
+*-----------------------------* 3385-3402
+ARROW1.ART  , 99
+ARROW2.ART  , 99
+ENDING00.ART, 99
+ENDING01.ART, 99
+ENDING02.ART, 99
+ENDING03.ART, 99
+ENDING04.ART, 99
+ENDING05.ART, 99
+ENDING06.ART, 99
+ENDING07.ART, 99
+ENDING08.ART, 99
+ENDING09.ART, 99
+ENDING10.ART, 99
+ENDING11.ART, 99
+ENDING12.ART, 99
+ENDING13.ART, 99
+ENDING14.ART, 99
+ENDING15.ART, 99
+*-----------------------------* 3403-3420
+ENDING16.ART, 99
+ENDING17.ART, 99
+ENDING18.ART, 99
+ENDING19.ART, 99
+ENDING20.ART, 99
+ENDING21.ART, 99
+ENDING22.ART, 99
+ENDING23.ART, 99
+ENDING24.ART, 99
+ENDING25.ART, 99
+ENDING26.ART, 99
+ENDING27.ART, 99
+ENDING28.ART, 99
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3421-3438
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3439-3456
+CAVE1001.ART , 3 , 1 , 0
+CAVE1002.ART , 3 , 1 , 0
+CAVE1003.ART , 3 , 1 , 0
+CAVE1004.ART , 3 , 1 , 0
+CAVE1005.ART , 0 , 1 , 0
+CAVE1006.ART , 0 , 1 , 0
+CAVE1007.ART , 0 , 1 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+CAVE1015.ART , 0 , 1 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3457-3474
+CAVE1019.ART , 3 , 0 , 0
+CAVE1020.ART , 3 , 1 , 0
+CAVE1021.ART , 3 , 1 , 0
+CAVE1022.ART , 3 , 1 , 0
+CAVE1023.ART , 6 , 1 , 0
+CAVE1024.ART , 6 , 1 , 0
+CAVE1025.ART , 6 , 1 , 0
+CAVE1026.ART , 0 , 1 , 0
+CAVE1027.ART , 5 , 1 , 0
+CAVE1028.ART , 0 , 1 , 0
+CAVE1029.ART , 6 , 0 , 0
+NO_FILE
+CAVE1031.ART , 0 , 0 , 0
+CAVE1032.ART , 1 , 0 , 0
+CAVE1033.ART , 0 , 1 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3475-3492
+CAVE1037.ART , 0 , 0 , 3 , 6
+CAVE1038.ART , 0 , 0 , 0
+CAVE1039.ART , 0 , 0 , 0
+CAVE1040.ART , 0 , 1 , 0
+CAVE1041.ART , 0 , 1 , 0
+CAVE1042.ART , 0 , 1 , 0
+NO_FILE
+CAVE1044.ART , 0 , 1 , 0
+CAVE1045.ART , 0 , 1 , 0
+CAVE1046.ART , 0 , 1 , 0
+NO_FILE
+NO_FILE
+CAVE1049.ART , 0 , 0 , 0
+CAVE1050.ART , 1 , 0 , 0
+CAVE1051.ART , 0 , 1 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3493-3510
+NO_FILE
+NO_FILE
+CAVE1057.ART , 0 , 1 , 0
+CAVE1058.ART , 2 , 1 , 5 , 0
+CAVE1059.ART , 2 , 0 , 6 , 0
+CAVE1060.ART , 1 , 0 , 0
+CAVE1061.ART , 1 , 0 , 0
+CAVE1062.ART , 2 , 0 , 8 , 0
+CAVE1063.ART , 2 , 0 , 7 , 0
+CAVE1064.ART , 0 , 1 , 0
+CAVE1065.ART , 0 , 1 , 0
+CAVE1066.ART , 0 , 1 , 0
+CAVE1067.ART , 0 , 0 , 0
+CAVE1068.ART , 9 , 1 , 0
+CAVE1069.ART , 0 , 1 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3511-3528
+NO_FILE
+CAVE1074.ART , 2 , 1 , 5 , 0
+CAVE1075.ART , 2 , 1 , 6 , 0
+CAVE1076.ART , 9 , 1 , 0
+CAVE1077.ART , 0 , 1 , 0
+CAVE1078.ART , 0 , 1 , 0
+CAVE1079.ART , 0 , 1 , 0
+CAVE1080.ART , 0 , 1 , 0
+CAVE1081.ART , 9 , 1 , 0
+CAVE1082.ART , 2 , 0 , 8 , 0
+CAVE1083.ART , 2 , 0 , 7 , 0
+CAVE1084.ART , 0 , 0 , 0
+NO_FILE
+CAVE1086.ART , 0 , 1 , 0
+CAVE1087.ART , 0 , 1 , 0
+NO_FILE
+CAVE1089.ART , 0 , 1 , 0
+CAVE1090.ART , 0 , 1 , 0
+*-----------------------------* 3529-3546
+CAVE1091.ART , 1 , 0 , 0
+CAVE1092.ART , 9 , 1 , 0
+CAVE1093.ART , 9 , 1 , 0
+CAVE1094.ART , 0 , 0 , 0
+CAVE1095.ART , 1 , 0 , 0
+CAVE1096.ART , 1 , 0 , 0
+CAVE1097.ART , 9 , 1 , 0
+CAVE1098.ART , 0 , 1 , 0
+CAVE1099.ART , 9 , 1 , 0
+CAVE1100.ART , 9 , 1 , 0
+CAVE1101.ART , 9 , 1 , 0
+NO_FILE
+CAVE1103.ART , 0 , 1 , 0
+CAVE1104.ART , 2 , 1 , 1 , 0
+CAVE1105.ART , 1 , 0 , 0
+CAVE1106.ART , 1 , 0 , 0
+CAVE1107.ART , 2 , 0 , 2 , 0
+CAVE1108.ART , 0 , 1 , 0
+*-----------------------------* 3547-3564
+ICECUB01.ART , 0 ,14 , 3552 , 20
+ICECUB02.ART , 0 ,14 , 3553 , 20
+ICECUB03.ART , 0 ,14 , 3554 , 20
+ICECUB04.ART , 0 ,14 , 3555 , 20
+NO_FILE
+ICECUB05.ART , 0 ,14 , 3584 , 20
+ICECUB06.ART , 0 ,14 , 3585 , 20
+ICECUB07.ART , 0 ,14 , 3586 , 20
+ICECUB08.ART , 0 ,14 , 3587 , 20
+NO_FILE
+NO_FILE
+CAVE1120.ART , 1 , 0 , 0
+CAVE1121.ART , 2 , 1 , 1 , 0
+CAVE1122.ART , 9 , 1 , 0
+NO_FILE
+NO_FILE
+CAVE1125.ART , 9 , 1 , 0
+CAVE1126.ART , 9 , 1 , 0
+*-----------------------------* 3565-3582
+ICECUB09.ART , 0 ,14 , 3570 , 20
+ICECUB10.ART , 9 ,14 , 3571 , 20
+ICECUB11.ART , 9 ,14 , 3572 , 20
+ICECUB12.ART , 9 ,14 , 3573 , 20
+ICECUB13.ART , 0 ,14 , 3574 , 20
+ICECUB14.ART , 0 ,14 , 3601 , 20
+ICECUB15.ART , 9 ,14 , 3602 , 20
+ICECUB16.ART , 9 ,14 , 3603 , 20
+ICECUB17.ART , 9 ,14 , 3604 , 20
+ICECUB18.ART , 0 ,14 , 3605 , 20
+NO_FILE
+CAVE1138.ART , 2 , 1 , 1 , 0
+CAVE1139.ART , 9 , 1 , 0
+CAVE1140.ART , 9 , 1 , 0
+CAVE1141.ART , 9 , 1 , 0
+NO_FILE
+NO_FILE
+CAVE1144.ART , 9 , 1 , 0
+*-----------------------------* 3583-3600
+NO_FILE
+ICECUB19.ART , 0 ,14 , 3589 , 20
+ICECUB20.ART , 0 ,14 , 3590 , 20
+ICECUB21.ART , 0 ,14 , 3591 , 20
+ICECUB22.ART , 0 ,14 , 3592 , 20
+NO_FILE
+ICECUB23.ART , 0 ,14 , 3547 , 20
+ICECUB24.ART , 0 ,14 , 3548 , 20
+ICECUB25.ART , 0 ,14 , 3549 , 20
+ICECUB26.ART , 0 ,14 , 3550 , 20
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3601-3618
+ICECUB27.ART , 0 ,14 , 3606 , 20
+ICECUB28.ART , 0 ,14 , 3607 , 20
+ICECUB29.ART , 0 ,14 , 3608 , 20
+ICECUB30.ART , 0 ,14 , 3609 , 20
+ICECUB31.ART , 0 ,14 , 3610 , 20
+ICECUB32.ART , 0 ,14 , 3565 , 20
+ICECUB33.ART , 9 ,14 , 3566 , 20
+ICECUB34.ART , 9 ,14 , 3567 , 20
+ICECUB35.ART , 9 ,14 , 3568 , 20
+ICECUB36.ART , 0 ,14 , 3569 , 20
+NO_FILE
+BWB009.ART , 0 , 0 , 0
+BWB010.ART , 0 , 0 , 0
+BWB011.ART , 0 , 0 , 0
+BWB012.ART , 0 , 0 , 0
+BWB013.ART , 0 , 0 , 0
+NO_FILE
+NO_FILE
+*-----------------------------* 3619-3636
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+BWB023.ART , 0 , 0 , 0
+BWB024.ART , 0 , 0 , 0
+BWB025.ART , 0 , 0 , 0
+BWB026.ART , 0 , 0 , 0
+BWB027.ART , 0 , 0 , 0
+BWB028.ART , 0 , 0 , 0
+BWB029.ART , 0 , 0 , 0
+BWB030.ART , 0 , 0 , 0
+BWB031.ART , 0 , 0 , 0
+BWB032.ART , 0 , 0 , 0
+NO_FILE
+*-----------------------------* 3637-3654
+NO_FILE
+NO_FILE
+NO_FILE
+BWB037.ART , 0 , 0 , 0
+BWB038.ART , 0 , 0 , 0
+BWB039.ART , 0 , 0 , 0
+BWB040.ART , 0 , 0 , 0
+BWB041.ART , 0 , 0 , 0
+BWB042.ART , 0 , 0 , 0
+BWB043.ART , 0 , 0 , 0
+BWB044.ART , 0 , 0 , 0
+BWB045.ART , 0 , 0 , 0
+BWB046.ART , 0 , 0 , 0
+BWB047.ART , 0 , 0 , 0
+BWB048.ART , 0 , 0 , 0
+BWB049.ART , 0 , 0 , 0
+BWB050.ART , 0 , 0 , 0
+BWB051.ART , 0 , 0 , 0
+*-----------------------------* 3655-3672
+NO_FILE
+NO_FILE
+NO_FILE
+BWB055.ART , 0 , 0 , 0
+BWB056.ART , 0 , 0 , 0
+BWB057.ART , 0 , 0 , 0
+BWB058.ART , 0 , 0 , 0
+BWB059.ART , 0 , 0 , 0
+BWB060.ART , 0 , 0 , 0
+BWB061.ART , 0 , 0 , 0
+BWB062.ART , 0 , 0 , 0
+BWB063.ART , 0 , 0 , 0
+BWB064.ART , 0 , 0 , 0
+BWB065.ART , 0 , 0 , 0
+BWB066.ART , 0 , 0 , 0
+BWB067.ART , 0 , 0 , 0
+BWB068.ART , 0 , 0 , 0
+BWB069.ART , 0 , 0 , 0
+*-----------------------------* 3673-3690
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+BWB074.ART , 0 , 0 , 0
+BWB075.ART , 0 , 0 , 0
+BWB076.ART , 0 , 0 , 0
+BWB077.ART , 0 , 0 , 0
+BWB078.ART , 0 , 0 , 0
+BWB079.ART , 0 , 0 , 0
+BWB080.ART , 0 , 0 , 0
+BWB081.ART , 0 , 0 , 0
+BWB082.ART , 0 , 0 , 0
+BWB083.ART , 0 , 0 , 0
+BWB084.ART , 0 , 0 , 0
+BWB085.ART , 0 , 0 , 0
+BWB086.ART , 0 , 0 , 0
+NO_FILE
+*-----------------------------* 3691-3708
+NO_FILE
+NO_FILE
+NO_FILE
+NO_FILE
+BWB092.ART , 1 , 0 , 0
+BWB093.ART , 1 , 0 , 0
+BWB094.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+BWB097.ART , 1 , 0 , 0
+BWB098.ART , 1 , 0 , 0
+BWB099.ART , 1 , 0 , 0
+BWB100.ART , 1 , 0 , 0
+BWB101.ART , 1 , 0 , 0
+BWB102.ART , 1 , 0 , 0
+NO_FILE
+NO_FILE
+NO_FILE
+*-----------------------------* 3709

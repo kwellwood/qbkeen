@@ -4,7 +4,7 @@ DEFINT A-Z
 '$INCLUDE: 'enemies1.bi'
 DECLARE SUB KillPlayer ()
 DECLARE SUB PlaySound (slot)
-DECLARE FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat)
+DECLARE FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat, lifespan)
 DECLARE FUNCTION Map& (x, y)
 DECLARE FUNCTION MapFG& (x, y)
 DECLARE FUNCTION MapWidth ()
@@ -19,9 +19,7 @@ CONST idle = 9
 '-------------------------------------------
 
 CONST slug = 1, bounder = 2, mushroom = 3, lick = 4      ' enemy id constants
-CONST arachnut = 5, worm = 6, snake = 7, ancient = 8     '
-CONST spearup = 9, speardown = 10, spearleft = 11        '
-CONST spearright = 12                                    '
+CONST arachnut = 5
 
 CONST dead = 10                                          ' global constants
 CONST bouncelo = 1, bouncehi = 2                         ' mushroom constants
@@ -421,7 +419,7 @@ IF enemy(e).status = crawling THEN
     enemy(e).actiontime = maxfps
     '--- create poop ---
     x = enemy(e).x: y = enemy(e).y + (enemy(e).ysize / 2)
-    a = AddSprite(x, y, eframe(8), eframe(9), maxfps * 2, efsize(8).x, efsize(8).y, 1, 0)
+    a = AddSprite(x, y, eframe(8), eframe(9), maxfps * 2, efsize(8).x, efsize(8).y, 1, 0, -1)
   END IF
 END IF
 

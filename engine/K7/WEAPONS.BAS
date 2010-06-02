@@ -121,7 +121,9 @@ FOR s = 1 TO 32
     IF OnCamera(x1, y1, x2, y2) THEN
      
       frame& = shot(s).sframe + (INT(anmcounter / shot(s).delay) MOD (shot(s).eframe - shot(s).frame))
-      PutSprite frame&, shot(s).x - CameraOrigX - (shottype(shot(s).id).xsize / 2), shot(s).y - CameraOrigY - (shottype(shot(s).id).ysize / 2), drawpage
+      sx = INT(shot(s).x - CameraOrigX - (shottype(shot(s).id).xsize / 2))
+      sy = INT(shot(s).y - CameraOrigY - (shottype(shot(s).id).ysize / 2))
+      PutSprite frame&, sx, sy, drawpage
     END IF
   END IF
 NEXT s
@@ -158,7 +160,7 @@ shot(s).active = 0
 IF shot(s).id = keenshot THEN
   '--- add explosion to sprite stack ---
   x = shot(s).x: y = shot(s).y
-  a = AddSprite(x, y, shottype(keenshot).expsframe, shottype(keenshot).expeframe, shottype(keenshot).expframedelay, shottype(keenshot).expxsize, shottype(keenshot).expysize, 0, 0)
+  a = AddSprite(x, y, shottype(keenshot).expsframe, shottype(keenshot).expeframe, shottype(keenshot).expframedelay, shottype(keenshot).expxsize, shottype(keenshot).expysize, 0, 0, -1)
 
   '--- play sound if in hearing range ---
   IF ShotInRange(s, 240) THEN PlaySound 6
@@ -261,7 +263,7 @@ sy2 = shot(s).y
 
 IF TileType(Map&(sx, sy)) = 1 THEN ShotCollide = 1: EXIT FUNCTION
 IF TileType(MapFG&(sx, sy)) = 9 AND TileType(Map&(sx, sy)) <> 5 THEN ShotCollide = 1: EXIT FUNCTION
-IF (TileType(Map&(sx, sy)) = 6 OR TileType(MapFG&(sx, sy)) = 6) AND TileType(Map&(sx, sy)) <> 5 THEN ShotCollide = 1: EXIT FUNCTION
+IF (TileType(Map&(sx, sy)) = 6 OR TileType(MapFG&(sx, sy)) = 6) AND TileType(Map&(sx, sy)) <> 5 AND shot(s).yv > 0 THEN ShotCollide = 1: EXIT FUNCTION
 IF TileType(Map&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 0): EXIT FUNCTION
 IF TileType(MapFG&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 1): EXIT FUNCTION
 

@@ -12,6 +12,7 @@ DECLARE SUB EnemyAI (e)
 DECLARE SUB EnemyHitWall (e, p, hx!, hy!) 'point hit, clippoint hit (x, y)
 DECLARE SUB EnemyOnGround (e)
 DECLARE SUB EnemyPhysics (e)
+DECLARE SUB EnemyHitSlope (e, x!, y!, l)
 DECLARE SUB HandleEnemies ()
 DECLARE SUB InitEnemies ()
 DECLARE SUB KillEnemy (e)
@@ -27,6 +28,7 @@ TYPE enemytype
   yv AS SINGLE
   xdir AS INTEGER
   onground AS INTEGER
+  onslope AS INTEGER
   action AS INTEGER
   actiontime AS INTEGER
   frame AS LONG
@@ -41,5 +43,5 @@ TYPE enemytype
 END TYPE
 
 COMMON SHARED enemy() AS enemytype, eframe() AS LONG, efsize() AS intcoordinate
-COMMON SHARED activefoestack() AS STRING
+COMMON SHARED activefoestack() AS STRING, EClipPoint() AS coordinate
 

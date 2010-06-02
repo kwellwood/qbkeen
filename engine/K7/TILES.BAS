@@ -44,18 +44,22 @@ OPEN tileset$ FOR INPUT AS 1
     LoadArtFile t&, file$
 
     INPUT #1, tileprop
-    IF tileprop <> 99 THEN
-      SetTileType t&, tileprop
-      IF tileprop = 2 THEN
-        INPUT #1, sm&: SetSlopeMask t&, sm&
-        SetAnmLength t&, 0
-       ELSE
-        INPUT #1, af
-        INPUT #1, ad
-        SetAnmLength t&, af
-        SetAnmDelay t&, ad
-      END IF
-    END IF
+    IF tileprop <> 99 THEN INPUT #1, tileprop2 ELSE tileprop2 = 0
+   
+    SetTileType t&, tileprop
+    SetTileType2 t&, tileprop2
+    SELECT CASE tileprop
+     CASE 2
+      INPUT #1, sm&: SetSlopeMask t&, sm&
+      INPUT #1, af: ad = 0  'get af to check for being overlay too
+     CASE 99
+      af = 0: ad = 0
+     CASE ELSE
+      INPUT #1, af
+      IF af > 0 THEN INPUT #1, ad ELSE ad = 0
+    END SELECT
+    SetAnmLength t&, af
+    SetAnmDelay t&, ad
   NEXT t&
 CLOSE 1
 
@@ -78,7 +82,7 @@ END SUB
 SUB SetSlopeMask (t&, m&)
 
 bitl(0) = m&
-BiosXWrite SlopeMaskHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARSEG(bitl(0))
+BiosXWrite SlopeMaskHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 
 END SUB
 
@@ -88,6 +92,26 @@ biti(0) = v
 BiosXWrite TileTypeHandle, t& * 2 - 2, 2, VARSEG(biti(0)), VARPTR(biti(0))
 
 END SUB
+
+SUB SetTileType2 (t&, v)
+
+biti(0) = v
+BiosXWrite TileType2Handle, t& * 2 - 2, 2, VARSEG(biti(0)), VARPTR(biti(0))
+
+END SUB
+
+FUNCTION SlopeHeight (x, y, l)
+
+mapx = INT(x / ts) + 1: mapy = INT(y / ts) + 1
+SELECT CASE l
+ CASE 0: tile& = Map&(mapx, mapy)
+ CASE 1: tile& = MapFG&(mapx, mapy)
+END SELECT
+
+PutTile SlopeMask&(tile&), 0, 0, slopepage
+SlopeHeight = DQBpoint(slopepage, x - ((mapx - 1) * ts), y - ((mapy - 1) * ts))
+
+END FUNCTION
 
 FUNCTION SlopeMask& (t&)
 
@@ -101,6 +125,14 @@ FUNCTION TileType (t&)
 biti(0) = 0
 BiosXRead TileTypeHandle, t& * 2 - 2, 2, VARSEG(biti(0)), VARPTR(biti(0))
 TileType = biti(0)
+
+END FUNCTION
+
+FUNCTION TileType2 (t&)
+
+biti(0) = 5
+BiosXRead TileType2Handle, t& * 2 - 2, 2, VARSEG(biti(0)), VARPTR(biti(0))
+TileType2 = biti(0)
 
 END FUNCTION
 

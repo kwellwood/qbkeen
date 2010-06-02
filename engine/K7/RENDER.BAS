@@ -43,9 +43,9 @@ SUB DrawHUD
 
 '=================[ CLIP POINTS ON PLAYER ]=================
 'DQBpset drawpage, player(0).x - camera(0).vx1, player(0).y - camera(0).vy1, 15
-'FOR cp = 1 TO 10
-'  DQBpset drawpage, ClipPoint(cp).x - camera(0).vx1, ClipPoint(cp).y - camera(0).vy1, 15
-'NEXT cp
+FOR cp = 1 TO 10
+  DQBpset drawpage, ClipPoint(cp).x - camera(0).vx1, ClipPoint(cp).y - camera(0).vy1, 15
+NEXT cp
 
 '=================[ MISC TEXT INFO ]=================
 DQBprint drawpage, "Camera(0).v1: (" + STR$(camera(0).vx1) + "," + STR$(camera(0).vy1) + ")", 200, 0, 15
@@ -96,16 +96,28 @@ FOR y = miny TO maxy
     py = (y - miny) * ts - suby
 
     t& = Map&(x, y)
+    t2& = MapFG&(x, y)
     IF t& THEN
       al = AnmLength(t&)
-      IF al THEN
+      IF t2& THEN al2 = AnmLength(t2&)
+      IF al > 0 THEN
         ad = AnmDelay(t&)
         t& = (INT(anmcounter / ad) MOD al) + t&
       END IF
+     
       '----- switches plugin -----
       IF TileType(t&) = 4 THEN t& = t& + switch(SwitchTag(x, y))
       '---------------------------
-      PutSprite t&, px, py, drawpage
+      PutSprite t&, px, py, drawpage  '\/ overlay the foreground
+      IF t2& AND TileType2(t2&) = 1 THEN
+        IF al2 > 0 THEN
+          ad2 = AnmDelay(t2&)
+          t2& = (INT(anmcounter / ad2) MOD al2) + t2&
+        END IF
+        PutSprite t2&, px, py, drawpage
+      END IF
+      'IF TileType(t&) = 2 THEN PutSprite SlopeMask&(t&), px, py, drawpage
+      'IF TileType(t2&) = 2 THEN PutSprite SlopeMask&(t2&), px, py, drawpage
     END IF
   NEXT x
 NEXT y
@@ -113,6 +125,7 @@ NEXT y
 '=========[ DRAW SPRITES CLASSES ]========
 DrawShots
 DrawItems
+DrawSprites
 DrawEnemies
 
 '=========[ DRAW PLAYER ]=========
@@ -126,20 +139,20 @@ FOR y = miny TO maxy
     px = (x - minx) * ts - subx
     py = (y - miny) * ts - suby
 
-    t& = MapFG&(x, y)
-    IF t& THEN
-      al = AnmLength(t&)
+    t2& = MapFG&(x, y)
+    IF t2& AND TileType2(t2&) <> 1 THEN
+      al = AnmLength(t2&)
       IF al THEN
-        ad = AnmDelay(t&)
-        t& = (INT(anmcounter / ad) MOD al) + t&
+        ad = AnmDelay(t2&)
+        t2& = (INT(anmcounter / ad) MOD al) + t2&
       END IF
-      PutSprite t&, px, py, drawpage
+      PutSprite t2&, px, py, drawpage
     END IF
   NEXT x
 NEXT y
 
 '========[ SPRITE CLASSES ABOVE FOREGROUND ]========
-DrawSprites
+
 
 DrawScoreboard
 IF DQBkey(59) THEN DrawHUD

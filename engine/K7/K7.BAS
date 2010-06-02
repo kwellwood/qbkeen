@@ -38,6 +38,7 @@ DIM SHARED switch(1 TO 25)
 '-------- Enemies System -------
 DIM SHARED enemy(100) AS enemytype, eframe(16) AS LONG
 DIM SHARED efsize(16) AS intcoordinate, activefoestack(0) AS STRING
+DIM SHARED EClipPoint(4) AS coordinate
 
 PRINT "Loading...";
 InitEngine
@@ -70,9 +71,9 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 6)."
+PRINT "Powered by K7 Engine technology (Build 7)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled January 25, 2001"
+PRINT "Compiled April 9, 2001"
 END
 
 '============================================================================
@@ -91,6 +92,8 @@ BiosXOpen 4, AnmLengthHandle, a
 IF a THEN ErrorHandlerSub 106
 BiosXOpen 4, AnmDelayHandle, a
 IF a THEN ErrorHandlerSub 107
+BiosXOpen 4, TileType2Handle, a
+IF a THEN ErrorHandlerSub a
 
 '=========[ Graphics System ]==========
 BiosXOpen 2048, ArtHandle, a
@@ -116,6 +119,7 @@ SUB DeallocXMS
 
 '===========[ Tiles System ]===========
 BiosXClose TileTypeHandle
+BiosXClose TileType2Handle
 BiosXClose AnmLengthHandle
 BiosXClose AnmDelayHandle
 
@@ -202,9 +206,9 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 6)."
+PRINT "Powered by K7 Engine technology (Build 7)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled January 25, 2001"
+PRINT "Compiled April 9, 2001"
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$

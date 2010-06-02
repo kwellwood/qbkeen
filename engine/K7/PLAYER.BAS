@@ -31,7 +31,8 @@ SUB CheckOnGround
 '    block is wall
 
 IF player(0).yv >= 0 THEN
-  IF INT((player(0).y + (player(0).ysize / 2)) MOD ts) >= ts - 2 THEN
+  mapx = INT(player(0).x / ts) + 1: mapy = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
+  IF INT((player(0).y + (player(0).ysize / 2)) MOD ts) >= ts - 1 THEN   ' ts - 2 THEN
     mapx = INT(player(0).x / ts) + 1: mapy = INT((player(0).y + (player(0).ysize / 2)) / ts) + 2
     IF TileType(Map&(mapx, mapy)) = 1 THEN
       player(0).onground = 1
@@ -46,33 +47,45 @@ IF player(0).yv >= 0 THEN
   player(0).onground = 0
 END IF
 
+IF TileType(Map&(mapx, mapy)) = 2 OR TileType(MapFG&(mapx, mapy)) = 2 THEN
+  IF TileType(Map&(mapx, mapy)) = 2 THEN l = 0 ELSE l = 1
+  x = ClipPoint(2).x: y = ClipPoint(2).y
+  h1 = SlopeHeight(x, y, l)
+  h2 = SlopeHeight(x, y + 1, l)
+  IF h1 = 0 AND h2 > 0 THEN player(0).onground = 1: player(0).onslope = 1
+END IF
+
+'if player is jumping or not moving at all
+'  (mapx,mapy)=bottom of player's coordinates in tiles
+'  if tile directly under player is a wall
+'    (mapx,mapy)=coordinates of tile directly under player
+'    if tile under player is wall
+'      player is on ground
+'      align on ground if not close enough
+'     else
+'      player is not on ground
+'    end if
+'   else
+'    player is not on ground
+'  end if
+' else
+'  player is not on ground
+'end if
+
 END SUB
 
 SUB ClipPlayerToMap
 
 IF player(0).action = dying THEN EXIT SUB
 
-FOR cp = 1 TO 10
-  SELECT CASE HitPoint(cp)
+FOR cp = 1 TO 8
+  SELECT CASE HitPoint(cp)  'if player clippoint(cp) is on a special tile
    CASE 1: HitWall cp, ClipPoint(cp).x, ClipPoint(cp).y
+   CASE 2: IF cp = 2 THEN HitSlope ClipPoint(cp).x, ClipPoint(cp).y, 0
    CASE 3: KillPlayer
+   CASE 8: IF cp = 2 THEN HitSlope ClipPoint(cp).x, ClipPoint(cp).y, 1
   END SELECT
 NEXT cp
-
-IF HitPoint(1) = 1 THEN HitWall 1, ClipPoint(1).x, ClipPoint(1).y
-IF HitPoint(2) = 1 THEN HitWall 2, ClipPoint(2).x, ClipPoint(2).y
-
-IF HitPoint(3) = 1 THEN HitWall 3, ClipPoint(3).x, ClipPoint(3).y
-IF HitPoint(4) = 1 THEN HitWall 4, ClipPoint(4).x, ClipPoint(4).y
-
-IF HitPoint(5) = 1 THEN HitWall 5, ClipPoint(5).x, ClipPoint(5).y
-IF HitPoint(6) = 1 THEN HitWall 6, ClipPoint(6).x, ClipPoint(6).y
-
-IF HitPoint(7) = 1 THEN HitWall 7, ClipPoint(7).x, ClipPoint(7).y
-IF HitPoint(8) = 1 THEN HitWall 8, ClipPoint(8).x, ClipPoint(8).y
-
-IF HitPoint(9) = 1 THEN HitWall 9, ClipPoint(9).x, ClipPoint(9).y
-IF HitPoint(10) = 1 THEN HitWall 10, ClipPoint(10).x, ClipPoint(10).y
 
 END SUB
 
@@ -179,21 +192,38 @@ FUNCTION HitPoint (p)
 
 mx = INT(ClipPoint(p).x / ts) + 1
 my = INT(ClipPoint(p).y / ts) + 1
-HitPoint = TileType(Map&(mx, my))
-'IF TileType(Map&(mx, my)) = 1 THEN HitPoint = 1 ELSE HitPoint = 0
+IF TileType(MapFG&(mx, my)) = 2 THEN HitPoint = 8 ELSE HitPoint = TileType(Map&(mx, my))
 
 END FUNCTION
+
+SUB HitSlope (x!, y!, l)
+
+x = x!: y = y!
+h = SlopeHeight(x, y, l)
+IF h > 20 OR h < 0 THEN
+  DebugLog "SlopeHeight Error, h:" + STR$(h)
+  ErrorHandlerSub 9999
+END IF
+IF h THEN
+  player(0).y = INT(player(0).y) - h
+  player(0).yv = 0
+  player(0).onground = 1
+  player(0).onslope = 1
+  UpdateClipPoints
+END IF
+
+END SUB
 
 SUB HitWall (p, hx!, hy!)
             
 
-' 1--5--2     3--1--4
-' |     |     |     |
-' 7     8     5     6
-' |     |     |     |
-' 9     10    7     8
-' |     |     |     |
-' 3--6--4     9--2-10
+' 3--1--4
+' |     |
+' 5     6
+' |     |
+' 7     8
+' |     |
+' 9--2-10
 
 
 side = -1

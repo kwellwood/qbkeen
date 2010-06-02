@@ -56,6 +56,7 @@ TYPE playertype
  txsize AS INTEGER
  tysize AS INTEGER
  onground AS INTEGER
+ onslope AS INTEGER     ' player is standing on an incline
  adelay AS INTEGER
  canjump AS INTEGER
  jumpheight AS SINGLE

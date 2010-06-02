@@ -90,19 +90,42 @@ FUNCTION EnemyHitPoint (x!, y!)
 
 mx = INT(x! / ts) + 1
 my = INT(y! / ts) + 1
-IF TileType(Map&(mx, my)) = 1 THEN EnemyHitPoint = 1 ELSE EnemyHitPoint = 0
+'IF TileType(Map&(mx, my)) = 1 THEN EnemyHitPoint = 1 ELSE EnemyHitPoint = 0
+IF TileType(MapFG&(mx, my)) = 2 THEN EnemyHitPoint = 8 ELSE EnemyHitPoint = TileType(Map&(mx, my))
 
 END FUNCTION
 
+SUB EnemyHitSlope (e, x!, y!, l)
+
+x = x!: y = y!
+h = SlopeHeight(x, y, l)
+IF h > 20 OR h < 0 THEN
+  DebugLog "SlopeHeight Error, h:" + STR$(h)
+  ErrorHandlerSub 9999
+END IF
+IF h THEN
+  enemy(e).y = INT(enemy(e).y) - h
+  enemy(e).yv = 0
+  enemy(e).onground = 1
+  enemy(e).onslope = 1
+
+  'EClipPoint(1).x = enemy(e).x: EClipPoint(1).y = enemy(e).y - enemy(e).ysize / 2
+  'EClipPoint(2).x = enemy(e).x: EClipPoint(1).y = enemy(e).y + enemy(e).ysize / 2
+  'EClipPoint(3).x = enemy(e).x - enemy(e).xsize / 2: EClipPoint(3).y = enemy(e).y
+  'EClipPoint(4).x = enemy(e).x + enemy(e).xsize / 2: EClipPoint(4).y = enemy(e).y
+END IF
+
+END SUB
+
 SUB EnemyHitWall (e, p, hx!, hy!)
 
-'---1---
+'+--1--+
 '|     |
 '|     |
 '3     4
 '|     |
 '|     |
-'---2---
+'+--2--+
 
 side = -1
 
@@ -135,6 +158,11 @@ SELECT CASE side
   enemy(e).xv = 0
   IF p = 3 THEN enemy(e).x = nx! + (enemy(e).xsize / 2)
 END SELECT
+
+'EClipPoint(1).x = enemy(e).x: EClipPoint(1).y = enemy(e).y - enemy(e).ysize / 2
+'EClipPoint(2).x = enemy(e).x: EClipPoint(1).y = enemy(e).y + enemy(e).ysize / 2
+'EClipPoint(3).x = enemy(e).x - enemy(e).xsize / 2: EClipPoint(3).y = enemy(e).y
+'EClipPoint(4).x = enemy(e).x + enemy(e).xsize / 2: EClipPoint(4).y = enemy(e).y
 
 END SUB
 
@@ -195,40 +223,36 @@ IF enemy(e).x > (mapxsize * ts) - 1 THEN enemy(e).x = (mapxsize * ts) - 1: enemy
 IF enemy(e).y > (mapysize * ts) - 1 THEN enemy(e).y = (mapysize * ts) - 1: enemy(e).yv = 0
 
 '===============================[ CLIPPING ]=================================
-cp1x! = enemy(e).x: cp1y! = enemy(e).y - enemy(e).ysize / 2
-cp2x! = enemy(e).x: cp2y! = enemy(e).y + enemy(e).ysize / 2
-cp3x! = enemy(e).x - enemy(e).xsize / 2: cp3y! = enemy(e).y
-cp4x! = enemy(e).x + enemy(e).xsize / 2: cp4y! = enemy(e).y
+EClipPoint(1).x = enemy(e).x: EClipPoint(1).y = enemy(e).y - enemy(e).ysize / 2
+EClipPoint(2).x = enemy(e).x: EClipPoint(2).y = enemy(e).y + enemy(e).ysize / 2
+EClipPoint(3).x = enemy(e).x - enemy(e).xsize / 2: EClipPoint(3).y = enemy(e).y
+EClipPoint(4).x = enemy(e).x + enemy(e).xsize / 2: EClipPoint(4).y = enemy(e).y
+'cp1x! = enemy(e).x: cp1y! = enemy(e).y - enemy(e).ysize / 2
+'cp2x! = enemy(e).x: cp2y! = enemy(e).y + enemy(e).ysize / 2
+'cp3x! = enemy(e).x - enemy(e).xsize / 2: cp3y! = enemy(e).y
+'cp4x! = enemy(e).x + enemy(e).xsize / 2: cp4y! = enemy(e).y
 
-IF EnemyHitPoint(cp1x!, cp1y!) THEN EnemyHitWall e, 1, cp1x!, cp1y!
-IF EnemyHitPoint(cp2x!, cp2y!) THEN EnemyHitWall e, 2, cp2x!, cp2y!
-IF EnemyHitPoint(cp3x!, cp3y!) THEN EnemyHitWall e, 3, cp3x!, cp3y!
-IF EnemyHitPoint(cp4x!, cp4y!) THEN EnemyHitWall e, 4, cp4x!, cp4y!
+FOR cp = 1 TO 4
+  SELECT CASE EnemyHitPoint(EClipPoint(cp).x, EClipPoint(cp).y)
+   CASE 1: EnemyHitWall e, cp, EClipPoint(cp).x, EClipPoint(cp).y
+   CASE 2: IF cp = 2 THEN EnemyHitSlope e, EClipPoint(cp).x, EClipPoint(cp).y, 0
+   CASE 3: EnemyHitWall e, cp, EClipPoint(cp).x, EClipPoint(cp).y
+   CASE 8: IF cp = 2 THEN EnemyHitSlope e, ClipPoint(cp).x, ClipPoint(cp).y, 1
+  END SELECT
+NEXT cp
 
-'UpdateClipPoints
+'IF EnemyHitPoint(cp1x!, cp1y!) THEN EnemyHitWall e, 1, cp1x!, cp1y!
+'IF EnemyHitPoint(cp2x!, cp2y!) THEN EnemyHitWall e, 2, cp2x!, cp2y!
+'IF EnemyHitPoint(cp3x!, cp3y!) THEN EnemyHitWall e, 3, cp3x!, cp3y!
+'IF EnemyHitPoint(cp4x!, cp4y!) THEN EnemyHitWall e, 4, cp4x!, cp4y!
 
-' ---1---
+' +--1--+
 ' |     |
 ' |     |
 ' 3     4
 ' |     |
 ' |     |
-' ---2---
-
-'IF HitPoint(5) THEN HitWall 5, ClipPoint(5).x, ClipPoint(5).y
-'IF HitPoint(6) THEN HitWall 6, ClipPoint(6).x, ClipPoint(6).y
-
-'IF HitPoint(1) THEN HitWall 1, ClipPoint(1).x, ClipPoint(1).y
-'IF HitPoint(2) THEN HitWall 2, ClipPoint(2).x, ClipPoint(2).y
-
-'IF HitPoint(7) THEN HitWall 7, ClipPoint(7).x, ClipPoint(7).y
-'IF HitPoint(8) THEN HitWall 8, ClipPoint(8).x, ClipPoint(8).y
-
-'IF HitPoint(9) THEN HitWall 9, ClipPoint(9).x, ClipPoint(9).y
-'IF HitPoint(10) THEN HitWall 10, ClipPoint(10).x, ClipPoint(10).y
-
-'IF HitPoint(3) THEN HitWall 3, ClipPoint(3).x, ClipPoint(3).y
-'IF HitPoint(4) THEN HitWall 4, ClipPoint(4).x, ClipPoint(4).y
+' +--2--+
 
 END SUB
 
@@ -306,7 +330,7 @@ SELECT CASE enemy(e).status
     IF enemy(e).xdir = left THEN enemy(e).xdir = right ELSE enemy(e).xdir = left
   END IF
   '----[ TURN AROUND FOR DROP-OFF ]----
-  my = INT(enemy(e).y / ts) + 1 + 1
+  my = INT(enemy(e).y / ts) + 2
   IF TileType(Map&(mx, my)) = 0 THEN
     IF enemy(e).xdir = left THEN enemy(e).xdir = right ELSE enemy(e).xdir = left
   END IF

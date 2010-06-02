@@ -5,6 +5,7 @@ DECLARE SUB DrawMenu ()
 DECLARE SUB HandleMenu (k)
 DECLARE SUB InitMenu ()
 DECLARE SUB Intro ()
+DECLARE SUB NewGame ()
 
 CONST menusysver = 1
 CONST main = 1, options = 2, save = 3, load = 4

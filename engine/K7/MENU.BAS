@@ -51,7 +51,7 @@ SELECT CASE k
   SELECT CASE menu
    CASE main
     SELECT CASE menuopt
-     CASE 1  'newgame
+     CASE 1  ': NewGame
      CASE 2  'savegame
      CASE 3  'loadgame
      CASE 4  'options
@@ -96,6 +96,26 @@ SUB Intro
 PutTile 75, 0, 0, video
 DO: LOOP UNTIL DQBkey(keyctrl) OR DQBkey(keyspace) OR DQBkey(keyenter) OR DQBkey(keyesc)
 
+
+END SUB
+
+SUB NewGame
+
+'player(0).lives = 3
+'player(0).ammo = 15
+'player(0).score = 0
+
+InitMenu
+InitScoreboard
+InitItems
+InitWeapons
+InitEnemies
+LoadMap "keen73.map"
+
+gamemode = ingame
+gameplay = running
+player(0).action = moving
+player(0).actiontime = 0
 
 END SUB
 

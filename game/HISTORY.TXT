@@ -96,3 +96,24 @@ Changes since Build 5:
 - Basic player death handling
 - Enemy system with the slug enemy!!
 - Full compliment of items from keen 4
+
+Build 7 (04-09-2001):
+   Again, this build was a little slow. But finally slopes are now in the
+engine and working. Both the player and enemies react to them. Unfortunately,
+due to the nature of the tile engine, the slopes are checked graphically and
+not mathematically. This slows things down a little bit but it should be ok.
+As you may notice, the map has been completely redone from the last build. It
+is actually an exact copy (so far) of the first level of Commander Keen 4, right
+down to item placement! Now thats progress. :) Too bad the candy bars cant be
+reached without Keen's trusty pogo stick. Hopefully that will come later along
+with the underground part of the map. Stay tuned to qbcode.hypermart.net for
+future builds!
+
+Changes since Build 6:
+- New play map
+- Working slopes
+- Some code optimization
+- Map foreground tiles now overlayed on sprite objects
+- More new artwork
+- Foreground tiles can be superimposed on background tiles as a single
+  background tile for objects like hills and houses, saving tile space.

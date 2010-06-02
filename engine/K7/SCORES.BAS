@@ -12,6 +12,7 @@ ON ERROR GOTO ErrorHandler
 '============================================================================
 ErrorHandler:
 e = ERR
+DebugLog "Error in scores module"
 ErrorHandlerSub e
 RESUME NEXT
 

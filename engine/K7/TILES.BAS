@@ -1,21 +1,27 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
 '$INCLUDE: 'directqb.bi'
 '$INCLUDE: 'xms.bi'
 '$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'map.bi'
+'$INCLUDE: 'tiles.bi'
+'$STATIC
 
 ON ERROR GOTO ErrorHandler
 
+DIM SHARED ArtHandle, ArtOffSetHandle, ArtLengthHandle
+DIM SHARED xmspos&
+DIM SHARED TileTypeHandle, TileType2Handle, AnmLengthHandle, AnmDelayHandle
+DIM SHARED SlopeMaskHandle
+DIM SHARED numtiles&
+DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
+REM $DYNAMIC
 FUNCTION AnmDelay (t&)
 
 BiosXRead AnmDelayHandle, t& * 2 - 2, 2, VARSEG(biti(0)), VARPTR(biti(0))
@@ -30,7 +36,142 @@ AnmLength = biti(0)
 
 END FUNCTION
 
-SUB LoadTiles
+REM $STATIC
+SUB EntityOnGround (onground, onslope, onobject, x!, y!, yv!, ysize)
+
+'--- already standing on an object ---
+IF onobject THEN
+  global(0).onground = 1
+  global(0).onslope = 0
+  global(0).y = y!
+  global(0).yv = yv!
+  EXIT SUB
+END IF
+
+'--- previous ground values ---
+oldonslope = onslope
+oldonground = onground
+'--- map location of player's feet ---
+mapx = INT(x! / ts) + 1
+mapy = INT((y! + (ysize / 2)) / ts) + 1
+
+'=========================[ CHECK FOR GROUND TILE ]==========================
+IF yv! >= 0 THEN
+  mapx = INT(x! / ts) + 1: mapy = INT((y! + (ysize / 2)) / ts) + 1
+  IF INT((y! + (ysize / 2)) MOD ts) >= ts - 1 THEN
+    mapx = INT(x! / ts) + 1: mapy = INT((y! + (ysize / 2)) / ts) + 2
+    IF TileType(Map&(mapx, mapy)) = 1 OR TileType(MapFG&(mapx, mapy)) = 9 OR TileType(MapFG&(mapx, mapy)) = 6 THEN
+      onground = 1
+      onslope = 0
+      IF INT((y! + (ysize / 2)) MOD ts) < ts - 1 THEN y! = INT(y!) + 1
+     ELSE
+      onground = 0
+      onslope = 0
+    END IF
+   ELSE
+    onground = 0
+    onslope = 0
+  END IF
+ ELSE
+  onground = 0
+  onslope = 0
+END IF
+
+'===========================[ CHECK FOR SLOPES ]=============================
+IF TileType(Map&(mapx, mapy)) = 2 OR TileType(MapFG&(mapx, mapy)) = 2 THEN
+  IF TileType(Map&(mapx, mapy)) = 2 THEN l = 0 ELSE l = 1
+  tmpx = x!: tmpy = y! + (ysize / 2)
+  h1 = SlopeHeight(tmpx, tmpy, l)
+  h2 = SlopeHeight(tmpx, tmpy + 1, l)
+  IF h1 = 0 AND h2 < 0 THEN
+    onground = 1: onslope = 1
+   ELSE
+    onground = 0: onslope = 0
+  END IF
+END IF
+
+'========================[ KEEP PLAYER ON A SLOPE ]==========================
+IF onground = 0 AND oldonground = 1 AND yv! >= 0 THEN
+  mapx = INT(x! / ts) + 1
+  mapy = INT((y! + (ysize / 2)) / ts) + 1
+  IF TileType(Map&(mapx, mapy)) = 2 OR TileType(MapFG&(mapx, mapy)) = 2 THEN
+    sticktoslope = 1
+   ELSEIF TileType(Map&(mapx, mapy + 1)) = 2 OR TileType(MapFG&(mapx, mapy + 1)) = 2 THEN
+    sticktoslope = 1: mapy = mapy + 1
+    y! = y! + (ts - ((y! + (ysize / 2) + ts) MOD ts))
+   ELSEIF TileType(Map&(mapx, mapy + 1)) = 1 OR TileType(MapFG&(mapx, mapy + 1)) = 9 THEN
+    y! = y! + (ts - (y! + (ysize / 2) + ts) MOD ts) - 1
+    yv! = 0
+    onground = 1
+  END IF
+  IF sticktoslope THEN
+    IF TileType(Map&(mapx, mapy)) = 2 THEN l = 0 ELSE l = 1
+    y! = y! + (ts - (y! + (ysize / 2) + 1) MOD ts) - 1
+    tmpx = INT(x!): tmpy = INT(y! + (ysize / 2) + 1)
+    y! = y! + SlopeHeight(tmpx, tmpy, l)
+    yv! = 0
+    onground = 1: onslope = 1
+  END IF
+END IF
+
+'========================[ RETURN CHANGED VARIABLES ]=========================
+global(0).onground = onground
+global(0).onslope = onslope
+global(0).y = y!
+global(0).yv = yv!
+
+END SUB
+
+FUNCTION HitPoint (x!, y!)
+
+'fg =Foreground Tag 1
+'fg2=Foreground Tag 2
+'bg =Background Tag 1
+
+'--- get tile coordinates ---
+mx = INT(x! / ts) + 1
+my = INT(y! / ts) + 1
+
+mapfgtile& = MapFG&(mx, my)
+maptile& = Map&(mx, my)
+fg = TileType(mapfgtile&)
+fg2 = TileType2(mapfgtile&)
+bg = TileType(maptile&)
+
+IF fg2 = 10 THEN HitPoint = 10: EXIT FUNCTION   ' exit level tile
+
+SELECT CASE fg
+ CASE 2: HitPoint = 8: EXIT FUNCTION     ' slope in foreground
+ CASE 3: HitPoint = 3: EXIT FUNCTION     ' hazzard in foreground
+ CASE 6: HitPoint = 6: EXIT FUNCTION     ' oneway floor
+ CASE 7: HitPoint = 7: EXIT FUNCTION     ' gem socket
+ CASE 9: HitPoint = 1: EXIT FUNCTION     ' wall in foreground
+END SELECT
+HitPoint = bg
+
+END FUNCTION
+
+REM $DYNAMIC
+SUB LoadArtFile (t&, f$)
+
+'--- load from mounted pak ---
+a = LoadFromPAK(f$, VARSEG(scr(0)), VARPTR(scr(0)))
+IF a THEN debuglog "File not found: " + f$: ErrorHandlerSub 134 + a
+
+'--- write to xms ---
+filesize& = PAKFileSize(f$)
+BiosXWrite ArtHandle, xmspos&, filesize&, VARSEG(scr(0)), VARPTR(scr(0))
+bitl(0) = xmspos&: BiosXWrite ArtOffSetHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+bitl(0) = filesize&: BiosXWrite ArtLengthHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+
+'- increment current write offset in xms -
+xmspos& = xmspos& + filesize&
+
+END SUB
+
+SUB LoadTiles (tileset$)
+
+e = InitPAKLib: IF e THEN ErrorHandlerSub 104
 
 xmspos& = 0
 OPEN tileset$ FOR INPUT AS 1
@@ -41,7 +182,10 @@ OPEN tileset$ FOR INPUT AS 1
   INPUT #1, numtiles&
   FOR t& = 1 TO numtiles&
     '---[ Load artwork ]---
-    INPUT #1, file$
+    DO
+      INPUT #1, file$
+    LOOP UNTIL LEFT$(file$, 1) <> "*"
+   
     LoadArtFile t&, file$
 
     '---[ Handle tile properties ]---
@@ -72,6 +216,30 @@ OPEN tileset$ FOR INPUT AS 1
     SetAnmDelay t&, ad                        'set anm delay tag
   NEXT t&
 CLOSE 1
+
+ClosePAKLib
+
+END SUB
+
+SUB PutSprite (t&, x, y, p)
+
+BiosXRead ArtOffSetHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0)): xmspos& = bitl(0)
+BiosXRead ArtLengthHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0)): tlength& = bitl(0)
+BiosXRead ArtHandle, xmspos&, tlength&, VARSEG(scr(0)), VARPTR(scr(0))
+
+DQBsetTransPut
+DQBput p, x, y, VARSEG(scr(0)), VARPTR(scr(0))
+
+END SUB
+
+SUB PutTile (t&, x, y, p)
+
+BiosXRead ArtOffSetHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0)): xmspos& = bitl(0)
+BiosXRead ArtLengthHandle, t& * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0)): tlength& = bitl(0)
+BiosXRead ArtHandle, xmspos&, tlength&, VARSEG(scr(0)), VARPTR(scr(0))
+
+DQBsetSolidPut
+DQBput p, x, y, VARSEG(scr(0)), VARPTR(scr(0))
 
 END SUB
 
@@ -158,9 +326,45 @@ SlopeMask& = bitl(0)
 
 END FUNCTION
 
+SUB TilesCloseXMS
+
+BiosXClose TileTypeHandle
+BiosXClose TileType2Handle
+BiosXClose AnmLengthHandle
+BiosXClose AnmDelayHandle
+BiosXClose SlopeMaskHandle
+
+BiosXClose ArtHandle
+BiosXClose ArtOffSetHandle
+BiosXClose ArtLengthHandle
+
+END SUB
+
+SUB TilesGetXMS
+
+BiosXOpen 8, TileTypeHandle, a     ' INTEGER elements
+IF a THEN ErrorHandlerSub 105
+BiosXOpen 8, AnmLengthHandle, a
+IF a THEN ErrorHandlerSub 106
+BiosXOpen 8, AnmDelayHandle, a
+IF a THEN ErrorHandlerSub 107
+BiosXOpen 8, TileType2Handle, a
+IF a THEN ErrorHandlerSub 114
+BiosXOpen 8, SlopeMaskHandle, a
+IF a THEN ErrorHandlerSub 115
+
+BiosXOpen 2048, ArtHandle, a
+IF a THEN ErrorHandlerSub 108
+BiosXOpen 16, ArtOffSetHandle, a    ' LONG elements
+IF a THEN ErrorHandlerSub 109
+BiosXOpen 16, ArtLengthHandle, a
+IF a THEN ErrorHandlerSub 110
+
+END SUB
+
 FUNCTION TileType (t&)
 
-biti(0) = 0
+biti(0) = 0   ' default tile type
 BiosXRead TileTypeHandle, t& * 2 - 2, 2, VARSEG(biti(0)), VARPTR(biti(0))
 TileType = biti(0)
 
@@ -168,7 +372,7 @@ END FUNCTION
 
 FUNCTION TileType2 (t&)
 
-biti(0) = 0
+biti(0) = 0    ' default tile type
 BiosXRead TileType2Handle, t& * 2 - 2, 2, VARSEG(biti(0)), VARPTR(biti(0))
 TileType2 = biti(0)
 

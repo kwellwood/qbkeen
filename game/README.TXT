@@ -8,12 +8,12 @@
                          http://qbcode.hypermart.net
 
    Thankyou for downloading Commander Keen 7! This project is an attempt to
-clone the original Keens 4-6 engine for creating new levels and to provide
+clone the original Keen 4-6's engine for creating new levels and to provide
 a fully featured base platform engine to be used in other games. This is one
 of the most advanced platform game engines ever written that can be found in
-internet QB community. The source code included with this build is not
+the internet QB community. The source code included with this build is not
 compilable (due to the libraries and complexity involved) but is included as
-a learning guide for those ambitious enough to read my code! Sorry it isn't
+a LEARNING TOOL for those ambitious enough to read my code! Sorry it isn't
 commented, but I'm not writing it as a tutorial.
 
    The keys to play the game are as follows:
@@ -25,18 +25,16 @@ CTRL       - Jump
 ALT        - Toggle pogostick
 SPACE      - Fire blaster pistol
 PG UP/DOWN - Scroll screen up/down
-A          - Set ammo to 50 (debug key)
+A          - Set ammo to 99 (debug key)
 F1         - Show engine counters (debug key)
 F2         - Show player data (debug key)
-F3         - Show scoreboard (ems disabled version)
+F3         - Show scoreboard (ems disabled mode)
 F5         - Skip to next level (debug key)
 
-   Make sure to run SETUP.EXE to setup your machine's sound system. If you
-get an error message concerning memory when running keen7.exe, try running it
-with the -noems parameter to disable EMS memory use (Some computers dont
-allow access to it.) If the program keeps crashing randomly with error
-70 (DS4QB), then you need to disable sound effects and possibly music. Sorry,
-but this is a bug in DS4QB! Hopefully the author will update it soon.
+   If you receive an error message concerning memory when running keen7.exe,
+try running it with the -noems parameter to disable EMS memory use (Some
+computers dont allow access to it.) or if you are using windows xp, edit the
+executable's properties to allow Auto EMS memory.
 
    Enjoy playing the game and please contact me with any questions, comments,
 or suggestions. Please share this game with other people! If you would like
@@ -54,6 +52,8 @@ explore the editor's capabilities.
    TED keys:
 Arrows      - Scroll screen
 -/=         - Zoom in and out
+1/2         - Toggle layer visibility
+T           - Shortcut to tile list
 ESC         - Toggle menu bar
 Left mouse  - Draw tile/place item
 Right mouse - Grab tile

@@ -42,7 +42,7 @@
 0135, "LoadArtFile: File not found in graphics archive"
 0136, "LoadArtFile: PAKlib not initialized or archive not mounted"
 0137, "InitMenu: Invalid version of MENU.DAT"
-0140, "DS4QB.Init: SOUNDSYS.DAT not found"
+0140, "DS4QB.Init: Critical file in \SOUNDSYS missing"
 0141, "DS4QB.Init: Could not connect to slave module"
 0142, "DS4QB.Init: SOUNDSYS.CFG not found; Run SETUP.EXE"
 0155, "DQBloadSound: Cannot open file, or file does not exist"

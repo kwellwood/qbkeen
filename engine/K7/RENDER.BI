@@ -1,23 +1,16 @@
 DEFINT A-Z
 '$DYNAMIC
 
-COMMON SHARED backgroundused
-
 DECLARE SUB DoCamera ()
 DECLARE SUB DrawHUD ()
 DECLARE SUB DrawObjects ()
 DECLARE SUB DrawPlayerHUD ()
 DECLARE SUB DrawScreen ()
 DECLARE SUB FocusCamera ()
-
-TYPE camtype
- x AS INTEGER
- y AS INTEGER
- vx1 AS INTEGER
- vy1 AS INTEGER
- vx2 AS INTEGER
- vy2 AS INTEGER
-END TYPE
-
-COMMON SHARED camera() AS camtype
+DECLARE SUB MoveCamera (x, y)
+DECLARE FUNCTION CameraOrigX ()
+DECLARE FUNCTION CameraOrigY ()
+DECLARE FUNCTION CameraX ()
+DECLARE FUNCTION CameraY ()
+DECLARE FUNCTION OnCamera (x1, y1, x2, y2)
 

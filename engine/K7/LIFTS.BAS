@@ -1,39 +1,93 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
 '$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'tiles.bi'
+'$INCLUDE: 'player.bi'
+'$INCLUDE: 'switches.bi'
+'$INCLUDE: 'render.bi'
+'$INCLUDE: 'lifts.bi'
+'$STATIC
+
+CONST liftspeed! = 1.6, liftframedelay = 1
+
+TYPE locatortype
+ x AS INTEGER
+ y AS INTEGER
+ locksw AS INTEGER   'if locksw then check switch(locksw)
+ delay AS INTEGER
+END TYPE
+
+TYPE lifttype
+ x AS SINGLE
+ y AS SINGLE
+ xv AS SINGLE
+ yv AS SINGLE
+ delay AS INTEGER
+ target AS INTEGER
+ track AS INTEGER
+END TYPE
 
 ON ERROR GOTO ErrorHandler
+
+DIM SHARED numtracks, numlifts
+DIM SHARED liftstop&, liftleft&, liftright&, liftup&, liftdown&
+DIM SHARED locator(1 TO 16, 1 TO 16) AS locatortype, numlocators(1 TO 16)
+DIM SHARED lift(1 TO 16) AS lifttype
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
+SUB DoPlayerOnLift
+
+'--- is keen on a platform? ---
+player(0).onlift = 0
+IF player(0).action = hangclimb THEN EXIT SUB
+IF player(0).action = dying THEN EXIT SUB
+FOR l = 1 TO numlifts
+  IF LiftTouchPlayer(l) THEN player(0).onlift = l
+NEXT l
+
+IF player(0).onlift AND player(0).yv >= 0 THEN
+  l = player(0).onlift
+  player(0).onball = 0
+
+  '--- clip player to lift ---
+  ny! = lift(l).y - 1
+  player(0).yv = 0
+  player(0).y = ny! - (player(0).ysize / 2)
+  player(0).onground = 1
+  player(0).canjump = ts * player(0).jumpheight
+  IF player(0).action = hanging THEN player(0).action = moving
+  player(0).holdingjump = 0
+  player(0).stoppedjump = 0
+  UpdateClipPoints
+END IF
+
+END SUB
+
 SUB DrawLifts
 
 FOR l = 1 TO numlifts
   '--- if item is on screen ---
-  IF lift(l).x + (52 / 2) >= camera(0).vx1 AND lift(l).x - (52 / 2) <= camera(0).vx2 THEN
-    IF lift(l).y + (16 / 2) >= camera(0).vy1 AND lift(l).y - (16 / 2) <= camera(0).vy2 THEN
-   
-      '--- draw item ---
-      x = lift(l).x - camera(0).vx1 - (52 / 2)
-      y = lift(l).y - camera(0).vy1 - (16 / 2)
-      IF lift(l).xv <= -1! THEN frame& = 1104
-      IF lift(l).xv >= 1! THEN frame& = 1106
-      IF lift(l).yv <= -1! THEN frame& = 1108
-      IF lift(l).yv >= 1! THEN frame& = 1109
-      IF lift(l).xv = 0 AND lift(l).yv = 0 THEN frame& = 1110
+  x1 = lift(l).x - (52 / 2)
+  y1 = lift(l).y - (16 / 2)
+  x2 = lift(l).x + (52 / 2)
+  y2 = lift(l).y + (16 / 2)
+  IF OnCamera(x1, y1, x2, y2) THEN
      
-      IF frame& <> 1110 THEN frame& = frame& + (INT(anmcounter / liftframedelay) MOD 2)
-      PutSprite frame&, x, y, drawpage
-    END IF
+    '--- draw item ---
+    x = lift(l).x - CameraOrigX - (52 / 2)
+    y = lift(l).y - CameraOrigY - (16 / 2)
+    IF lift(l).xv <= -1! THEN frame& = liftleft&  '1104
+    IF lift(l).xv >= 1! THEN frame& = liftright&  '1106
+    IF lift(l).yv <= -1! THEN frame& = liftup&    '1108
+    IF lift(l).yv >= 1! THEN frame& = liftdown&   '1109
+    IF lift(l).xv = 0 AND lift(l).yv = 0 THEN frame& = liftstop&  '1110
+     
+    IF frame& <> 1110 THEN frame& = frame& + (INT(anmcounter / liftframedelay) MOD 2)
+    PutSprite frame&, x, y, drawpage
   END IF
 NEXT l
 
@@ -50,7 +104,7 @@ FOR l = 1 TO numlifts
     '--- set new target for lift ---
     IF lift(l).delay = 0 THEN
       IF locator(lift(l).track, lift(l).target).locksw THEN
-        IF switch(locator(lift(l).track, lift(l).target).locksw) = 1 THEN SetLiftTarget l
+        IF GetSwitch(locator(lift(l).track, lift(l).target).locksw) = 1 THEN SetLiftTarget l
        ELSE SetLiftTarget l
       END IF
     END IF
@@ -96,10 +150,24 @@ NEXT l
 
 END SUB
 
+SUB InitLifts
+
+OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, Text$
+  LOOP UNTIL UCASE$(Text$) = "[LIFTS.DAT]"
+  INPUT #1, liftstop&
+  INPUT #1, liftleft&
+  INPUT #1, liftright&
+  INPUT #1, liftup&
+  INPUT #1, liftdown&
+CLOSE 1
+
+END SUB
+
 FUNCTION LiftNearTarget (l)
 
-IF ABS(lift(l).x - locator(lift(l).track, lift(l).target).x) < 2 THEN
-  IF ABS(lift(l).y - locator(lift(l).track, lift(l).target).y) < 2 THEN
+IF ABS(lift(l).x - locator(lift(l).track, lift(l).target).x) < 4 THEN
+  IF ABS(lift(l).y - locator(lift(l).track, lift(l).target).y) < 4 THEN
     LiftNearTarget = 1
    ELSE LiftNearTarget = 0
   END IF
@@ -114,11 +182,17 @@ px1! = player(0).x: py1! = player(0).y + (player(0).tysize / 2)
 lx1! = lift(l).x - (56 / 2): ly1! = lift(l).y - 1
 lx2! = lift(l).x + (56 / 2): ly2! = lift(l).y + (18 / 2)
 
-IF px1! >= lx1! AND px1! <= lx2! AND py1! >= ly1! AND py1! <= ly2! THEN touch = 1
-
-LiftTouchPlayer = touch
+IF px1! >= lx1! AND px1! <= lx2! AND py1! >= ly1! AND py1! <= ly2! THEN LiftTouchPlayer = 1
 
 END FUNCTION
+
+SUB LoadLiftsFromFile (f)
+
+FOR l = 1 TO numlifts
+  GET #f, , lift(l)
+NEXT l
+
+END SUB
 
 SUB LoadPlatforms (f)
 
@@ -168,6 +242,14 @@ IF lift(l).xv < .001 AND lift(l).xv > 0 THEN lift(l).xv = 0
 IF lift(l).xv > -.001 AND lift(l).xv < 0 THEN lift(l).xv = 0
 IF lift(l).yv < .001 AND lift(l).yv > 0 THEN lift(l).yv = 0
 IF lift(l).yv > -.001 AND lift(l).yv < 0 THEN lift(l).yv = 0
+
+END SUB
+
+SUB WriteLiftsToFile (f)
+
+FOR l = 1 TO numlifts
+  PUT #f, , lift(l)
+NEXT l
 
 END SUB
 

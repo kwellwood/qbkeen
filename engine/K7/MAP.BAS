@@ -1,21 +1,31 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
-'$INCLUDE: 'directqb.bi'
 '$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'tiles.bi'
+'$INCLUDE: 'player.bi'
+'$INCLUDE: 'items.bi'
+'$INCLUDE: 'enemies.bi'
+'$INCLUDE: 'teleport.bi'
+'$INCLUDE: 'lifts.bi'
+'$INCLUDE: 'weapons.bi'
+'$INCLUDE: 'switches.bi'
+'$INCLUDE: 'render.bi'
+'$INCLUDE: 'sound.bi'
+'$INCLUDE: 'map.bi'
+'$STATIC
+
+CONST mapsysver = 3
 
 ON ERROR GOTO ErrorHandler
 
+DIM SHARED MapHandle, MapFGHandle, mapxsize, mapysize
+DIM SHARED file AS STRING * 12, bitl(0) AS LONG
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
 SUB LoadMap (file$)
 
 f = FREEFILE
@@ -29,9 +39,9 @@ OPEN file$ FOR BINARY AS f
   GET #f, , mapysize
  
   '-- background music --
-  GET #f, , file(0)
-  IF UCASE$(RTRIM$(file(0))) <> "NONE" THEN
-    LoadMusic UCASE$(RTRIM$(file(0)))
+  GET #f, , file
+  IF UCASE$(RTRIM$(file)) <> "NONE" THEN
+    LoadMusic UCASE$(RTRIM$(file))
   END IF
 
   '--- load map tile data ---
@@ -40,31 +50,21 @@ OPEN file$ FOR BINARY AS f
       GET #f, , t1&
       GET #f, , t2&
       GET #f, , s&
-      IF s& > 0 THEN debuglog "found switchtag" + STR$(s&) + " at" + STR$(rx) + "," + STR$(ry)
       SetSwitchTag rx, ry, s&
       SetMap rx, ry, t1&
       SetMapFG rx, ry, t2&
-
-      '----[ Get switch tag ]----
-      'IF TileType(t1&) = 4 THEN
-      '  GET #f, , s                 'switch here,
-      '  SetSwitchTag rx, ry, s      ' set the tag
-      ' ELSE SetSwitchTag rx, ry, 0  'no swich here
-      'END IF
-   
     NEXT rx
   NEXT ry
 
   '--- initialize player state ---
   GET #f, , player(0).x: GET #f, , player(0).y
-  player(0).xv = 0: player(0).yv = 0
-  camera(0).x = player(0).x: camera(0).y = player(0).y
-  player(0).xdir = left: player(0).action = moving
-  player(0).idletime = 0
+  player(0).xdir = left
+  InitPlayerState
+  FocusCamera
   UpdateClipPoints
 
   '-----[ Load Objects ]-----
-  activeitemstack(0) = ""
+  ClearItems
   ClearSprites
   LoadItems f
   LoadEnemies f
@@ -72,39 +72,72 @@ OPEN file$ FOR BINARY AS f
   LoadPlatforms f
 
   '--- clear active shots ---
-  FOR s = 1 TO 5: shot(s).active = 0: NEXT s
+  ClearShots
  
   '--- reset switch values ---
-  FOR s = 1 TO 25: switch(s) = 0: NEXT s
+  FOR s = 1 TO 25: SetSwitch s, 0: NEXT s
 CLOSE f
 
 END SUB
 
 FUNCTION Map& (x, y)
 
-BiosXRead MapHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+mapxsize& = mapxsize: x& = x: y& = y
+BiosXRead MapHandle, ((y& * mapxsize& - mapxsize&) + x&) * 4& - 4&, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 Map& = bitl(0)
 
 END FUNCTION
 
+SUB MapCloseXMS
+
+BiosXClose MapHandle
+BiosXClose MapFGHandle
+
+END SUB
+
 FUNCTION MapFG& (x, y)
 
-BiosXRead MapFGHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+mapxsize& = mapxsize: x& = x: y& = y
+BiosXRead MapFGHandle, ((y& * mapxsize& - mapxsize&) + x&) * 4& - 4&, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 MapFG& = bitl(0)
+
+END FUNCTION
+
+SUB MapGetXMS
+
+BiosXOpen 2048, MapHandle, a
+IF a THEN ErrorHandlerSub 111
+
+BiosXOpen 2048, MapFGHandle, a
+IF a THEN ErrorHandlerSub 112
+
+END SUB
+
+FUNCTION MapHeight
+
+MapHeight = mapysize
+
+END FUNCTION
+
+FUNCTION MapWidth
+
+MapWidth = mapxsize
 
 END FUNCTION
 
 SUB SetMap (x, y, t&)
 
+mapxsize& = mapxsize: x& = x: y& = y
 bitl(0) = t&
-BiosXWrite MapHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+BiosXWrite MapHandle, ((y& * mapxsize& - mapxsize&) + x&) * 4& - 4&, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 
 END SUB
 
 SUB SetMapFG (x, y, t&)
 
+mapxsize& = mapxsize: x& = x: y& = y
 bitl(0) = t&
-BiosXWrite MapFGHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+BiosXWrite MapFGHandle, ((y& * mapxsize& - mapxsize&) + x&) * 4& - 4&, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 
 END SUB
 

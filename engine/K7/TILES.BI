@@ -1,5 +1,6 @@
 DEFINT A-Z
 '$DYNAMIC
+
 '       == TILE TAG 1 ==
 'Background           Foreground
 '00=passive           00=passive
@@ -8,7 +9,7 @@ DEFINT A-Z
 '03=hazzard           03=null
 '04=switch            04=null
 '05=pole/ladder       05=pole/ladder
-'06=null              06=null
+'06=null              06=oneway floor
 '07=null              07=empty gem socket
 '08=[reserved]        08=[reserved]
 '09=null              09=wall
@@ -26,21 +27,23 @@ DEFINT A-Z
 '03 - \'    07 - .\1    11 - '/1
 '04 - '/    08 - .\2    12 - '/2
 
-COMMON SHARED TileTypeHandle, TileType2Handle, AnmLengthHandle, AnmDelayHandle
-COMMON SHARED SlopeMaskHandle
-COMMON SHARED numtiles&, tileset$
-
-DECLARE SUB LoadTiles ()
+DECLARE SUB EntityOnGround (onground, onslope, onobject, x!, y!, yv!, ysize)
+DECLARE SUB LoadArtFile (t&, f$)
+DECLARE SUB LoadTiles (tileset$)
+DECLARE SUB PutSprite (t&, x, y, p)
+DECLARE SUB PutTile (t&, x, y, p)
 DECLARE SUB SetTileType (t&, v)
 DECLARE SUB SetTileType2 (t&, v)
 DECLARE SUB SetAnmLength (t&, l)
 DECLARE SUB SetAnmDelay (t&, d)
 DECLARE SUB SetSlopeMask (t&, m&)
-
-DECLARE FUNCTION TileType (t&)
-DECLARE FUNCTION TileType2 (t&)
+DECLARE SUB TilesCloseXMS ()
+DECLARE SUB TilesGetXMS ()
 DECLARE FUNCTION AnmLength (t&)
 DECLARE FUNCTION AnmDelay (t&)
+DECLARE FUNCTION HitPoint (x!, y!)
 DECLARE FUNCTION SlopeHeight (x, y, l)
 DECLARE FUNCTION SlopeMask& (t&)
+DECLARE FUNCTION TileType (t&)
+DECLARE FUNCTION TileType2 (t&)
 

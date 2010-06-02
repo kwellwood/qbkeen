@@ -1,51 +1,66 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
-'$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
 '$INCLUDE: 'dextern.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'sound.bi'
+'$STATIC
+
+DECLARE SUB ErrorHandlerSub (e)
+
+CONST maxsounds = 48
 
 ON ERROR GOTO ErrorHandler
 
+DIM SHARED soundsys, soundset$
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
+SUB EndMusic
+
+IF soundsys THEN DS4QB.StopMusic 1
+
+END SUB
+
 SUB InitSound
 
-a = DS4QB.Init(HIGHQUALITY, DEFAULT)
-IF a THEN ErrorHandlerSub 139 - a    ' error codes are negative
+IF soundsys THEN
+  a = DS4QB.Init(CURRENT, DEFAULT)
+  IF a THEN ErrorHandlerSub 139 - a    ' error codes are negative
 
-LoadSounds
+  LoadSounds
+END IF
 
 END SUB
 
 SUB LoadMusic (file$)
 
-DS4QB.Stopmusic 1
-DS4QB.LoadMusic 1, ".\MUSIC\" + file$, mus.looping OR mus.surround
-DS4QB.SetMusicAttr 1, 75, CURRENT
-PlayMusic 1
+IF soundsys THEN
+  DS4QB.StopMusic 1
+  DS4QB.LoadMusic 1, ".\MUSIC\" + file$, mus.looping OR mus.surround
+  DS4QB.SetMusicAttr 1, 75, CURRENT
+  PlayMusic 1
+END IF
 
 END SUB
 
 SUB LoadSounds
 
-OPEN soundset$ FOR INPUT AS 1
-  INPUT #1, numsounds
-  IF numsounds > maxsounds THEN DebugLog "WARNING: Too many sounds:" + STR$(numsounds): numsounds = maxsounds
+IF soundsys THEN
+  OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, Text$
+  LOOP UNTIL UCASE$(Text$) = "[" + UCASE$(soundset$) + "]"
+   
+    INPUT #1, NumSounds
+    IF NumSounds > maxsounds THEN DebugLog "WARNING: Too many sounds:" + STR$(NumSounds): NumSounds = maxsounds
 
-  FOR s = 1 TO numsounds
-    INPUT #1, soundfile$
-    DS4QB.LoadSound s, soundfile$, DEFAULT
-  NEXT s
-CLOSE 1
+    FOR s = 1 TO NumSounds
+      INPUT #1, soundfile$
+      DS4QB.LoadSound s, soundfile$, DEFAULT
+    NEXT s
+  CLOSE 1
+END IF
 
 END SUB
 
@@ -57,13 +72,32 @@ END SUB
 
 SUB PlaySound (slot)
 
-DS4QB.PlaySound slot
+'IF soundsys THEN DS4QB.AddSound slot, CURRENT, CURRENT, CURRENT, CURRENT
+IF soundsys THEN DS4QB.PlaySound slot
+
+END SUB
+
+SUB PlaySoundBuffer
+
+'IF soundsys THEN DS4QB.PlaySounds
+
+END SUB
+
+SUB SetSoundSet (file$)
+
+soundset$ = file$
+
+END SUB
+
+SUB SetSoundSys (state)
+
+soundsys = state
 
 END SUB
 
 SUB ShutdownSound
 
-DS4QB.Close
+IF soundsys THEN DS4QB.Close
 
 END SUB
 

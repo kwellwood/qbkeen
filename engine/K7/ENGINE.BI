@@ -1,17 +1,13 @@
 DEFINT A-Z
-'$DYNAMIC
 
-COMMON SHARED maxfps, ts, gamemode, realtimer!, anmcounter, gameplay
-COMMON SHARED quitgame, curlevel, ems
-COMMON SHARED drawpage, menupage
-
-CONST enginever = 8
 CONST inmenu = 1, ingame = 2
-CONST lookup = 4, lookdown = 5
-CONST moving = 0, shooting = 1, switching = 2, dying = 3, teleporting = 4
-CONST climbing = 5, pogo = 6, hanging = 7, hangclimb = 8
-CONST idle = 9
 CONST running = 1, paused = 2
+CONST up = 0, down = 1, left = 2, right = 3
+CONST FrameTimer = 0, AnmTimer = 1, HiResTimer = 2
+
+COMMON SHARED anmcounter, menutimermark&
+COMMON SHARED maxfps, ts, quitgame, gamemode, gameplay, curlevel, ems, dolog
+COMMON SHARED drawpage, menupage
 
 DECLARE SUB AllocXMS ()
 DECLARE SUB DeallocXMS ()
@@ -24,17 +20,50 @@ DECLARE SUB InitEngine ()
 DECLARE SUB LoadLevel ()
 DECLARE SUB MainLoop ()
 DECLARE SUB NextLevel ()
+DECLARE SUB ReadParameters ()
+DECLARE SUB ResetTimer (tmr)
 DECLARE SUB SetPalette ()
+DECLARE FUNCTION FrameReady ()
+DECLARE FUNCTION TileUnitsInt (pixels%)
+DECLARE FUNCTION TileUnitsSin (pixels!)
+DECLARE FUNCTION TimerTicked (tmr)
+DECLARE FUNCTION TimerTicks& (tmr)
 
 TYPE coordinate
  x AS SINGLE
  y AS SINGLE
 END TYPE
 
-TYPE hues
- red AS INTEGER
- grn AS INTEGER
- blu AS INTEGER
+TYPE enemytype
+  id AS INTEGER
+  x AS SINGLE
+  y AS SINGLE
+  xv AS SINGLE
+  yv AS SINGLE
+  xdir AS INTEGER
+  onground AS INTEGER
+  onslope AS INTEGER
+  action AS INTEGER
+  actiontime AS INTEGER
+  frame AS LONG
+  xsize AS INTEGER
+  ysize AS INTEGER
+  txsize AS INTEGER
+  tysize AS INTEGER
+  status AS INTEGER
+  statustime AS INTEGER
+  xmax AS INTEGER
+  ymax AS INTEGER
+  starsprite AS INTEGER   ' slot of stars sprite if dead
+END TYPE
+
+TYPE globalvars        ' used to return multiple
+ x AS SINGLE           '   values from a function
+ y AS SINGLE           '   routine
+ xv AS SINGLE
+ yv AS SINGLE
+ onground AS INTEGER
+ onslope AS INTEGER
 END TYPE
 
 TYPE intcoordinate
@@ -63,14 +92,14 @@ TYPE playertype
  adelay AS INTEGER
  canjump AS INTEGER
  jumpheight AS SINGLE
- score AS LONG            ' scores.bi, items.bi
- ammo  AS INTEGER         ' scores.bi, weapon.bi
- drops AS INTEGER         ' items.bi
+ score AS LONG
+ ammo  AS INTEGER
+ drops AS INTEGER
  keyred AS INTEGER
  keyblu AS INTEGER
  keygrn AS INTEGER
  keyyel AS INTEGER
- lives AS INTEGER         ' scores.bi
+ lives AS INTEGER
  reload AS INTEGER        ' time to wait for reload
  shooting AS INTEGER      ' time to display shooting frame
  shootingframe AS LONG    ' shooting frame to show
@@ -83,11 +112,14 @@ TYPE playertype
  holdingjump AS INTEGER   ' player is actively jumping up
  stoppedjump AS INTEGER   ' no longer holding the jump button
  onlift AS INTEGER        ' lift currently standing on
+ onball AS INTEGER        ' bouncing ball currently standing on
  idletime AS INTEGER      ' frames player hasnt pressed a key
 END TYPE
 
+COMMON SHARED scr()
 COMMON SHARED player() AS playertype, ClipPoint() AS coordinate
-COMMON SHARED scr(), file() AS STRING * 12
-COMMON SHARED biti() AS INTEGER, bitl() AS LONG, pal() AS hues
-COMMON SHARED pframe() AS LONG, fsize() AS intcoordinate
+COMMON SHARED enemy() AS enemytype, activefoestack AS STRING
+COMMON SHARED eframe() AS LONG, efsize() AS intcoordinate
+COMMON SHARED EClipPoint() AS coordinate
+COMMON SHARED global() AS globalvars
 

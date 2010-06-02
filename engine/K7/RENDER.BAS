@@ -1,11 +1,28 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
 '$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'timer.bi'
+'$INCLUDE: 'tiles.bi'
+'$INCLUDE: 'map.bi'
+'$INCLUDE: 'player.bi'
+'$INCLUDE: 'items.bi'
+'$INCLUDE: 'enemies.bi'
+'$INCLUDE: 'weapons.bi'
+'$INCLUDE: 'lifts.bi'
+'$INCLUDE: 'scores.bi'
+'$INCLUDE: 'switches.bi'
+'$INCLUDE: 'menu.bi'
+'$INCLUDE: 'render.bi'
+'$STATIC
+
+TYPE camtype
+ x AS INTEGER
+ y AS INTEGER
+ vx1 AS INTEGER
+ vy1 AS INTEGER
+ vx2 AS INTEGER
+ vy2 AS INTEGER
+END TYPE
 
 ON ERROR GOTO ErrorHandler
 
@@ -16,17 +33,40 @@ e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
+FUNCTION CameraOrigX
+
+CameraOrigX = camera(0).vx1
+
+END FUNCTION
+
+FUNCTION CameraOrigY
+
+CameraOrigY = camera(0).vy1
+
+END FUNCTION
+
+FUNCTION CameraX
+
+CameraX = camera(0).x
+
+END FUNCTION
+
+FUNCTION CameraY
+
+CameraY = camera(0).y
+
+END FUNCTION
+
 SUB DoCamera
 
 '-- dont track player while dying --
 IF player(0).action = dying THEN EXIT SUB
 
 '-- loose tracking box --
-IF player(0).x - camera(0).x > 60 THEN camera(0).x = player(0).x - 60
-IF player(0).x - camera(0).x < -60 THEN camera(0).x = player(0).x + 60
-IF player(0).y - camera(0).y > 40 THEN camera(0).y = player(0).y - 40
-IF player(0).y - camera(0).y < -40 THEN camera(0).y = player(0).y + 40
+IF player(0).x - camera(0).x > 50 THEN camera(0).x = player(0).x - 50
+IF player(0).x - camera(0).x < -50 THEN camera(0).x = player(0).x + 50
+IF player(0).y - camera(0).y > 35 THEN camera(0).y = player(0).y - 35
+IF player(0).y - camera(0).y < -35 THEN camera(0).y = player(0).y + 35
 
 '-- set upper left of camera --
 camera(0).vx1 = camera(0).x - 160: camera(0).vy1 = camera(0).y - 100
@@ -37,8 +77,8 @@ IF camera(0).vy1 < 0 THEN camera(0).vy1 = 0
 '-- set lower right of camera --
 camera(0).vx2 = camera(0).vx1 + 319
 camera(0).vy2 = camera(0).vy1 + 199
-IF camera(0).vx2 > (ts * mapxsize) - 1 THEN camera(0).vx2 = (ts * mapxsize) - 1
-IF camera(0).vy2 > (ts * mapysize) - 1 THEN camera(0).vy2 = (ts * mapysize) - 1
+IF camera(0).vx2 > (ts * MapWidth) - 1 THEN camera(0).vx2 = (ts * MapWidth) - 1
+IF camera(0).vy2 > (ts * MapHeight) - 1 THEN camera(0).vy2 = (ts * MapHeight) - 1
 
 '-- reset upper left with lower right of camera --
 camera(0).vx1 = camera(0).vx2 - 319
@@ -52,17 +92,10 @@ SUB DrawHUD
 DQBprint drawpage, "Camera(0).v1: (" + STR$(camera(0).vx1) + "," + STR$(camera(0).vy1) + ")", 200, 0, 15
 DQBprint drawpage, "Camera(0).v2: (" + STR$(camera(0).vx2) + "," + STR$(camera(0).vy2) + ")", 200, 10, 15
 DQBline drawpage, 198, 19, 318, 19, 15
-DQBprint drawpage, "ActiveItemStack(0):" + STR$(LEN(activeitemstack(0))), 200, 22, 15
-DQBprint drawpage, "ActiveSpriteStack(0):" + STR$(LEN(activespritestack(0))), 200, 32, 15
-totalshots = 0: FOR s = 1 TO 5: totalshots = totalshots + shot(s).active: NEXT s
-DQBprint drawpage, "ActiveShots:" + STR$(totalshots), 200, 42, 15
-DQBprint drawpage, "ActiveFoeStack(0):" + STR$(LEN(activefoestack(0))), 200, 52, 15
-DQBline drawpage, 198, 60, 318, 60, 15
 
 '-- animation ticker --
-DQBprint drawpage, "TIMER:" + STR$(TIMER), 1, 172, 15
-DQBprint drawpage, "menudelay:" + STR$(menudelay!), 1, 182, 15
-DQBprint drawpage, "anmcounter:" + STR$(anmcounter), 1, 192, 15
+DQBprint drawpage, "FrameTimer:" + STR$(CSElapsedTicks(0)), 1, 172, 15
+DQBprint drawpage, "AnmCounter:" + STR$(anmcounter), 1, 192, 15
 
 END SUB
 
@@ -71,7 +104,7 @@ SUB DrawObjects
 DrawShots
 DrawItems
 DrawLifts
-IF player(0).action <> dead THEN DrawPlayer
+IF player(0).action <> dying THEN DrawPlayer
 DrawEnemies
 DrawSprites
 
@@ -148,7 +181,7 @@ FOR y = miny TO maxy
       END IF
      
       '----- switches plugin -----
-      IF TileType(t&) = 4 THEN t& = t& + switch(SwitchTag(x, y))
+      IF TileType(t&) = 4 THEN t& = t& + GetSwitch(INT(SwitchTag&(x, y)))
       '---------------------------
      
       PutSprite t&, px, py, drawpage  '\/ overlay the foreground
@@ -174,7 +207,8 @@ FOR y = miny TO maxy
     py = (y - miny) * ts - suby
 
     t2& = MapFG&(x, y)
-    IF t2& AND TileType2(t2&) <> 1 AND TileType2(t2&) <> 10 THEN
+    t2type2 = TileType2(t2&)
+    IF t2& AND t2type2 <> 1 AND t2type2 <> 10 THEN
       al = AnmLength(t2&)
       IF al THEN
         ad = AnmDelay(t2&)
@@ -185,7 +219,8 @@ FOR y = miny TO maxy
   NEXT x
 NEXT y
 
-IF player(0).action = dead THEN DrawPlayer
+'-- draw player on top if dead --
+IF player(0).action = dying THEN DrawPlayer
 
 '---[ Draw HUD Information ]---
 IF ems OR DQBkey(61) THEN DrawScoreboard
@@ -204,4 +239,21 @@ camera(0).x = player(0).x
 camera(0).y = player(0).y
 
 END SUB
+
+SUB MoveCamera (x, y)
+
+camera(0).x = camera(0).x + x
+camera(0).y = camera(0).y + y
+
+END SUB
+
+FUNCTION OnCamera (x1, y1, x2, y2)
+
+IF x2 >= camera(0).vx1 AND x1 <= camera(0).vx2 THEN
+  IF y2 >= camera(0).vy1 AND y1 <= camera(0).vy2 THEN
+    OnCamera = 1
+  END IF
+END IF
+
+END FUNCTION
 

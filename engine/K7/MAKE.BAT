@@ -10,8 +10,6 @@ echo TILES.BAS...    (Tiles system)
 bc tiles.bas /e/x/o/t/c:512; > tiles.cmp
 echo MAP.BAS...      (Map system)
 bc map.bas /e/x/o/t/c:512; > map.cmp
-echo GRAPHICS.BAS... (Graphics system)
-bc graphics.bas /e/x/o/t/c:512; > graphics.cmp
 echo RENDER.BAS...   (Render system)
 bc render.bas /e/x/o/t/c:512; > render.cmp
 echo MENU.BAS...     (Menu system)
@@ -40,8 +38,6 @@ echo  +TILES.OBJ...    (Tiles system)
 lib k7core.lib +tiles; > tiles.cmp
 echo  +MAP.OBJ...      (Map system)
 lib k7core.lib +map; > map.cmp
-echo  +GRAPHICS.OBJ... (Graphics system)
-lib k7core.lib +graphics; > graphics.cmp
 echo  +RENDER.OBJ...   (Render system)
 lib k7core.lib +render; > render.cmp
 echo  +MENU.OBJ...     (Menu system)
@@ -62,13 +58,38 @@ lib k7core.lib +paklib; > paklib.cmp
 echo * Checking for Errors *
 CALL CheckErr corelib.dat
 
+rem =========================================================================
+
+echo * Building Enemy Objects *
+echo ENEMIES.BAS...  (Enemy system)
+bc enemies.bas /e/x/o/t/c:512; > enemies.cmp
+echo ENEMIES1.BAS... (Enemy AI)
+bc enemies1.bas /e/x/o/t/c:512; > enemies1.cmp
+echo ENEMIES2.BAS... (Enemy AI)
+bc enemies2.bas /e/x/o/t/c:512; > enemies2.cmp
+
+echo * Checking For Errors *
+CALL CheckErr enemyobj.dat
+
+echo * Building Enemy Library *
+echo K7ENEMY.LIB:
+echo  +ENEMIES.OBJ...  (Enemy system)
+lib k7enemy.lib +enemies; > enemies.cmp
+echo  +ENEMIES1.OBJ... (Enemy AI)
+lib k7enemy.lib +enemies1; > enemies1.cmp
+echo  +ENEMIES2.OBJ... (Enemy AI)
+lib k7enemy.lib +enemies2; > enemies2.cmp
+
+echo * Checking for Errors *
+CALL CheckErr enemylib.dat
+
+rem =========================================================================
+
 echo * Building Objects *
 echo K7.BAS...       (Main routines)
 bc k7.bas /e/x/o/t/c:512; > k7.cmp
 echo SWITCHES.BAS... (Switches)
 bc switches.bas /e/x/o/t/c:512; > switches.cmp
-echo ENEMIES.BAS...  (Enemy system)
-bc enemies.bas /e/x/o/t/c:512; > enemies.cmp
 echo CLIMBING.BAS... (Climbing physics)
 bc climbing.bas /e/x/o/t/c:512; > climbing.cmp
 echo LIFTS.BAS...    (Moving platforms)
@@ -78,7 +99,7 @@ bc ds4qbpp.bas /e/x/o/t/c:512; > ds4qbpp.cmp
 
 echo * Linking Objects *
 echo KEEN7.EXE...    (Main program)
-link /ex/noe k7 switches enemies climbing lifts ds4qbpp,keen7,,dqb xms k7core paklib bcom45 brun45; >link.cmp
+link /ex/noe k7 switches enemies climbing lifts ds4qbpp,keen7,,k7core k7enemy dqb timer paklib bcom45 brun45; >link.cmp
 
 echo * Checking For Errors *
 CALL CheckErr modules.dat
@@ -87,6 +108,8 @@ echo * Cleaning Up *
 move keen7.exe ..\..\game > nul
 del k7core.lib
 del k7core.bak
+del k7enemy.lib
+del k7enemy.bak
 del keen7.map
 del *.obj
 del *.cmp

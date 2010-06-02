@@ -222,18 +222,18 @@ Changes Since Build 11:
 - Added level 3: The Perilous Pit
 - Wrote a readme file to explain the game better
 
-BUILD 13 (01-25-2002)
+BUILD 13 (01-20-2002)
    Another build with some big additions in game content. Three new levels
 have been added: Hillville, Lifewater Oasis, and Sand Yego. Not just boring
-old forrest anymore! In the code department we have doors unlocked by gem
+old forest anymore! In the code department we have doors unlocked by gem
 keys and bridges toggled by switches. The engine is rapidly nearing
 completion! I want to fix the physics because they're still too fast and I'll
 get working on a couple new enemies. Those take the most time because each
 one is hardcoded. But for now, enjoy the update. Hopefully next time we'll
 have a more stable sound system with DS4QB++ 1.2 and several more enemies and
 levels. BTW, as an added bonus I will begin releasing the development tools
-with each build. It is just the level editor this time because I don't
-want to delay Build 13 another week writing documentation. One more note:
+with each build. It is just the level editor for this build because I don't
+want to delay this another week writing documentation. One more note:
 noems.exe has been removed. To run Keen without EMS memory, use the -noems
 command line parameter.
 
@@ -244,4 +244,25 @@ Changes Since Build 12:
 - Switchable bridges
 - Level skip cheat (F5)
 - Added -noems parameter
-- new ripped music
+
+BUILD 14 (06-09-2002)
+   This build took way too long to complete because of major revisions to the
+code. Not even half of the work put in will actually be visible to the player
+but the code is now uncluttered, more modularized, debugged, and ready to go
+for future construction. Several features have been added since b13 and the
+executable size has even been reduced! The only major setback of this build
+is the lack of sound. DS4QB++ 2.0 (which was more stable than last build)
+conflicts with the new timing routines from Cosmo library. DQB 1.6's timing
+conflicted with win xp and now cosmo conflicts with DS4QB. I will have to try
+to either find yet another set of timer routines with millisecond precision
+or find a new sound system. (Does anyone have something that might work?)
+
+Changes Since Build 13:
+- Two new levels (Pyramid of Moons, Isle of Tar)
+- Three new enemies (Lick, Arachnut, Worm)
+- Player can ride on bounders
+- Slugs can move down slopes
+- Oneway floor tiles
+- New timing routines; works in Windows XP
+- Sound system disabled
+- Code optimized and debugged

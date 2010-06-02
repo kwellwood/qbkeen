@@ -1,9 +1,11 @@
 2
 16
 30
-KEEN16.DAT
+KEEN7.DAT
 8
-10
+12
+8
+30
 
 version
 tilesize
@@ -11,3 +13,5 @@ max fps
 tileset file
 scroll speed
 tile matrixes
+player width
+player height

@@ -1,0 +1,6 @@
+DEFINT A-Z
+'$DYNAMIC
+
+DECLARE SUB WormAI (e)
+DECLARE SUB WormFrames (e)
+

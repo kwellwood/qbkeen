@@ -1,21 +1,32 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
 '$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'timer.bi'
+'$INCLUDE: 'tiles.bi'
+'$INCLUDE: 'map.bi'
+'$INCLUDE: 'player.bi'
+'$INCLUDE: 'items.bi'
+'$INCLUDE: 'enemies.bi'
+'$INCLUDE: 'switches.bi'
+'$INCLUDE: 'lifts.bi'
+'$INCLUDE: 'weapons.bi'
+'$INCLUDE: 'menu.bi'
+'$STATIC
+
+CONST menusysver = 1
+CONST main = 1, options = 2, save = 3, load = 4
 
 ON ERROR GOTO ErrorHandler
 
+DIM SHARED menu, menutile&, selectorstartfrm&, selectorframes, menuopt
+DIM SHARED menux, menuy, selectordelay, selectionpixels
+DIM SHARED TitleScreenTile&
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
 SUB DrawMenu
 
 '--- select current menu ---
@@ -37,22 +48,28 @@ END SUB
 SUB HandleMenu (k)
 
 '--- delay input ---
-IF TIMER < menudelay! THEN EXIT SUB
+IF TimerTicks(HiResTimer) < menutimermark& THEN EXIT SUB
 
 SELECT CASE k
  '--- move selector up ---
- CASE keyup
-  IF menuopt > 1 THEN menuopt = menuopt - 1: menudelay! = TIMER + .2
+ CASE KEYUP
+  IF menuopt > 1 THEN
+    menuopt = menuopt - 1
+    menutimermark& = TimerTicks(HiResTimer) + (100 \ 5)
+  END IF
  '--- move selector down ---
- CASE keydown
+ CASE KEYDOWN
   SELECT CASE menu       'number of options
    CASE main: max = 5    ' depending on the
    CASE save: max = 1    ' current menu
    CASE load: max = 1
    CASE options: max = 1
   END SELECT
-  IF menuopt < max THEN menuopt = menuopt + 1: menudelay! = TIMER + .2
- CASE keyenter
+  IF menuopt < max THEN
+    menuopt = menuopt + 1
+    menutimermark& = TimerTicks(HiResTimer) + (100 \ 5)
+  END IF
+ CASE KEYENTER
   SELECT CASE menu
    CASE main
     '--- main menu options ---
@@ -63,7 +80,7 @@ SELECT CASE k
      CASE 4  ': Options
      CASE 5: quitgame = 1
     END SELECT
-    WHILE DQBkey(keyenter): WEND
+    WHILE DQBkey(KEYENTER): WEND
    CASE save
     '--- save menu options ---
    CASE load
@@ -71,12 +88,12 @@ SELECT CASE k
    CASE options
     '--- options menu options ---
   END SELECT
-  menudelay! = TIMER + .2
+  menutimermark& = TimerTicks(HiResTimer) + (100 \ 5)
  '--- move up in menu tree ---
- CASE keyesc
+ CASE KEYESC
   IF player(0).action <> dying THEN
     IF menu <> main THEN menu = main ELSE gamemode = ingame
-    menudelay! = TIMER + .2
+    menutimermark& = TimerTicks(HiResTimer) + (200 \ 5)
   END IF
 END SELECT
 
@@ -84,10 +101,9 @@ END SUB
 
 SUB InitMenu
 
-'OPEN "menu.dat" FOR INPUT AS 1
 OPEN "engine.dat" FOR INPUT AS 1
-  DO: INPUT #1, text$
-  LOOP UNTIL UCASE$(text$) = "[MENU.DAT]"
+  DO: INPUT #1, Text$
+  LOOP UNTIL UCASE$(Text$) = "[MENU.DAT]"
   INPUT #1, filever
   IF filever <> menusysver THEN ErrorHandlerSub 137
 
@@ -98,6 +114,7 @@ OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, menux
   INPUT #1, menuy
   INPUT #1, selectionpixels
+  INPUT #1, TitleScreenTile&
 CLOSE 1
 
 menu = main
@@ -107,8 +124,8 @@ END SUB
 
 SUB Intro
 
-PutTile 75, 0, 0, video
-DO: LOOP UNTIL DQBkey(keyctrl) OR DQBkey(keyspace) OR DQBkey(keyenter) OR DQBkey(keyesc)
+PutTile TitleScreenTile&, 0, 0, VIDEO
+DO: LOOP UNTIL DQBkey(KEYCTRL) OR DQBkey(KEYSPACE) OR DQBkey(KEYENTER) OR DQBkey(KEYESC)
 
 END SUB
 
@@ -123,41 +140,20 @@ OPEN "SAVE1.CK7" FOR BINARY AS 2
   GET #2, , player(0)
   UpdateClipPoints
 
-  activeitemstack(0) = "": GET #2, , i
-  FOR k = 1 TO i
-    GET #2, , item(k)
-    activeitemstack(0) = activeitemstack(0) + CHR$(k)
-  NEXT k
+  LoadItemsFromFile 2
+  LoadSpritesFromFile 2
+  LoadEnemiesFromFile 2
+  LoadShotsFromFile 2
+  FOR s = 1 TO 25
+    GET #2, , n
+    SetSwitch s, n
+  NEXT s
+  LoadLiftsFromFile 2
 
-  activespritestack(0) = ""
-  unusedspritestack(0) = ""
-  GET #2, , s
-  FOR k = 1 TO s
-    GET #2, , sprite(k)
-    activespritestack(0) = activespritestack(0) + CHR$(k)
-  NEXT k
-  FOR k = LEN(activespritestack(0)) + 1 TO 100
-    unusedspritestack(0) = unusedspritestack(0) + CHR$(k)
-  NEXT k
-
-  activefoestack(0) = "": GET #2, , e
-  FOR k = 1 TO e
-    GET #2, , enemy(k)
-    activefoestack(0) = activefoestack(0) + CHR$(k)
-  NEXT k
-
-  FOR s = 1 TO 5: GET #2, , shot(s): NEXT s
-
-  FOR s = 1 TO 25: GET #2, , switch(s): NEXT s
-
-  FOR l = 1 TO numlifts: GET #2, , lift(l): NEXT l
-
-  FOR y = 1 TO mapysize
-    FOR x = 1 TO mapxsize
-      'GET #2, , layer1&
+  FOR y = 1 TO MapHeight
+    FOR x = 1 TO MapWidth
       GET #2, , layer2&
       GET #2, , layer3&
-      'SetMap x, y, layer1&
       SetMapFG x, y, layer2&
       SetSwitchTag x, y, layer3&
     NEXT x
@@ -203,36 +199,20 @@ OPEN "SAVE1.CK7" FOR BINARY AS 1
   PUT #1, , curlevel
   PUT #1, , player(0)
 
-  i = LEN(activeitemstack(0)): PUT #1, , i
-  FOR i = 1 TO LEN(activeitemstack(0))
-    k = ASC(MID$(activeitemstack(0), i, 1))
-    PUT #1, , item(k)
-  NEXT i
- 
-  s = LEN(activespritestack(0)): PUT #1, , s
-  FOR s = 1 TO LEN(activespritestack(0))
-    k = ASC(MID$(activespritestack(0), s, 1))
-    PUT #1, , sprite(k)
+  WriteItemsToFile 1
+  WriteSpritesToFile 1
+  WriteEnemiesToFile 1
+  WriteShotsToFile 1
+  FOR s = 1 TO 25
+    n = GetSwitch(s)
+    PUT #1, , n
   NEXT s
+  WriteLiftsToFile 1
 
-  e = LEN(activefoestack(0)): PUT #1, , e
-  FOR e = 1 TO LEN(activefoestack(0))
-    k = ASC(MID$(activefoestack(0), e, 1))
-    PUT #1, , enemy(k)
-  NEXT e
-
-  FOR s = 1 TO 5: PUT #1, , shot(s): NEXT s
-
-  FOR s = 1 TO 25: PUT #1, , switch(s): NEXT s
-
-  FOR l = 1 TO numlifts: PUT #1, , lift(l): NEXT l
-
-  FOR y = 1 TO mapysize
-    FOR x = 1 TO mapxsize
-      'layer1& = Map&(x, y)
+  FOR y = 1 TO MapHeight
+    FOR x = 1 TO MapWidth
       layer2& = MapFG&(x, y)
       layer3& = SwitchTag&(x, y)
-      'PUT #1, , layer1&
       PUT #1, , layer2&
       PUT #1, , layer3&
     NEXT x

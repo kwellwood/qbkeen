@@ -1,10 +1,23 @@
+-----------------------------------------------------------------------------
+Index of files:
+ engine.dat
+ menu.dat
+ scores.dat
+ weapons.dat
+ lifts.dat
+ items.dat
+ enemies.dat
+ player.dat
+ soundmp3.dat
+ soundwav.dat
+-----------------------------------------------------------------------------
 [ENGINE.DAT]
-8
+14
 16
 40
 0.8
 0.9
-KEEN16.DAT
+KEEN7.DAT
 SOUNDMP3.DAT
 16
 3.5
@@ -28,13 +41,14 @@ player clip ysize
 -----------------------------------------------------------------------------
 [MENU.DAT]
 1
-64
-62
+83
+703
 2
 4
 106
 62
 22
+89
 file version
 menu tile
 selector tile
@@ -43,26 +57,33 @@ animation delay
 selection 1 x
 selection 1 y
 selector move pixels
+title screen tile
 -----------------------------------------------------------------------------
 [SCORES.DAT]
-496
-497
+541
+542
 7
 4
+90
+49
+57
 scoreboard tile
 start of digits tiles 0-9
 x location of board
 y location of board
+tile for loading levels
+x location for loading tile
+y location for loading tile
 -----------------------------------------------------------------------------
 [WEAPONS.DAT]
 6
-55
-58
+705
+708
 1
 16
 16
-59
-60
+709
+710
 2
 16
 16
@@ -78,21 +99,33 @@ explosion animation delay
 explosion x size
 explosion y size
 -----------------------------------------------------------------------------
+[LIFTS.DAT]
+699
+693
+695
+697
+698
+hovering
+move left
+move right
+move up
+move down
+-----------------------------------------------------------------------------
 [ITEMS.DAT]
 13
-516,2,4,522,7,3,10,16,16,32,100,0,0,0
-518,2,4,529,7,3,16,16,16,32,200,0,0,0
-520,2,4,536,7,3,16,16,16,32,500,0,0,0
-512,2,4,543,7,3,15,15,15,32,1000,0,0,0
-514,2,4,550,7,3,15,15,15,32,2000,0,0,0
-616,2,4,557,7,3,10,16,10,32,5000,0,0,0
-618,2,4,564,7,3,11,16,11,16,0,0,100,0
-62,2,4,578,7,3,16,12,16,32,0,5,0,0
-609,4,2,613,3,4,16,16,16,16,0,0,1,0
-1190,2,4,1205,7,3,16,12,18,32,0,0,0,1
-1192,2,4,1205,7,3,16,12,18,32,0,0,0,2
-1194,2,4,1205,7,3,15,12,18,32,0,0,0,3
-1196,2,4,1205,7,3,16,12,18,32,0,0,0,4
+563,2,4,569,7,3,10,16,16,32,100,0,0,0
+565,2,4,577,7,3,16,16,16,32,200,0,0,0
+567,2,4,584,7,3,16,16,16,32,500,0,0,0
+559,2,4,595,7,3,16,15,15,32,1000,0,0,0
+561,2,4,602,7,3,16,15,15,32,2000,0,0,0
+685,2,4,613,7,3,10,16,10,32,5000,0,0,0
+687,2,4,620,7,3,12,16,11,16,0,0,100,0
+703,2,4,638,7,3,16,12,16,32,0,5,0,0
+675,4,2,679,3,4,16,16,16,16,0,0,1,0
+1301,2,4,1319,7,3,16,12,18,32,0,0,0,1
+1303,2,4,1319,7,3,16,12,18,32,0,0,0,2
+1305,2,4,1319,7,3,15,12,18,32,0,0,0,3
+1307,2,4,1319,7,3,16,12,18,32,0,0,0,4
 sframe
 frames
 delay
@@ -106,30 +139,47 @@ pysize
 points
 ammo
 lifedrop
-gemkey
+gemkey (1=red,2=blue,3=green,4=yellow)
 -----------------------------------------------------------------------------
-[ENEMY.DAT]
-590,16,24
-591,24,22
-592,24,24
-593,16,24
-594,24,22
-595,24,24
-596,24,22
-597,16,24
-598,16,7
-599,16,6
-601,24,23
-602,24,23
-603,24,23
-604,24,23
-605,24,23
-606,24,23
-607,24,24
-620,32,32
-621,32,32
-622,32,32
-623,32,32
+[ENEMIES.DAT]
+553
+555
+655,16,24
+656,24,22
+657,24,24
+658,16,24
+659,24,22
+660,24,24
+661,24,22
+662,16,24
+663,16,7
+664,16,6
+667,24,24
+668,24,24
+669,24,24
+670,24,24
+671,24,24
+672,24,24
+673,24,24
+689,32,32
+690,32,32
+691,32,32
+692,32,32
+712,22,16
+716,22,16
+720,22,16
+733,28,16
+734,38,16
+735,40,16
+736,28,16
+737,38,16
+738,40,16
+751,40,40
+755,62,20
+501,24,12
+503,24,12
+stars anm first frame
+stars anm last frame
 (0) slug left 1
 (1) slug left 2
 (2) slug poop left
@@ -151,6 +201,19 @@ gemkey
 (18) mushroom left 2
 (19) mushroom right 1
 (20) mushroom right 2
+(21) lick left frame 1 of 4
+(22) lick right frame 1 of 4
+(23) lick dead
+(24) lick attack left 1
+(25) lick attack left 2
+(26) lick attack left 3
+(27) lick attack right 1
+(28) lick attack right 2
+(29) lick attack right 3
+(30) arachnut run
+(31) arachnut stunned
+(32) worm left frame 1 of 2
+(33) worm right frame 1 of 2
 -----------------------------------------------------------------------------
 [PLAYER.DAT]
 1
@@ -176,35 +239,35 @@ gemkey
 33,32,48
 34,32,32
 35,24,32
-23,24,32
-631,16,32
+17,24,32
+50,16,32
 5, 0 , 0
-17,26,32
+19,26,32
 3, 0 , 0
-20,26,32
+22,26,32
 3, 0 , 0
-642,24,32
+61,24,32
 4, 0 , 0
-636,40,32
-637,32,40
-638,32,32
-639,24,32
-640,32,40
-641,32,32
-657,24,32
-658,24,32
-659,24,32
-660,24,32
-1076,16,40
-1091,24,40
-1077,22,40
-1092,22,40
-42,24,32
+55,40,32
+56,32,40
+57,32,32
+58,24,32
+59,32,40
+60,32,32
+65,24,32
+66,24,32
+67,24,32
+68,24,32
+73,16,40
+78,24,40
+74,22,40
+79,22,40
+40,24,32
 4 , 0, 0
-46,24,32
-47,24,32
+44,24,32
+45,24,32
 2 , 0, 0
-49,24,32
+47,24,32
 2 , 0, 0
 animation delay
 (0) stand left
@@ -259,3 +322,95 @@ animation delay
 (49) turning page frames
 (50) standing up
 (51) standing up frames
+-----------------------------------------------------------------------------
+[SOUNDMP3.DAT]
+21
+.\SOUNDFX\MP3\ENTERLEV.MP3
+.\SOUNDFX\MP3\EXITLEV.MP3
+.\SOUNDFX\MP3\DIE.MP3
+.\SOUNDFX\MP3\SHOOT.MP3
+.\SOUNDFX\MP3\NOAMMO.MP3
+.\SOUNDFX\MP3\SHOTHIT.MP3
+.\SOUNDFX\MP3\FOOTSTEP.MP3
+.\SOUNDFX\MP3\BUMPROOF.MP3
+.\SOUNDFX\MP3\JUMP.MP3
+.\SOUNDFX\MP3\LAND.MP3
+.\SOUNDFX\MP3\POGO.MP3
+.\SOUNDFX\MP3\FALL.MP3
+.\SOUNDFX\MP3\CANDY.MP3
+.\SOUNDFX\MP3\LIFEDROP.MP3
+.\SOUNDFX\MP3\PISTOL.MP3
+.\SOUNDFX\MP3\GEMKEY.MP3
+.\SOUNDFX\MP3\OPENDOOR.MP3
+.\SOUNDFX\MP3\SLUGPOOP.MP3
+.\SOUNDFX\MP3\MBOUNCE1.MP3
+.\SOUNDFX\MP3\MBOUNCE2.MP3
+.\SOUNDFX\MP3\BBOUNCE.MP3
+Slots:
+1 enter level
+2 exit level
+3 keen die
+4 shoot gun
+5 no ammo click
+6 shot collide
+7 footsteps
+8 bump ceiling
+9 jump
+10 land on ground
+11 pogo bounce
+12 fall
+13 collect candy
+14 collect lifedrop
+15 collect gun
+16 collect gemkey
+17 open gem door
+18 slug poop
+19 mushroom bounce 1
+20 mushroom bounce 2
+21 bounder bounce
+-----------------------------------------------------------------------------
+[SOUNDWAV.DAT]
+21
+.\SOUNDFX\WAV\ENTERLEV.WAV
+.\SOUNDFX\WAV\EXITLEV.WAV
+.\SOUNDFX\WAV\DIE.WAV
+.\SOUNDFX\WAV\SHOOT.WAV
+.\SOUNDFX\WAV\NOAMMO.WAV
+.\SOUNDFX\WAV\SHOTHIT.WAV
+.\SOUNDFX\WAV\FOOTSTEP.WAV
+.\SOUNDFX\WAV\BUMPROOF.WAV
+.\SOUNDFX\WAV\JUMP.WAV
+.\SOUNDFX\WAV\LAND.WAV
+.\SOUNDFX\WAV\POGO.WAV
+.\SOUNDFX\WAV\FALL.WAV
+.\SOUNDFX\WAV\CANDY.WAV
+.\SOUNDFX\WAV\LIFEDROP.WAV
+.\SOUNDFX\WAV\PISTOL.WAV
+.\SOUNDFX\WAV\GEMKEY.WAV
+.\SOUNDFX\WAV\OPENDOOR.WAV
+.\SOUNDFX\WAV\SLUGPOOP.WAV
+.\SOUNDFX\WAV\MBOUNCE1.WAV
+.\SOUNDFX\WAV\MBOUNCE2.WAV
+.\SOUNDFX\WAV\BBOUNCE.WAV
+Slots:
+1 enter level
+2 exit level
+3 keen die
+4 shoot gun
+5 no ammo click
+6 shot collide
+7 footsteps
+8 bump ceiling
+9 jump
+10 land on ground
+11 pogo bounce
+12 fall
+13 collect candy
+14 collect lifedrop
+15 collect gun
+16 collect gemkey
+17 open gem door
+18 slug poop
+19 mushroom bounce 1
+20 mushroom bounce 2
+21 bounder bounce

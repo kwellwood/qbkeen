@@ -1,29 +1,85 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
-'$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'tiles.bi'
+'$INCLUDE: 'player.bi'
+'$INCLUDE: 'render.bi'
+'$INCLUDE: 'sound.bi'
+'$INCLUDE: 'items.bi'
+'$STATIC
+
+CONST red = 1, blue = 2, green = 3, yellow = 4
+
+TYPE itemclass
+ x AS INTEGER
+ y AS INTEGER
+ sframe AS LONG
+ frames AS INTEGER
+ delay AS INTEGER
+ id AS INTEGER
+ xsize AS INTEGER
+ ysize AS INTEGER
+ scored AS INTEGER
+END TYPE
+
+TYPE spriteclass
+ x AS INTEGER
+ y AS INTEGER
+ frame AS LONG
+ sframe AS LONG
+ eframe AS LONG
+ delay AS INTEGER     ' ticks per frame
+ ticks AS INTEGER     ' set to delay and decrease for next frame
+ xsize AS INTEGER
+ ysize AS INTEGER
+ deadly AS INTEGER   ' kill player if touched
+ repeat AS INTEGER   ' dont kill sprite, loop animation
+END TYPE
+
+TYPE itemtypeclass
+ sframe AS LONG
+ frames AS INTEGER
+ delay AS INTEGER
+ points AS INTEGER
+ lifedrop AS INTEGER
+ gemkey AS INTEGER
+ xsize AS INTEGER
+ ysize AS INTEGER
+ pxsize AS INTEGER
+ pysize AS INTEGER
+ ammo AS INTEGER
+ psframe AS LONG
+ pframes AS LONG
+ pdelay AS INTEGER
+END TYPE
 
 ON ERROR GOTO ErrorHandler
+
+DIM SHARED numitems, numitemtypes
+DIM SHARED item(1 TO 255) AS itemclass, bonus(1 TO 13) AS itemtypeclass
+DIM SHARED activeitemstack AS STRING, activespritestack AS STRING
+DIM SHARED sprite(1 TO 100) AS spriteclass, unusedspritestack AS STRING
+
+'activeitemstack = "list of active items to handle"
+'                  "31246890"
+'activespritestack = "list of active passive sprites to handle"
+'                    "1375"
+'unusedspritestack = "list of inactive passive sprites for later use"
+'                    "246890"
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
-SUB AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat)
+FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat)
 
 '--- exit if no more empty sprite slots ---
-IF LEN(unusedspritestack(0)) = 0 THEN EXIT SUB
+IF LEN(unusedspritestack) = 0 THEN EXIT FUNCTION
 
 '--- balance the stacks ---
-s = ASC(LEFT$(unusedspritestack(0), 1))
-unusedspritestack(0) = RIGHT$(unusedspritestack(0), LEN(unusedspritestack(0)) - 1)
-activespritestack(0) = activespritestack(0) + CHR$(s)
+s = ASC(LEFT$(unusedspritestack, 1))
+unusedspritestack = RIGHT$(unusedspritestack, LEN(unusedspritestack) - 1)
+activespritestack = activespritestack + CHR$(s)
 
 '--- fill in sprite object ---
 sprite(s).x = x
@@ -38,15 +94,21 @@ sprite(s).ysize = ysize
 sprite(s).deadly = deadly
 sprite(s).repeat = repeat
 
-biti(0) = s 'set to slot in sprites so another
-            'function can access it later
+AddSprite = s  'set to slot in sprites so another
+               'function can access it later
+
+END FUNCTION
+
+SUB ClearItems
+
+activeitemstack = ""
 
 END SUB
 
 SUB ClearSprites
 
-activespritestack(0) = ""   'clear sprite stack
-unusedspritestack(0) = ""   'clear unused sprite stack
+activespritestack = ""   'clear sprite stack
+unusedspritestack = ""   'clear unused sprite stack
 FOR s = 1 TO 100            'fill unused sprite stack
   sprite(s).deadly = 0
   sprite(s).repeat = 0
@@ -54,16 +116,16 @@ FOR s = 1 TO 100            'fill unused sprite stack
   sprite(s).x = 0: sprite(s).y = 0
   sprite(s).xsize = 0: sprite(s).ysize = 0
   sprite(s).frame = 0: sprite(s).sframe = 0: sprite(s).eframe = 0
-  unusedspritestack(0) = unusedspritestack(0) + CHR$(s)
+  unusedspritestack = unusedspritestack + CHR$(s)
 NEXT s
 
 END SUB
 
 SUB DoItems
 
-FOR k = 1 TO LEN(activeitemstack(0))
-  IF k > LEN(activeitemstack(0)) THEN EXIT FOR
-  i = ASC(MID$(activeitemstack(0), k, 1))
+FOR k = 1 TO LEN(activeitemstack)
+  IF k > LEN(activeitemstack) THEN EXIT FOR
+  i = ASC(MID$(activeitemstack, k, 1))
 
   IF TouchItem(i) THEN
     '--- award bonus' value ---
@@ -96,10 +158,10 @@ FOR k = 1 TO LEN(activeitemstack(0))
     END IF
 
     '--- remove from active item stack ---
-    activeitemstack(0) = LEFT$(activeitemstack(0), k - 1) + RIGHT$(activeitemstack(0), LEN(activeitemstack(0)) - k)
+    activeitemstack = LEFT$(activeitemstack, k - 1) + RIGHT$(activeitemstack, LEN(activeitemstack) - k)
    
     x = item(i).x: y = item(i).y - (bonus(item(i).id).pysize / 2)
-    AddSprite x, y, bonus(item(i).id).psframe, bonus(item(i).id).psframe + bonus(item(i).id).pframes - 1, bonus(item(i).id).pdelay, bonus(item(i).id).pxsize, bonus(item(i).id).pysize, 0, 0
+    a = AddSprite(x, y, bonus(item(i).id).psframe, bonus(item(i).id).psframe + bonus(item(i).id).pframes - 1, bonus(item(i).id).pdelay, bonus(item(i).id).pxsize, bonus(item(i).id).pysize, 0, 0)
 
     k = k - 1
   END IF
@@ -109,9 +171,9 @@ END SUB
 
 SUB DoSprites
 
-FOR k = 1 TO LEN(activespritestack(0))
-  IF k > LEN(activespritestack(0)) THEN EXIT FOR
-  s = ASC(MID$(activespritestack(0), k, 1))
+FOR k = 1 TO LEN(activespritestack)
+  IF k > LEN(activespritestack) THEN EXIT FOR
+  s = ASC(MID$(activespritestack, k, 1))
   
   '-- if this sprite is deadly --
   IF sprite(s).deadly AND TouchSprite(s) THEN KillPlayer
@@ -127,8 +189,8 @@ FOR k = 1 TO LEN(activespritestack(0))
   IF sprite(s).frame > sprite(s).eframe THEN
     IF sprite(s).repeat = 0 THEN
       '--- remove from active sprite stack ---
-      activespritestack(0) = LEFT$(activespritestack(0), k - 1) + RIGHT$(activespritestack(0), LEN(activespritestack(0)) - k)
-      unusedspritestack(0) = unusedspritestack(0) + CHR$(s)
+      activespritestack = LEFT$(activespritestack, k - 1) + RIGHT$(activespritestack, LEN(activespritestack) - k)
+      unusedspritestack = unusedspritestack + CHR$(s)
       k = k - 1
      ELSE
       '--- loop animation ---
@@ -141,19 +203,21 @@ END SUB
 
 SUB DrawItems
 
-FOR k = 1 TO LEN(activeitemstack(0))
-  i = ASC(MID$(activeitemstack(0), k, 1))
+FOR k = 1 TO LEN(activeitemstack)
+  i = ASC(MID$(activeitemstack, k, 1))
  
   '--- if item is on screen ---
-  IF item(i).x + (item(i).xsize / 2) >= camera(0).vx1 AND item(i).x - (item(i).xsize / 2) <= camera(0).vx2 THEN
-    IF item(i).y + (item(i).ysize / 2) >= camera(0).vy1 AND item(i).y - (item(i).ysize / 2) <= camera(0).vy2 THEN
+  x1 = item(i).x - (item(i).xsize / 2)
+  y1 = item(i).y - (item(i).ysize / 2)
+  x2 = item(i).x + (item(i).xsize / 2)
+  y2 = item(i).y + (item(i).ysize / 2)
+  IF OnCamera(x1, y1, x2, y2) THEN
     
-      '--- draw item ---
-      x = item(i).x - camera(0).vx1 - (item(i).xsize / 2)
-      y = item(i).y - camera(0).vy1 - (item(i).ysize / 2)
-      frame& = item(i).sframe + (INT(anmcounter / item(i).delay) MOD item(i).frames)
-      PutSprite frame&, x, y, drawpage
-    END IF
+    '--- draw item ---
+    x = item(i).x - CameraOrigX - (item(i).xsize / 2)
+    y = item(i).y - CameraOrigY - (item(i).ysize / 2)
+    frame& = item(i).sframe + (INT(anmcounter / item(i).delay) MOD item(i).frames)
+    PutSprite frame&, x, y, drawpage
   END IF
 NEXT k
 
@@ -161,18 +225,20 @@ END SUB
 
 SUB DrawSprites
 
-FOR k = 1 TO LEN(activespritestack(0))
-  s = ASC(MID$(activespritestack(0), k, 1))
+FOR k = 1 TO LEN(activespritestack)
+  s = ASC(MID$(activespritestack, k, 1))
 
   '--- if sprite is on screen ---
-  IF sprite(s).x + (sprite(s).xsize / 2) >= camera(0).vx1 AND sprite(s).x - (sprite(s).xsize / 2) <= camera(0).vx2 THEN
-    IF sprite(s).y + (sprite(s).ysize / 2) >= camera(0).vy1 AND sprite(s).y - (sprite(s).ysize / 2) <= camera(0).vy2 THEN
-   
-      '--- draw sprite ---
-      x = sprite(s).x - camera(0).vx1 - (sprite(s).xsize / 2)
-      y = sprite(s).y - camera(0).vy1 - (sprite(s).ysize / 2)
-      PutSprite sprite(s).frame, x, y, drawpage
-    END IF
+  x1 = sprite(s).x - (sprite(s).xsize / 2)
+  y1 = sprite(s).y - (sprite(s).ysize / 2)
+  x2 = sprite(s).x + (sprite(s).xsize / 2)
+  y2 = sprite(s).y + (sprite(s).ysize / 2)
+  IF OnCamera(x1, y1, x2, y2) THEN
+
+    '--- draw sprite ---
+    x = sprite(s).x - CameraOrigX - (sprite(s).xsize / 2)
+    y = sprite(s).y - CameraOrigY - (sprite(s).ysize / 2)
+    PutSprite sprite(s).frame, x, y, drawpage
   END IF
 NEXT k
 
@@ -180,10 +246,9 @@ END SUB
 
 SUB InitItems
 
-'OPEN "items.dat" FOR INPUT AS 1
 OPEN "engine.dat" FOR INPUT AS 1
-  DO: INPUT #1, text$
-  LOOP UNTIL UCASE$(text$) = "[ITEMS.DAT]"
+  DO: INPUT #1, Text$
+  LOOP UNTIL UCASE$(Text$) = "[ITEMS.DAT]"
   INPUT #1, numitemtypes
   FOR i = 1 TO numitemtypes
     INPUT #1, bonus(i).sframe
@@ -203,7 +268,7 @@ OPEN "engine.dat" FOR INPUT AS 1
   NEXT i
 CLOSE 1
 
-activeitemstack(0) = ""
+ClearItems
 ClearSprites
 
 END SUB
@@ -223,8 +288,35 @@ FOR i = 1 TO numitems
   item(i).xsize = bonus(item(i).id).xsize
   item(i).ysize = bonus(item(i).id).ysize
   item(i).scored = 0
-  activeitemstack(0) = activeitemstack(0) + CHR$(i)
+  activeitemstack = activeitemstack + CHR$(i)
 NEXT i
+
+END SUB
+
+SUB LoadItemsFromFile (f)
+
+activeitemstack = "": GET #f, , i
+FOR k = 1 TO i
+  GET #f, , item(k)
+  activeitemstack = activeitemstack + CHR$(k)
+NEXT k
+
+END SUB
+
+SUB LoadSpritesFromFile (f)
+
+activespritestack = ""
+unusedspritestack = ""
+
+GET #f, , s
+FOR k = 1 TO s
+  GET #f, , sprite(k)
+  activespritestack = activespritestack + CHR$(k)
+NEXT k
+
+FOR k = LEN(activespritestack) + 1 TO 100
+  unusedspritestack = unusedspritestack + CHR$(k)
+NEXT k
 
 END SUB
 
@@ -280,4 +372,24 @@ IF sx1 >= px1 AND sx1 <= px2 AND sy2 >= py1 AND sy2 <= py2 THEN TouchSprite = 1
 IF sx2 >= px1 AND sx2 <= px2 AND sy2 >= py1 AND sy2 <= py2 THEN TouchSprite = 1
 
 END FUNCTION
+
+SUB WriteItemsToFile (f)
+
+i = LEN(activeitemstack): PUT #f, , i
+FOR i = 1 TO LEN(activeitemstack)
+  k = ASC(MID$(activeitemstack, i, 1))
+  PUT #f, , item(k)
+NEXT i
+
+END SUB
+
+SUB WriteSpritesToFile (f)
+
+s = LEN(activespritestack): PUT #f, , s
+FOR s = 1 TO LEN(activespritestack)
+  k = ASC(MID$(activespritestack, s, 1))
+  PUT #f, , sprite(k)
+NEXT s
+
+END SUB
 

@@ -1,20 +1,45 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
-'$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'tiles.bi'
+'$INCLUDE: 'map.bi'
+'$INCLUDE: 'items.bi'
+'$INCLUDE: 'render.bi'
+'$INCLUDE: 'player.bi'
+'$INCLUDE: 'enemies.bi'
+'$INCLUDE: 'sound.bi'
+'$INCLUDE: 'weapons.bi'
+'$STATIC
+
+TYPE shottype
+ x AS SINGLE
+ y AS SINGLE
+ xv AS SINGLE
+ yv AS SINGLE
+ frame AS LONG
+ sframe AS LONG
+ eframe AS LONG
+ delay AS INTEGER
+ active AS INTEGER
+END TYPE
 
 ON ERROR GOTO ErrorHandler
+
+DIM SHARED shotsframe&, shoteframe&, shotframedelay, shotxsize, shotysize
+DIM SHARED shotexpsframe&, shotexpeframe&, shotexpframedelay, shotexpxsize
+DIM SHARED shotexpysize, shotvelocity
+DIM SHARED shot(1 TO 5) AS shottype
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
+SUB ClearShots
+
+FOR s = 1 TO 5: shot(s).active = 0: NEXT s
+
+END SUB
+
 SUB DoShots
 
 FOR s = 1 TO 5
@@ -24,14 +49,16 @@ FOR s = 1 TO 5
     shot(s).y = shot(s).y + shot(s).yv
    
     '--- map boundaries ---
-    IF shot(s).x < 0 OR shot(s).x > mapxsize * ts THEN shot(s).active = 0
-    IF shot(s).y < 0 OR shot(s).y > mapysize * ts THEN shot(s).active = 0
+    IF shot(s).x < 0 OR shot(s).x > MapWidth * ts THEN shot(s).active = 0
+    IF shot(s).y < 0 OR shot(s).y > MapHeight * ts THEN shot(s).active = 0
 
     '--- hit a wall ---
     IF ShotCollide(s) THEN KillShot s
  
     '--- hit an enemy ---
-    e = ShotEnemy(s)
+    sx1 = shot(s).x - (shotxsize / 2): sy1 = shot(s).y - (shotysize / 2)
+    sx2 = shot(s).x + (shotxsize / 2): sy2 = shot(s).y + (shotysize / 2)
+    e = ShotEnemy(sx1, sy1, sx2, sy2)
     IF e THEN
       KillEnemy e
       KillShot s
@@ -48,8 +75,16 @@ SUB DrawShots
 
 FOR s = 1 TO 5
   IF shot(s).active THEN
-    frame& = shot(s).sframe + (INT(anmcounter / shot(s).delay) MOD (shot(s).eframe - shot(s).frame))
-    PutSprite frame&, shot(s).x - camera(0).vx1 - (shotxsize / 2), shot(s).y - camera(0).vy1 - (shotysize / 2), drawpage
+   
+    x1 = shot(s).x - (shotxsize / 2)
+    x2 = shot(s).x + (shotxsize / 2)
+    y1 = shot(s).y - (shotysize / 2)
+    y2 = shot(s).y + (shotysize / 2)
+    IF OnCamera(x1, y1, x2, y2) THEN
+     
+      frame& = shot(s).sframe + (INT(anmcounter / shot(s).delay) MOD (shot(s).eframe - shot(s).frame))
+      PutSprite frame&, shot(s).x - CameraOrigX - (shotxsize / 2), shot(s).y - CameraOrigY - (shotysize / 2), drawpage
+    END IF
   END IF
 NEXT s
 
@@ -57,10 +92,9 @@ END SUB
 
 SUB InitWeapons
 
-'OPEN "weapons.dat" FOR INPUT AS 1
 OPEN "engine.dat" FOR INPUT AS 1
-  DO: INPUT #1, text$
-  LOOP UNTIL UCASE$(text$) = "[WEAPONS.DAT]"
+  DO: INPUT #1, Text$
+  LOOP UNTIL UCASE$(Text$) = "[WEAPONS.DAT]"
   INPUT #1, shotvelocity
   INPUT #1, shotsframe&
   INPUT #1, shoteframe&
@@ -83,10 +117,16 @@ shot(s).active = 0
 
 '--- add explosion to sprite stack ---
 x = shot(s).x: y = shot(s).y
-AddSprite x, y, shotexpsframe&, shotexpeframe&, shotexpframedelay, shotexpxsize, shotexpysize, 0, 0
+a = AddSprite(x, y, shotexpsframe&, shotexpeframe&, shotexpframedelay, shotexpxsize, shotexpysize, 0, 0)
 
 '--- play sound if in hearing range ---
 IF ShotInRange(s, 240) THEN PlaySound 6
+
+END SUB
+
+SUB LoadShotsFromFile (f)
+
+FOR s = 1 TO 5: GET #f, , shot(s): NEXT s
 
 END SUB
 
@@ -114,8 +154,9 @@ END IF
 
 IF player(0).onground THEN
   IF player(0).aim = -1 THEN    ' player not aiming up or down; on ground
-    IF player(0).xdir = left THEN player(0).shootingframe = groundleft: player(0).xv = 0
-    IF player(0).xdir = right THEN player(0).shootingframe = groundright: player(0).xv = 0
+    IF player(0).xdir = left THEN player(0).shootingframe = groundleft
+    IF player(0).xdir = right THEN player(0).shootingframe = groundright
+     player(0).xv = 0: player(0).frozen = 1
    ELSE
     player(0).shootingframe = groundup: player(0).xv = 0: player(0).frozen = 1 'stop walking
   END IF
@@ -148,11 +189,17 @@ SELECT CASE player(0).shootingframe
  CASE polerightdown: framedataslot = 36
 END SELECT
 
-player(0).frame = pframe(framedataslot)
-player(0).txsize = fsize(framedataslot).x
-player(0).tysize = fsize(framedataslot).y
+player(0).frame = PlayerFrame&(framedataslot)
+player(0).txsize = PFrameSizeX(framedataslot)
+player(0).tysize = PFrameSizeY(framedataslot)
 
 END SUB
+
+FUNCTION ShotActive (s)
+
+ShotActive = shot(s).active
+
+END FUNCTION
 
 FUNCTION ShotCollide (s)
 
@@ -170,29 +217,6 @@ IF TileType(Map&(sx, sy)) = 1 THEN ShotCollide = 1: EXIT FUNCTION
 IF TileType(MapFG&(sx, sy)) = 9 AND TileType(Map&(sx, sy)) <> 5 THEN ShotCollide = 1: EXIT FUNCTION
 IF TileType(Map&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 0): EXIT FUNCTION
 IF TileType(MapFG&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 1): EXIT FUNCTION
-
-END FUNCTION
-
-FUNCTION ShotEnemy (s)
-
-FOR k = 1 TO LEN(activefoestack(0))
-  IF k > LEN(activefoestack(0)) THEN EXIT FOR
-  e = ASC(MID$(activefoestack(0), k, 1))
-  IF enemy(e).status <> dead THEN
-    sx1 = shot(s).x - (shotxsize / 2): sy1 = shot(s).y - (shotysize / 2)
-    sx2 = shot(s).x + (shotxsize / 2): sy2 = shot(s).y + (shotysize / 2)
-    ex1 = enemy(e).x - (enemy(e).txsize / 2): ey1 = enemy(e).y - (enemy(e).tysize / 2)
-    ex2 = enemy(e).x + (enemy(e).txsize / 2): ey2 = enemy(e).y + (enemy(e).tysize / 2)
-   
-    '--- is shot touching this enemy ---
-    IF sx1 >= ex1 AND sx1 <= ex2 AND sy1 >= ey1 AND sy1 <= ey2 THEN touchenemy = 1
-    IF sx2 >= ex1 AND sx2 <= ex2 AND sy1 >= ey1 AND sy1 <= ey2 THEN touchenemy = 1
-    IF sx1 >= ex1 AND sx1 <= ex2 AND sy2 >= ey1 AND sy2 <= ey2 THEN touchenemy = 1
-    IF sx2 >= ex1 AND sx2 <= ex2 AND sy2 >= ey1 AND sy2 <= ey2 THEN touchenemy = 1
-
-    IF touchenemy THEN ShotEnemy = e: EXIT FOR
-  END IF
-NEXT k
 
 END FUNCTION
 
@@ -222,14 +246,14 @@ FOR s = 1 TO 5
 
     IF player(0).ammo THEN
       PlaySound 4
-      shot(s).sframe = shotsframe&
+     shot(s).sframe = shotsframe&
       shot(s).eframe = shoteframe&
       shot(s).delay = shotframedelay
       shot(s).frame = shot(s).sframe
       shot(s).active = 1
      ELSE PlaySound 5
     END IF
-   
+ 
     SetShootingFrame  ' player(0).shootingframe=??
     IF player(0).ammo THEN player(0).ammo = player(0).ammo - 1
     player(0).reload = maxfps / 4
@@ -239,6 +263,12 @@ FOR s = 1 TO 5
     EXIT FOR
   END IF
 NEXT s
+
+END SUB
+
+SUB WriteShotsToFile (f)
+
+FOR s = 1 TO 5: PUT #f, , shot(s): NEXT s
 
 END SUB
 

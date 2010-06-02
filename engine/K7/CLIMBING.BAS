@@ -1,14 +1,12 @@
 DEFINT A-Z
 '$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
-'$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'tiles.bi'
+'$INCLUDE: 'map.bi'
+'$INCLUDE: 'player.bi'
+'$INCLUDE: 'climbing.bi'
 
 ON ERROR GOTO ErrorHandler
-
 '============================================================================
 ErrorHandler:
 e = ERR
@@ -56,7 +54,7 @@ END SELECT
 '--- check for wall in tile 1 area ---
 fg = TileType(MapFG&(mx, my - 1))
 bg = TileType(Map&(mx, my - 1))
-IF fg = 2 OR fg = 9 OR bg THEN EXIT SUB
+IF fg = 2 OR fg = 6 OR fg = 9 OR bg THEN EXIT SUB
 
 '--- not if using pogo or shooting ---
 IF player(0).action <> moving THEN EXIT SUB
@@ -106,15 +104,15 @@ SELECT CASE player(0).aim
  CASE up
   IF player(0).xdir = left THEN
     framedataslot = 25
-    anmframe = INT(anmcounter / player(0).adelay) MOD pframe(26)
+    anmframe = INT(anmcounter / player(0).adelay) MOD PlayerFrame&(26)
    ELSEIF player(0).xdir = right THEN
     framedataslot = 27
-    anmframe = INT(anmcounter / player(0).adelay) MOD pframe(28)
+    anmframe = INT(anmcounter / player(0).adelay) MOD PlayerFrame&(28)
   END IF
  '-- sliding down --
  CASE down
   framedataslot = 29
-  anmframe = INT(anmcounter / (player(0).adelay * 1.5)) MOD pframe(30)
+  anmframe = INT(anmcounter / (player(0).adelay * 1.5)) MOD PlayerFrame&(30)
  '-- hanging still --
  CASE -1
   IF player(0).xdir = left THEN
@@ -124,9 +122,9 @@ SELECT CASE player(0).aim
   END IF
 END SELECT
 
-player(0).frame = pframe(framedataslot) + anmframe
-player(0).txsize = fsize(framedataslot).x
-player(0).tysize = fsize(framedataslot).y
+player(0).frame = PlayerFrame&(framedataslot) + anmframe
+player(0).txsize = PFrameSizeX(framedataslot)
+player(0).tysize = PFrameSizeY(framedataslot)
 
 END SUB
 
@@ -149,11 +147,11 @@ SUB FinishHangClimb
 
 SELECT CASE player(0).xdir
  CASE left
-  p = 5: mx = INT(clippoint(5).x / ts + 1) - 1: posontile! = .5
+  p = 5: mx = INT(ClipPoint(5).x / ts + 1) - 1: posontile! = .5
  CASE right
-  p = 6: mx = INT(clippoint(6).x / ts + 1) + 1: posontile! = .5
+  p = 6: mx = INT(ClipPoint(6).x / ts + 1) + 1: posontile! = .5
 END SELECT
-my = INT(clippoint(p).y / ts + 1)
+my = INT(ClipPoint(p).y / ts + 1)
 
 player(0).x = (mx * ts - ts) + (ts * posontile!)
 player(0).y = ((my * ts - ts) - 1) - (player(0).ysize / 2)
@@ -189,7 +187,7 @@ SELECT CASE player(0).xdir
   END SELECT
 END SELECT
 
-player(0).frame = pframe(framedataslot) + anmframe
+player(0).frame = PlayerFrame&(framedataslot) + anmframe
 player(0).txsize = xsize
 player(0).tysize = ysize
 
@@ -211,9 +209,9 @@ SELECT CASE player(0).xdir
  CASE right: framedataslot = 42
 END SELECT
 
-player(0).frame = pframe(framedataslot)
-player(0).txsize = fsize(framedataslot).x
-player(0).tysize = fsize(framedataslot).y
+player(0).frame = PlayerFrame&(framedataslot)
+player(0).txsize = PFrameSizeX(framedataslot)
+player(0).tysize = PFrameSizeY(framedataslot)
 
 END SUB
 

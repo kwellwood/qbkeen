@@ -1,21 +1,29 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
-'$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'player.bi'
+'$INCLUDE: 'render.bi'
+'$INCLUDE: 'teleport.bi'
+'$STATIC
+
+CONST portalxsize = 24, portalysize = 24
+
+TYPE portaltype
+ x AS INTEGER
+ y AS INTEGER
+ destx AS INTEGER
+ desty AS INTEGER
+END TYPE
 
 ON ERROR GOTO ErrorHandler
 
+DIM SHARED numportals
+DIM SHARED portal(1 TO 32) AS portaltype
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
 SUB CheckTeleport
 
 '-- must be standing on the ground --
@@ -68,9 +76,9 @@ SUB TeleportingFrames
 
 framedataslot = 23
 
-player(0).frame = pframe(framedataslot) + INT(((maxfps * .7) - player(0).actiontime) / ((maxfps * .7) / pframe(24)))
-player(0).txsize = fsize(framedataslot).x
-player(0).tysize = fsize(framedataslot).y + ((player(0).frame - pframe(framedataslot)) * 8)
+player(0).frame = PlayerFrame&(framedataslot) + INT(((maxfps * .7) - player(0).actiontime) / ((maxfps * .7) / PlayerFrame&(24)))
+player(0).txsize = PFrameSizeX(framedataslot)
+player(0).tysize = PFrameSizeY(framedataslot) + ((player(0).frame - PlayerFrame&(framedataslot)) * 8)
 
 END SUB
 

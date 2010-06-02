@@ -1,45 +1,17 @@
-6
-LEVEL01.MAP
+08
+.\LEVELS\LEVEL01.MAP
 "Keen makes a run for the Border Village"
-LEVEL02.MAP
+.\LEVELS\LEVEL02.MAP
 "Keen slips into Slug Village"
-LEVEL03.MAP
+.\LEVELS\LEVEL03.MAP
 "Keen plummets into The Perilous Pit"
-LEVEL07.MAP
+.\LEVELS\LEVEL07.MAP
 "Keen stumbles upon Hillville"
-LEVEL10.MAP
+.\LEVELS\LEVEL10.MAP
 "Keen crawls into Lifewater Oasis"
-LEVEL08.MAP
+.\LEVELS\LEVEL08.MAP
 "Keen grits his teeth and enters Sand Yego"
-
-
-
-LEVEL06.MAP
-"Keen reflects upon entering Crystalus"
-LEVEL07.MAP
-"Keen stumbles upon Hillville"
-LEVEL08.MAP
-"Keen grits his teeth and enters Sand Yego"
-LEVEL09.MAP
-"Keen disappears into Miragia"
-LEVEL10.MAP
-"Keen crawls into Lifewater Oasis"
-LEVEL11.MAP
+.\LEVELS\LEVEL11.MAP
 "Keen backs into the Pyramid of the Moons"
-LEVEL12.MAP
-"Keen moves silently in the Pyramid of Shadows"
-LEVEL13.MAP
-"Keen reverently enters the Pyramid of the Gnosticene Ancients"
-LEVEL14.MAP
-"Keen hesitantly crosses into the Pyramid of the Forbidden"
-LEVEL15.MAP
+.\LEVELS\LEVEL15.MAP
 "Keen mucks along the Isle of Tar"
-LEVEL16.MAP
-"Keen blazes across the Isle of Fire"
-LEVEL17.MAP
-"Keen hopefully enters the Well of Wishes"
-LEVEL18.MAP
-"Keen launches into the Bean-with-Bacon Megarocket"
-
-map 4:"Keen plods down into the Cave of the Descendents"
-map 5:"Keen shivers along the Chasm of Chills"

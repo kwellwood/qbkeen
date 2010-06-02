@@ -2,53 +2,25 @@ DEFINT A-Z
 '$DYNAMIC
 '$INCLUDE: 'engine.bi'
 '$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'dextern.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'timer.bi'
+'$INCLUDE: 'k7.bi'
+
 RANDOMIZE TIMER
 ON ERROR GOTO ErrorHandler
-
-'Changes for disabling EMM:
-'K7: dqbinit, exit messages, nextlevel(copylayer)
-'ENGINE.BI: page constants
-'RENDER: scoreboard, copylayer, clearlayer, dqbwait
 '============================================================================
-IF UCASE$(COMMAND$) = "-NOEMS" THEN ems = 0 ELSE ems = 1
-IF ems = 0 THEN PRINT "* EMS memory use disabled *"
-
+ReadParameters      ' Override presets from the command line
 e = DQBinit(ems * 2, 0, 0): IF e THEN ErrorHandlerSub 99 + e
-e = InitPAKLib: IF e THEN ErrorHandlerSub 104
 AllocXMS
 
-'--------- Core Engine ---------
+'------- K7 Private variables -------
+DIM SHARED pal(255) AS hues
+
+'--------- Global variables ---------
+DIM SHARED scr(32002)
 DIM SHARED player(0) AS playertype, ClipPoint(1 TO 10) AS coordinate
-DIM SHARED scr(32004), file(0) AS STRING * 12
-DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
-DIM SHARED pframe(51) AS LONG, fsize(51) AS intcoordinate
-
-'--------- Items System --------
-DIM SHARED item(1 TO 255) AS itemclass, bonus(1 TO 13) AS itemtypeclass
-DIM SHARED activeitemstack(0) AS STRING, activespritestack(0) AS STRING
-DIM SHARED sprite(1 TO 100) AS spriteclass, unusedspritestack(0) AS STRING
-
-'-------- Weapons System -------
-DIM SHARED shot(1 TO 5) AS shottype
-
-'------- Switches System -------
-DIM SHARED Switch(0 TO 25)
-
-'-------- Enemies System -------
-DIM SHARED enemy(100) AS enemytype, eframe(20) AS LONG
-DIM SHARED efsize(20) AS intcoordinate, activefoestack(0) AS STRING
-DIM SHARED EClipPoint(4) AS coordinate
-
-'------- Teleport System -------
-DIM SHARED portal(1 TO 32) AS portaltype, activeportalstack(0) AS STRING
-
-'------- Platform System -------
-DIM SHARED locator(1 TO 16, 1 TO 16) AS locatortype, numlocators(1 TO 16)
-DIM SHARED lift(1 TO 16) AS lifttype
+DIM SHARED enemy(100) AS enemytype, EClipPoint(4) AS coordinate
+DIM SHARED eframe(33) AS LONG, efsize(33) AS intcoordinate
+DIM SHARED global(0) AS globalvars
 '============================================================================
 PRINT "Loading..."
 
@@ -56,20 +28,20 @@ PRINT "Loading..."
 InitEngine
 InitMenu
 InitScoreboard
+InitLifts
 InitItems
 InitWeapons
 InitEnemies
 InitSound
-LoadTiles
+LoadTiles tileset$
 LoadLevel
-ClosePAKLib
 
 PRINT "Ok"
 
 '--------[ Set Screen Mode ]--------
 DQBinitVGA: SCREEN 13
 SetPalette
-DQBsetFrameRate maxfps
+ERASE pal
 
 '---------[ Start the Game ]--------
 Intro
@@ -78,14 +50,16 @@ MainLoop
 '------[ Shutdown the Engine ]------
 DQBinitText
 SCREEN 0: WIDTH 80, 25
+PRINT "Shutting down...": PRINT
 
 ShutdownSound
 DQBremoveKeyboard
+csRemoveTimer
 DeallocXMS
 DQBclose
 
-PRINT "Powered by K7 Engine technology (Build 13)."
-PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
+PRINT "Powered by K7 Engine technology (Build 14)."
+PRINT "K7 Engine (c) Kevin Wellwood 2002": PRINT
 'PRINT "Development version."
 END
 '============================================================================
@@ -97,66 +71,27 @@ RESUME NEXT
 REM $STATIC
 SUB AllocXMS
 
-'-----------[ Tiles System ]-----------
-BiosXOpen 8, TileTypeHandle, A
-IF A THEN ErrorHandlerSub 105
-BiosXOpen 8, AnmLengthHandle, A
-IF A THEN ErrorHandlerSub 106
-BiosXOpen 8, AnmDelayHandle, A
-IF A THEN ErrorHandlerSub 107
-BiosXOpen 8, TileType2Handle, A
-IF A THEN ErrorHandlerSub 114
-BiosXOpen 8, SlopeMaskHandle, A
-IF A THEN ErrorHandlerSub 115
-
-'---------[ Graphics System ]----------
-BiosXOpen 2048, ArtHandle, A
-IF A THEN ErrorHandlerSub 108
-BiosXOpen 8, ArtOffSetHandle, A
-IF A THEN ErrorHandlerSub 109
-BiosXOpen 8, ArtLengthHandle, A
-IF A THEN ErrorHandlerSub 110
-
-'------------[ Map System ]------------
-BiosXOpen 1024, MapHandle, A
-IF A THEN ErrorHandlerSub 111
-BiosXOpen 1024, MapFGHandle, A
-IF A THEN ErrorHandlerSub 112
-
-'---------[ SWITCHES PLUGIN ]----------
-BiosXOpen 1024, SwitchTagHandle, ErrCode
-IF ErrCode THEN ErrorHandlerSub 113
+TilesGetXMS
+MapGetXMS
+SwitchesGetXMS
 
 END SUB
 
 SUB DeallocXMS
 
-'-----------[ Tiles System ]-----------
-BiosXClose TileTypeHandle
-BiosXClose TileType2Handle
-BiosXClose AnmLengthHandle
-BiosXClose AnmDelayHandle
-
-'---------[ Graphics System ]----------
-BiosXClose ArtHandle
-BiosXClose ArtOffSetHandle
-BiosXClose ArtLengthHandle
-
-'------------[ Map System ]------------
-BiosXClose MapHandle
-BiosXClose MapFGHandle
-
-'---------[ Switches Plugin ]----------
-BiosXClose SwitchTagHandle
+TilesCloseXMS
+MapCloseXMS
+SwitchesCloseXMS
 
 END SUB
 
-SUB DebugLog (t$)
+SUB debuglog (t$)
 
-IF UCASE$(COMMAND$) = "-LOG" THEN
+IF dolog THEN
   ff = FREEFILE
   OPEN "debug.log" FOR APPEND AS ff
     t$ = "TIME: " + LTRIM$(RTRIM$(STR$(TIMER))) + "  ACTION: " + t$
+    't$ = "ACTION: " + t$
     PRINT #ff, t$
   CLOSE ff
 END IF
@@ -176,11 +111,11 @@ SELECT CASE gamemode
     IF DQBkey(KEYLEFT) THEN MovePlayer LEFT    ' move left (left key)
     IF DQBkey(KEYUP) THEN
       player(0).idletime = 0
-      player(0).aim = up                   ' aim up or climb up (up key)
+      player(0).aim = UP                   ' aim up or climb up (up key)
       IF player(0).action = climbing THEN  ' continue climbing up
         ClimbUp                            '
-       ELSEIF player(0).action = hanging THEN ' climb up from a ledge
-        HangClimbUp                           '
+       ELSEIF player(0).action = hanging THEN  ' climb up from a ledge
+        HangClimbUp                            '
        ELSE
         CheckSwitch                        ' check to flip a switch
         CheckTeleport                      ' check to teleport
@@ -194,14 +129,14 @@ SELECT CASE gamemode
       IF player(0).action <> climbing AND player(0).onground THEN CheckClimb
     END IF
     IF DQBkey(KEYCTRL) THEN                            ' jump (ctrl)
-      MovePlayer up                                    '
+      MovePlayer UP                                    '
      ELSEIF player(0).holdingjump THEN                 ' not pressing jump
       player(0).holdingjump = 0                        '  do not allow
       player(0).stoppedjump = 1                        '  jumping to continue
     END IF
     IF DQBkey(KEYALT) THEN TogglePogo                  ' Pogostick (alt)
-    IF DQBkey(73) THEN camera(0).y = camera(0).y - 2   ' Camera Up (pg up)
-    IF DQBkey(81) THEN camera(0).y = camera(0).y + 2   ' Camera Down (pg dn)
+    IF DQBkey(73) THEN MoveCamera 0, -2                ' Camera Up (pg up)
+    IF DQBkey(81) THEN MoveCamera 0, 2                 ' Camera Down (pg dn)
     IF DQBkey(KEYSPACE) THEN SpawnPlayerShot           ' Shoot gun (space)
   END IF
  
@@ -211,7 +146,10 @@ SELECT CASE gamemode
     WHILE DQBkey(25): WEND
   END IF
   ' Toggle menu (esc)
-  IF DQBkey(KEYESC) AND TIMER >= menudelay! AND player(0).action <> dying THEN gamemode = inmenu: menudelay! = TIMER + .2
+  IF DQBkey(KEYESC) AND TimerTicks(HiResTimer) > menutimermark& AND player(0).action <> dying THEN
+    gamemode = inmenu
+    menutimermark& = TimerTicks(HiResTimer) + (200 \ 5)
+  END IF
 
   ' Skip level (F5)
   IF DQBkey(63) THEN NextLevel
@@ -227,10 +165,10 @@ END SUB
 
 SUB DoTimers
 
-IF TIMER - realtimer! > .1 THEN
+IF TimerTicked(AnmTimer) THEN
+  PlaySoundBuffer
   anmcounter = anmcounter + 1
   IF anmcounter > 840 THEN anmcounter = 0
-  realtimer! = TIMER
 END IF
 
 END SUB
@@ -250,20 +188,33 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 13)."
-PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
+PRINT "Powered by K7 Engine technology (Build 14)."
+PRINT "K7 Engine (c) Kevin Wellwood 2002": PRINT
 'PRINT "Development version."
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
 
+PRINT : PRINT "Shutting down..."
 DQBremoveKeyboard
+csRemoveTimer
 DeallocXMS
 ShutdownSound
 DQBclose
 END
 
 END SUB
+
+FUNCTION FrameReady
+
+IF TimerTicked(FrameTimer) THEN
+  FrameReady = 1
+  EXIT FUNCTION
+END IF
+
+FrameReady = 0
+
+END FUNCTION
 
 SUB IncreaseIdleTime
 
@@ -277,22 +228,23 @@ END SUB
 
 SUB InitEngine
 
-SELECT CASE ems
- CASE 0: drawpage = 0: menupage = 0
- CASE 1: drawpage = 1: menupage = 2
-END SELECT
+drawpage = ems * 1: menupage = ems * 2
 
 OPEN "engine.dat" FOR INPUT AS 1
-  DO: INPUT #1, text$
-  LOOP UNTIL UCASE$(text$) = "[ENGINE.DAT]"
+  DO: INPUT #1, Text$
+  LOOP UNTIL UCASE$(Text$) = "[ENGINE.DAT]"
   INPUT #1, v
   IF v <> enginever THEN CLOSE 1: ErrorHandlerSub 125
   INPUT #1, ts
   INPUT #1, maxfps
-  INPUT #1, friction!    ' velocity friction co-efficient
+  INPUT #1, friction!
+    SetPlayerFriction friction!  ' friction co-efficient
+    SetEnemyFriction friction!   '
   INPUT #1, gravity!
+    SetPlayerGravity gravity!    ' gravity acceleration
+    SetEnemyGravity gravity!     '
   INPUT #1, tileset$
-  INPUT #1, soundset$
+  INPUT #1, soundset$: SetSoundSet soundset$
   INPUT #1, maxchannels
   INPUT #1, player(0).xmax
   INPUT #1, player(0).ymax
@@ -301,30 +253,22 @@ OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, player(0).ysize
 CLOSE 1
 
+InitPlayer
 curlevel = 1
-
-OPEN "engine.dat" FOR INPUT AS 1
-  DO: INPUT #1, text$
-  LOOP UNTIL UCASE$(text$) = "[PLAYER.DAT]"
-  INPUT #1, player(0).adelay  ' animation speed
-  FOR f = 0 TO 51
-    INPUT #1, pframe(f)
-    INPUT #1, fsize(f).x
-    INPUT #1, fsize(f).y
-  NEXT f
-CLOSE 1
-player(0).lives = 3
-player(0).ammo = 5
-player(0).score = 0
 
 DEF SEG = VARSEG(pal(0))
 BLOAD "palette.dat", 0
 DEF SEG
 
-A = DQBloadFont("font.dat")
-IF A THEN ErrorHandlerSub 125 + A
+a = DQBloadFont("font.dat")
+IF a THEN ErrorHandlerSub 125 + a
 
 DQBinstallKeyboard
+
+csInstallTimer
+csSetTimer FrameTimer, INT((1000 \ maxfps) / 5) * 5   'framerate
+csSetTimer AnmTimer, 100                              'anmcounter (1/10 sec)
+csSetTimer HiResTimer, 5                              'generic 5ms timer
 
 END SUB
 
@@ -334,7 +278,7 @@ SUB LoadLevel
 OPEN "levels.dat" FOR INPUT AS 1
   INPUT #1, numlevels
   IF curlevel > numlevels OR curlevel < 0 THEN
-    DebugLog "Level not in list:" + STR$(curlevel)
+    debuglog "Level not in list:" + STR$(curlevel)
     ErrorHandlerSub 129
   END IF
   FOR l = 1 TO numlevels
@@ -368,18 +312,17 @@ SUB MainLoop
 
 DO
   DoTimers
-  IF DQBframeReady THEN
+  IF FrameReady THEN
     DoInput
     IF gameplay = running THEN
       DoPhysics
       DoPlayerOnLift
       HandleLifts
-      'DoPlayerOnLift
       DoSprites
       DoItems
       DoShots
       HandleEnemies
-      PlayerState
+      DoPlayerState
       DoCamera
     END IF
     DrawScreen
@@ -390,40 +333,48 @@ END SUB
 
 SUB NextLevel
 
-t! = TIMER
-DS4QB.StopMusic 1
-PlaySound 2
+mark& = TimerTicks(HiResTimer) + (1000 \ 5)
 
-curlevel = curlevel + 1
-PutSprite 74, 49, 57, drawpage
+EndMusic                   ' stop music
+PlaySound 2                ' end of level sound
 
-OPEN "levels.dat" FOR INPUT AS 1
-  INPUT #1, numlevels
-  IF curlevel > numlevels OR curlevel < 0 THEN
-    DebugLog "Level not in list:" + STR$(curlevel)
-    ErrorHandlerSub 129
+curlevel = curlevel + 1    ' increment level
+
+DrawLoadingBox             ' draw loading screen
+
+LoadLevel                  ' load next level to memory
+
+WHILE TimerTicks(HiResTimer) < mark&: WEND
+
+END SUB
+
+SUB ReadParameters
+
+ems = 1         ' Turn on EMS
+SetSoundSys 0   ' Turn off sound system
+dolog = 0       ' Turn off logging
+
+l$ = COMMAND$
+
+FOR c = 1 TO LEN(l$)
+  IF ASC(MID$(l$, c, 1)) = ASC(" ") OR c = LEN(l$) THEN
+    IF c = LEN(l$) AND ASC(MID$(l$, c, 1)) <> ASC(" ") THEN arg$ = arg$ + MID$(l$, c, 1)
+    SELECT CASE arg$
+     CASE "-NOEMS": ems = 0: PRINT "* EMS memory use disabled *"
+     'CASE "-SOUND": SetSoundSys 1: PRINT "* Sound system enabled *"
+     CASE "-LOG": dolog = 1: PRINT "* Debugging log enabled *"
+    END SELECT
+    arg$ = ""
+   ELSE
+    arg$ = arg$ + MID$(l$, c, 1)
   END IF
-  FOR l = 1 TO numlevels
-    INPUT #1, mapfile$
-    INPUT #1, mapname$
-    IF l = curlevel THEN EXIT FOR
-  NEXT l
-CLOSE 1
-IF DQBlen(mapname$) > 140 THEN
-  totallen = DQBlen(mapname$)
-  temp$ = mapname$: mapname$ = "": mapname2$ = ""
-  WHILE DQBlen(mapname$ + LEFT$(temp$, INSTR(temp$, " "))) <= 144 AND INSTR(temp$, " ")
-    mapname$ = mapname$ + LEFT$(temp$, INSTR(temp$, " "))
-    temp$ = RIGHT$(temp$, LEN(temp$) - INSTR(temp$, " "))
-  WEND
-  mapname2$ = temp$
-END IF
-DQBprint drawpage, mapname$, 112, 78, 14
-IF mapname2$ > "" THEN DQBprint drawpage, mapname2$, 120, 88, 14
-IF ems THEN DQBcopyLayer drawpage, video
+NEXT c
 
-LoadLevel
-DO: LOOP UNTIL TIMER - t! > 1!
+END SUB
+
+SUB ResetTimer (tmr)
+
+csResetTicks tmr
 
 END SUB
 
@@ -441,4 +392,29 @@ OUT &H3C9, 32
 OUT &H3C9, 32
 
 END SUB
+
+FUNCTION TileUnitsInt (pixels)
+
+TileUnitsInt = INT(pixels / ts) + 1
+
+END FUNCTION
+
+FUNCTION TileUnitsSin (pixels!)
+
+TileUnitsSin = INT(pixels! / ts) + 1
+
+END FUNCTION
+
+FUNCTION TimerTicked (tmr)
+
+TimerTicked = CSTimerFlag(tmr)
+
+END FUNCTION
+
+FUNCTION TimerTicks& (tmr)
+
+ticks& = CSElapsedTicks&(tmr)
+TimerTicks& = ticks&
+
+END FUNCTION
 

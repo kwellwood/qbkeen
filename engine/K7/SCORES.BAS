@@ -1,21 +1,51 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
 '$INCLUDE: 'directqb.bi'
-'$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'tiles.bi'
+'$INCLUDE: 'scores.bi'
+'$STATIC
 
 ON ERROR GOTO ErrorHandler
 
+DIM SHARED Scoreboard&, Scoredigit&, boardx, boardy
+DIM SHARED loading&, loadx, loady
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
+SUB DrawLoadingBox
+
+PutSprite loading&, loadx, loady, drawpage
+
+OPEN "levels.dat" FOR INPUT AS 1
+  INPUT #1, numlevels
+  IF curlevel > numlevels OR curlevel < 0 THEN
+    DebugLog "Level not in list:" + STR$(curlevel)
+    ErrorHandlerSub 129
+  END IF
+  FOR l = 1 TO numlevels
+    INPUT #1, mapfile$
+    INPUT #1, mapname$
+    IF l = curlevel THEN EXIT FOR
+  NEXT l
+CLOSE 1
+IF DQBlen(mapname$) > 140 THEN
+  totallen = DQBlen(mapname$)
+  temp$ = mapname$: mapname$ = "": mapname2$ = ""
+  WHILE DQBlen(mapname$ + LEFT$(temp$, INSTR(temp$, " "))) <= 144 AND INSTR(temp$, " ")
+    mapname$ = mapname$ + LEFT$(temp$, INSTR(temp$, " "))
+    temp$ = RIGHT$(temp$, LEN(temp$) - INSTR(temp$, " "))
+  WEND
+  mapname2$ = temp$
+END IF
+DQBprint drawpage, mapname$, 112, 78, 14
+IF mapname2$ > "" THEN DQBprint drawpage, mapname2$, 120, 88, 14
+IF ems THEN DQBcopyLayer drawpage, VIDEO
+
+END SUB
+
 SUB DrawNumber (digits, x, y, n&)
 
 'step through the score from left to right and
@@ -51,7 +81,7 @@ END SUB
 
 SUB DrawScoreboard
 
-PutTile scoreboard&, boardx, boardy, drawpage
+PutTile Scoreboard&, boardx, boardy, drawpage
 
 s& = player(0).score
 l& = player(0).lives
@@ -64,14 +94,16 @@ END SUB
 
 SUB InitScoreboard
 
-'OPEN "scores.dat" FOR INPUT AS 1
 OPEN "engine.dat" FOR INPUT AS 1
-  DO: INPUT #1, text$
-  LOOP UNTIL UCASE$(text$) = "[SCORES.DAT]"
-  INPUT #1, scoreboard&
+  DO: INPUT #1, Text$
+  LOOP UNTIL UCASE$(Text$) = "[SCORES.DAT]"
+  INPUT #1, Scoreboard&
   INPUT #1, Scoredigit&
   INPUT #1, boardx
   INPUT #1, boardy
+  INPUT #1, loading&
+  INPUT #1, loadx
+  INPUT #1, loady
 CLOSE 1
 
 END SUB

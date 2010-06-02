@@ -1,20 +1,24 @@
 DEFINT A-Z
-'$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
-'$INCLUDE: 'directqb.bi'
 '$INCLUDE: 'xms.bi'
-'$INCLUDE: 'paklib.bi'
-'$INCLUDE: 'plugins.bi'
+'$INCLUDE: 'tiles.bi'
+'$INCLUDE: 'map.bi'
+'$INCLUDE: 'player.bi'
+'$INCLUDE: 'sound.bi'
+'$INCLUDE: 'switches.bi'
+'$STATIC
 
 ON ERROR GOTO ErrorHandler
+
+DIM SHARED SwitchTagHandle
+DIM SHARED flipsframe&, flipeframe&, flipframedelay
+DIM SHARED switch(25), bitl(0) AS LONG
 '============================================================================
 ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
-REM $STATIC
 SUB CheckSwitch
 
 '-- must be standing on the ground --
@@ -41,8 +45,8 @@ IF switch(s&) = 0 THEN switch(s&) = 1 ELSE switch(s&) = 0
 
 '--- flip attached bridge ---
 IF s2& > 0 THEN
-  by = INT(s2& / mapxsize) + 1           'location of top left of bridge
-  bx = s2& - (by * mapxsize - mapxsize)  'to toggle.
+  by = INT(s2& / MapWidth) + 1           'location of top left of bridge
+  bx = s2& - (by * MapWidth - MapWidth)  'to toggle.
   bl = SwitchTag(bx, by)
   blON = SwitchTag(bx, by + 1)
   IF blON = 1 THEN tileshift = 1 ELSE tileshift = -1
@@ -60,24 +64,49 @@ PlaySound 5
 
 END SUB
 
+FUNCTION GetSwitch (s)
+
+GetSwitch = switch(s)
+
+END FUNCTION
+
+SUB SetSwitch (s, n)
+
+switch(s) = n
+
+END SUB
+
 SUB SetSwitchTag (x, y, sw&)
 
 bitl(0) = sw&
-BiosXWrite SwitchTagHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+BiosXWrite SwitchTagHandle, ((y * MapWidth - MapWidth) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+
+END SUB
+
+SUB SwitchesCloseXMS
+
+BiosXClose SwitchTagHandle
+ 
+END SUB
+
+SUB SwitchesGetXMS
+
+BiosXOpen 1024, SwitchTagHandle, a
+IF a THEN ErrorHandlerSub 113
 
 END SUB
 
 SUB SwitchingFrames
 
-player(0).frame = pframe(21)
-player(0).txsize = fsize(21).x
-player(0).tysize = fsize(21).y
+player(0).frame = PlayerFrame&(21)
+player(0).txsize = PFrameSizeX(21)
+player(0).tysize = PFrameSizeY(21)
 
 END SUB
 
 FUNCTION SwitchTag& (x, y)
 
-BiosXRead SwitchTagHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+BiosXRead SwitchTagHandle, ((y * MapWidth - MapWidth) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 SwitchTag& = bitl(0)
 
 END FUNCTION
@@ -97,8 +126,8 @@ END SELECT
 
 IF hadkey THEN
   t& = SwitchTag&(mx, my)               'use switchtag to find the top of
-  dy = INT(t& / mapxsize) + 1           'the door to open. check there to
-  dx = t& - (dy * mapxsize - mapxsize)  'find the height of the door then
+  dy = INT(t& / MapWidth) + 1           'the door to open. check there to
+  dx = t& - (dy * MapWidth - MapWidth)  'find the height of the door then
   dh& = SwitchTag&(dx, dy)              'change the tiles.
   FOR y = dy TO dy + dh& - 1            '
     SetMapFG dx, y, MapFG&(dx, y) + 1   '

@@ -2,12 +2,12 @@ DEFINT A-Z
 '$DYNAMIC
 
 CONST maxsounds = 48
-COMMON SHARED maxchannels, soundset$, channel, SoundEnabled
+COMMON SHARED soundset$
 
 DECLARE SUB InitSound ()
 DECLARE SUB LoadMusic (file$)
 DECLARE SUB LoadSounds ()
-DECLARE SUB PlayMusic (Slot)
-DECLARE SUB PlaySound (Slot)
+DECLARE SUB PlayMusic (slot)
+DECLARE SUB PlaySound (slot)
 DECLARE SUB ShutdownSound ()
 

@@ -11,6 +11,7 @@
 0055, "QB: File already open"
 0062, "QB: Premature end in file"
 0064, "QB: Bad file name"
+0070, "DS4QB: DS4QBxx module already loaded"
 0076, "QB: Path not found"
 0100, "DQBinit: 386 or better CPU not detected"
 0101, "DQBinit: Unable to find an expanded memory manager"

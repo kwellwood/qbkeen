@@ -71,12 +71,14 @@ echo ENEMIES.BAS...  (Enemy system)
 bc enemies.bas /e/x/o/t/c:512; > enemies.cmp
 echo CLIMBING.BAS... (Climbing physics)
 bc climbing.bas /e/x/o/t/c:512; > climbing.cmp
+echo LIFTS.BAS...    (Moving platforms)
+bc lifts.bas /e/x/o/t/c:512; > lifts.cmp
 echo DS4QBPP.BAS...  (DirectSound system)
 bc ds4qbpp.bas /e/x/o/t/c:512; > ds4qbpp.cmp
 
 echo * Linking Objects *
 echo KEEN7.EXE...    (Main program)
-link /ex/noe k7 switches enemies climbing ds4qbpp,keen7,,dqb xms k7core paklib bcom45 brun45; >link.cmp
+link /ex/noe k7 switches enemies climbing lifts ds4qbpp,keen7,,dqb xms k7core paklib bcom45 brun45; >link.cmp
 
 echo * Checking For Errors *
 CALL CheckErr modules.dat

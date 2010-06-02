@@ -19,20 +19,16 @@ RESUME NEXT
 REM $STATIC
 SUB InitSound
 
-IF SoundEnabled THEN
-  a = DS4QB.Init(HIGHQUALITY, DEFAULT)
-  IF a THEN ErrorHandlerSub 139 - a    ' error codes are negative
-END IF
+a = DS4QB.Init(HIGHQUALITY, DEFAULT)
+IF a THEN ErrorHandlerSub 139 - a    ' error codes are negative
 
-channel = 1
-
-IF SoundEnabled THEN LoadSounds
+LoadSounds
 
 END SUB
 
 SUB LoadMusic (file$)
 
-DS4QB.StopMusic 1
+DS4QB.Stopmusic 1
 DS4QB.LoadMusic 1, ".\MUSIC\" + file$, mus.looping OR mus.surround
 DS4QB.SetMusicAttr 1, 30, CURRENT
 PlayMusic 1
@@ -43,8 +39,8 @@ SUB LoadSounds
 
 OPEN soundset$ FOR INPUT AS 1
   INPUT #1, numsounds
-  IF numsounds > maxsounds THEN debuglog "WARNING: Too many sounds:" + STR$(numsounds): numsounds = maxsounds
- 
+  IF numsounds > maxsounds THEN DebugLog "WARNING: Too many sounds:" + STR$(numsounds): numsounds = maxsounds
+
   FOR s = 1 TO numsounds
     INPUT #1, soundfile$
     DS4QB.LoadSound s, soundfile$, DEFAULT
@@ -53,20 +49,15 @@ CLOSE 1
 
 END SUB
 
-SUB PlayMusic (Slot)
+SUB PlayMusic (slot)
 
-DS4QB.PlayMusic Slot
+DS4QB.PlayMusic slot
 
 END SUB
 
-SUB PlaySound (Slot)
+SUB PlaySound (slot)
 
-IF SoundEnabled = 0 THEN EXIT SUB
-
-DS4QB.PlaySound Slot
-
-'channel = channel + 1
-'IF channel > maxchannels THEN channel = 1
+DS4QB.PlaySound slot
 
 END SUB
 

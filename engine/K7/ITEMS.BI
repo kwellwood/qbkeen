@@ -5,11 +5,14 @@ CONST red = 1, green = 2, yellow = 3, blue = 4
 COMMON SHARED numitems, numitemtypes
 
 DECLARE SUB ClearSprites ()
+DECLARE SUB AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat)
 DECLARE SUB DoItems ()
 DECLARE SUB DoSprites ()
 DECLARE SUB DrawItems ()
 DECLARE SUB DrawSprites ()
 DECLARE SUB InitItems ()
+DECLARE SUB LoadItems (f)
+DECLARE SUB MoveSprite (s, x, y)
 DECLARE FUNCTION TouchItem (i)
 DECLARE FUNCTION TouchSprite (s)
 

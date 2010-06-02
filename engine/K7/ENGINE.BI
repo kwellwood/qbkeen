@@ -7,9 +7,11 @@ COMMON SHARED quitgame, curlevel
 CONST enginever = 8
 CONST inmenu = 1, ingame = 2
 CONST lookup = 4, lookdown = 5
-CONST drawpage = 1, backdroppage = 2, menupage = 3
+'CONST drawpage = 0, backdroppage = 0, menupage = 0   ' delete this line
+CONST drawpage = 1, menupage = 2, backdroppage = 3  ' use this one
 CONST moving = 0, shooting = 1, switching = 2, dying = 3, teleporting = 4
-CONST climbing = 5, pogo = 6
+CONST climbing = 5, pogo = 6, hanging = 7, hangclimb = 8
+CONST idle = 9
 CONST running = 1, paused = 2
 
 DECLARE SUB AllocXMS ()
@@ -18,6 +20,7 @@ DECLARE SUB DebugLog (t$)
 DECLARE SUB DoInput ()
 DECLARE SUB DoTimers ()
 DECLARE SUB ErrorHandlerSub (e)
+DECLARE SUB IncreaseIdleTime ()
 DECLARE SUB InitEngine ()
 DECLARE SUB LoadLevel ()
 DECLARE SUB MainLoop ()
@@ -76,9 +79,12 @@ TYPE playertype
  changeaction AS INTEGER  ' so cant switch between actions too fast
  holdingjump AS INTEGER   ' player is actively jumping up
  stoppedjump AS INTEGER   ' no longer holding the jump button
+ onlift AS INTEGER        ' lift currently standing on
+ idletime AS INTEGER      ' frames player hasnt pressed a key
 END TYPE
 
-COMMON SHARED player() AS playertype, scr(), file() AS STRING * 12
+COMMON SHARED player() AS playertype, ClipPoint() AS coordinate
+COMMON SHARED scr(), file() AS STRING * 12
 COMMON SHARED biti() AS INTEGER, bitl() AS LONG, pal() AS hues
 COMMON SHARED pframe() AS LONG, fsize() AS intcoordinate
 

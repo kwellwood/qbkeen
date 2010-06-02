@@ -5,6 +5,7 @@ COMMON SHARED backgroundused
 
 DECLARE SUB DoCamera ()
 DECLARE SUB DrawHUD ()
+DECLARE SUB DrawObjects ()
 DECLARE SUB DrawPlayerHUD ()
 DECLARE SUB DrawScreen ()
 DECLARE SUB FocusCamera ()

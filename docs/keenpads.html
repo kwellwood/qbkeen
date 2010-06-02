@@ -1,0 +1,130 @@
+<html>
+<head>
+  <title>Grimreaper pad help</title>
+</head>
+<body bgcolor="#ffffff">
+<table border="0" cellspacing="0" cellpadding="0" align="center">
+<tr>
+<td nowrap>
+<img src="http://216.33.236.24/lgo_msn_113x49.gif" width=113 height=49 border=0 alt="go to MSN">
+</td>
+<td nowrap width="100%">
+<font class="flb">	&nbsp; Hotmail</font><sup  style="position:relative;top:-5px;"><font class="s">&reg;</font></SUP>
+&nbsp;
+<font class="Tdom">kwellwood@hotmail.com</font>
+</td>
+<td align="right" nowrap>
+<font class="f" size=2><b><a href="/cgi-bin/HoTMaiL?curmbox=F000000001&a=4b9c639f13bc94c0089ccdc864b6acea">Inbox</a> &nbsp; | &nbsp; <a href="http://lw7fd.law7.hotmail.msn.com/cgi-bin/getmsg?curmbox=F000000001&a=4b9c639f13bc94c0089ccdc864b6acea&msg=MSG1003350304.63">Previous Page</a></b></font>
+</td>
+</tr>
+</table>
+<hr size="1px" color="#336699">
+<a name="top"></a>
+<table align="center" width=600 cellspacing=0 cellpadding=1>
+<tr>
+<td valign="top" align="right" nowrap>
+<font class="s"><b>Attachments&nbsp;:&nbsp;</b></font>
+</td>
+<td>
+<font class="f" size=2><nobr>keenonpad.bmp (263k)</nobr></font>
+</td>
+</tr>
+</table>
+
+<table align="center" width="600" cellspacing=0 cellpadding=5>
+<tr><td>
+<table class='Wf' border=0 align='center' width='100%' cellspacing=0 cellpadding=3 nowrap> 
+ <tr><td>
+<DIV><SCRIPT>
+<!--
+function Filtered()
+{
+return 0
+}
+//-->
+</SCRIPT>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<div style="BACKGROUND-COLOR:#ffffff">
+<DIV><FONT face=Arial size=2>Well, I will upload build 12 to my site when I have 
+fixed a little bug. After having loaded a game the the engine</FONT></DIV>
+<DIV><FONT face=Arial size=2>has got problems to draw the correct bitmaps on the 
+screen, i.e. a Sparky is a background tile or so.</FONT></DIV>
+<DIV><FONT face=Arial size=2>The problem&nbsp;will be fixed on 
+Friday.</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>I calls those lifts pads (don't ask me why I do 
+that, I don't know too).</FONT></DIV>
+<DIV><FONT face=Arial size=2>Yes, I think I can help you.</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>Movements:</FONT></DIV>
+<DIV><FONT face=Arial size=2>Locator points are the right way to do the 
+stuff.</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>In fact, I had the same problem. Keen always fell 
+through a pad. I have almost gone mad.</FONT></DIV>
+<DIV><FONT face=Arial size=2>But then I thought way not handling them as if they 
+were platforms.</FONT></DIV>
+<DIV><FONT face=Arial size=2>I think you have a detection routine in your 
+program that decides wether Keen falls or stands on a platform?</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>Now the important part: A "pad detection routine" ( 
+which should be within the detection routine for platforms)</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>You have to think of a rectangle that describes the 
+pad:</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2><IMG alt="" hspace=0 src="keenonpad.bmp" align=baseline border=0></FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>Now you need a new variable ( KeenOnPad or so ) and 
+asign the value -1 which tells the game</FONT></DIV>
+<DIV><FONT face=Arial size=2>that Keen doesn't stand on a pad.</FONT></DIV>
+<DIV><FONT face=Arial size=2>Now check if Keen's feet are within one&nbsp;of 
+the&nbsp;rectangles (I don't know how many pads you use, should be done with a 
+simple for loop).</FONT></DIV>
+<DIV><FONT face=Arial size=2>If so asign the pad number (index of the array) to 
+KeenOnPad and leave the pad detection routine.</FONT></DIV>
+<DIV><FONT face=Arial size=2>Then the game knows that Keen&nbsp;is on pad number 
+KeenOnPad.</FONT></DIV>
+<DIV><FONT face=Arial size=2>Now&nbsp;deal with&nbsp;pad detection&nbsp;as if 
+Keen would be on a platform.</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>Movements:</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>That's easy if KeenOnPad is not equal to 
+-1</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>The direction of the pad is the same direction in 
+which Keen is moved.</FONT></DIV>
+<DIV><FONT face=Arial size=2>You move the pad Keen is on 2 up, so you just move 
+Keen 2 up.</FONT></DIV>
+<DIV>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>This should work fine! Hopefully, nobody's 
+perfect.</FONT></DIV>
+<DIV><FONT face=Arial size=2>If something goes wrong tell me and I try my best 
+to fix the problem.</FONT></DIV>
+<DIV><FONT face=Arial size=2>It took me some time to perfect the pad 
+thing.</FONT></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><FONT face=Arial size=2>Oliver</FONT></DIV>
+<font color=#000000></div>
+</div>
+
+</td></tr>
+</table>
+
+</td></tr></table>
+<hr size="1px" color="#336699">
+<table cellspacing=0 cellpadding=0 align=center width=100%>
+<tr>
+<td nowrap>
+<img src="http://216.33.236.24/lgo_msn_113x49.gif" width=113 height=49 border=0 alt="go to MSN">
+</td>
+<td nowrap width=100%>
+&nbsp;<font class="s">&copy; 2001 Microsoft Corporation. All rights reserved.</font> <a href="/cgi-bin/dasp/links_shell.asp?matter=tos&curmbox=F000000001&a=4b9c639f13bc94c0089ccdc864b6acea&id=2&fs=1&cb=_lang%3dEN&ct=1003416441" target="_top"><font class="s">TERMS OF USE</font></a> &nbsp; <a href="http://www.msn.com/help/legal/privacy.htm" target="_top"><font class="s">TRUSTe Approved Privacy Statement</font></a>
+</td>
+</tr>
+</table>
+<!-- H: F97.law7.internal.hotmail.com -->
+<!-- V: WIN2K 09.03.27.0006 i -->
+<!-- D: Sep 25 2001 15:53:51-->

@@ -1,9 +1,18 @@
 DEFINT A-Z
 '$INCLUDE: 'DS4QBPP.BI'
 '$INCLUDE: 'DEXTERN.BI'
+DECLARE SUB ErrorHandlerSub (e)
 
 DIM SHARED ErrNum, OS, xSound, xMusic
 DIM SHARED MusType(512), MusRows(512)
+
+ON ERROR GOTO ErrorHandler
+
+'============================================================================
+ErrorHandler:
+e = ERR
+ErrorHandlerSub e
+RESUME NEXT
 
 REM $DYNAMIC
 FUNCTION Combine& (Order AS LONG, Row AS LONG)
@@ -44,9 +53,12 @@ SUB DeleteFiles
  IF FileExsist(INFILE) THEN KILL INFILE
  IF FileExsist(SENDCONFIRM) THEN KILL SENDCONFIRM
  IF FileExsist(RECEIVECONFIRM) THEN KILL RECEIVECONFIRM
- IF FileExsist("START.EXE") THEN SHELL "DEL START.EXE >NUL"
- IF FileExsist("BASS.DLL") THEN SHELL "DEL BASS.DLL >NUL"
- IF FileExsist("DS4QBXX.EXE") THEN SHELL "DEL DS4QBXX.EXE >NUL"
+ SHELL "DEL START.EXE > NUL"
+ SHELL "DEL BASS.DLL > NUL"
+ SHELL "DEL DS4QBXX.EXE > NUL"
+ 'IF FileExsist("START.EXE") THEN SHELL "DEL START.EXE >NUL"
+ 'IF FileExsist("BASS.DLL") THEN SHELL "DEL BASS.DLL >NUL"
+ 'IF FileExsist("DS4QBXX.EXE") THEN SHELL "DEL DS4QBXX.EXE >NUL"
 END SUB
 
 SUB DS4QB.Close
@@ -54,7 +66,7 @@ SUB DS4QB.Close
 
  Temp.ID = CMD.CLOSE
  
- 't# = TIMER: WHILE TIMER - t# < 1: WEND
+ t# = TIMER: WHILE TIMER - t# < 1: WEND
 
  Handle = ReadySend
   PUT #Handle, 1, Temp

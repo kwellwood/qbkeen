@@ -1,29 +1,29 @@
 DEFINT A-Z
 '$DYNAMIC
-
 '$INCLUDE: 'engine.bi'
 '$INCLUDE: 'directqb.bi'
 '$INCLUDE: 'xms.bi'
 '$INCLUDE: 'paklib.bi'
 '$INCLUDE: 'dextern.bi'
 '$INCLUDE: 'plugins.bi'
-
 RANDOMIZE TIMER
 ON ERROR GOTO ErrorHandler
-A = DQBinit(3, 0, 0): IF A THEN ErrorHandlerSub 99 + A
-A = InitPAKLib: IF A THEN ErrorHandlerSub 104
+
+'Changes for disabling EMM:
+'K7: dqbinit, exit messages, nextlevel(copylayer)
+'ENGINE.BI: page constants
+'RENDER: scoreboard, copylayer, clearlayer, dqbwait
+'============================================================================
+e = DQBinit(2, 0, 0): IF e THEN ErrorHandlerSub 99 + e
+'e = DQBinit(0, 0, 0): IF e THEN ErrorHandlerSub 99 + e
+e = InitPAKLib: IF e THEN ErrorHandlerSub 104
 AllocXMS
 
 '--------- Core Engine ---------
-DIM SHARED player(0) AS playertype, scr(32004), file(0) AS STRING * 12
-DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, Pal(255) AS hues
-DIM SHARED pframe(46) AS LONG, fsize(46) AS intcoordinate
-
-'-------- Render System --------
-DIM SHARED camera(0) AS camtype
-
-'-------- Physics System -------
-DIM SHARED ClipPoint(1 TO 10) AS coordinate
+DIM SHARED player(0) AS playertype, ClipPoint(1 TO 10) AS coordinate
+DIM SHARED scr(32004), file(0) AS STRING * 12
+DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
+DIM SHARED pframe(51) AS LONG, fsize(51) AS intcoordinate
 
 '--------- Items System --------
 DIM SHARED item(1 TO 255) AS itemclass, bonus(1 TO 10) AS itemtypeclass
@@ -34,7 +34,7 @@ DIM SHARED sprite(1 TO 100) AS spriteclass, unusedspritestack(0) AS STRING
 DIM SHARED shot(1 TO 5) AS shottype
 
 '------- Switches System -------
-DIM SHARED Switch(1 TO 25)
+DIM SHARED Switch(0 TO 25)
 
 '-------- Enemies System -------
 DIM SHARED enemy(100) AS enemytype, eframe(20) AS LONG
@@ -44,43 +44,49 @@ DIM SHARED EClipPoint(4) AS coordinate
 '------- Teleport System -------
 DIM SHARED portal(1 TO 32) AS portaltype, activeportalstack(0) AS STRING
 
+'------- Platform System -------
+DIM SHARED locator(1 TO 16, 1 TO 16) AS locatortype, numlocators(1 TO 16)
+DIM SHARED lift(1 TO 16) AS lifttype
+'============================================================================
 PRINT "Loading..."
-InitEngine
 
-'--plugins--
+'----------[ Initialize ]----------
+InitEngine
 InitMenu
 InitScoreboard
 InitItems
 InitWeapons
 InitEnemies
 InitSound
-'-----------
-
-'--core assets--
 LoadTiles
 LoadLevel
-'---------------
 
 PRINT "Ok"
 
+'--------[ Set Screen Mode ]--------
 DQBinitVGA: SCREEN 13
 SetPalette
+DQBsetFrameRate maxfps
 
+'---------[ Start the Game ]--------
 Intro
 MainLoop
 
+'------[ Shutdown the Engine ]------
 DQBinitText
 SCREEN 0: WIDTH 80, 25
+
 ShutdownSound
 DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 11)."
-PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled September 19, 2001"
-END
 
+PRINT "Powered by K7 Engine technology (Build 12)."
+PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
+'PRINT "EMS memory use disabled."
+'PRINT "Development version."
+END
 '============================================================================
 ErrorHandler:
 e = ERR
@@ -90,19 +96,19 @@ RESUME NEXT
 REM $STATIC
 SUB AllocXMS
 
-'===========[ Tiles System ]===========
-BiosXOpen 4, TileTypeHandle, A
+'-----------[ Tiles System ]-----------
+BiosXOpen 8, TileTypeHandle, A
 IF A THEN ErrorHandlerSub 105
-BiosXOpen 4, AnmLengthHandle, A
+BiosXOpen 8, AnmLengthHandle, A
 IF A THEN ErrorHandlerSub 106
-BiosXOpen 4, AnmDelayHandle, A
+BiosXOpen 8, AnmDelayHandle, A
 IF A THEN ErrorHandlerSub 107
-BiosXOpen 4, TileType2Handle, A
+BiosXOpen 8, TileType2Handle, A
 IF A THEN ErrorHandlerSub 114
-BiosXOpen 4, SlopeMaskHandle, A
+BiosXOpen 8, SlopeMaskHandle, A
 IF A THEN ErrorHandlerSub 115
 
-'=========[ Graphics System ]==========
+'---------[ Graphics System ]----------
 BiosXOpen 2048, ArtHandle, A
 IF A THEN ErrorHandlerSub 108
 BiosXOpen 8, ArtOffSetHandle, A
@@ -110,13 +116,13 @@ IF A THEN ErrorHandlerSub 109
 BiosXOpen 8, ArtLengthHandle, A
 IF A THEN ErrorHandlerSub 110
 
-'============[ Map System ]============
+'------------[ Map System ]------------
 BiosXOpen 1024, MapHandle, A
 IF A THEN ErrorHandlerSub 111
 BiosXOpen 1024, MapFGHandle, A
 IF A THEN ErrorHandlerSub 112
 
-'=========[ SWITCHES PLUGIN ]==========
+'---------[ SWITCHES PLUGIN ]----------
 BiosXOpen 512, SwitchTagHandle, ErrCode
 IF ErrCode THEN ErrorHandlerSub 113
 
@@ -124,78 +130,87 @@ END SUB
 
 SUB DeallocXMS
 
-'===========[ Tiles System ]===========
+'-----------[ Tiles System ]-----------
 BiosXClose TileTypeHandle
 BiosXClose TileType2Handle
 BiosXClose AnmLengthHandle
 BiosXClose AnmDelayHandle
 
-'=========[ Graphics System ]==========
+'---------[ Graphics System ]----------
 BiosXClose ArtHandle
 BiosXClose ArtOffSetHandle
 BiosXClose ArtLengthHandle
 
-'============[ Map System ]============
+'------------[ Map System ]------------
 BiosXClose MapHandle
 BiosXClose MapFGHandle
 
-'=========[ Switches Plugin ]==========
+'---------[ Switches Plugin ]----------
 BiosXClose SwitchTagHandle
 
 END SUB
 
 SUB DebugLog (t$)
 
-ff = FREEFILE
-OPEN "debug.log" FOR APPEND AS ff
-  t$ = "TIME: " + LTRIM$(RTRIM$(STR$(TIMER))) + "  ACTION: " + t$
-  PRINT #ff, t$
-CLOSE ff
+IF UCASE$(COMMAND$) = "-LOG" THEN
+  ff = FREEFILE
+  OPEN "debug.log" FOR APPEND AS ff
+    t$ = "TIME: " + LTRIM$(RTRIM$(STR$(TIMER))) + "  ACTION: " + t$
+    PRINT #ff, t$
+  CLOSE ff
+END IF
 
 END SUB
 
 SUB DoInput
 
-player(0).aim = -1   ' dont aim up or down
+player(0).aim = -1
+IncreaseIdleTime
 
 SELECT CASE gamemode
  CASE ingame
   IF gameplay = running THEN
-    IF DQBkey(30) THEN player(0).ammo = 99
-    IF DQBkey(KEYRIGHT) THEN MovePlayer RIGHT
-    IF DQBkey(KEYLEFT) THEN MovePlayer LEFT
+    IF DQBkey(30) THEN player(0).ammo = 99     ' add ammo (a)
+    IF DQBkey(KEYRIGHT) THEN MovePlayer RIGHT  ' move right (right key)
+    IF DQBkey(KEYLEFT) THEN MovePlayer LEFT    ' move left (left key)
     IF DQBkey(KEYUP) THEN
-      player(0).aim = UP                   ' player wants to aim up
-      IF player(0).action = climbing THEN  ' climb up a pole
-        ClimbUp
+      player(0).idletime = 0
+      player(0).aim = up                   ' aim up or climb up (up key)
+      IF player(0).action = climbing THEN  ' continue climbing up
+        ClimbUp                            '
+       ELSEIF player(0).action = hanging THEN ' climb up from a ledge
+        HangClimbUp                           '
        ELSE
-        CheckSwitch               ' not climbing so check other stuff
-        CheckTeleport
-        CheckClimb
+        CheckSwitch                        ' check to flip a switch
+        CheckTeleport                      ' check to teleport
+        CheckClimb                         ' check to grab a pole
       END IF
     END IF
-    IF DQBkey(KEYDOWN) THEN
+    IF DQBkey(KEYDOWN) THEN       ' aim down or climb down (down key)
+      player(0).idletime = 0
       IF player(0).onground = 0 OR player(0).action = climbing THEN player(0).aim = DOWN
       IF player(0).action = climbing THEN ClimbDown
       IF player(0).action <> climbing AND player(0).onground THEN CheckClimb
     END IF
-    IF DQBkey(KEYCTRL) THEN
-      MovePlayer UP    ' (ie: jump)
-     ELSEIF player(0).holdingjump THEN
-      player(0).holdingjump = 0
-      player(0).stoppedjump = 1
+    IF DQBkey(KEYCTRL) THEN                            ' jump (ctrl)
+      MovePlayer up                                    '
+     ELSEIF player(0).holdingjump THEN                 ' not pressing jump
+      player(0).holdingjump = 0                        '  do not allow
+      player(0).stoppedjump = 1                        '  jumping to continue
     END IF
-    IF DQBkey(KEYALT) THEN TogglePogo        ' Get on/off pogostick
-    IF DQBkey(73) THEN camera(0).y = camera(0).y - 2
-    IF DQBkey(81) THEN camera(0).y = camera(0).y + 2
-    IF DQBkey(KEYSPACE) THEN SpawnPlayerShot
+    IF DQBkey(KEYALT) THEN TogglePogo                  ' Pogostick (alt)
+    IF DQBkey(73) THEN camera(0).y = camera(0).y - 2   ' Camera Up (pg up)
+    IF DQBkey(81) THEN camera(0).y = camera(0).y + 2   ' Camera Down (pg dn)
+    IF DQBkey(KEYSPACE) THEN SpawnPlayerShot           ' Shoot gun (space)
   END IF
  
-  IF DQBkey(25) THEN  ' Pause - 'p'
+  ' Pause (p)
+  IF DQBkey(25) THEN
     IF gameplay = running THEN gameplay = paused ELSE gameplay = running
     WHILE DQBkey(25): WEND
   END IF
-  IF DQBkey(KEYESC) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .2
+  ' Toggle menu (esc)
+  IF DQBkey(KEYESC) AND TIMER >= menudelay! AND player(0).action <> dying THEN gamemode = inmenu: menudelay! = TIMER + .2
 
  CASE inmenu
   IF DQBkey(KEYESC) THEN HandleMenu KEYESC
@@ -231,9 +246,10 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 11)."
+PRINT "Powered by K7 Engine technology (Build 12)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled September 19, 2001"
+'PRINT "EMS memory use disabled."
+'PRINT "Development version."
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
@@ -244,6 +260,14 @@ ClosePAKLib
 ShutdownSound
 DQBclose
 END
+
+END SUB
+
+SUB IncreaseIdleTime
+
+IF player(0).action = moving AND player(0).onground THEN
+  IF player(0).idletime < 1000 THEN player(0).idletime = player(0).idletime + 1
+END IF
 
 END SUB
 
@@ -267,18 +291,20 @@ OPEN "engine.dat" FOR INPUT AS 1
 CLOSE 1
 
 curlevel = 1
-SoundEnabled = 1
 
 OPEN "player.dat" FOR INPUT AS 1
   INPUT #1, player(0).adelay  ' animation speed
-  FOR f = 0 TO 46
+  FOR f = 0 TO 51
     INPUT #1, pframe(f)
     INPUT #1, fsize(f).x
     INPUT #1, fsize(f).y
   NEXT f
 CLOSE 1
+player(0).lives = 3
+player(0).ammo = 5
+player(0).score = 0
 
-DEF SEG = VARSEG(Pal(0))
+DEF SEG = VARSEG(pal(0))
 BLOAD "palette.dat", 0
 DEF SEG
 
@@ -306,11 +332,11 @@ OPEN "levels.dat" FOR INPUT AS 1
 CLOSE 1
 LoadMap mapfile$
 
-'====[ GAME STATE ]====
+'---[ Set Game State ]---
 gamemode = ingame
 gameplay = running
 
-'====[ PLAYER STATUS ]====
+'----[ Reset Player Status ]----
 player(0).onground = 0
 player(0).onslope = 0
 player(0).canjump = 0
@@ -327,14 +353,15 @@ END SUB
 
 SUB MainLoop
 
-DQBsetFrameRate maxfps
-
 DO
   DoTimers
   IF DQBframeReady THEN
     DoInput
     IF gameplay = running THEN
       DoPhysics
+      DoPlayerOnLift
+      HandleLifts
+      'DoPlayerOnLift
       DoSprites
       DoItems
       DoShots
@@ -351,6 +378,7 @@ END SUB
 SUB NextLevel
 
 DS4QB.StopMusic 1
+PlaySound 2
 
 curlevel = curlevel + 1
 PutSprite 74, 49, 57, drawpage
@@ -381,8 +409,8 @@ DQBprint drawpage, mapname$, 112, 78, 14
 IF mapname2$ > "" THEN DQBprint drawpage, mapname2$, 120, 88, 14
 DQBcopyLayer drawpage, video
 
-LoadLevel
 SLEEP 1
+LoadLevel
 
 END SUB
 
@@ -391,8 +419,13 @@ SUB SetPalette
 OUT &H3C8, 0
 
 FOR i = 0 TO 255
-  OUT &H3C9, Pal(i).red: OUT &H3C9, Pal(i).grn: OUT &H3C9, Pal(i).blu
+  OUT &H3C9, pal(i).red: OUT &H3C9, pal(i).grn: OUT &H3C9, pal(i).blu
 NEXT
+
+OUT &H3C7, -1
+OUT &H3C9, 0
+OUT &H3C9, 32
+OUT &H3C9, 32
 
 END SUB
 

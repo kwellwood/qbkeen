@@ -8,7 +8,6 @@ DEFINT A-Z
 '$INCLUDE: 'plugins.bi'
 
 ON ERROR GOTO ErrorHandler
-
 '============================================================================
 ErrorHandler:
 e = ERR
@@ -20,6 +19,7 @@ SUB DoShots
 
 FOR s = 1 TO 5
   IF shot(s).active THEN
+    '--- move shot ---
     shot(s).x = shot(s).x + shot(s).xv
     shot(s).y = shot(s).y + shot(s).yv
    
@@ -36,7 +36,10 @@ FOR s = 1 TO 5
       KillEnemy e
       KillShot s
     END IF
-  END IF
+ 
+    '--- in range of player ---
+    IF ShotInRange(s, 400) = 0 THEN shot(s).active = 0
+ END IF
 NEXT s
 
 END SUB
@@ -72,24 +75,15 @@ END SUB
 
 SUB KillShot (s)
 
+'--- shot slot no longer active ---
 shot(s).active = 0
 
 '--- add explosion to sprite stack ---
-IF LEN(unusedspritestack(0)) THEN
-  'if over 240pixels away, any direction then dont play
-  IF ShotInRange(s, 240) THEN PlaySound 6
- 
-  sp = ASC(LEFT$(unusedspritestack(0), 1))
-  unusedspritestack(0) = RIGHT$(unusedspritestack(0), LEN(unusedspritestack(0)) - 1)
-  activespritestack(0) = activespritestack(0) + CHR$(sp)
-  sprite(sp).x = shot(s).x: sprite(sp).y = shot(s).y
-  sprite(sp).frame = shotexpsframe&
-  sprite(sp).eframe = shotexpeframe&
-  sprite(sp).delay = shotexpframedelay
-  sprite(sp).ticks = sprite(sp).delay    ' count down to zero at rate of
-  sprite(sp).xsize = shotexpxsize        '  'delay' for next frame
-  sprite(sp).ysize = shotexpysize
-END IF
+x = shot(s).x: y = shot(s).y
+AddSprite x, y, shotexpsframe&, shotexpeframe&, shotexpframedelay, shotexpxsize, shotexpysize, 0, 0
+
+'--- play sound if in hearing range ---
+IF ShotInRange(s, 240) THEN PlaySound 6
 
 END SUB
 
@@ -119,7 +113,8 @@ IF player(0).onground THEN
   IF player(0).aim = -1 THEN    ' player not aiming up or down; on ground
     IF player(0).xdir = left THEN player(0).shootingframe = groundleft: player(0).xv = 0
     IF player(0).xdir = right THEN player(0).shootingframe = groundright: player(0).xv = 0
-   ELSE player(0).shootingframe = groundup: player(0).xv = 0: player(0).frozen = 1 'stop walking
+   ELSE
+    player(0).shootingframe = groundup: player(0).xv = 0: player(0).frozen = 1 'stop walking
   END IF
  ELSE
   IF player(0).aim = -1 THEN    ' player not aiming up or down; in air
@@ -163,11 +158,15 @@ sy = INT(shot(s).y / ts) + 1
 sx2 = shot(s).x
 sy2 = shot(s).y
 
-IF TileType(Map&(sx, sy)) = 1 THEN ShotCollide = 1
-IF TileType(MapFG&(sx, sy)) = 9 THEN ShotCollide = 1
-IF TileType(Map&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 0)
-IF TileType(MapFG&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 1)
+'hit a wall
+'hit a wall in the foreground (not over a pole)
+'check for slope hit
+'check for slope hit in foreground
 
+IF TileType(Map&(sx, sy)) = 1 THEN ShotCollide = 1: EXIT FUNCTION
+IF TileType(MapFG&(sx, sy)) = 9 AND TileType(Map&(sx, sy)) <> 5 THEN ShotCollide = 1: EXIT FUNCTION
+IF TileType(Map&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 0): EXIT FUNCTION
+IF TileType(MapFG&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 1): EXIT FUNCTION
 
 END FUNCTION
 
@@ -181,16 +180,13 @@ FOR k = 1 TO LEN(activefoestack(0))
     sx2 = shot(s).x + (shotxsize / 2): sy2 = shot(s).y + (shotysize / 2)
     ex1 = enemy(e).x - (enemy(e).txsize / 2): ey1 = enemy(e).y - (enemy(e).tysize / 2)
     ex2 = enemy(e).x + (enemy(e).txsize / 2): ey2 = enemy(e).y + (enemy(e).tysize / 2)
+   
     '--- is shot touching this enemy ---
     IF sx1 >= ex1 AND sx1 <= ex2 AND sy1 >= ey1 AND sy1 <= ey2 THEN touchenemy = 1
-    IF sx2 >= ex1 AND sx2 <= ex2 AND sy1 >= ey1 AND sy1 <= ey2 THEN touchenemy = 2
-    IF sx1 >= ex1 AND sx1 <= ex2 AND sy2 >= ey1 AND sy2 <= ey2 THEN touchenemy = 3
-    IF sx2 >= ex1 AND sx2 <= ex2 AND sy2 >= ey1 AND sy2 <= ey2 THEN touchenemy = 4
+    IF sx2 >= ex1 AND sx2 <= ex2 AND sy1 >= ey1 AND sy1 <= ey2 THEN touchenemy = 1
+    IF sx1 >= ex1 AND sx1 <= ex2 AND sy2 >= ey1 AND sy2 <= ey2 THEN touchenemy = 1
+    IF sx2 >= ex1 AND sx2 <= ex2 AND sy2 >= ey1 AND sy2 <= ey2 THEN touchenemy = 1
 
-    'IF ex1 >= sx1 AND ex1 <= sx2 AND ey1 >= sy1 AND ey1 <= sy2 THEN touchenemy = 1
-    'IF ex2 >= sx1 AND ex2 <= sx2 AND ey1 >= sy1 AND ey1 <= sy2 THEN touchenemy = 1
-    'IF ex1 >= sx1 AND ex1 <= sx2 AND ey2 >= sy1 AND ey2 <= sy2 THEN touchenemy = 1
-    'IF ex2 >= sx1 AND ex2 <= sx2 AND ey2 >= sy1 AND ey2 <= sy2 THEN touchenemy = 1
     IF touchenemy THEN ShotEnemy = e: EXIT FOR
   END IF
 NEXT k
@@ -205,7 +201,8 @@ END FUNCTION
 
 SUB SpawnPlayerShot
 
-IF player(0).frozen THEN EXIT SUB      'player not allowed to move
+player(0).idletime = 0                 'player pressed shoot key
+IF player(0).frozen THEN EXIT SUB      'player not allowed to shoot
 IF player(0).reload <> 0 THEN EXIT SUB 'if already shot recently (wait reload)
 
 FOR s = 1 TO 5

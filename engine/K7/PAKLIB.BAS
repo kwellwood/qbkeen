@@ -91,8 +91,6 @@ PakHandle = FOpen(filename$, 0)
     FOR n = 1 TO 12
       FGet1 PakHandle, c
       temp$ = temp$ + CHR$(c)
-      'curbit(0) = c
-      'BiosXWrite PakHeadHandle, xmspakpos&, 2, VARSEG(curbit(0)), VARPTR(curbit(0))
       xmspakpos& = xmspakpos& + 2
     NEXT n
     pakfname(f&) = temp$
@@ -107,7 +105,6 @@ PakHandle = FOpen(filename$, 0)
     BiosXWrite PakHeadHandle, xmspakpos&, 4, VARSEG(curbitl&(0)), VARPTR(curbitl&(0))
     xmspakpos& = xmspakpos& + 4
   NEXT f&
-'FClose PakHandle  ' don't close it
 PakInitState = 2
 
 END FUNCTION
@@ -122,15 +119,7 @@ END FUNCTION
 
 FUNCTION PAKFilename$ (filenum&)
 
-xmspakpos& = (filenum& - 1) * 32
 PAKFilename$ = pakfname(filenum&)
-
-'FOR c = 1 TO 12
-'  BiosXRead PakHeadHandle, xmspakpos&, 2, VARSEG(curbit(0)), VARPTR(curbit(0))
-'  filename$ = filename$ + CHR$(curbit(0))
-'  xmspakpos& = xmspakpos& + 2
-'NEXT c
-'PAKFilename$ = filename$
 
 END FUNCTION
 

@@ -15,4 +15,5 @@ DEFINT A-Z
 '$INCLUDE: 'enemies.bi'
 '$INCLUDE: 'teleport.bi'
 '$INCLUDE: 'climbing.bi'
+'$INCLUDE: 'lifts.bi'
 

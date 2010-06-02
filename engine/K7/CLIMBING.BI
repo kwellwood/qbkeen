@@ -1,10 +1,13 @@
 DEFINT A-Z
 '$DYNAMIC
 
-'COMMON SHARED TileTypeHandle, TileType2Handle, AnmLengthHandle, AnmDelayHandle
-
 DECLARE SUB CheckClimb ()
+DECLARE SUB CheckForLedge (s, mx, my)
 DECLARE SUB ClimbDown ()
 DECLARE SUB ClimbingFrames ()
 DECLARE SUB ClimbUp ()
+DECLARE SUB FinishHangClimb ()
+DECLARE SUB HangClimbFrames ()
+DECLARE SUB HangClimbUp ()
+DECLARE SUB HangingFrames ()
 

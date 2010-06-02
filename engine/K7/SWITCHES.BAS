@@ -8,7 +8,6 @@ DEFINT A-Z
 '$INCLUDE: 'plugins.bi'
 
 ON ERROR GOTO ErrorHandler
-
 '============================================================================
 ErrorHandler:
 e = ERR
@@ -18,7 +17,8 @@ RESUME NEXT
 REM $STATIC
 SUB CheckSwitch
 
-IF player(0).onground = 0 THEN EXIT SUB  ' must be standing on the ground
+'-- must be standing on the ground --
+IF player(0).onground = 0 THEN EXIT SUB
 
 ' get the number of the switch at this location
 s = SwitchTag(INT(player(0).x / ts) + 1, INT((player(0).y - (player(0).tysize / 4)) / ts) + 1)
@@ -29,7 +29,7 @@ IF s = 0 THEN EXIT SUB
 ' already flipping a switch?
 IF player(0).action = switching AND player(0).actiontime THEN EXIT SUB
 
-IF switch(s) = 0 THEN switch(s) = 1 ELSE switch(s) = 0
+IF Switch(s) = 0 THEN Switch(s) = 1 ELSE Switch(s) = 0
 player(0).action = switching
 player(0).actiontime = maxfps / 3
 player(0).xv = 0: player(0).frozen = 1

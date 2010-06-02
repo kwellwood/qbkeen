@@ -186,7 +186,7 @@ Changes Since Build 9:
 BUILD 11 (09-19-2001)
    This was intended to much different than what it is right now. Instead of
 adding ledge grabbing and other cool stuff, I have instead added a sound
-engine! DirectQB wasn't cooperating so I am using DirectSound 4 QB++, a
+engine! DirectQB wasn't cooperating so I am using the new DS4QB++, a
 wonderful library by Chris Adams. The sound effects and music are all in
 128kbps .MP3 format to save space. Everything you hear was ripped directly
 from the real game, so enjoy the quality! Actually, I think this may be the
@@ -200,3 +200,24 @@ Changes Since Build 10:
 - New sound system! (DS4QB++)
 - Background music
 - Sound effects
+
+BUILD 12 (12-07-2001)
+   I think this is one of the biggest updates in code of the releases yet!
+This was a long time in coming, but hopefully the wait was worth it. Keen
+can grab onto ledges, ride moving platforms and fight the new Bounder enemy!
+The engine code is rapidly nearing completion and should be done with just
+a few more builds. Enjoy, and be prepared for another big release after this
+one! (Plans include gem key doors, switchable bridges and another new enemy
+or two.)
+
+Changes Since Build 11:
+- Organized code for stability
+- Fixed sudden death from picking up items
+- Moving platforms
+- Grab and climb up on ledges
+- Fidget animation (don't press any keys)
+- Added Bounder enemy (or npc)
+- Stars sprites move with dead enemies
+- Fixed minor bugs, increased speed
+- Added level 3: The Perilous Pit
+- Wrote a readme file to explain the game better

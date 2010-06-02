@@ -40,12 +40,17 @@
 658,24,32
 659,24,32
 660,24,32
-1076,22,40
+1076,16,40
+1091,24,40
 1077,22,40
-4, 0 , 0
-1091,22,40
 1092,22,40
-4, 0 , 0
+42,24,32
+4 , 0, 0
+46,24,32
+47,24,32
+2 , 0, 0
+49,24,32
+2 , 0, 0
 
 animation delay
 (0) stand left
@@ -92,6 +97,11 @@ animation delay
 (41) hang onto a ledge left
 (42) hang onto a ledge right
 (43) climb onto a ledge left
-(44) climb left frames
-(45) climb onto a ledge right
-(46) climb right frames
+(44) climb onto a ledge right
+(45) sitting down
+(46) sitting down frames
+(47) reading book
+(48) turning page
+(49) turning page frames
+(50) standing up
+(51) standing up frames

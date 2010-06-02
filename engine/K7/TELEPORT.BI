@@ -6,6 +6,7 @@ COMMON SHARED numportals
 CONST portalxsize = 24, portalysize = 24
 
 DECLARE SUB CheckTeleport ()
+DECLARE SUB LoadPortals (f)
 DECLARE SUB TeleportingFrames ()
 DECLARE SUB TeleportPlayer ()
 

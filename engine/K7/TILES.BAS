@@ -40,26 +40,31 @@ OPEN tileset$ FOR INPUT AS 1
  
   INPUT #1, numtiles&
   FOR t& = 1 TO numtiles&
+    '---[ Load artwork ]---
     INPUT #1, file$
     LoadArtFile t&, file$
 
+    '---[ Handle tile properties ]---
     INPUT #1, tileprop
     IF tileprop <> 99 THEN INPUT #1, tileprop2 ELSE tileprop2 = 0
-   
     SetTileType t&, tileprop
     SetTileType2 t&, tileprop2
+    SetSlopeMask t&, 0
     SELECT CASE tileprop
+     '--- slope tile ---
      CASE 2
-      INPUT #1, sm&: SetSlopeMask t&, sm&
-      INPUT #1, af: ad = 0  'get af to check for being overlay too
+      INPUT #1, sm&: SetSlopeMask t&, sm&     'sm&=slope type
+      INPUT #1, af: ad = 0                    'af=overlay tag for slope tiles
+     '--- nul tile ---
      CASE 99
-      af = 0: ad = 0
+      af = 0: ad = 0                          'nul tiles not animated
+     '--- any other tile ---
      CASE ELSE
-      INPUT #1, af
-      IF af > 0 THEN INPUT #1, ad ELSE ad = 0
+      INPUT #1, af                            'if animation length,
+      IF af > 0 THEN INPUT #1, ad ELSE ad = 0 ' get animation delay too
     END SELECT
-    SetAnmLength t&, af
-    SetAnmDelay t&, ad
+    SetAnmLength t&, af                       'set anm length tag
+    SetAnmDelay t&, ad                        'set anm delay tag
   NEXT t&
 CLOSE 1
 
@@ -102,17 +107,26 @@ END SUB
 
 FUNCTION SlopeHeight (x, y, l)
 
-tx = INT(x / ts) + 1: ty = INT(y / ts) + 1
-SELECT CASE l
- CASE 0: tile& = Map&(tx, ty)
- CASE 1: tile& = MapFG&(tx, ty)
-END SELECT
-stype = SlopeMask&(tile&)
+'Slope Types:
+'-------------------------------
+'01 - /.    05 - /.1    09 - \'1
+'02 - .\    06 - /.2    10 - \'2
+'03 - \'    07 - .\1    11 - '/1
+'04 - '/    08 - .\2    12 - '/2
 
-px = (tx - 1) * ts
-py = (ty - 1) * ts
-sx = x - px
-sy = y - py
+tx = INT(x / ts) + 1             'get tile coordinates
+ty = INT(y / ts) + 1             '
+
+SELECT CASE l                    'get tile number
+ CASE 0: tile& = Map&(tx, ty)    ' from background
+ CASE 1: tile& = MapFG&(tx, ty)  ' from foreground
+END SELECT
+stype = SlopeMask&(tile&)        'get tile slope type
+
+px = (tx - 1) * ts               'upper left corner
+py = (ty - 1) * ts               ' of tile in pixels
+sx = x - px                      'difference between x,y and
+sy = y - py                      ' upper left of tile in pixels
 
 SELECT CASE stype
  CASE 1: IF sx > ts - sy - 1 THEN hit = (ts - sy - 1) - sx
@@ -149,7 +163,7 @@ END FUNCTION
 
 FUNCTION TileType2 (t&)
 
-biti(0) = 5
+biti(0) = 0
 BiosXRead TileType2Handle, t& * 2 - 2, 2, VARSEG(biti(0)), VARPTR(biti(0))
 TileType2 = biti(0)
 

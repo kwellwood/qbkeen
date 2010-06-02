@@ -1,5 +1,5 @@
 KEEN7.GPK
-2196
+2412
 *-----------------------------*
 STANDL.ART  , 99
 WALKL1.ART  , 99
@@ -88,11 +88,11 @@ LEDGER3.ART , 99
 LEDGER4.ART , 99
 LEDGER5.ART , 99
 MENU.ART    , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+SAVEMENU.ART, 99
+LOADMENU.ART, 99
+OPTSMENU.ART, 99
+DROPDOWN.ART, 99
+PAUSED.ART  , 99
 TITLE.ART   , 99
 LOADING.ART , 99
 *-----------------------------*
@@ -661,10 +661,10 @@ BLANK.ART   , 99
 1UPYEL5.ART , 99
 1UPYEL6.ART , 99
 1UPYEL7.ART , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+ARROWU1.ART , 99
+ARROWU2.ART , 99
+ARROWD1.ART , 99
+ARROWD2.ART , 99
 *-----------------------------*
 1UPBLUE1.ART, 99
 1UPBLUE2.ART, 99
@@ -680,10 +680,10 @@ GUNPT4.ART  , 99
 GUNPT5.ART  , 99
 GUNPT6.ART  , 99
 GUNPT7.ART  , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+ARROWL1.ART , 99
+ARROWL2.ART , 99
+ARROWR1.ART , 99
+ARROWR2.ART , 99
 *-----------------------------*
 SWITCH1.ART , 4 , 0 , 0
 SWITCH2.ART , 4 , 0 , 0
@@ -811,12 +811,12 @@ FHILL020.ART, 1 , 0 , 0
 FHILL021.ART, 2 , 0 , 8 , 0
 FHILL022.ART, 2 , 0 , 7 , 0
 FHILL027.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+SNAKEMOV.ART, 99
+SNAKELL1.ART, 99
+SNAKELL2.ART, 99
+SNAKELR1.ART, 99
+SNAKELR2.ART, 99
+SNAKEDED.ART, 99
 *-----------------------------*
 FHILL023.ART, 1 , 0 , 0
 FHILL024.ART, 1 , 0 , 0
@@ -830,12 +830,12 @@ BLANK.ART   , 99
 FHILL025.ART, 1 , 0 , 0
 FHILL026.ART, 1 , 0 , 0
 BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+SNAKEAL1.ART, 99
+SNAKEAL2.ART, 99
+SNAKEAL3.ART, 99
+SNAKEAR1.ART, 99
+SNAKEAR2.ART, 99
+SNAKEAR3.ART, 99
 *-----------------------------*
 BLANK.ART   , 99
 BLANK.ART   , 99
@@ -985,9 +985,9 @@ BLANK.ART   , 99
 BLANK.ART   , 99
 BLANK.ART   , 99
 BLANK.ART   , 99
-CAVE0012.ART, 9 , 0 , 0
-EARTH12.ART , 9 , 0 , 0
-SAND0004.ART, 9 , 0 , 0
+CAVE0012.ART, 6 , 0 , 0
+EARTH12.ART , 6 , 0 , 0
+SAND0004.ART, 6 , 0 , 0
 *-----------------------------*
 POLE008.ART , 5 , 1 , 0
 POLE012.ART , 5 , 1 , 0
@@ -1411,11 +1411,11 @@ PORTL15.ART , 0 , 1 , 0
 PORTL25.ART , 0 , 0 , 0
 PORTL33.ART , 0 , 0 , 0
 PORTL45.ART , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+RKEYICON.ART, 99
+YKEYICON.ART, 99
+BKEYICON.ART, 99
+GKEYICON.ART, 99
+ANCICON.ART , 99
 BLANK.ART   , 99
 BLANK.ART   , 99
 BLANK.ART   , 99
@@ -1763,10 +1763,10 @@ CAVE0058.ART, 0 , 0 , 0
 CAVE0059.ART, 0 , 0 , 0
 CAVE0060.ART, 0 , 0 , 0
 CAVE0061.ART, 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+SHOOTERU.ART, 99
+SHOOTERD.ART, 99
+SHOOTERL.ART, 99
+SHOOTERR.ART, 99
 *-----------------------------*
 OILA1T.ART  , 0 , 1 , 4 , 1
 OILA2T.ART  , 0 , 1 , 4 , 1
@@ -1783,9 +1783,9 @@ TAR101.ART  , 0 , 0 , 0
 TAR102.ART  , 0 , 0 , 0
 TAR103.ART  , 0 , 0 , 0
 TAR104.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+SPEARU1.ART , 99
+SPEARU2.ART , 99
+SPEARU3.ART , 99
 *-----------------------------*
 OILA1B.ART  , 3 , 0 , 4 , 1
 OILA2B.ART  , 3 , 0 , 4 , 1
@@ -1802,9 +1802,9 @@ TAR105.ART  , 0 , 0 , 0
 TAR106.ART  , 0 , 0 , 0
 TAR107.ART  , 0 , 0 , 0
 TAR108.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+SPEARD1.ART , 99
+SPEARD2.ART , 99
+SPEARD3.ART , 99
 *-----------------------------*
 OILB1T.ART  , 0 , 1 , 4 , 1
 OILB2T.ART  , 0 , 1 , 4 , 1
@@ -1821,9 +1821,9 @@ TAR201.ART  , 0 , 0 , 0
 TAR202.ART  , 0 , 0 , 0
 TAR203.ART  , 0 , 0 , 0
 TAR204.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+SPEARL1.ART , 99
+SPEARL2.ART , 99
+SPEARL3.ART , 99
 *-----------------------------*
 OILB1B.ART  , 3 , 0 , 4 , 1
 OILB2B.ART  , 3 , 0 , 4 , 1
@@ -1840,9 +1840,9 @@ TAR205.ART  , 0 , 0 , 0
 TAR206.ART  , 0 , 0 , 0
 TAR207.ART  , 0 , 0 , 0
 TAR208.ART  , 0 , 0 , 0
-BLANK.ART   , 99
-BLANK.ART   , 99
-BLANK.ART   , 99
+SPEARR1.ART , 99
+SPEARR2.ART , 99
+SPEARR3.ART , 99
 *-----------------------------*
 SBRG01T.ART , 0 , 1 , 0
 SBRG02T.ART , 0 , 1 , 0
@@ -1854,12 +1854,12 @@ SBRG07T.ART , 0 , 1 , 0
 SBRG08T.ART , 0 , 1 , 0
 BLANK.ART   , 99
 BLANK.ART   , 99
-BLANK.ART   , 99
+SPIKE11.ART , 3 , 1 , 0
 SPIKE7.ART  , 3 , 1 , 0
 SPIKE9.ART  , 3 , 1 , 0
-SHOOTRU1.ART, 0 , 1 , 0
-SHOOTRD.ART , 0 , 1 , 0
-SHOOTRL.ART , 0 , 1 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
 BLANK.ART   , 99
 BLANK.ART   , 99
 *-----------------------------*
@@ -1873,12 +1873,12 @@ SBRG07B.ART , 9 , 1 , 0
 SBRG08B.ART , 0 , 0 , 0
 SBRG09B.ART , 1 , 0 , 0
 SBRG10B.ART , 1 , 0 , 0
-BLANK.ART   , 99
+SPIKE12.ART , 3 , 1 , 0
 SPIKE8.ART  , 3 , 0 , 0
 SPIKE10.ART , 3 , 1 , 0
-SHOOTRU2.ART, 0 , 1 , 0
-SHOOTRR1.ART, 0 , 1 , 0
-SHOOTRR2.ART, 0 , 1 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
 BLANK.ART   , 99
 BLANK.ART   , 99
 *-----------------------------*
@@ -2246,13 +2246,13 @@ JUNG1819.ART, 0 , 0 , 0
 BLANK.ART   , 99
 BLANK.ART   , 99
 BLANK.ART   , 99
-TARPIT01.ART, 0 , 1 , 3 , 3
+TARPIT01.ART, 0 , 1 , 3 , 1
 TARPIT02.ART, 0 , 0 , 0
 TARPIT03.ART, 0 , 0 , 0
-TARPIT04.ART, 0 , 1 , 3 , 3
+TARPIT04.ART, 0 , 1 , 3 , 1
 TARPIT05.ART, 0 , 0 , 0
 TARPIT06.ART, 0 , 0 , 0
-TARPIT07.ART, 0 , 1 , 3 , 3
+TARPIT07.ART, 0 , 1 , 3 , 1
 TARPIT08.ART, 0 , 0 , 0
 TARPIT09.ART, 0 , 0 , 0
 BLANK.ART   , 99
@@ -2262,16 +2262,16 @@ BLANK.ART   , 99
 BLANK.ART   , 99
 BLANK.ART   , 99
 *-----------------------------*
-TARPIT10.ART, 1 , 0 , 3 , 3
+TARPIT10.ART, 1 , 0 , 3 , 1
 TARPIT11.ART, 0 , 0 , 0
 TARPIT12.ART, 0 , 0 , 0
-TARPIT13.ART, 3 , 0 , 3 , 3
+TARPIT13.ART, 3 , 0 , 3 , 1
 TARPIT14.ART, 0 , 0 , 0
 TARPIT15.ART, 0 , 0 , 0
-TARPIT16.ART, 3 , 0 , 3 , 3
+TARPIT16.ART, 3 , 0 , 3 , 1
 TARPIT17.ART, 0 , 0 , 0
 TARPIT18.ART, 0 , 0 , 0
-TARPIT19.ART, 1 , 0 , 3 , 3
+TARPIT19.ART, 1 , 0 , 3 , 1
 TARPIT20.ART, 0 , 0 , 0
 TARPIT21.ART, 0 , 0 , 0
 BLANK.ART   , 99
@@ -2319,3 +2319,230 @@ BLANK.ART   , 99
 BLANK.ART   , 99
 BLANK.ART   , 99
 *-----------------------------*
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+*-----------------------------*
+BLANK.ART   , 99
+ICE002.ART  , 0 , 1 , 0
+ICE003.ART  , 0 , 0 , 0
+BLANK.ART   , 99
+ICE005.ART  , 0 , 1 , 0
+ICE006.ART  , 0 , 1 , 0
+ICE007.ART  , 0 , 1 , 0
+ICE008.ART  , 0 , 1 , 0
+ICE009.ART  , 0 , 1 , 0
+ICE010.ART  , 0 , 1 , 0
+ICE011.ART  , 0 , 1 , 0
+ICE012.ART  , 0 , 1 , 0
+ICE013.ART  , 0 , 1 , 0
+ICE014.ART  , 5 , 1 , 0
+ICE015.ART  , 0 , 1 , 0
+ICE016.ART  , 6 , 0 , 0
+ICE017.ART  , 0 , 0 , 0
+ICE018.ART  , 0 , 0 , 0
+*-----------------------------*
+ICE019.ART  , 0 , 0 , 0
+ICE020.ART  , 1 , 0 , 0
+ICE021.ART  , 1 , 0 , 0
+ICE022.ART  , 1 , 0 , 0
+ICE023.ART  , 0 , 1 , 0
+ICE024.ART  , 6 , 1 , 0
+ICE025.ART  , 6 , 1 , 0
+ICE026.ART  , 6 , 1 , 0
+ICE027.ART  , 6 , 1 , 0
+ICE028.ART  , 6 , 1 , 0
+ICE029.ART  , 6 , 1 , 0
+ICE030.ART  , 6 , 1 , 0
+ICE031.ART  , 5 , 1 , 0
+ICE032.ART  , 5 , 1 , 0
+ICE033.ART  , 5 , 1 , 0
+ICE034.ART  , 5 , 1 , 0
+ICE035.ART  , 0 , 0 , 0
+ICE036.ART  , 0 , 0 , 0
+*-----------------------------*
+ICE037.ART  , 0 , 0 , 0
+ICE038.ART  , 3 , 1 , 0
+ICE039.ART  , 3 , 1 , 0
+ICE040.ART  , 1 , 0 , 0
+ICE041.ART  , 0 , 1 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+ICE044.ART  , 0 , 1 , 0
+ICE045.ART  , 0 , 1 , 0
+ICE046.ART  , 0 , 1 , 0
+BLANK.ART   , 99
+ICE048.ART  , 0 , 1 , 0
+ICE049.ART  , 0 , 1 , 0
+ICE050.ART  , 0 , 1 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+ICE053.ART  , 0 , 0 , 0
+ICE054.ART  , 0 , 0 , 0
+*-----------------------------*
+ICE055.ART  , 0 , 0 , 0
+ICE056.ART  , 3 , 0 , 0
+ICE057.ART  , 3 , 1 , 0
+ICE058.ART  , 9 , 1 , 0
+ICE059.ART  , 0 , 1 , 0
+ICE060.ART  , 0 , 1 , 0
+ICE061.ART  , 0 , 1 , 0
+ICE062.ART  , 2 , 1 , 5 , 0
+ICE063.ART  , 2 , 0 , 6 , 0
+ICE064.ART  , 1 , 0 , 0
+ICE065.ART  , 1 , 0 , 0
+ICE066.ART  , 2 , 0 , 8 , 0
+ICE067.ART  , 2 , 0 , 7 , 0
+ICE068.ART  , 0 , 1 , 0
+ICE069.ART  , 0 , 1 , 0
+ICE070.ART  , 0 , 1 , 0
+ICE071.ART  , 0 , 0 , 0
+ICE072.ART  , 0 , 0 , 0
+*-----------------------------*
+BLANK.ART   , 99
+ICE074.ART  , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+ICE078.ART  , 2 , 0 , 5 , 0
+ICE079.ART  , 2 , 1 , 6 , 0
+ICE080.ART  , 0 , 1 , 0
+ICE081.ART  , 1 , 0 , 0
+ICE082.ART  , 1 , 0 , 0
+ICE083.ART  , 1 , 0 , 0
+ICE084.ART  , 1 , 0 , 0
+ICE085.ART  , 0 , 1 , 0
+ICE086.ART  , 2 , 0 , 8 , 0
+ICE087.ART  , 2 , 0 , 7 , 0
+ICE088.ART  , 0 , 0 , 0
+ICE089.ART  , 0 , 0 , 0
+ICE090.ART  , 0 , 0 , 0
+*-----------------------------*
+ICE091.ART  , 1 , 0 , 0
+ICE092.ART  , 1 , 0 , 0
+ICE093.ART  , 1 , 0 , 0
+BLANK.ART   , 99
+ICE095.ART  , 9 , 1 , 0
+ICE096.ART  , 9 , 1 , 0
+ICE097.ART  , 9 , 1 , 0
+BLANK.ART   , 99
+ICE099.ART  , 1 , 0 , 0
+ICE100.ART  , 1 , 0 , 0
+ICE101.ART  , 1 , 0 , 0
+ICE102.ART  , 1 , 0 , 0
+ICE103.ART  , 0 , 1 , 0
+ICE104.ART  , 0 , 1 , 0
+ICE105.ART  , 0 , 1 , 0
+BLANK.ART   , 99
+ICE107.ART  , 0 , 0 , 0
+ICE108.ART  , 0 , 0 , 0
+*-----------------------------*
+ICE109.ART  , 9 , 1 , 0
+ICE110.ART  , 9 , 1 , 0
+ICE111.ART  , 9 , 1 , 0
+ICE112.ART  , 9 , 1 , 0
+ICE113.ART  , 9 , 1 , 0
+ICE114.ART  , 9 , 1 , 0
+ICE115.ART  , 9 , 1 , 0
+ICE116.ART  , 9 , 1 , 0
+ICE117.ART  , 9 , 1 , 0
+ICE118.ART  , 9 , 1 , 0
+ICE119.ART  , 9 , 1 , 0
+ICE120.ART  , 0 , 0 , 0
+ICE121.ART  , 0 , 0 , 0
+ICE122.ART  , 0 , 0 , 0
+ICE123.ART  , 0 , 0 , 0
+BLANK.ART   , 99
+ICE125.ART  , 0 , 0 , 0
+ICE126.ART  , 0 , 0 , 0
+*-----------------------------*
+ICE116.ART  , 0 , 0 , 0
+ICE117.ART  , 0 , 0 , 0
+ICE118.ART  , 0 , 0 , 0
+ICE119.ART  , 0 , 0 , 0
+BLANK.ART   , 99
+ICE132.ART  , 0 , 0 , 0
+ICE133.ART  , 0 , 0 , 0
+ICE134.ART  , 0 , 0 , 0
+ICE135.ART  , 0 , 0 , 0
+ICE136.ART  , 0 , 0 , 0
+ICE137.ART  , 0 , 0 , 0
+ICE138.ART  , 0 , 0 , 0
+ICE139.ART  , 0 , 0 , 0
+ICE140.ART  , 0 , 0 , 0
+ICE141.ART  , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+*-----------------------------*
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+ICE150.ART  , 0 , 0 , 0
+BLANK.ART   , 99
+ICE152.ART  , 1 , 0 , 0
+ICE153.ART  , 1 , 0 , 0
+ICE154.ART  , 0 , 0 , 0
+ICE155.ART  , 0 , 0 , 0
+ICE156.ART  , 0 , 0 , 0
+ICE157.ART  , 0 , 0 , 0
+ICE158.ART  , 0 , 0 , 0
+ICE159.ART  , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+*-----------------------------*
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+ICE168.ART  , 1 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+ICE174.ART  , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+ICE177.ART  , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+*-----------------------------*
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+ICE192.ART  , 1 , 0 , 0
+ICE193.ART  , 1 , 0 , 0
+ICE194.ART  , 1 , 0 , 0
+ICE195.ART  , 1 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99

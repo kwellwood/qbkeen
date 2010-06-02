@@ -19,7 +19,9 @@ CONST idle = 9
 '-------------------------------------------
 
 CONST slug = 1, bounder = 2, mushroom = 3, lick = 4      ' enemy id constants
-CONST arachnut = 5, worm = 6                             '
+CONST arachnut = 5, worm = 6, snake = 7, ancient = 8     '
+CONST spearup = 9, speardown = 10, spearleft = 11        '
+CONST spearright = 12                                    '
 
 CONST dead = 10                                          ' global constants
 CONST bouncelo = 1, bouncehi = 2                         ' mushroom constants
@@ -77,9 +79,9 @@ SELECT CASE enemy(e).status
     END IF
   END IF
  CASE stunned
-  IF enemy(e).actiontime = 0 THEN                   '4 is the animation
-    enemy(e).actiontime = INT((maxfps * 2) / 4) * 4 '  delay so set this
-    enemy(e).status = waking                        '  as a multiple of 4
+  IF enemy(e).actiontime = 0 THEN                    '4 is the animation
+    enemy(e).actiontime = INT((maxfps * 2) / 4) * 4  '  delay so set this
+    enemy(e).status = waking                         '  as a multiple of 4
   END IF
  CASE waking
   IF enemy(e).actiontime = 0 THEN

@@ -2,9 +2,7 @@ DEFINT A-Z
 '$DYNAMIC
 
 DECLARE SUB DoCamera ()
-DECLARE SUB DrawHUD ()
-DECLARE SUB DrawObjects ()
-DECLARE SUB DrawPlayerHUD ()
+DECLARE SUB DrawBox (x1, y1, x2, y2, c)
 DECLARE SUB DrawScreen ()
 DECLARE SUB FocusCamera ()
 DECLARE SUB MoveCamera (x, y)

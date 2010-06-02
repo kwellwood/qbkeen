@@ -342,15 +342,15 @@ END SUB
 
 SUB TilesGetXMS
 
-BiosXOpen 8, TileTypeHandle, a     ' INTEGER elements
+BiosXOpen 16, TileTypeHandle, a     ' INTEGER elements
 IF a THEN ErrorHandlerSub 105
-BiosXOpen 8, AnmLengthHandle, a
+BiosXOpen 16, AnmLengthHandle, a
 IF a THEN ErrorHandlerSub 106
-BiosXOpen 8, AnmDelayHandle, a
+BiosXOpen 16, AnmDelayHandle, a
 IF a THEN ErrorHandlerSub 107
-BiosXOpen 8, TileType2Handle, a
+BiosXOpen 16, TileType2Handle, a
 IF a THEN ErrorHandlerSub 114
-BiosXOpen 8, SlopeMaskHandle, a
+BiosXOpen 16, SlopeMaskHandle, a
 IF a THEN ErrorHandlerSub 115
 
 BiosXOpen 2048, ArtHandle, a

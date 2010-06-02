@@ -1,31 +1,20 @@
 DEFINT A-Z
 
 CONST inmenu = 1, ingame = 2
-CONST running = 1, paused = 2
+CONST running = 1, paused = 2, stopped = 3
 CONST up = 0, down = 1, left = 2, right = 3
 CONST FrameTimer = 0, AnmTimer = 1, HiResTimer = 2
 
 COMMON SHARED anmcounter, menutimermark&
-COMMON SHARED maxfps, ts, quitgame, gamemode, gameplay, curlevel, ems, dolog
+COMMON SHARED maxfps, ts, gamemode, gameplay, curlevel, ems, dolog
+COMMON SHARED quitgame, showdebughud, showdropdownheight, maplocation$
 COMMON SHARED drawpage, menupage
 
-DECLARE SUB AllocXMS ()
-DECLARE SUB DeallocXMS ()
 DECLARE SUB DebugLog (t$)
-DECLARE SUB DoInput ()
-DECLARE SUB DoTimers ()
 DECLARE SUB ErrorHandlerSub (e)
 DECLARE SUB IncreaseIdleTime ()
-DECLARE SUB InitEngine ()
 DECLARE SUB LoadLevel ()
-DECLARE SUB MainLoop ()
-DECLARE SUB NextLevel ()
-DECLARE SUB ReadParameters ()
-DECLARE SUB ResetTimer (tmr)
-DECLARE SUB SetPalette ()
-DECLARE FUNCTION FrameReady ()
-DECLARE FUNCTION TileUnitsInt (pixels%)
-DECLARE FUNCTION TileUnitsSin (pixels!)
+DECLARE SUB SetLevelComplete ()
 DECLARE FUNCTION TimerTicked (tmr)
 DECLARE FUNCTION TimerTicks& (tmr)
 
@@ -93,6 +82,7 @@ TYPE playertype
  canjump AS INTEGER
  jumpheight AS SINGLE
  score AS LONG
+ nextlifeat AS LONG
  ammo  AS INTEGER
  drops AS INTEGER
  keyred AS INTEGER
@@ -114,6 +104,8 @@ TYPE playertype
  onlift AS INTEGER        ' lift currently standing on
  onball AS INTEGER        ' bouncing ball currently standing on
  idletime AS INTEGER      ' frames player hasnt pressed a key
+ invincible AS INTEGER
+ ancientsrescued AS INTEGER
 END TYPE
 
 COMMON SHARED scr()

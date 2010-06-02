@@ -46,7 +46,7 @@ FOR cp = 1 TO 8
    CASE 7: IF cp = 2 THEN UnlockDoor
    CASE 8: IF cp = 2 THEN HitSlope clippoint(cp).x, clippoint(cp).y, 1
    CASE 9: HitWall cp, clippoint(cp).x, clippoint(cp).y
-   CASE 10: NextLevel
+   CASE 10: SetLevelComplete
   END SELECT
   UpdateClipPoints
 NEXT cp
@@ -461,7 +461,7 @@ END SUB
 
 SUB KillPlayer
 
-IF player(0).action <> dying THEN
+IF player(0).action <> dying AND player(0).invincible = 0 THEN
   player(0).action = dying
   player(0).actiontime = maxfps
   player(0).frozen = 1
@@ -644,6 +644,20 @@ player(0).y = player(0).y + y!
 UpdateClipPoints
 
 END SUB
+
+FUNCTION ShotPlayer (sx1, sy1, sx2, sy2)
+
+'--- corners of player ---
+px1 = player(0).x - (player(0).txsize / 2): py1 = player(0).y - (player(0).tysize / 2)
+px2 = player(0).x + (player(0).txsize / 2): py2 = player(0).y + (player(0).tysize / 2)
+
+'--- collision test ---
+IF sx1 >= px1 AND sx1 <= px2 AND sy1 >= py1 AND sy1 <= py2 THEN ShotPlayer = 1
+IF sx2 >= px1 AND sx2 <= px2 AND sy1 >= py1 AND sy1 <= py2 THEN ShotPlayer = 1
+IF sx1 >= px1 AND sx1 <= px2 AND sy2 >= py1 AND sy2 <= py2 THEN ShotPlayer = 1
+IF sx2 >= px1 AND sx2 <= px2 AND sy2 >= py1 AND sy2 <= py2 THEN ShotPlayer = 1
+
+END FUNCTION
 
 SUB TogglePogo
 

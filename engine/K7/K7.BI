@@ -15,9 +15,22 @@ DEFINT A-Z
 '$INCLUDE: 'climbing.bi'
 '$INCLUDE: 'lifts.bi'
 
-CONST enginever = 14
+DECLARE SUB AllocXMS ()
+DECLARE SUB DeallocXMS ()
+DECLARE SUB DoInput ()
+DECLARE SUB DoTimers ()
+DECLARE SUB InitEngine ()
+DECLARE SUB MainLoop ()
+DECLARE SUB NextLevel ()
+DECLARE SUB ReadParameters ()
+DECLARE SUB ResetTimer (tmr)
+DECLARE SUB SetPalette ()
+DECLARE FUNCTION FrameReady ()
+DECLARE FUNCTION LevelComplete ()
 
-COMMON SHARED tileset$
+CONST enginever = 15
+
+COMMON SHARED tileset$, levelcompleteflag
 
 TYPE hues
  red AS INTEGER

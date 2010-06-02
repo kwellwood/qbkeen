@@ -4,6 +4,8 @@ DEFINT A-Z
 '$INCLUDE: 'enemies.bi'
 '$INCLUDE: 'enemies1.bi'
 '$INCLUDE: 'enemies2.bi'
+
+'--- MISC ROUTINES ---
 DECLARE FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat)
 DECLARE SUB MoveSprite (s, x, y)
 DECLARE FUNCTION CameraOrigX ()
@@ -20,9 +22,22 @@ DECLARE FUNCTION Map& (x, y)
 DECLARE FUNCTION MapFG& (x, y)
 DECLARE FUNCTION TileType (t&)
 '$STATIC
+
+'--- PRIVATE ROUTINES ---
+DECLARE SUB DoEnemyFrame (e)
+DECLARE SUB EnemyAI (e)
+DECLARE SUB EnemyClipPoints (e)
+DECLARE SUB EnemyHitSlope (e, x!, y!, l)
+DECLARE SUB EnemyHitWall (e, p, hx!, hy!) 'point hit, clippoint hit (x, y)
+DECLARE SUB EnemyPhysics (e)
+DECLARE SUB SpawnEnemy (e)
+DECLARE FUNCTION EnemyHitPoint (x!, y!)
 '============================================================================
 CONST slug = 1, bounder = 2, mushroom = 3, lick = 4      ' enemy id constants
-CONST arachnut = 5, worm = 6                             '
+CONST arachnut = 5, worm = 6, snake = 7, ancient = 8     '
+CONST spearup = 9, speardown = 10, spearleft = 11        '
+CONST spearright = 12, shooterup = 13, shooterdown = 14  '
+CONST shooterleft = 15, shooterright = 16                '
 
 CONST dead = 10                                          ' global constants
 CONST bouncelo = 1, bouncehi = 2                         ' mushroom constants
@@ -33,6 +48,12 @@ CONST sitonground = 0, attacking = 2 ', bouncefollow = 1 ' lick constants
 CONST firesmall = 1, firemed = 2, firebig = 3            '
 CONST stunned = 1, waking = 2                            ' arachnut constants
 CONST wormcrawl1 = 0, wormcrawl2 = 1                     ' worm constants
+CONST snakemove = 0, snakepeek = 1, snakeattack = 2      ' snake constants
+CONST walking = 0, brooding = 1                          ' ancient constants
+CONST ancientwalk1 = 0, ancientwalk2 = 1                 '
+CONST ancientbrood = 2                                   '
+CONST spearsit = 0, spearattack = 1                      ' spear constants
+CONST shooterwait = 0                                    ' shooter constants
 
 ON ERROR GOTO ErrorHandler
 
@@ -43,6 +64,12 @@ ErrorHandler:
 e = ERR
 ErrorHandlerSub e
 RESUME NEXT
+
+FUNCTION ActiveEnemies
+
+ActiveEnemies = LEN(activefoestack)
+
+END FUNCTION
 
 SUB DoEnemyFrame (e)
 
@@ -61,6 +88,10 @@ SELECT CASE enemy(e).id
  CASE lick: LickFrames e
  CASE arachnut: ArachnutFrames e
  CASE worm: WormFrames e
+ CASE snake: SnakeFrames e
+ CASE ancient: AncientFrames e
+ CASE spearup TO spearright: SpearFrames e
+ CASE shooterup TO shooterright: ShooterFrames e
 END SELECT
 
 END SUB
@@ -96,6 +127,10 @@ SELECT CASE enemy(e).id
  CASE lick: LickAI e
  CASE arachnut: ArachnutAI e
  CASE worm: WormAI e
+ CASE snake: SnakeAI e
+ CASE ancient: AncientAI e
+ CASE spearup TO spearright: SpearAI e
+ CASE shooterup TO shooterright: ShooterAI e
 END SELECT
 
 END SUB
@@ -181,6 +216,10 @@ END FUNCTION
 
 SUB EnemyPhysics (e)
 
+'-- these enemies are stationary --
+IF enemy(e).id >= spearup AND enemy(e).id <= spearright THEN EXIT SUB
+IF enemy(e).id >= shooterup AND enemy(e).id <= shooterright THEN EXIT SUB
+
 '-- used to track for star sprite movement --
 eoldx! = enemy(e).x: eoldy! = enemy(e).y
 
@@ -253,6 +292,19 @@ IF player(0).onball = e THEN ShiftPlayer (enemy(e).x - eoldx!), (enemy(e).y - eo
 
 END SUB
 
+FUNCTION EnemyShootable (id)
+
+SELECT CASE id
+ CASE worm: EnemyShootable = 0
+ CASE ancient: EnemyShootable = 0
+ CASE snake: IF enemy(e).status <> snakeattack THEN EnemyShootable = 0 ELSE EnemyShootable = 1
+ CASE spearup TO spearright: EnemyShootable = 0
+ CASE shooterup TO shooterright: EnemyShootable = 0
+ CASE ELSE: EnemyShootable = 1
+END SELECT
+
+END FUNCTION
+
 FUNCTION EnemyTouchPlayer (e)
 
 px1 = clippoint(5).x: py1 = clippoint(1).y
@@ -270,7 +322,8 @@ SUB HandleEnemies
 FOR k = 1 TO LEN(activefoestack)
   e = ASC(MID$(activefoestack, k, 1))
  
-  IF EnemyInRange(e, 320) THEN   'if in range
+  IF EnemyInRange(e, 320) OR (enemy(e).id >= spearup AND enemy(e).id <= spearright) THEN
+                                 '  if in range /\ (or a spear or shooter)
     EnemyPhysics e               '  keep moving enemy, clipping
     EnemyAI e                    '  check status, change direction or action
   END IF
@@ -286,7 +339,7 @@ OPEN "engine.dat" FOR INPUT AS 1
   LOOP UNTIL UCASE$(Text$) = "[ENEMIES.DAT]"
   INPUT #1, starsStart&    ' first frame of stars
   INPUT #1, starsEnd&      ' last frame of stars
-  FOR f = 0 TO 33
+  FOR f = 0 TO 57
     INPUT #1, eframe(f)
     INPUT #1, efsize(f).x
     INPUT #1, efsize(f).y
@@ -305,7 +358,6 @@ SELECT CASE enemy(e).id
   enemy(e).actiontime = maxfps * 5
   enemy(e).xv = 0
   EXIT SUB
- CASE worm: EXIT SUB
 END SELECT
 
 enemy(e).status = dead: enemy(e).action = dead
@@ -383,10 +435,10 @@ FOR k = 1 TO LEN(activefoestack)
   IF k > LEN(activefoestack) THEN EXIT FOR
   e = ASC(MID$(activefoestack, k, 1))
   IF enemy(e).status <> dead THEN
-    IF enemy(e).id <> worm THEN
+    IF EnemyShootable(enemy(e).id) THEN
       ex1 = enemy(e).x - (enemy(e).txsize / 2): ey1 = enemy(e).y - (enemy(e).tysize / 2)
       ex2 = enemy(e).x + (enemy(e).txsize / 2): ey2 = enemy(e).y + (enemy(e).tysize / 2)
-  
+
       '--- is shot touching this enemy ---
       IF sx1 >= ex1 AND sx1 <= ex2 AND sy1 >= ey1 AND sy1 <= ey2 THEN touchenemy = 1
       IF sx2 >= ex1 AND sx2 <= ex2 AND sy1 >= ey1 AND sy1 <= ey2 THEN touchenemy = 1
@@ -463,7 +515,49 @@ SELECT CASE enemy(e).id
   enemy(e).txsize = efsize(32).x
   enemy(e).tysize = efsize(32).y
   enemy(e).xmax = 6! + RND: enemy(e).ymax = 4
-  enemy(e).xsize = 24: enemy(e).ysize = 12
+  enemy(e).xsize = 24: enemy(e).ysize = 16
+ CASE snake
+  enemy(e).xdir = left
+  enemy(e).status = snakemove
+  enemy(e).actiontime = 0
+  enemy(e).onground = 1
+  enemy(e).frame = eframe(34)
+  enemy(e).txsize = efsize(34).x
+  enemy(e).tysize = efsize(34).y
+  enemy(e).xmax = 3: enemy(e).ymax = 3
+  enemy(e).xsize = 16: enemy(e).ysize = 24  '62, 22
+ CASE ancient
+  enemy(e).xdir = left
+  enemy(e).action = ancientwalk1
+  enemy(e).actiontime = 2
+  enemy(e).status = walking
+  enemy(e).onground = 1
+  enemy(e).frame = eframe(42)
+  enemy(e).txsize = efsize(42).x
+  enemy(e).tysize = efsize(42).y
+  enemy(e).xmax = 16: enemy(e).ymax = 16
+  enemy(e).xsize = 16: enemy(e).ysize = 38
+ CASE spearup TO spearright
+  enemy(e).action = 0
+  enemy(e).actiontime = maxfps * 2
+  enemy(e).status = spearsit
+  enemy(e).frame = eframe(46 + (enemy(e).id - spearup) * 2)
+  enemy(e).txsize = efsize(46 + (enemy(e).id - spearup) * 2).x
+  enemy(e).tysize = efsize(46 + (enemy(e).id - spearup) * 2).y
+  enemy(e).xsize = 16: enemy(e).ysize = 16
+  IF enemy(e).id = spearup OR enemy(e).id = speardown THEN enemy(e).xsize = 12
+  IF enemy(e).id = spearleft OR enemy(e).id = spearright THEN enemy(e).ysize = 12
+ CASE shooterup TO shooterright
+  enemy(e).action = 0
+  enemy(e).actiontime = 0
+  enemy(e).status = shooterwait
+  enemy(e).frame = eframe(54 + (enemy(e).id - shooterup))
+  enemy(e).txsize = efsize(54 + (enemy(e).id - shooterup)).x
+  enemy(e).tysize = efsize(54 + (enemy(e).id - shooterup)).y
+  enemy(e).xsize = 16: enemy(e).ysize = 16
+  IF enemy(e).id = shooterup THEN enemy(e).ysize = 32
+  IF enemy(e).id = shooterright THEN enemy(e).xsize = 32
+ CASE ELSE: ErrorHandlerSub 170
 END SELECT
 
 END SUB

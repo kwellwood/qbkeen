@@ -19,7 +19,7 @@ DIM SHARED pal(255) AS hues
 DIM SHARED scr(32002)
 DIM SHARED player(0) AS playertype, ClipPoint(1 TO 10) AS coordinate
 DIM SHARED enemy(100) AS enemytype, EClipPoint(4) AS coordinate
-DIM SHARED eframe(33) AS LONG, efsize(33) AS intcoordinate
+DIM SHARED eframe(57) AS LONG, efsize(57) AS intcoordinate
 DIM SHARED global(0) AS globalvars
 '============================================================================
 PRINT "Loading..."
@@ -41,7 +41,6 @@ PRINT "Ok"
 '--------[ Set Screen Mode ]--------
 DQBinitVGA: SCREEN 13
 SetPalette
-ERASE pal
 
 '---------[ Start the Game ]--------
 Intro
@@ -58,7 +57,7 @@ csRemoveTimer
 DeallocXMS
 DQBclose
 
-PRINT "Powered by K7 Engine technology (Build 14)."
+PRINT "Powered by K7 Engine technology (Build 15)."
 PRINT "K7 Engine (c) Kevin Wellwood 2002": PRINT
 'PRINT "Development version."
 END
@@ -128,31 +127,34 @@ SELECT CASE gamemode
       IF player(0).action = climbing THEN ClimbDown
       IF player(0).action <> climbing AND player(0).onground THEN CheckClimb
     END IF
-    IF DQBkey(KEYCTRL) THEN                            ' jump (ctrl)
-      MovePlayer UP                                    '
-     ELSEIF player(0).holdingjump THEN                 ' not pressing jump
-      player(0).holdingjump = 0                        '  do not allow
-      player(0).stoppedjump = 1                        '  jumping to continue
+    IF DQBkey(KEYCTRL) THEN                          ' jump (ctrl)
+      MovePlayer UP                                  '
+     ELSEIF player(0).holdingjump THEN               ' not pressing jump
+      player(0).holdingjump = 0                      '  do not allow
+      player(0).stoppedjump = 1                      '  jumping to continue
     END IF
-    IF DQBkey(KEYALT) THEN TogglePogo                  ' Pogostick (alt)
-    IF DQBkey(73) THEN MoveCamera 0, -2                ' Camera Up (pg up)
-    IF DQBkey(81) THEN MoveCamera 0, 2                 ' Camera Down (pg dn)
-    IF DQBkey(KEYSPACE) THEN SpawnPlayerShot           ' Shoot gun (space)
+    IF DQBkey(KEYALT) THEN TogglePogo                ' Pogostick (alt)
+    IF DQBkey(73) THEN MoveCamera 0, -2              ' Camera Up (pg up)
+    IF DQBkey(81) THEN MoveCamera 0, 2               ' Camera Down (pg dn)
+    IF DQBkey(KEYSPACE) THEN SpawnPlayerShot         ' Shoot gun (space)
+    IF DQBkey(KEYENTER) AND showdropdownheight = -181 THEN
+      showdropdownheight = showdropdownheight + 1
+    END IF
   END IF
  
-  ' Pause (p)
-  IF DQBkey(25) THEN
+  ' Pause (p)       ' \/ cant pause/unpause when dropdown status is moving
+  IF DQBkey(25) AND showdropdownheight = -181 THEN
     IF gameplay = running THEN gameplay = paused ELSE gameplay = running
     WHILE DQBkey(25): WEND
   END IF
   ' Toggle menu (esc)
-  IF DQBkey(KEYESC) AND TimerTicks(HiResTimer) > menutimermark& AND player(0).action <> dying THEN
+  IF DQBkey(KEYESC) AND TimerTicks(HiResTimer) > menutimermark& AND player(0).action <> dying AND showdropdownheight = -181 THEN
     gamemode = inmenu
     menutimermark& = TimerTicks(HiResTimer) + (200 \ 5)
   END IF
 
   ' Skip level (F5)
-  IF DQBkey(63) THEN NextLevel
+  IF DQBkey(63) THEN SetLevelComplete
 
  CASE inmenu
   IF DQBkey(KEYESC) THEN HandleMenu KEYESC
@@ -188,7 +190,7 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 14)."
+PRINT "Powered by K7 Engine technology (Build 15)."
 PRINT "K7 Engine (c) Kevin Wellwood 2002": PRINT
 'PRINT "Development version."
 
@@ -218,7 +220,7 @@ END FUNCTION
 
 SUB IncreaseIdleTime
 
-IF gameplay = paused THEN EXIT SUB
+IF gameplay <> running THEN EXIT SUB
 
 IF player(0).action = moving AND player(0).onground THEN
   IF player(0).idletime < 1000 THEN player(0).idletime = player(0).idletime + 1
@@ -228,7 +230,7 @@ END SUB
 
 SUB InitEngine
 
-drawpage = ems * 1: menupage = ems * 2
+DrawPage = ems * 1: menupage = ems * 2
 
 OPEN "engine.dat" FOR INPUT AS 1
   DO: INPUT #1, Text$
@@ -255,13 +257,15 @@ CLOSE 1
 
 InitPlayer
 curlevel = 1
+gamemode = inmenu
+gameplay = stopped
 
 DEF SEG = VARSEG(pal(0))
 BLOAD "palette.dat", 0
 DEF SEG
 
-a = DQBloadFont("font.dat")
-IF a THEN ErrorHandlerSub 125 + a
+A = DQBloadFont("font.dat")
+IF A THEN ErrorHandlerSub 125 + A
 
 DQBinstallKeyboard
 
@@ -271,6 +275,17 @@ csSetTimer AnmTimer, 100                              'anmcounter (1/10 sec)
 csSetTimer HiResTimer, 5                              'generic 5ms timer
 
 END SUB
+
+FUNCTION LevelComplete
+
+IF levelcompleteflag THEN
+  levelcompleteflag = 0
+  LevelComplete = 1
+ ELSE
+  LevelComplete = 0
+END IF
+
+END FUNCTION
 
 SUB LoadLevel
 
@@ -283,19 +298,18 @@ OPEN "levels.dat" FOR INPUT AS 1
   END IF
   FOR l = 1 TO numlevels
     INPUT #1, mapfile$
-    INPUT #1, mapname$
+    INPUT #1, temp1$
+    INPUT #1, temp2$
     IF l = curlevel THEN EXIT FOR
   NEXT l
 CLOSE 1
 LoadMap mapfile$
 
-'---[ Set Game State ]---
-gamemode = ingame
-gameplay = running
-
 '----[ Reset Player Status ]----
 player(0).onground = 0
 player(0).onslope = 0
+player(0).onlift = 0
+player(0).onball = 0
 player(0).canjump = 0
 player(0).reload = 0
 player(0).shooting = 0
@@ -305,6 +319,11 @@ player(0).action = moving
 player(0).actiontime = 0
 player(0).frozen = 0
 player(0).usingportal = 0
+player(0).keyred = 0
+player(0).keygrn = 0
+player(0).keyblu = 0
+player(0).keyyel = 0
+DoCamera
 
 END SUB
 
@@ -325,15 +344,19 @@ DO
       DoPlayerState
       DoCamera
     END IF
+    DoDropdownStatus
     DrawScreen
   END IF
+ 
+  IF LevelComplete THEN NextLevel
+
 LOOP UNTIL quitgame
 
 END SUB
 
 SUB NextLevel
 
-mark& = TimerTicks(HiResTimer) + (1000 \ 5)
+mark& = TimerTicks(HiResTimer) + (1500 \ 5)
 
 EndMusic                   ' stop music
 PlaySound 2                ' end of level sound
@@ -343,6 +366,9 @@ curlevel = curlevel + 1    ' increment level
 DrawLoadingBox             ' draw loading screen
 
 LoadLevel                  ' load next level to memory
+
+gameplay = running
+gamemode = ingame
 
 WHILE TimerTicks(HiResTimer) < mark&: WEND
 
@@ -378,32 +404,32 @@ csResetTicks tmr
 
 END SUB
 
+SUB SetLevelComplete
+
+levelcompleteflag = 1
+
+END SUB
+
 SUB SetPalette
 
+'--- Set the Palette ---
 OUT &H3C8, 0
-
 FOR i = 0 TO 255
   OUT &H3C9, pal(i).red: OUT &H3C9, pal(i).grn: OUT &H3C9, pal(i).blu
 NEXT
+ERASE pal
 
+'--- Set the border color ---
 OUT &H3C7, -1
 OUT &H3C9, 0
 OUT &H3C9, 32
 OUT &H3C9, 32
 
+'--- Load the blender map ---
+'a = DQBcreateBMap(1, 144, 144): IF a THEN ErrorHandlerSub 180
+'a = DQBloadBMap(1, "blue.bln"): IF a THEN ErrorHandlerSub 180 + a
+
 END SUB
-
-FUNCTION TileUnitsInt (pixels)
-
-TileUnitsInt = INT(pixels / ts) + 1
-
-END FUNCTION
-
-FUNCTION TileUnitsSin (pixels!)
-
-TileUnitsSin = INT(pixels! / ts) + 1
-
-END FUNCTION
 
 FUNCTION TimerTicked (tmr)
 

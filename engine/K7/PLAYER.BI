@@ -32,4 +32,5 @@ DECLARE SUB UpdateClipPoints ()
 DECLARE FUNCTION PFrameSizeX (slot)
 DECLARE FUNCTION PFrameSizeY (slot)
 DECLARE FUNCTION PlayerFrame& (slot)
+DECLARE FUNCTION ShotPlayer (sx1, sy1, sx2, sy2)
 

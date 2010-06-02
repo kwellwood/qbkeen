@@ -20,6 +20,7 @@ ON ERROR GOTO ErrorHandler
 
 DIM SHARED MapHandle, MapFGHandle, mapxsize, mapysize
 DIM SHARED file AS STRING * 12, bitl(0) AS LONG
+DIM SHARED mapidtag AS STRING * 3
 '============================================================================
 ErrorHandler:
 e = ERR
@@ -30,9 +31,9 @@ SUB LoadMap (file$)
 
 f = FREEFILE
 OPEN file$ FOR BINARY AS f
-  '-- check file version --
-  GET #f, , version
-  IF version <> mapsysver THEN ErrorHandlerSub 130
+  '-- check file format --
+  GET #f, , mapidtag
+  IF mapidtag <> "CK7" THEN ErrorHandlerSub 130
 
   '-- map dimensions --
   GET #f, , mapxsize

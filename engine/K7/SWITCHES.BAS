@@ -78,8 +78,9 @@ END SUB
 
 SUB SetSwitchTag (x, y, sw&)
 
+mapxsize& = MapWidth: x& = x: y& = y
 bitl(0) = sw&
-BiosXWrite SwitchTagHandle, ((y * MapWidth - MapWidth) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+BiosXWrite SwitchTagHandle, ((y& * mapxsize& - mapxsize&) + x&) * 4& - 4&, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 
 END SUB
 
@@ -91,7 +92,7 @@ END SUB
 
 SUB SwitchesGetXMS
 
-BiosXOpen 1024, SwitchTagHandle, a
+BiosXOpen 2048, SwitchTagHandle, a
 IF a THEN ErrorHandlerSub 113
 
 END SUB
@@ -106,7 +107,8 @@ END SUB
 
 FUNCTION SwitchTag& (x, y)
 
-BiosXRead SwitchTagHandle, ((y * MapWidth - MapWidth) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+mapxsize& = MapWidth: x& = x: y& = y
+BiosXRead SwitchTagHandle, ((y& * mapxsize& - mapxsize&) + x&) * 4& - 4&, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
 SwitchTag& = bitl(0)
 
 END FUNCTION

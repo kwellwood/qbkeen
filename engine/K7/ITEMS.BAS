@@ -71,6 +71,18 @@ e = ERR
 ErrorHandlerSub e
 RESUME NEXT
 
+FUNCTION ActiveItems
+
+ActiveItems = LEN(activeitemstack)
+
+END FUNCTION
+
+FUNCTION ActiveSprites
+
+ActiveSprites = LEN(activespritestack)
+
+END FUNCTION
+
 FUNCTION AddSprite (x, y, frame&, eframe&, delay, xsize, ysize, deadly, repeat)
 
 '--- exit if no more empty sprite slots ---
@@ -128,9 +140,26 @@ FOR k = 1 TO LEN(activeitemstack)
   i = ASC(MID$(activeitemstack, k, 1))
 
   IF TouchItem(i) THEN
+    '--- setup bonus sprite ---
+    startframe& = bonus(item(i).id).psframe
+    endframe& = startframe& + bonus(item(i).id).pframes - 1
+    framedelay = bonus(item(i).id).pdelay
+    xsize = bonus(item(i).id).pxsize
+    ysize = bonus(item(i).id).pysize
+   
     '--- award bonus' value ---
     IF bonus(item(i).id).points THEN
       player(0).score = player(0).score + bonus(item(i).id).points
+      IF player(0).score >= player(0).nextlifeat THEN
+        player(0).nextlifeat = player(0).nextlifeat * 2
+        player(0).lives = player(0).lives + 1
+        '-- overwrite points anm with blue 1up --
+        startframe& = 631
+        endframe& = 637
+        framedelay = 3
+        xsize = 12
+        ysize = 16
+      END IF
       PlaySound 13
     END IF
     IF bonus(item(i).id).ammo THEN
@@ -138,14 +167,22 @@ FOR k = 1 TO LEN(activeitemstack)
       PlaySound 15
     END IF
     IF bonus(item(i).id).lifedrop THEN
-      player(0).drops = player(0).drops + bonus(item(i).id).lifedrop
-      PlaySound 14
-      IF player(0).drops > 99 THEN
-        player(0).drops = 0
+      IF bonus(item(i).id).lifedrop = 100 THEN    '100 drops- extra life
         player(0).lives = player(0).lives + 1
-        oneup = 1
-       ELSE oneup = 0
+       ELSE                                       'a single drop
+        player(0).drops = player(0).drops + bonus(item(i).id).lifedrop
+        IF player(0).drops > 99 THEN              'collected 100 drops?
+          player(0).drops = 0
+          player(0).lives = player(0).lives + 1
+          '-- overwrite lifedrop anm with blue 1up --
+          startframe& = 631
+          endframe& = 637
+          framedelay = 3
+          xsize = 12
+          ysize = 16
+        END IF
       END IF
+      PlaySound 14
     END IF
     IF bonus(item(i).id).gemkey THEN
       SELECT CASE bonus(item(i).id).gemkey
@@ -161,7 +198,7 @@ FOR k = 1 TO LEN(activeitemstack)
     activeitemstack = LEFT$(activeitemstack, k - 1) + RIGHT$(activeitemstack, LEN(activeitemstack) - k)
    
     x = item(i).x: y = item(i).y - (bonus(item(i).id).pysize / 2)
-    a = AddSprite(x, y, bonus(item(i).id).psframe, bonus(item(i).id).psframe + bonus(item(i).id).pframes - 1, bonus(item(i).id).pdelay, bonus(item(i).id).pxsize, bonus(item(i).id).pysize, 0, 0)
+    a = AddSprite(x, y, startframe&, endframe&, framedelay, xsize, ysize, 0, 0)
 
     k = k - 1
   END IF

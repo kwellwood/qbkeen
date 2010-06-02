@@ -30,6 +30,7 @@ IF TileType(Map&(x, y)) <> 5 AND TileType(MapFG&(x, y)) <> 5 THEN EXIT SUB
 player(0).xv = 0: player(0).yv = 0
 player(0).action = climbing: player(0).actiontime = -1
 player(0).changeaction = maxfps / 3
+player(0).onground = 0: player(0).onslope = 0
 player(0).x = (x * ts) - (ts / 2)
 player(0).canjump = ts * (player(0).jumpheight / 8) 'allow player to jump off
                                                     ' pole at 1/8 norm height
@@ -87,6 +88,7 @@ END IF
 
 '-- move down pole --
 player(0).y = player(0).y + 3.5
+UpdateClipPoints
 
 END SUB
 
@@ -140,6 +142,7 @@ IF TileType(Map&(x, y)) <> 5 AND TileType(MapFG&(x, y)) <> 5 THEN player(0).aim 
 
 '-- climb up pole --
 player(0).y = player(0).y - 2
+UpdateClipPoints
 
 END SUB
 

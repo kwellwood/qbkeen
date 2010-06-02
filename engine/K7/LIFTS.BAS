@@ -8,6 +8,9 @@ DEFINT A-Z
 '$INCLUDE: 'lifts.bi'
 '$STATIC
 
+DECLARE SUB SetLiftTarget (l)
+DECLARE FUNCTION LiftNearTarget (l)
+
 CONST liftspeed! = 1.6, liftframedelay = 1
 
 TYPE locatortype
@@ -166,8 +169,8 @@ END SUB
 
 FUNCTION LiftNearTarget (l)
 
-IF ABS(lift(l).x - locator(lift(l).track, lift(l).target).x) < 4 THEN
-  IF ABS(lift(l).y - locator(lift(l).track, lift(l).target).y) < 4 THEN
+IF ABS(lift(l).x - locator(lift(l).track, lift(l).target).x) <= 2 THEN
+  IF ABS(lift(l).y - locator(lift(l).track, lift(l).target).y) <= 2 THEN
     LiftNearTarget = 1
    ELSE LiftNearTarget = 0
   END IF

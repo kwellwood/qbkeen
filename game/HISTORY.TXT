@@ -266,3 +266,24 @@ Changes Since Build 13:
 - New timing routines; works in Windows XP
 - Sound system disabled
 - Code optimized and debugged
+- Level editor (TED) overhauled
+
+BUILD 15 (08-13-2002)
+   With progress going as quickly as it has been, the next build may be the
+final build of Keen. Basically the only things left to make are enemies and
+levels. Lets hope that I don't get bogged down in tweaking and organizing
+the code and actually finish this project. Over two years in the making now!
+
+Changes Since Build 14:
+- Two new levels (Crystalus, Temple of Shadows)
+- Three new enemies (snake, spears, shooters)
+- More artwork
+- Map format changed ("CK7" id tag inserted)
+- Multiple saved games allowed
+- Menu redrawn and fully functional
+- Game starts in the main menu- use New Game to actually begin
+- Debugging options available in main menu
+- Dropdown status menu in-game
+- Ancients NPCs (touching them exits the level)
+- Multiple shot types for shooting enemies to use
+- Many miscellaneous tweaks

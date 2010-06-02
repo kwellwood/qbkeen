@@ -12,7 +12,7 @@ Index of files:
  soundwav.dat
 -----------------------------------------------------------------------------
 [ENGINE.DAT]
-14
+15
 16
 40
 0.8
@@ -67,6 +67,7 @@ title screen tile
 90
 49
 57
+87
 scoreboard tile
 start of digits tiles 0-9
 x location of board
@@ -74,19 +75,14 @@ y location of board
 tile for loading levels
 x location for loading tile
 y location for loading tile
+dropdown menu tile
 -----------------------------------------------------------------------------
 [WEAPONS.DAT]
-6
-705
-708
-1
-16
-16
-709
-710
-2
-16
-16
+6,705,708,1,16,16,709,710,2,16,16
+10,627,628,1,8,16,627,628,1,8,16
+10,629,630,1,8,16,629,630,1,8,16
+10,645,646,1,16,8,645,646,1,16,8
+10,647,648,1,16,8,647,648,1,16,8
 shot velocity
 blast start frame
 blast end frame
@@ -176,8 +172,32 @@ gemkey (1=red,2=blue,3=green,4=yellow)
 738,40,16
 751,40,40
 755,62,20
-501,24,12
-503,24,12
+501,24,16
+503,24,16
+769,16,22
+770,16,22
+772,16,22
+787,24,24
+789,62,24
+790,24,24
+792,62,24
+774,20,24
+1291,20,38
+1293,20,38
+1309,20,38
+1311,20,38
+1690,16,48
+1691,16,48
+1708,16,48
+1709,16,48
+1726,48,16
+1727,48,16
+1744,48,16
+1745,48,16
+1671,16,32
+1672,16,16
+1673,16,16
+1674,32,16
 stars anm first frame
 stars anm last frame
 (0) slug left 1
@@ -214,6 +234,30 @@ stars anm last frame
 (31) arachnut stunned
 (32) worm left frame 1 of 2
 (33) worm right frame 1 of 2
+(34) snake moving
+(35) snake look left
+(36) snake look right
+(37) snake attack left 1 (popup)
+(38) snake attack left 2 (bite)
+(39) snake attack right 1 (popup)
+(40) snake attack right 2 (bite)
+(41) snake dead
+(42) ancient walk left
+(43) ancient brood left
+(44) ancient walk right
+(45) ancient brood right
+(46) spear up sit
+(47) spear up attack
+(48) spear down sit
+(49) spear down attack
+(50) spear left sit
+(51) spear left attack
+(52) spear right sit
+(53) spear right attack
+(54) shooter up
+(55) shooter down
+(56) shooter left
+(57) shooter right
 -----------------------------------------------------------------------------
 [PLAYER.DAT]
 1

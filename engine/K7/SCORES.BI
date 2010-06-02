@@ -1,8 +1,9 @@
 DEFINT A-Z
 '$DYNAMIC
 
+DECLARE SUB DoDropdownStatus ()
+DECLARE SUB DrawDropdown (y)
 DECLARE SUB DrawLoadingBox ()
-DECLARE SUB DrawNumber (digits, x, y, n&)
 DECLARE SUB DrawScoreboard ()
 DECLARE SUB InitScoreboard ()
 

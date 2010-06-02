@@ -221,3 +221,27 @@ Changes Since Build 11:
 - Fixed minor bugs, increased speed
 - Added level 3: The Perilous Pit
 - Wrote a readme file to explain the game better
+
+BUILD 13 (01-25-2002)
+   Another build with some big additions in game content. Three new levels
+have been added: Hillville, Lifewater Oasis, and Sand Yego. Not just boring
+old forrest anymore! In the code department we have doors unlocked by gem
+keys and bridges toggled by switches. The engine is rapidly nearing
+completion! I want to fix the physics because they're still too fast and I'll
+get working on a couple new enemies. Those take the most time because each
+one is hardcoded. But for now, enjoy the update. Hopefully next time we'll
+have a more stable sound system with DS4QB++ 1.2 and several more enemies and
+levels. BTW, as an added bonus I will begin releasing the development tools
+with each build. It is just the level editor this time because I don't
+want to delay Build 13 another week writing documentation. One more note:
+noems.exe has been removed. To run Keen without EMS memory, use the -noems
+command line parameter.
+
+Changes Since Build 12:
+- Three new levels
+- MUCH more artwork
+- Gem key doors
+- Switchable bridges
+- Level skip cheat (F5)
+- Added -noems parameter
+- new ripped music

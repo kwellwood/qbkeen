@@ -72,19 +72,9 @@ FOR l = 1 TO numlifts
     
     '--- move player if attached to lift ---
     IF player(0).onlift = l THEN
-      DebugLog "Onlift:" + STR$(l)
-      DebugLog "Lift().xv,yv:" + STR$(lift(l).xv) + "," + STR$(lift(l).yv)
-      DebugLog "Lift().x,y[1]:" + STR$(ox!) + "," + STR$(oy!)
-      DebugLog "Lift().x,y[2]:" + STR$(lift(l).x) + "," + STR$(lift(l).y)
-      DebugLog "Player().x,y[1]:" + STR$(player(0).x) + "," + STR$(player(0).y)
       player(0).x = player(0).x + (lift(l).x - ox!)
       player(0).y = player(0).y + (lift(l).y - oy!)
-      DebugLog "Player().x,y[2]:" + STR$(player(0).x) + "," + STR$(player(0).y)
-      DebugLog "Distance from lift (x,y):" + STR$(lift(l).x - player(0).x) + "," + STR$(lift(l).y - player(0).y)
-      DebugLog "----------------"
       UpdateClipPoints
-     ELSEIF player(0).onlift = 0 THEN
-      DebugLog "*** Not on lift ***"
     END IF
   END IF
 NEXT l

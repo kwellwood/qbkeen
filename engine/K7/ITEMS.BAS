@@ -85,7 +85,16 @@ FOR k = 1 TO LEN(activeitemstack(0))
        ELSE oneup = 0
       END IF
     END IF
-   
+    IF bonus(item(i).id).gemkey THEN
+      SELECT CASE bonus(item(i).id).gemkey
+       CASE red: player(0).keyred = 1
+       CASE blue: player(0).keyblu = 1
+       CASE green: player(0).keygrn = 1
+       CASE yellow: player(0).keyyel = 1
+      END SELECT
+      PlaySound 16
+    END IF
+
     '--- remove from active item stack ---
     activeitemstack(0) = LEFT$(activeitemstack(0), k - 1) + RIGHT$(activeitemstack(0), LEN(activeitemstack(0)) - k)
    
@@ -171,7 +180,10 @@ END SUB
 
 SUB InitItems
 
-OPEN "items.dat" FOR INPUT AS 1
+'OPEN "items.dat" FOR INPUT AS 1
+OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, text$
+  LOOP UNTIL UCASE$(text$) = "[ITEMS.DAT]"
   INPUT #1, numitemtypes
   FOR i = 1 TO numitemtypes
     INPUT #1, bonus(i).sframe

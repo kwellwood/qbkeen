@@ -382,16 +382,13 @@ END SUB
 
 FUNCTION EnemyTouchPlayer (e)
 
-px1 = player(0).x - (player(0).txsize / 4): py1 = player(0).y - (player(0).tysize / 2)
-px2 = player(0).x + (player(0).txsize / 4): py2 = player(0).y + (player(0).tysize / 2)
+px1 = clippoint(5).x: py1 = clippoint(1).y
+px2 = clippoint(6).x: py2 = clippoint(2).y
 ex1 = enemy(e).x - (enemy(e).xsize / 2): ey1 = enemy(e).y - (enemy(e).ysize / 2)
 ex2 = enemy(e).x + (enemy(e).xsize / 2): ey2 = enemy(e).y + (enemy(e).ysize / 2)
-IF px1 >= ex1 AND px1 <= ex2 AND py1 >= ey1 AND py1 <= ey2 THEN touch = 1
-IF px2 >= ex1 AND px2 <= ex2 AND py1 >= ey1 AND py1 <= ey2 THEN touch = 1
-IF px1 >= ex1 AND px1 <= ex2 AND py2 >= ey1 AND py2 <= ey2 THEN touch = 1
-IF px2 >= ex1 AND px2 <= ex2 AND py2 >= ey1 AND py2 <= ey2 THEN touch = 1
-
-EnemyTouchPlayer = touch
+IF (px1 >= ex1 AND px1 <= ex2) OR (px2 >= ex1 AND px2 <= ex2) THEN touch = 1
+IF (py1 >= ey1 AND py1 <= ey2) OR (py2 >= ey1 AND py2 <= ey2) THEN touch = touch + 1
+IF touch = 2 THEN EnemyTouchPlayer = 1 ELSE EnemyTouchPlayer = 0
 
 END FUNCTION
 
@@ -411,7 +408,10 @@ END SUB
 
 SUB InitEnemies
 
-OPEN "enemy.dat" FOR INPUT AS 1
+'OPEN "enemy.dat" FOR INPUT AS 1
+OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, text$
+  LOOP UNTIL UCASE$(text$) = "[ENEMY.DAT]"
   FOR f = 0 TO 20
     INPUT #1, eframe(f)
     INPUT #1, efsize(f).x

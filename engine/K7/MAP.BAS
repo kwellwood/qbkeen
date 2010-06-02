@@ -39,15 +39,18 @@ OPEN file$ FOR BINARY AS f
     FOR rx = 1 TO mapxsize
       GET #f, , t1&
       GET #f, , t2&
-      bitl(0) = t1&: BiosXWrite MapHandle, ((ry * mapxsize - mapxsize) + rx) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
-      bitl(0) = t2&: BiosXWrite MapFGHandle, ((ry * mapxsize - mapxsize) + rx) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+      GET #f, , s&
+      IF s& > 0 THEN debuglog "found switchtag" + STR$(s&) + " at" + STR$(rx) + "," + STR$(ry)
+      SetSwitchTag rx, ry, s&
+      SetMap rx, ry, t1&
+      SetMapFG rx, ry, t2&
 
       '----[ Get switch tag ]----
-      IF TileType(t1&) = 4 THEN
-        GET #f, , s                 'switch here,
-        SetSwitchTag rx, ry, s      ' set the tag
-       ELSE SetSwitchTag rx, ry, 0  'no swich here
-      END IF
+      'IF TileType(t1&) = 4 THEN
+      '  GET #f, , s                 'switch here,
+      '  SetSwitchTag rx, ry, s      ' set the tag
+      ' ELSE SetSwitchTag rx, ry, 0  'no swich here
+      'END IF
    
     NEXT rx
   NEXT ry
@@ -90,4 +93,18 @@ BiosXRead MapFGHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0
 MapFG& = bitl(0)
 
 END FUNCTION
+
+SUB SetMap (x, y, t&)
+
+bitl(0) = t&
+BiosXWrite MapHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+
+END SUB
+
+SUB SetMapFG (x, y, t&)
+
+bitl(0) = t&
+BiosXWrite MapFGHandle, ((y * mapxsize - mapxsize) + x) * 4 - 4, 4, VARSEG(bitl(0)), VARPTR(bitl(0))
+
+END SUB
 

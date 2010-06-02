@@ -55,6 +55,11 @@ OPEN tileset$ FOR INPUT AS 1
      CASE 2
       INPUT #1, sm&: SetSlopeMask t&, sm&     'sm&=slope type
       INPUT #1, af: ad = 0                    'af=overlay tag for slope tiles
+     '--- gem socket ---
+     CASE 7
+      INPUT #1, sm&: SetSlopeMask t&, sm&     'sm&=key color
+      INPUT #1, af                            'if animation length,
+      IF af > 0 THEN INPUT #1, ad ELSE ad = 0 ' get animation delay too
      '--- nul tile ---
      CASE 99
       af = 0: ad = 0                          'nul tiles not animated

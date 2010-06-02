@@ -30,7 +30,7 @@ SUB LoadMusic (file$)
 
 DS4QB.Stopmusic 1
 DS4QB.LoadMusic 1, ".\MUSIC\" + file$, mus.looping OR mus.surround
-DS4QB.SetMusicAttr 1, 30, CURRENT
+DS4QB.SetMusicAttr 1, 75, CURRENT
 PlayMusic 1
 
 END SUB

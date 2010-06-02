@@ -1,4 +1,4 @@
-DEFINT A-Z
+ DEFINT A-Z
 '$DYNAMIC
 
 '$INCLUDE: 'engine.bi'
@@ -112,7 +112,7 @@ END IF
 
 '-- Allow player to jump again --
 IF player(0).onground THEN
-  player(0).holdingjump = 0
+  'player(0).holdingjump = 0
   player(0).stoppedjump = 0
 END IF
 
@@ -127,6 +127,7 @@ FOR cp = 1 TO 8
    CASE 1: HitWall cp, clippoint(cp).x, clippoint(cp).y
    CASE 2: IF cp = 2 THEN HitSlope clippoint(cp).x, clippoint(cp).y, 0
    CASE 3: KillPlayer
+   CASE 7: IF cp = 2 THEN UnlockDoor
    CASE 8: IF cp = 2 THEN HitSlope clippoint(cp).x, clippoint(cp).y, 1
    CASE 10: NextLevel
   END SELECT
@@ -247,7 +248,7 @@ SUB DoPlayerOnLift
 
 '--- is keen on a platform? ---
 player(0).onlift = 0
-'IF player(0).holdingjump THEN EXIT SUB
+IF player(0).action = hangclimb THEN EXIT SUB
 FOR l = 1 TO numlifts
   IF LiftTouchPlayer(l) THEN player(0).onlift = l
 NEXT l
@@ -261,6 +262,7 @@ IF player(0).onlift AND player(0).yv >= 0 THEN
   player(0).y = ny! - (player(0).ysize / 2)
   player(0).onground = 1
   player(0).canjump = ts * player(0).jumpheight
+  IF player(0).action = hanging THEN player(0).action = moving
   player(0).holdingjump = 0
   player(0).stoppedjump = 0
   UpdateClipPoints
@@ -295,7 +297,7 @@ IF player(0).onground THEN
   '--- allow to jump higher ---
   player(0).canjump = ts * player(0).jumpheight * 2
   '--- reset jump input vars ---
-  player(0).holdingjump = 0
+  'player(0).holdingjump = 0
   player(0).stoppedjump = 0
 END IF
 
@@ -316,6 +318,7 @@ fg = TileType(MapFG&(mx, my))
 fg2 = TileType2(MapFG&(mx, my))
 bg = TileType(Map&(mx, my))
 IF fg = 2 THEN HitPoint = 8: EXIT FUNCTION    'slope in foreground
+IF fg = 7 THEN HitPoint = 7: EXIT FUNCTION    'gem socket
 IF fg = 9 THEN HitPoint = 1: EXIT FUNCTION    'wall in foreground
 IF fg2 = 10 THEN HitPoint = 10: EXIT FUNCTION 'exit level tile
 HitPoint = bg
@@ -336,7 +339,7 @@ IF h THEN
   player(0).yv = 0
   player(0).onground = 1
   player(0).onslope = 1
-  player(0).holdingjump = 0
+  'player(0).holdingjump = 0
   player(0).stoppedjump = 0
 END IF
 
@@ -463,16 +466,16 @@ SELECT CASE d
     IF (player(0).yv < 0) OR (player(0).yv = 0 AND player(0).onground) OR (player(0).action = climbing) THEN
       IF player(0).canjump AND player(0).stoppedjump = 0 THEN
         IF (player(0).action = climbing AND player(0).changeaction = 0) OR (player(0).action <> climbing) THEN
-
-          IF player(0).holdingjump = 0 THEN PlaySound 9
-          player(0).holdingjump = 1
-          player(0).yv = -player(0).ymax
-          IF player(0).action = climbing THEN   '-- jumping from a pole --
-            player(0).changeaction = maxfps / 3 ' wait to grab pole again
-            player(0).yv = player(0).yv / 4     ' 1/4 jump power
+          IF player(0).onground = 0 OR player(0).holdingjump = 0 THEN  'stop repeat jumping
+            IF player(0).holdingjump = 0 THEN PlaySound 9
+            player(0).holdingjump = 1
+            player(0).yv = -player(0).ymax
+            IF player(0).action = climbing THEN   '-- jumping from a pole --
+              player(0).changeaction = maxfps / 3 ' wait to grab pole again
+              player(0).yv = player(0).yv / 4     ' 1/4 jump power
+            END IF
+            IF player(0).action <> pogo THEN player(0).action = moving
           END IF
-          IF player(0).action <> pogo THEN player(0).action = moving
-       
         END IF
       END IF
     END IF

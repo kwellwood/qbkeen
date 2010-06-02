@@ -2,13 +2,12 @@ DEFINT A-Z
 '$DYNAMIC
 
 COMMON SHARED maxfps, ts, gamemode, realtimer!, anmcounter, gameplay
-COMMON SHARED quitgame, curlevel
+COMMON SHARED quitgame, curlevel, ems
+COMMON SHARED drawpage, menupage
 
 CONST enginever = 8
 CONST inmenu = 1, ingame = 2
 CONST lookup = 4, lookdown = 5
-'CONST drawpage = 0, backdroppage = 0, menupage = 0   ' delete this line
-CONST drawpage = 1, menupage = 2, backdroppage = 3  ' use this one
 CONST moving = 0, shooting = 1, switching = 2, dying = 3, teleporting = 4
 CONST climbing = 5, pogo = 6, hanging = 7, hangclimb = 8
 CONST idle = 9
@@ -67,6 +66,10 @@ TYPE playertype
  score AS LONG            ' scores.bi, items.bi
  ammo  AS INTEGER         ' scores.bi, weapon.bi
  drops AS INTEGER         ' items.bi
+ keyred AS INTEGER
+ keyblu AS INTEGER
+ keygrn AS INTEGER
+ keyyel AS INTEGER
  lives AS INTEGER         ' scores.bi
  reload AS INTEGER        ' time to wait for reload
  shooting AS INTEGER      ' time to display shooting frame

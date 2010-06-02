@@ -1,3 +1,4 @@
+[ENGINE.DAT]
 8
 16
 40
@@ -10,8 +11,7 @@ SOUNDMP3.DAT
 8.0
 2.7
 8
-32
-
+30
 engine version
 tilesize
 max fps
@@ -25,3 +25,237 @@ max y vel
 player jump height (in tiles)
 player clip xsize
 player clip ysize
+-----------------------------------------------------------------------------
+[MENU.DAT]
+1
+64
+62
+2
+4
+106
+62
+22
+file version
+menu tile
+selector tile
+selector frames
+animation delay
+selection 1 x
+selection 1 y
+selector move pixels
+-----------------------------------------------------------------------------
+[SCORES.DAT]
+496
+497
+7
+4
+scoreboard tile
+start of digits tiles 0-9
+x location of board
+y location of board
+-----------------------------------------------------------------------------
+[WEAPONS.DAT]
+6
+55
+58
+1
+16
+16
+59
+60
+2
+16
+16
+shot velocity
+blast start frame
+blast end frame
+animation delay
+tile x size
+tile y size
+explosion start frame
+explosion end frame
+explosion animation delay
+explosion x size
+explosion y size
+-----------------------------------------------------------------------------
+[ITEMS.DAT]
+13
+516,2,4,522,7,3,10,16,16,32,100,0,0,0
+518,2,4,529,7,3,16,16,16,32,200,0,0,0
+520,2,4,536,7,3,16,16,16,32,500,0,0,0
+512,2,4,543,7,3,15,15,15,32,1000,0,0,0
+514,2,4,550,7,3,15,15,15,32,2000,0,0,0
+616,2,4,557,7,3,10,16,10,32,5000,0,0,0
+618,2,4,564,7,3,11,16,11,16,0,0,100,0
+62,2,4,578,7,3,16,12,16,32,0,5,0,0
+609,4,2,613,3,4,16,16,16,16,0,0,1,0
+1190,2,4,1205,7,3,16,12,18,32,0,0,0,1
+1192,2,4,1205,7,3,16,12,18,32,0,0,0,2
+1194,2,4,1205,7,3,15,12,18,32,0,0,0,3
+1196,2,4,1205,7,3,16,12,18,32,0,0,0,4
+sframe
+frames
+delay
+psframe
+pframes
+pdelay
+xsize
+ysize
+pxsize
+pysize
+points
+ammo
+lifedrop
+gemkey
+-----------------------------------------------------------------------------
+[ENEMY.DAT]
+590,16,24
+591,24,22
+592,24,24
+593,16,24
+594,24,22
+595,24,24
+596,24,22
+597,16,24
+598,16,7
+599,16,6
+601,24,23
+602,24,23
+603,24,23
+604,24,23
+605,24,23
+606,24,23
+607,24,24
+620,32,32
+621,32,32
+622,32,32
+623,32,32
+(0) slug left 1
+(1) slug left 2
+(2) slug poop left
+(3) slug right 1
+(4) slug right 2
+(5) slug poop right
+(6) slug die poop
+(7) slug die regular
+(8) slug's poo 1
+(9) slug's poo 2
+(10) ball left 1
+(11) ball left 2
+(12) ball right 1
+(13) ball right 2
+(14) ball up 1
+(15) ball up 2
+(16) ball die
+(17) mushroom left 1
+(18) mushroom left 2
+(19) mushroom right 1
+(20) mushroom right 2
+-----------------------------------------------------------------------------
+[PLAYER.DAT]
+1
+1 ,24,32
+2 ,24,32
+4 , 0, 0
+6 ,24,32
+7 ,24,32
+4 , 0, 0
+11,24,32
+12,24,32
+13,24,32
+14,24,32
+15,24,32
+16,24,32
+25,24,32
+26,24,32
+28,40,32
+29,28,32
+30,32,48
+31,40,32
+32,28,32
+33,32,48
+34,32,32
+35,24,32
+23,24,32
+631,16,32
+5, 0 , 0
+17,26,32
+3, 0 , 0
+20,26,32
+3, 0 , 0
+642,24,32
+4, 0 , 0
+636,40,32
+637,32,40
+638,32,32
+639,24,32
+640,32,40
+641,32,32
+657,24,32
+658,24,32
+659,24,32
+660,24,32
+1076,16,40
+1091,24,40
+1077,22,40
+1092,22,40
+42,24,32
+4 , 0, 0
+46,24,32
+47,24,32
+2 , 0, 0
+49,24,32
+2 , 0, 0
+animation delay
+(0) stand left
+(1) walk left start
+(2) walk left frames
+(3) stand right
+(4) walk right start
+(5) walk right frames
+(6) left jump up
+(7) left jump apex
+(8) left falling
+(9) right jump up
+(10) right jump apex
+(11) right falling
+(12) looking up
+(13) looking down
+(14) shoot walk left
+(15) shoot walk right
+(16) shoot up
+(17) shoot jump left
+(18) shoot jump right
+(19) shoot jump up
+(20) shoot jump down
+(21) flip switch
+(22) dying
+(23) walking through door start
+(24) walk through door frames
+(25) climb up left
+(26) climb up left frames
+(27) climb up right
+(28) climb up right frames
+(29) climb down
+(30) climb down frames
+(31) shoot pole left
+(32) shoot pole left up
+(33) shoot pole left down
+(34) shoot pole right
+(35) shoot pole right up
+(36) shoot pole right down
+(37) pogo left ground
+(38) pogo left air
+(39) pogo right ground
+(40) pogo right air
+(41) hang onto a ledge left
+(42) hang onto a ledge right
+(43) climb onto a ledge left
+(44) climb onto a ledge right
+(45) sitting down
+(46) sitting down frames
+(47) reading book
+(48) turning page
+(49) turning page frames
+(50) standing up
+(51) standing up frames

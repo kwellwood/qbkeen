@@ -1,14 +1,19 @@
-3
+6
 LEVEL01.MAP
 "Keen makes a run for the Border Village"
 LEVEL02.MAP
 "Keen slips into Slug Village"
 LEVEL03.MAP
 "Keen plummets into The Perilous Pit"
-LEVEL04.MAP
-"Keen plods down into the Cave of the Descendents"
-LEVEL05.MAP
-"Keen shivers along the Chasm of Chills"
+LEVEL07.MAP
+"Keen stumbles upon Hillville"
+LEVEL10.MAP
+"Keen crawls into Lifewater Oasis"
+LEVEL08.MAP
+"Keen grits his teeth and enters Sand Yego"
+
+
+
 LEVEL06.MAP
 "Keen reflects upon entering Crystalus"
 LEVEL07.MAP
@@ -35,3 +40,6 @@ LEVEL17.MAP
 "Keen hopefully enters the Well of Wishes"
 LEVEL18.MAP
 "Keen launches into the Bean-with-Bacon Megarocket"
+
+map 4:"Keen plods down into the Cave of the Descendents"
+map 5:"Keen shivers along the Chasm of Chills"

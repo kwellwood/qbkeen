@@ -57,7 +57,10 @@ END SUB
 
 SUB InitWeapons
 
-OPEN "weapons.dat" FOR INPUT AS 1
+'OPEN "weapons.dat" FOR INPUT AS 1
+OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, text$
+  LOOP UNTIL UCASE$(text$) = "[WEAPONS.DAT]"
   INPUT #1, shotvelocity
   INPUT #1, shotsframe&
   INPUT #1, shoteframe&

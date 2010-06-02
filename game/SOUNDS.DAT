@@ -1,0 +1,45 @@
+21
+.\SOUNDFX\ENTERLEV.MP3
+.\SOUNDFX\EXITLEV.MP3
+.\SOUNDFX\DIE.MP3
+.\SOUNDFX\SHOOT.MP3
+.\SOUNDFX\NOAMMO.MP3
+.\SOUNDFX\SHOTHIT.MP3
+.\SOUNDFX\FOOTSTEP.MP3
+.\SOUNDFX\BUMPROOF.MP3
+.\SOUNDFX\JUMP.MP3
+.\SOUNDFX\LAND.MP3
+.\SOUNDFX\POGO.MP3
+.\SOUNDFX\FALL.MP3
+.\SOUNDFX\CANDY.MP3
+.\SOUNDFX\LIFEDROP.MP3
+.\SOUNDFX\PISTOL.MP3
+.\SOUNDFX\GEMKEY.MP3
+.\SOUNDFX\OPENDOOR.MP3
+.\SOUNDFX\SLUGPOOP.MP3
+.\SOUNDFX\MBOUNCE1.MP3
+.\SOUNDFX\MBOUNCE2.MP3
+.\SOUNDFX\BBOUNCE.MP3
+
+Slots:
+1 enter level
+2 exit level            x
+3 keen die              x
+4 shoot gun             x
+5 no ammo click         x
+6 shot collide          x
+7 footsteps
+8 bump ceiling          x
+9 jump                  x
+10 land on ground
+11 pogo bounce          x
+12 fall
+13 collect candy        x
+14 collect lifedrop     x
+15 collect gun          x
+16 collect gemkey
+17 open gem door
+18 slug poop            x
+19 mushroom bounce 1
+20 mushroom bounce 2
+21 bounder bounce

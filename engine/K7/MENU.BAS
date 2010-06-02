@@ -42,7 +42,7 @@ IF TIMER < menudelay! THEN EXIT SUB
 SELECT CASE k
  '--- move selector up ---
  CASE keyup
-  IF menuopt > 1 THEN menuopt = menuopt - 1: menudelay! = TIMER + .1
+  IF menuopt > 1 THEN menuopt = menuopt - 1: menudelay! = TIMER + .2
  '--- move selector down ---
  CASE keydown
   SELECT CASE menu       'number of options
@@ -51,7 +51,7 @@ SELECT CASE k
    CASE load: max = 1
    CASE options: max = 1
   END SELECT
-  IF menuopt < max THEN menuopt = menuopt + 1: menudelay! = TIMER + .1
+  IF menuopt < max THEN menuopt = menuopt + 1: menudelay! = TIMER + .2
  CASE keyenter
   SELECT CASE menu
    CASE main
@@ -71,12 +71,12 @@ SELECT CASE k
    CASE options
     '--- options menu options ---
   END SELECT
-  menudelay! = TIMER + .1
+  menudelay! = TIMER + .2
  '--- move up in menu tree ---
  CASE keyesc
   IF player(0).action <> dying THEN
     IF menu <> main THEN menu = main ELSE gamemode = ingame
-    menudelay! = TIMER + .1
+    menudelay! = TIMER + .2
   END IF
 END SELECT
 
@@ -84,7 +84,10 @@ END SUB
 
 SUB InitMenu
 
-OPEN "menu.dat" FOR INPUT AS 1
+'OPEN "menu.dat" FOR INPUT AS 1
+OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, text$
+  LOOP UNTIL UCASE$(text$) = "[MENU.DAT]"
   INPUT #1, filever
   IF filever <> menusysver THEN ErrorHandlerSub 137
 
@@ -106,7 +109,6 @@ SUB Intro
 
 PutTile 75, 0, 0, video
 DO: LOOP UNTIL DQBkey(keyctrl) OR DQBkey(keyspace) OR DQBkey(keyenter) OR DQBkey(keyesc)
-
 
 END SUB
 
@@ -149,6 +151,17 @@ OPEN "SAVE1.CK7" FOR BINARY AS 2
   FOR s = 1 TO 25: GET #2, , switch(s): NEXT s
 
   FOR l = 1 TO numlifts: GET #2, , lift(l): NEXT l
+
+  FOR y = 1 TO mapysize
+    FOR x = 1 TO mapxsize
+      'GET #2, , layer1&
+      GET #2, , layer2&
+      GET #2, , layer3&
+      'SetMap x, y, layer1&
+      SetMapFG x, y, layer2&
+      SetSwitchTag x, y, layer3&
+    NEXT x
+  NEXT y
 CLOSE 2
 
 END SUB
@@ -213,6 +226,17 @@ OPEN "SAVE1.CK7" FOR BINARY AS 1
   FOR s = 1 TO 25: PUT #1, , switch(s): NEXT s
 
   FOR l = 1 TO numlifts: PUT #1, , lift(l): NEXT l
+
+  FOR y = 1 TO mapysize
+    FOR x = 1 TO mapxsize
+      'layer1& = Map&(x, y)
+      layer2& = MapFG&(x, y)
+      layer3& = SwitchTag&(x, y)
+      'PUT #1, , layer1&
+      PUT #1, , layer2&
+      PUT #1, , layer3&
+    NEXT x
+  NEXT y
 CLOSE 1
 
 SLEEP 1

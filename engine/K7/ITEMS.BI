@@ -1,7 +1,7 @@
 DEFINT A-Z
 '$DYNAMIC
 
-CONST red = 1, green = 2, yellow = 3, blue = 4
+CONST red = 1, blue = 2, green = 3, yellow = 4
 COMMON SHARED numitems, numitemtypes
 
 DECLARE SUB ClearSprites ()

@@ -26,7 +26,7 @@ x = INT(player(0).x / ts) + 1
 y = INT((player(0).y - (player(0).tysize / 4)) / ts) + 1
 
 '-- no pole at this location? --
-IF TileType(Map&(x, y)) <> 5 THEN EXIT SUB
+IF TileType(Map&(x, y)) <> 5 AND TileType(MapFG&(x, y)) <> 5 THEN EXIT SUB
 
 '-- set climbing state --
 player(0).xv = 0: player(0).yv = 0
@@ -83,7 +83,7 @@ x = INT(player(0).x / ts) + 1
 y = INT(((player(0).y + 8) - (player(0).tysize / 4)) / ts) + 1
 
 '-- if the pole stops, fall off --
-IF TileType(Map&(x, y)) <> 5 THEN
+IF TileType(Map&(x, y)) <> 5 AND TileType(MapFG&(x, y)) <> 5 THEN
   player(0).action = moving
 END IF
 
@@ -114,7 +114,7 @@ SELECT CASE player(0).aim
  '-- sliding down --
  CASE down
   framedataslot = 29
-  anmframe = INT(anmcounter / (player(0).adelay * 2)) MOD pframe(30)
+  anmframe = INT(anmcounter / (player(0).adelay * 1.5)) MOD pframe(30)
  '-- hanging still --
  CASE -1
   IF player(0).xdir = left THEN
@@ -138,7 +138,7 @@ y = INT(((player(0).y - 6) - (player(0).tysize / 4)) / ts) + 1
 
 '-- if the pole stops --
 ' dont move up, dont aim up
-IF TileType(Map&(x, y)) <> 5 THEN player(0).aim = -1: EXIT SUB
+IF TileType(Map&(x, y)) <> 5 AND TileType(MapFG&(x, y)) <> 5 THEN player(0).aim = -1: EXIT SUB
 
 '-- climb up pole --
 player(0).y = player(0).y - 2

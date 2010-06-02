@@ -14,8 +14,10 @@ ON ERROR GOTO ErrorHandler
 'ENGINE.BI: page constants
 'RENDER: scoreboard, copylayer, clearlayer, dqbwait
 '============================================================================
-e = DQBinit(2, 0, 0): IF e THEN ErrorHandlerSub 99 + e
-'e = DQBinit(0, 0, 0): IF e THEN ErrorHandlerSub 99 + e
+IF UCASE$(COMMAND$) = "-NOEMS" THEN ems = 0 ELSE ems = 1
+IF ems = 0 THEN PRINT "* EMS memory use disabled *"
+
+e = DQBinit(ems * 2, 0, 0): IF e THEN ErrorHandlerSub 99 + e
 e = InitPAKLib: IF e THEN ErrorHandlerSub 104
 AllocXMS
 
@@ -26,7 +28,7 @@ DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
 DIM SHARED pframe(51) AS LONG, fsize(51) AS intcoordinate
 
 '--------- Items System --------
-DIM SHARED item(1 TO 255) AS itemclass, bonus(1 TO 10) AS itemtypeclass
+DIM SHARED item(1 TO 255) AS itemclass, bonus(1 TO 13) AS itemtypeclass
 DIM SHARED activeitemstack(0) AS STRING, activespritestack(0) AS STRING
 DIM SHARED sprite(1 TO 100) AS spriteclass, unusedspritestack(0) AS STRING
 
@@ -60,6 +62,7 @@ InitEnemies
 InitSound
 LoadTiles
 LoadLevel
+ClosePAKLib
 
 PRINT "Ok"
 
@@ -79,12 +82,10 @@ SCREEN 0: WIDTH 80, 25
 ShutdownSound
 DQBremoveKeyboard
 DeallocXMS
-ClosePAKLib
 DQBclose
 
-PRINT "Powered by K7 Engine technology (Build 12)."
+PRINT "Powered by K7 Engine technology (Build 13)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-'PRINT "EMS memory use disabled."
 'PRINT "Development version."
 END
 '============================================================================
@@ -123,7 +124,7 @@ BiosXOpen 1024, MapFGHandle, A
 IF A THEN ErrorHandlerSub 112
 
 '---------[ SWITCHES PLUGIN ]----------
-BiosXOpen 512, SwitchTagHandle, ErrCode
+BiosXOpen 1024, SwitchTagHandle, ErrCode
 IF ErrCode THEN ErrorHandlerSub 113
 
 END SUB
@@ -212,6 +213,9 @@ SELECT CASE gamemode
   ' Toggle menu (esc)
   IF DQBkey(KEYESC) AND TIMER >= menudelay! AND player(0).action <> dying THEN gamemode = inmenu: menudelay! = TIMER + .2
 
+  ' Skip level (F5)
+  IF DQBkey(63) THEN NextLevel
+
  CASE inmenu
   IF DQBkey(KEYESC) THEN HandleMenu KEYESC
   IF DQBkey(KEYUP) THEN HandleMenu KEYUP
@@ -246,9 +250,8 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 12)."
+PRINT "Powered by K7 Engine technology (Build 13)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-'PRINT "EMS memory use disabled."
 'PRINT "Development version."
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
@@ -256,7 +259,6 @@ PRINT "* " + errtext$
 
 DQBremoveKeyboard
 DeallocXMS
-ClosePAKLib
 ShutdownSound
 DQBclose
 END
@@ -264,6 +266,8 @@ END
 END SUB
 
 SUB IncreaseIdleTime
+
+IF gameplay = paused THEN EXIT SUB
 
 IF player(0).action = moving AND player(0).onground THEN
   IF player(0).idletime < 1000 THEN player(0).idletime = player(0).idletime + 1
@@ -273,7 +277,14 @@ END SUB
 
 SUB InitEngine
 
+SELECT CASE ems
+ CASE 0: drawpage = 0: menupage = 0
+ CASE 1: drawpage = 1: menupage = 2
+END SELECT
+
 OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, text$
+  LOOP UNTIL UCASE$(text$) = "[ENGINE.DAT]"
   INPUT #1, v
   IF v <> enginever THEN CLOSE 1: ErrorHandlerSub 125
   INPUT #1, ts
@@ -292,7 +303,9 @@ CLOSE 1
 
 curlevel = 1
 
-OPEN "player.dat" FOR INPUT AS 1
+OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, text$
+  LOOP UNTIL UCASE$(text$) = "[PLAYER.DAT]"
   INPUT #1, player(0).adelay  ' animation speed
   FOR f = 0 TO 51
     INPUT #1, pframe(f)
@@ -377,6 +390,7 @@ END SUB
 
 SUB NextLevel
 
+t! = TIMER
 DS4QB.StopMusic 1
 PlaySound 2
 
@@ -397,20 +411,19 @@ OPEN "levels.dat" FOR INPUT AS 1
 CLOSE 1
 IF DQBlen(mapname$) > 140 THEN
   totallen = DQBlen(mapname$)
-  temp$ = mapname$: mapname$ = ""
-  'WHILE DQBlen(temp$) > totallen - 140 'DO
-  WHILE DQBlen(mapname$ + LEFT$(temp$, INSTR(temp$, " "))) <= 144
+  temp$ = mapname$: mapname$ = "": mapname2$ = ""
+  WHILE DQBlen(mapname$ + LEFT$(temp$, INSTR(temp$, " "))) <= 144 AND INSTR(temp$, " ")
     mapname$ = mapname$ + LEFT$(temp$, INSTR(temp$, " "))
     temp$ = RIGHT$(temp$, LEN(temp$) - INSTR(temp$, " "))
-  WEND'LOOP UNTIL DQBlen(temp$) <= totallen - 140
+  WEND
   mapname2$ = temp$
 END IF
 DQBprint drawpage, mapname$, 112, 78, 14
 IF mapname2$ > "" THEN DQBprint drawpage, mapname2$, 120, 88, 14
-DQBcopyLayer drawpage, video
+IF ems THEN DQBcopyLayer drawpage, video
 
-SLEEP 1
 LoadLevel
+DO: LOOP UNTIL TIMER - t! > 1!
 
 END SUB
 

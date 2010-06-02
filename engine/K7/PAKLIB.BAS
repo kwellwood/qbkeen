@@ -22,6 +22,7 @@ REM $STATIC
 SUB ClosePAKLib
 
 IF PakInitState THEN
+  ERASE pakfname
   FClose PakHandle
   BiosXClose PakHeadHandle
   PakInitState = 0

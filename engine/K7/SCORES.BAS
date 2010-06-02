@@ -64,7 +64,10 @@ END SUB
 
 SUB InitScoreboard
 
-OPEN "scores.dat" FOR INPUT AS 1
+'OPEN "scores.dat" FOR INPUT AS 1
+OPEN "engine.dat" FOR INPUT AS 1
+  DO: INPUT #1, text$
+  LOOP UNTIL UCASE$(text$) = "[SCORES.DAT]"
   INPUT #1, scoreboard&
   INPUT #1, Scoredigit&
   INPUT #1, boardx

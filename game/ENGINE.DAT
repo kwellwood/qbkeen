@@ -1,3 +1,16 @@
+-----------------------------------------------------------------------------
+Index of files:
+ engine.dat
+ menu.dat
+ scores.dat
+ weapons.dat
+ lifts.dat
+ items.dat
+ enemies.dat
+ player.dat
+ soundmp3.dat
+ soundwav.dat
+-----------------------------------------------------------------------------
 [ENGINE.DAT]
 16
 16
@@ -442,3 +455,95 @@ animation delay
 (65) mapmode swim up right
 (66) mapmode swim down left
 (67) mapmode swim down right
+-----------------------------------------------------------------------------
+[SOUNDMP3.DAT]
+21
+.\SOUNDFX\MP3\ENTERLEV.MP3
+.\SOUNDFX\MP3\EXITLEV.MP3
+.\SOUNDFX\MP3\DIE.MP3
+.\SOUNDFX\MP3\SHOOT.MP3
+.\SOUNDFX\MP3\NOAMMO.MP3
+.\SOUNDFX\MP3\SHOTHIT.MP3
+.\SOUNDFX\MP3\FOOTSTEP.MP3
+.\SOUNDFX\MP3\BUMPROOF.MP3
+.\SOUNDFX\MP3\JUMP.MP3
+.\SOUNDFX\MP3\LAND.MP3
+.\SOUNDFX\MP3\POGO.MP3
+.\SOUNDFX\MP3\FALL.MP3
+.\SOUNDFX\MP3\CANDY.MP3
+.\SOUNDFX\MP3\LIFEDROP.MP3
+.\SOUNDFX\MP3\PISTOL.MP3
+.\SOUNDFX\MP3\GEMKEY.MP3
+.\SOUNDFX\MP3\OPENDOOR.MP3
+.\SOUNDFX\MP3\SLUGPOOP.MP3
+.\SOUNDFX\MP3\MBOUNCE1.MP3
+.\SOUNDFX\MP3\MBOUNCE2.MP3
+.\SOUNDFX\MP3\BBOUNCE.MP3
+Slots:
+1 enter level
+2 exit level
+3 keen die
+4 shoot gun
+5 no ammo click
+6 shot collide
+7 footsteps
+8 bump ceiling
+9 jump
+10 land on ground
+11 pogo bounce
+12 fall
+13 collect candy
+14 collect lifedrop
+15 collect gun
+16 collect gemkey
+17 open gem door
+18 slug poop
+19 mushroom bounce 1
+20 mushroom bounce 2
+21 bounder bounce
+-----------------------------------------------------------------------------
+[SOUNDWAV.DAT]
+21
+.\SOUNDFX\WAV\ENTERLEV.WAV
+.\SOUNDFX\WAV\EXITLEV.WAV
+.\SOUNDFX\WAV\DIE.WAV
+.\SOUNDFX\WAV\SHOOT.WAV
+.\SOUNDFX\WAV\NOAMMO.WAV
+.\SOUNDFX\WAV\SHOTHIT.WAV
+.\SOUNDFX\WAV\FOOTSTEP.WAV
+.\SOUNDFX\WAV\BUMPROOF.WAV
+.\SOUNDFX\WAV\JUMP.WAV
+.\SOUNDFX\WAV\LAND.WAV
+.\SOUNDFX\WAV\POGO.WAV
+.\SOUNDFX\WAV\FALL.WAV
+.\SOUNDFX\WAV\CANDY.WAV
+.\SOUNDFX\WAV\LIFEDROP.WAV
+.\SOUNDFX\WAV\PISTOL.WAV
+.\SOUNDFX\WAV\GEMKEY.WAV
+.\SOUNDFX\WAV\OPENDOOR.WAV
+.\SOUNDFX\WAV\SLUGPOOP.WAV
+.\SOUNDFX\WAV\MBOUNCE1.WAV
+.\SOUNDFX\WAV\MBOUNCE2.WAV
+.\SOUNDFX\WAV\BBOUNCE.WAV
+Slots:
+1 enter level
+2 exit level
+3 keen die
+4 shoot gun
+5 no ammo click
+6 shot collide
+7 footsteps
+8 bump ceiling
+9 jump
+10 land on ground
+11 pogo bounce
+12 fall
+13 collect candy
+14 collect lifedrop
+15 collect gun
+16 collect gemkey
+17 open gem door
+18 slug poop
+19 mushroom bounce 1
+20 mushroom bounce 2
+21 bounder bounce

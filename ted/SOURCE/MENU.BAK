@@ -1,0 +1,504 @@
+DEFINT A-Z
+'$DYNAMIC
+
+'$INCLUDE: 'engine.bi'
+'$INCLUDE: 'directqb.bi'
+'$INCLUDE: 'xms.bi'
+'$INCLUDE: 'paklib.bi'
+'$INCLUDE: 'plugins.bi'
+
+ON ERROR GOTO ErrorHandler
+
+'============================================================================
+ErrorHandler:
+e = ERR
+ErrorHandlerSub 0
+RESUME NEXT
+
+REM $STATIC
+SUB DrawBox (x1, y1, x2, y2)
+
+DQBline drawpage, x1, y1, x2, y1, 20 'top
+DQBline drawpage, x1, y2, x2, y2, 24 'bottom
+DQBline drawpage, x1, y1, x1, y2, 20 'left
+DQBline drawpage, x2, y1, x2, y2, 24 'right
+DQBpset drawpage, x2, y1, 21         'top right
+DQBpset drawpage, x1, y2, 21         'bottom left
+
+END SUB
+
+SUB DrawBox2 (x1, y1, x2, y2)
+
+DQBboxf drawpage, x1, y1, x2, y2, 23 'filler
+DQBline drawpage, x1, y1, x2, y1, 24 'top
+DQBline drawpage, x1, y2, x2, y2, 20 'bottom
+DQBline drawpage, x1, y1, x1, y2, 24 'left
+DQBline drawpage, x2, y1, x2, y2, 20 'right
+DQBpset drawpage, x2, y1, 23         'top right
+DQBpset drawpage, x1, y2, 23         'bottom left
+
+END SUB
+
+SUB DrawMenu
+
+'====[ MENU BOX ]====
+DQBboxf drawpage, 0, 0, 319, 18, 22
+DQBline drawpage, 0, 19, 319, 19, 24
+
+'====[ LAYER BUTTONS ]====
+DrawBox 295, 0, 319, 9
+IF tlvisible THEN DQBboxf drawpage, 297, 2, 317, 7, 32 ELSE DQBboxf drawpage, 297, 2, 317, 7, 36
+DQBprint drawpage, "L1", 303, 2, 15
+DrawBox 295, 10, 319, 19
+IF fgvisible THEN DQBboxf drawpage, 297, 12, 317, 17, 32 ELSE DQBboxf drawpage, 297, 12, 317, 17, 36
+DQBprint drawpage, "L2", 302, 12, 15
+
+'====[ CURRENT TILE ]====
+IF PenTile& THEN
+  xs = TileXSize(PenTile&)
+  ys = TileYSize(PenTile&)
+  IF xs > 20 OR ys > 20 THEN
+    PutTileS PenTile&, 275, 0, 20, 20, drawpage
+   ELSE
+    PutTile PenTile&, 275, 0, drawpage
+  END IF
+ ELSE
+  DQBboxf drawpage, 275, 0, 294, 19, 0
+END IF
+DrawBox 275, 0, 294, 19
+DQBprint drawpage, LTRIM$(RTRIM$(STR$(PenTile&))), 277, 6, 15
+
+'====[ CURRENT MATRIX ]====
+IF objmode = 1 THEN
+  xs = TileXSize(matrix(1, 1))
+  ys = TileYSize(matrix(1, 1))
+  IF xs > 20 OR ys > 20 THEN
+    PutTileS matrix(1, 1), 255, 0, 20, 20, drawpage
+   ELSE
+    PutTile matrix(1, 1), 255, 0, drawpage
+  END IF
+  DQBprint drawpage, LTRIM$(RTRIM$(STR$(curitem))), 260, 6, 15
+ ELSE
+  DQBprint drawpage, "MA", 259, 6, 15
+END IF
+DrawBox 255, 0, 274, 19
+
+'====[ CURRENT ITEM ]====
+IF objmode = 2 THEN
+  xs = TileXSize(bonus(curitem).sframe)
+  ys = TileYSize(bonus(curitem).sframe)
+  IF xs > 20 OR ys > 20 THEN
+    PutTileS bonus(curitem).sframe, 235, 0, 20, 20, drawpage
+   ELSE
+    PutTile bonus(curitem).sframe, 235, 0, drawpage
+  END IF
+ ELSE
+  DQBprint drawpage, "IT", 240, 6, 15
+END IF
+DrawBox 235, 0, 254, 19
+
+'====[ CURRENT ENEMY ]====
+IF objmode = 3 THEN
+  xs = TileXSize(eframe(curitem))
+  ys = TileYSize(eframe(curitem))
+  IF xs > 20 OR ys > 20 THEN
+    PutTileS eframe(curitem), 215, 0, 20, 20, drawpage
+   ELSE
+    PutTile eframe(curitem), 215, 0, drawpage
+  END IF
+ ELSE
+  DQBprint drawpage, "EN", 219, 6, 15
+END IF
+DrawBox 215, 0, 234, 19
+
+'====[ TOP ROW BUTTONS ]====
+DrawBox 0, 0, 21, 9
+DQBprint drawpage, "Quit", 2, 2, 14
+DrawBox 22, 0, 66, 9
+DQBprint drawpage, "Load Map", 24, 2, 14
+DrawBox 67, 0, 111, 9
+DQBprint drawpage, "Save Map", 69, 2, 14
+DrawBox 112, 0, 152, 9
+DQBprint drawpage, "New Map", 114, 2, 14
+IF objmode = 8 THEN DrawBox2 153, 0, 183, 9 ELSE DrawBox 153, 0, 183, 9
+IF objmode = 8 THEN c = 18 ELSE c = 14
+DQBprint drawpage, "SwTag", 155, 2, c
+DrawBox 184, 0, 214, 9
+DQBprint drawpage, "Rplc", 186, 2, 14
+
+'====[ BOTTOM ROW BUTTONS ]====
+DrawBox 0, 10, 27, 19
+DQBprint drawpage, "Music", 2, 12, 14
+DrawBox 28, 10, 58, 19
+DQBprint drawpage, "Trk:" + LTRIM$(STR$(currentTrack)), 30, 12, 14
+DrawBox 59, 10, 92, 19
+IF objmode = 1 THEN DQBprint drawpage, LTRIM$(STR$(matrixoffset(curitem).x)) + "," + LTRIM$(STR$(matrixoffset(curitem).y)), 61, 12, 14
+IF objmode = 5 THEN DrawBox2 193, 10, 214, 19 ELSE DrawBox 193, 10, 214, 19
+IF objmode = 5 THEN c = 18 ELSE c = 14
+DQBprint drawpage, "Tele", 195, 12, c
+IF objmode = 7 THEN DrawBox2 171, 10, 192, 19 ELSE DrawBox 171, 10, 192, 19
+IF objmode = 7 THEN c = 18 ELSE c = 14
+DQBprint drawpage, "Lift", 173, 12, c
+IF objmode = 6 THEN DrawBox2 152, 10, 170, 19 ELSE DrawBox 152, 10, 170, 19
+IF objmode = 6 THEN c = 18 ELSE c = 14
+DQBprint drawpage, "Loc", 154, 12, c
+IF objmode = 4 THEN DrawBox2 125, 10, 151, 19 ELSE DrawBox 125, 10, 151, 19
+IF objmode = 4 THEN c = 18 ELSE c = 14
+DQBprint drawpage, "Start", 127, 12, c
+
+END SUB
+
+FUNCTION GetFile$ (x, y)
+dqbremovekeyboard
+DQBmousehide
+
+Inpt$ = "": length = 0: textx = x: texty = y
+DQBget drawpage, textx, texty, textx + 70, texty + 8, VARSEG(scr(0)), VARPTR(scr(0))
+
+DO
+  kbd$ = INKEY$
+  IF kbd$ <> "" THEN
+    SELECT CASE kbd$
+     CASE CHR$(8)
+      IF length > 0 THEN length = length - 1
+      Inpt$ = LEFT$(Inpt$, length)
+      DQBfPut drawpage, textx, texty, VARSEG(scr(0)), VARPTR(scr(0))
+     CASE CHR$(13)
+      EXIT DO
+     CASE ELSE
+      IF ASC(kbd$) > 31 AND ASC(kbd$) < 127 THEN
+        IF length < 13 THEN
+          Inpt$ = Inpt$ + kbd$
+          length = length + 1
+        END IF
+      END IF
+    END SELECT
+    DQBprint drawpage, Inpt$, textx, texty, 15
+    DQBcopyLayer drawpage, video
+  END IF
+LOOP
+
+GetFile$ = Inpt$
+DQBsetMousePos llcx, llcy
+DQBmouseShow
+dqbinstallkeyboard
+
+END FUNCTION
+
+SUB HandleMenuInput
+
+'objmode tags:
+'0 tiles
+'1 matrix
+'2 item
+'3 enemy
+'4 player start
+'5 teleport
+'6 locator
+'7 lift
+'8 set location tag
+
+mx = llcx: my = llcy
+
+IF InArea(mx, my, 0, 0, 21, 9) THEN button = 1        ' quit
+IF InArea(mx, my, 22, 0, 66, 9) THEN button = 2       ' load
+IF InArea(mx, my, 67, 0, 111, 9) THEN button = 3      ' save
+IF InArea(mx, my, 112, 0, 152, 9) THEN button = 4     ' new
+IF InArea(mx, my, 153, 0, 183, 9) THEN button = 5     ' switch tag
+IF InArea(mx, my, 0, 10, 27, 19) THEN button = 6      ' music
+IF InArea(mx, my, 275, 0, 294, 19) THEN button = 7    ' tilelist
+IF InArea(mx, my, 296, 0, 319, 9) THEN button = 8     ' layer 1
+IF InArea(mx, my, 295, 10, 319, 19) THEN button = 9   ' layer 2
+IF InArea(mx, my, 255, 0, 274, 19) THEN button = 10   ' matrix select
+IF InArea(mx, my, 235, 0, 254, 19) THEN button = 11   ' item select
+IF InArea(mx, my, 215, 0, 234, 19) THEN button = 12   ' enemy select
+IF InArea(mx, my, 28, 10, 58, 19) THEN button = 13    ' platform track
+IF InArea(mx, my, 193, 10, 214, 19) THEN button = 14  ' place teleport
+IF InArea(mx, my, 171, 10, 192, 19) THEN button = 15  ' place lift
+IF InArea(mx, my, 152, 10, 170, 19) THEN button = 16  ' place locator
+IF InArea(mx, my, 125, 10, 151, 19) THEN button = 17  ' place player start
+IF InArea(mx, my, 59, 10, 92, 19) THEN button = 18    ' change matrix offset
+IF InArea(mx, my, 184, 0, 214, 9) THEN button = 19    ' replace all tiles w/
+
+SELECT CASE button
+ CASE 1
+  WHILE DQBmouseLB: WEND
+  quitgame = 1
+ CASE 2
+  DQBbox drawpage, 126, 93, 195, 105, 15
+  DQBboxf drawpage, 127, 94, 194, 104, 14
+  DQBmousehide
+  DQBcopyLayer drawpage, video
+  DQBmouseShow
+  f$ = GetFile$(129, 96)
+  IF f$ <> "" THEN LoadMap f$
+  refresh = 1
+ CASE 3
+  DQBbox drawpage, 126, 93, 195, 105, 15
+  DQBboxf drawpage, 127, 94, 194, 104, 14
+  DQBmousehide
+  DQBcopyLayer drawpage, video
+  DQBmouseShow
+  f$ = GetFile$(129, 96)
+  IF f$ <> "" THEN SaveMap f$
+  refresh = 1
+ CASE 4
+  ' -- width of new map --
+  DQBbox drawpage, 126, 93, 195, 105, 15
+  DQBboxf drawpage, 127, 94, 194, 104, 14
+  DQBmousehide
+  DQBcopyLayer drawpage, video
+  DQBmouseShow
+  f$ = GetFile$(129, 96)
+  IF f$ <> "" THEN xs = VAL(f$) ELSE xs = -1
+  ' -- height of new map --
+  DQBbox drawpage, 126, 93, 195, 105, 15
+  DQBboxf drawpage, 127, 94, 194, 104, 14
+  DQBmousehide
+  DQBcopyLayer drawpage, video
+  DQBmouseShow
+  f$ = GetFile$(129, 96)
+  IF f$ <> "" THEN ys = VAL(f$) ELSE ys = -1
+  IF xs * ts >= 320 AND xs <= 512 AND ys * ts >= 200 AND ys <= 512 THEN
+    mapxsize = xs: mapysize = ys
+    NewMap
+  END IF
+  refresh = 1
+ CASE 5
+  IF objmode <> 8 THEN objmode = 8 ELSE objmode = 0
+  curitem = 0
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 6
+  SetBackground
+ CASE 7
+  SelectTile
+ CASE 8
+  IF tlvisible = 1 THEN tlvisible = 0 ELSE tlvisible = 1
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 9
+  IF fgvisible = 1 THEN fgvisible = 0 ELSE fgvisible = 1
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 10
+  IF objmode <> 1 THEN objmode = 1: curitem = 0
+  curitem = curitem + 1
+  IF curitem > matrices THEN curitem = 0: objmode = 0
+  IF curitem THEN
+    OPEN "matrix." + LTRIM$(RTRIM$(STR$(curitem))) FOR INPUT AS 1
+      INPUT #1, mxsize
+      INPUT #1, mysize
+      REDIM matrix(mxsize, mysize) AS LONG
+      FOR ry = 1 TO mysize
+        FOR rx = 1 TO mxsize: INPUT #1, matrix(rx, ry): NEXT rx
+      NEXT ry
+    CLOSE 1
+  END IF
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 11
+  IF objmode <> 2 THEN objmode = 2: curitem = 0
+  curitem = curitem + 1
+  IF curitem > numitemtypes THEN curitem = 0: objmode = 0
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 12
+  IF objmode <> 3 THEN objmode = 3: curitem = 0
+  curitem = curitem + 1
+  IF curitem > numenemytypes THEN curitem = 0: objmode = 0
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 13
+  currentTrack = currentTrack + 1
+  IF currentTrack > 16 THEN currentTrack = 1
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 14 'teleport
+  IF objmode <> 5 THEN objmode = 5 ELSE objmode = 0
+  curitem = 0
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 15 'lift
+  IF objmode <> 7 THEN objmode = 7 ELSE objmode = 0
+  curitem = 0
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 16 'locator
+  IF objmode <> 6 THEN objmode = 6 ELSE objmode = 0
+  curitem = 0
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 17 'start
+  IF objmode <> 4 THEN objmode = 4 ELSE objmode = 0
+  curitem = 0
+  WHILE DQBmouseLB: WEND
+  refresh = 1
+ CASE 18
+  IF objmode = 1 THEN
+    DQBbox drawpage, 126, 93, 195, 105, 15
+    DQBboxf drawpage, 127, 94, 194, 104, 14
+    DQBmousehide
+    DQBcopyLayer drawpage, video
+    DQBmouseShow
+    f$ = GetFile$(129, 96)
+    IF f$ <> "" THEN matrixoffset(curitem).x = VAL(f$)
+    DQBbox drawpage, 126, 93, 195, 105, 15
+    DQBboxf drawpage, 127, 94, 194, 104, 14
+    DQBmousehide
+    DQBcopyLayer drawpage, video
+    DQBmouseShow
+    f$ = GetFile$(129, 96)
+    IF f$ <> "" THEN matrixoffset(curitem).y = VAL(f$)
+    IF matrixoffset(curitem).x >= mxsize THEN matrixoffset(curitem).x = mxsize - 1
+    IF matrixoffset(curitem).x <= -mxsize THEN matrixoffset(curitem).x = -mxsize + 1
+    IF matrixoffset(curitem).y >= mysize THEN matrixoffset(curitem).y = mysize - 1
+    IF matrixoffset(curitem).y <= -mysize THEN matrixoffset(curitem).y = -mysize + 1
+    refresh = 1
+  END IF
+ CASE 19
+  ' -- tile to be replaced --
+  'DQBbox drawpage, 126, 93, 195, 105, 15
+  'DQBboxf drawpage, 127, 94, 194, 104, 14
+  'DQBmousehide
+  'DQBcopyLayer drawpage, video
+  'DQBmouseShow
+  'f$ = GetFile$(129, 96)
+  'IF f$ <> "" THEN t1& = VAL(f$) ELSE t1& = -1
+  '' -- tile to replace with --
+  'DQBbox drawpage, 126, 93, 195, 105, 15
+  'DQBboxf drawpage, 127, 94, 194, 104, 14
+  'DQBmousehide
+  'DQBcopyLayer drawpage, video
+  'DQBmouseShow
+  'f$ = GetFile$(129, 96)
+  'IF f$ <> "" THEN t2& = VAL(f$) ELSE t2& = -1
+  'IF t1& >= 0 AND t2& >= 0 THEN
+  '  ReplaceTile t1&, t2&
+  'END IF
+  OPEN "replace.scr" FOR INPUT AS 1
+    DO
+      INPUT #1, t1&
+      INPUT #1, t2&
+      ReplaceTile t1&, t2&
+    LOOP UNTIL EOF(1)
+  CLOSE 1
+  refresh = 1
+END SELECT
+
+END SUB
+
+FUNCTION InArea (x, y, x1, y1, x2, y2)
+
+IF x >= x1 AND x <= x2 AND y >= y1 AND y <= y2 THEN InArea = 1 ELSE InArea = 0
+
+END FUNCTION
+
+SUB SelectTile
+
+WHILE DQBmouseLB: WEND
+
+CurTile& = StartTile&: refresh = 1
+
+DO
+  IF refresh THEN
+    CurTile& = 0
+    DQBmousehide
+    DQBboxf drawpage, 0, 0, 306, 187, 150  ' tile background
+    DQBboxf drawpage, 307, 0, 319, 199, 0  ' right margin
+    DQBboxf drawpage, 0, 188, 319, 199, 0  ' bottom margin
+    'DQBclearLayer drawpage
+   
+    FOR puty = 0 TO 10
+      FOR putx = 0 TO 17
+        IF StartTile& + CurTile& = PenTile& THEN
+          DQBbox drawpage, putx * 17, puty * 17, putx * 17 + 17, puty * 17 + 17, 15
+        END IF
+        IF StartTile& + CurTile& <= numtiles& THEN
+          n& = (CurTile&) + StartTile&
+          placex = putx * 17 + 1: placey = puty * 17 + 1
+          PutTileS n&, placex, placey, 16, 16, drawpage
+          CurTile& = CurTile& + 1
+         ELSE
+          DQBboxf drawpage, putx * 17 + 1, puty * 17 + 1, putx * 17 + 16, puty * 17 + 16, 0
+        END IF
+      NEXT putx
+    NEXT puty
+ 
+    DQBmousehide
+    DQBcopyLayer drawpage, video
+    DQBmouseShow
+    refresh = 0
+  END IF
+
+  IF DQBkey(keyup) THEN
+    IF StartTile& > 18 THEN StartTile& = StartTile& - 18
+    refresh = 1
+    DQBwait 5
+  END IF
+  IF DQBkey(keydown) THEN
+    IF StartTile& + (11 * 18) <= 2500 THEN
+      StartTile& = StartTile& + 18
+      refresh = 1
+      DQBwait 5
+    END IF
+  END IF
+  IF DQBkey(73) THEN  ' Page up
+    IF StartTile& > 18 * 11 THEN StartTile& = StartTile& - (18 * 11) ELSE StartTile& = 1
+    refresh = 1
+    WHILE DQBkey(73): WEND
+  END IF
+  IF DQBkey(81) THEN  ' Page down
+    IF StartTile& + (18 * 11 * 2) <= 2500 THEN
+      StartTile& = StartTile& + (18 * 11)
+      refresh = 1
+      WHILE DQBkey(81): WEND
+    END IF
+  END IF
+
+  IF DQBmouseLB OR DQBmouseRB THEN
+    mx = DQBmouseX: my = DQBmouseY
+    IF mx > 0 AND mx < 307 AND my > 0 AND my < 187 THEN
+      CurTile& = 1
+      FOR chky = 0 TO 10
+        FOR chkx = 0 TO 17
+          IF StartTile& + CurTile& - 1 <= numtiles& THEN
+            IF InArea(mx, my, chkx * 17 + 1, chky * 17 + 1, chkx * 17 + 16, chky * 17 + 16) THEN
+              '-- grab the tile --
+              IF DQBmouseLB AND DQBmouseRB = 0 THEN PenTile& = StartTile& + CurTile& - 1: EXIT DO
+              '-- display number --
+              IF DQBmouseRB AND DQBmouseLB = 0 THEN
+                DQBboxf video, 290, 189, 319, 199, 0
+                DQBprint video, LTRIM$(RTRIM$(STR$(StartTile& + CurTile& - 1))), 292, 190, 15
+                WHILE DQBmouseRB: WEND
+                refresh = 1
+              END IF
+            END IF
+          END IF
+          CurTile& = CurTile& + 1
+        NEXT chkx
+      NEXT chky
+    END IF
+  END IF
+LOOP UNTIL DQBkey(keyesc)
+WHILE DQBmouseLB: WEND
+WHILE DQBmouseRB: WEND
+WHILE DQBkey(keyesc): WEND
+refresh = 1
+
+END SUB
+
+SUB SetBackground
+
+DQBbox drawpage, 126, 93, 195, 105, 15
+DQBboxf drawpage, 127, 94, 194, 104, 14
+DQBmousehide
+DQBcopyLayer drawpage, video
+DQBmouseShow
+f$ = GetFile$(129, 96)
+f$ = UCASE$(f$)
+IF f$ <> "" THEN bgfile$ = f$
+refresh = 1
+
+END SUB
+

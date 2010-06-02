@@ -1,4 +1,4 @@
- 15
+15
 .\LEVELS\START.MAP
 "The Main Menu?!", "Keen steps into The Main Menu??", 0, 0, 0
 .\LEVELS\OVERHEAD.MAP
@@ -33,3 +33,12 @@
 "Isle of Tar", "Keen mucks along the Isle of Tar", 879, 680, 0
 .\LEVELS\LEVEL18.MAP
 "Bean-with-Bacon Megarocket", "Keen launches into the Bean-with-Bacon Megarocket", -1, -1, 0
+
+LEVEL05.MAP
+"Chasm of Chills", "Keen shivers along the Chasm of Chills"
+LEVEL13.MAP
+"Pyramid of the Gnosticene Ancients", "Keen reverently enters the Pyramid of the Gnosticene Ancients"
+LEVEL14.MAP
+"Pyramid of the Forbidden", "Keen hesitantly crosses into the Pyramid of the Forbidden"
+LEVEL16.MAP
+"Isle of Fire", "Keen blazes across the Isle of Fire"

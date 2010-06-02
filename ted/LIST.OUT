@@ -1,0 +1,683 @@
+MAP-001.ART , 0 , 0 , 0
+MAP-002.ART , 0 , 0 , 0
+MAP-003.ART , 0 , 0 , 0
+MAP-004.ART , 0 , 0 , 0
+MAP-005.ART , 0 , 0 , 0
+MAP-006.ART , 0 , 0 , 0
+MAP-007.ART , 0 , 0 , 0
+MAP-008.ART , 0 , 0 , 0
+MAP-009.ART , 0 , 0 , 0
+MAP-010.ART , 0 , 0 , 0
+MAP-011.ART , 0 , 0 , 0
+MAP-012.ART , 0 , 0 , 0
+MAP-013.ART , 0 , 0 , 0
+MAP-014.ART , 0 , 0 , 0
+MAP-015.ART , 0 , 0 , 0
+MAP-016.ART , 0 , 0 , 0
+MAP-017.ART , 0 , 0 , 0
+MAP-018.ART , 0 , 0 , 0
+MAP-019.ART , 0 , 0 , 0
+MAP-020.ART , 0 , 0 , 0
+MAP-021.ART , 0 , 0 , 0
+MAP-022.ART , 0 , 0 , 0
+MAP-023.ART , 0 , 0 , 0
+MAP-024.ART , 0 , 0 , 0
+MAP-025.ART , 0 , 0 , 0
+MAP-026.ART , 0 , 0 , 0
+MAP-027.ART , 0 , 0 , 0
+MAP-028.ART , 0 , 0 , 0
+MAP-029.ART , 0 , 0 , 0
+MAP-030.ART , 0 , 0 , 0
+MAP-031.ART , 0 , 0 , 0
+MAP-032.ART , 0 , 0 , 0
+MAP-033.ART , 0 , 0 , 0
+MAP-034.ART , 0 , 0 , 0
+MAP-035.ART , 0 , 0 , 0
+MAP-036.ART , 0 , 0 , 0
+MAP-037.ART , 0 , 0 , 0
+MAP-038.ART , 0 , 0 , 0
+MAP-039.ART , 0 , 0 , 0
+MAP-040.ART , 0 , 0 , 0
+MAP-041.ART , 0 , 0 , 0
+MAP-042.ART , 0 , 0 , 0
+MAP-043.ART , 0 , 0 , 0
+MAP-044.ART , 0 , 0 , 0
+MAP-045.ART , 0 , 0 , 0
+MAP-046.ART , 0 , 0 , 0
+MAP-047.ART , 0 , 0 , 0
+MAP-048.ART , 0 , 0 , 0
+MAP-049.ART , 0 , 0 , 0
+MAP-050.ART , 0 , 0 , 0
+MAP-051.ART , 0 , 0 , 0
+MAP-052.ART , 0 , 0 , 0
+MAP-053.ART , 0 , 0 , 0
+MAP-054.ART , 0 , 0 , 0
+MAP-055.ART , 0 , 0 , 0
+MAP-056.ART , 0 , 0 , 0
+MAP-057.ART , 0 , 0 , 0
+MAP-058.ART , 0 , 0 , 0
+MAP-059.ART , 0 , 0 , 0
+MAP-060.ART , 0 , 0 , 0
+MAP-061.ART , 0 , 0 , 0
+MAP-062.ART , 0 , 0 , 0
+MAP-063.ART , 0 , 0 , 0
+MAP-064.ART , 0 , 0 , 0
+MAP-065.ART , 0 , 0 , 0
+MAP-066.ART , 0 , 0 , 0
+MAP-067.ART , 0 , 0 , 0
+MAP-068.ART , 0 , 0 , 0
+MAP-069.ART , 0 , 0 , 0
+MAP-070.ART , 0 , 0 , 0
+MAP-071.ART , 0 , 0 , 0
+MAP-072.ART , 0 , 0 , 0
+MAP-073.ART , 0 , 0 , 0
+MAP-074.ART , 0 , 0 , 0
+MAP-075.ART , 0 , 0 , 0
+MAP-076.ART , 0 , 0 , 0
+MAP-077.ART , 0 , 0 , 0
+MAP-078.ART , 0 , 0 , 0
+MAP-079.ART , 0 , 0 , 0
+MAP-080.ART , 0 , 0 , 0
+MAP-081.ART , 0 , 0 , 0
+MAP-082.ART , 0 , 0 , 0
+MAP-083.ART , 0 , 0 , 0
+MAP-084.ART , 0 , 0 , 0
+MAP-085.ART , 0 , 0 , 0
+MAP-086.ART , 0 , 0 , 0
+MAP-087.ART , 0 , 0 , 0
+MAP-088.ART , 0 , 0 , 0
+MAP-089.ART , 0 , 0 , 0
+MAP-090.ART , 0 , 0 , 0
+MAP-091.ART , 0 , 0 , 0
+MAP-092.ART , 0 , 0 , 0
+MAP-093.ART , 0 , 0 , 0
+MAP-094.ART , 0 , 0 , 0
+MAP-095.ART , 0 , 0 , 0
+MAP-096.ART , 0 , 0 , 0
+MAP-097.ART , 0 , 0 , 0
+MAP-098.ART , 0 , 0 , 0
+MAP-099.ART , 0 , 0 , 0
+MAP-100.ART , 0 , 0 , 0
+MAP-101.ART , 0 , 0 , 0
+MAP-102.ART , 0 , 0 , 0
+MAP-103.ART , 0 , 0 , 0
+MAP-104.ART , 0 , 0 , 0
+MAP-105.ART , 0 , 0 , 0
+MAP-106.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-109.ART , 0 , 0 , 0
+MAP-110.ART , 0 , 0 , 0
+MAP-111.ART , 0 , 0 , 0
+MAP-112.ART , 0 , 0 , 0
+MAP-113.ART , 0 , 0 , 0
+MAP-114.ART , 0 , 0 , 0
+MAP-115.ART , 0 , 0 , 0
+MAP-116.ART , 0 , 0 , 0
+MAP-117.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-121.ART , 0 , 0 , 0
+MAP-122.ART , 0 , 0 , 0
+MAP-123.ART , 0 , 0 , 0
+MAP-124.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-127.ART , 0 , 0 , 0
+MAP-128.ART , 0 , 0 , 0
+MAP-129.ART , 0 , 0 , 0
+MAP-130.ART , 0 , 0 , 0
+MAP-131.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-133.ART , 0 , 0 , 0
+MAP-134.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-136.ART , 0 , 0 , 0
+MAP-137.ART , 0 , 0 , 0
+MAP-138.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-140.ART , 0 , 0 , 0
+MAP-141.ART , 0 , 0 , 0
+MAP-142.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-149.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-151.ART , 0 , 0 , 0
+MAP-152.ART , 0 , 0 , 0
+MAP-153.ART , 0 , 0 , 0
+MAP-154.ART , 0 , 0 , 0
+MAP-155.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-158.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-167.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-171.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-174.ART , 0 , 0 , 0
+MAP-175.ART , 0 , 0 , 0
+MAP-176.ART , 0 , 0 , 0
+MAP-177.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-181.ART , 0 , 0 , 0
+MAP-182.ART , 0 , 0 , 0
+MAP-183.ART , 0 , 0 , 0
+MAP-184.ART , 0 , 0 , 0
+MAP-185.ART , 0 , 0 , 0
+MAP-186.ART , 0 , 0 , 0
+MAP-187.ART , 0 , 0 , 0
+MAP-188.ART , 0 , 0 , 0
+MAP-189.ART , 0 , 0 , 0
+MAP-190.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-194.ART , 0 , 0 , 0
+MAP-195.ART , 0 , 0 , 0
+MAP-196.ART , 0 , 0 , 0
+MAP-197.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-199.ART , 0 , 0 , 0
+MAP-200.ART , 0 , 0 , 0
+MAP-201.ART , 0 , 0 , 0
+MAP-202.ART , 0 , 0 , 0
+MAP-203.ART , 0 , 0 , 0
+MAP-204.ART , 0 , 0 , 0
+MAP-205.ART , 0 , 0 , 0
+MAP-206.ART , 0 , 0 , 0
+MAP-207.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-210.ART , 0 , 0 , 0
+MAP-211.ART , 0 , 0 , 0
+MAP-212.ART , 0 , 0 , 0
+MAP-213.ART , 0 , 0 , 0
+MAP-214.ART , 0 , 0 , 0
+MAP-215.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-217.ART , 0 , 0 , 0
+MAP-218.ART , 0 , 0 , 0
+MAP-219.ART , 0 , 0 , 0
+MAP-220.ART , 0 , 0 , 0
+MAP-221.ART , 0 , 0 , 0
+MAP-222.ART , 0 , 0 , 0
+MAP-223.ART , 0 , 0 , 0
+MAP-224.ART , 0 , 0 , 0
+MAP-225.ART , 0 , 0 , 0
+MAP-226.ART , 0 , 0 , 0
+MAP-227.ART , 0 , 0 , 0
+MAP-228.ART , 0 , 0 , 0
+MAP-229.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-231.ART , 0 , 0 , 0
+MAP-232.ART , 0 , 0 , 0
+MAP-233.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-235.ART , 0 , 0 , 0
+MAP-236.ART , 0 , 0 , 0
+MAP-237.ART , 0 , 0 , 0
+MAP-238.ART , 0 , 0 , 0
+MAP-239.ART , 0 , 0 , 0
+MAP-240.ART , 0 , 0 , 0
+MAP-241.ART , 0 , 0 , 0
+MAP-242.ART , 0 , 0 , 0
+MAP-243.ART , 0 , 0 , 0
+MAP-244.ART , 0 , 0 , 0
+MAP-245.ART , 0 , 0 , 0
+MAP-246.ART , 0 , 0 , 0
+MAP-247.ART , 0 , 0 , 0
+MAP-248.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-251.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-254.ART , 0 , 0 , 0
+MAP-255.ART , 0 , 0 , 0
+MAP-256.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-258.ART , 0 , 0 , 0
+MAP-259.ART , 0 , 0 , 0
+MAP-260.ART , 0 , 0 , 0
+MAP-261.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-264.ART , 0 , 0 , 0
+MAP-265.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-268.ART , 0 , 0 , 0
+MAP-269.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-272.ART , 0 , 0 , 0
+MAP-273.ART , 0 , 0 , 0
+MAP-274.ART , 0 , 0 , 0
+MAP-275.ART , 0 , 0 , 0
+MAP-276.ART , 0 , 0 , 0
+MAP-277.ART , 0 , 0 , 0
+MAP-278.ART , 0 , 0 , 0
+MAP-279.ART , 0 , 0 , 0
+MAP-280.ART , 0 , 0 , 0
+MAP-281.ART , 0 , 0 , 0
+MAP-282.ART , 0 , 0 , 0
+MAP-283.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-286.ART , 0 , 0 , 0
+MAP-287.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-289.ART , 0 , 0 , 0
+MAP-290.ART , 0 , 0 , 0
+MAP-291.ART , 0 , 0 , 0
+MAP-292.ART , 0 , 0 , 0
+MAP-293.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-296.ART , 0 , 0 , 0
+MAP-297.ART , 0 , 0 , 0
+MAP-298.ART , 0 , 0 , 0
+MAP-299.ART , 0 , 0 , 0
+MAP-300.ART , 0 , 0 , 0
+MAP-301.ART , 0 , 0 , 0
+MAP-302.ART , 0 , 0 , 0
+MAP-303.ART , 0 , 0 , 0
+MAP-304.ART , 0 , 0 , 0
+MAP-305.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-307.ART , 0 , 0 , 0
+MAP-308.ART , 0 , 0 , 0
+MAP-309.ART , 0 , 0 , 0
+MAP-310.ART , 0 , 0 , 0
+MAP-311.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-314.ART , 0 , 0 , 0
+MAP-315.ART , 0 , 0 , 0
+MAP-316.ART , 0 , 0 , 0
+MAP-317.ART , 0 , 0 , 0
+MAP-318.ART , 0 , 0 , 0
+MAP-319.ART , 0 , 0 , 0
+MAP-320.ART , 0 , 0 , 0
+MAP-321.ART , 0 , 0 , 0
+MAP-322.ART , 0 , 0 , 0
+MAP-323.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-325.ART , 0 , 0 , 0
+MAP-326.ART , 0 , 0 , 0
+MAP-327.ART , 0 , 0 , 0
+MAP-328.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-334.ART , 0 , 0 , 0
+MAP-335.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-337.ART , 0 , 0 , 0
+MAP-338.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-343.ART , 0 , 0 , 0
+MAP-344.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-347.ART , 0 , 0 , 0
+MAP-348.ART , 0 , 0 , 0
+MAP-349.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-351.ART , 0 , 0 , 0
+MAP-352.ART , 0 , 0 , 0
+MAP-353.ART , 0 , 0 , 0
+MAP-354.ART , 0 , 0 , 0
+MAP-355.ART , 0 , 0 , 0
+MAP-356.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-361.ART , 0 , 0 , 0
+MAP-362.ART , 0 , 0 , 0
+MAP-363.ART , 0 , 0 , 0
+MAP-364.ART , 0 , 0 , 0
+MAP-365.ART , 0 , 0 , 0
+MAP-366.ART , 0 , 0 , 0
+MAP-367.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-369.ART , 0 , 0 , 0
+MAP-370.ART , 0 , 0 , 0
+MAP-371.ART , 0 , 0 , 0
+MAP-372.ART , 0 , 0 , 0
+MAP-373.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-379.ART , 0 , 0 , 0
+MAP-380.ART , 0 , 0 , 0
+MAP-381.ART , 0 , 0 , 0
+MAP-382.ART , 0 , 0 , 0
+MAP-383.ART , 0 , 0 , 0
+MAP-384.ART , 0 , 0 , 0
+MAP-385.ART , 0 , 0 , 0
+MAP-386.ART , 0 , 0 , 0
+MAP-387.ART , 0 , 0 , 0
+MAP-388.ART , 0 , 0 , 0
+MAP-389.ART , 0 , 0 , 0
+MAP-390.ART , 0 , 0 , 0
+MAP-391.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-397.ART , 0 , 0 , 0
+MAP-398.ART , 0 , 0 , 0
+MAP-399.ART , 0 , 0 , 0
+MAP-400.ART , 0 , 0 , 0
+MAP-401.ART , 0 , 0 , 0
+MAP-402.ART , 0 , 0 , 0
+MAP-403.ART , 0 , 0 , 0
+MAP-404.ART , 0 , 0 , 0
+MAP-405.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-408.ART , 0 , 0 , 0
+MAP-409.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-415.ART , 0 , 0 , 0
+MAP-416.ART , 0 , 0 , 0
+MAP-417.ART , 0 , 0 , 0
+MAP-418.ART , 0 , 0 , 0
+MAP-419.ART , 0 , 0 , 0
+MAP-420.ART , 0 , 0 , 0
+MAP-421.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-427.ART , 0 , 0 , 0
+MAP-428.ART , 0 , 0 , 0
+MAP-429.ART , 0 , 0 , 0
+MAP-430.ART , 0 , 0 , 0
+MAP-431.ART , 0 , 0 , 0
+MAP-432.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-434.ART , 0 , 0 , 0
+MAP-435.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-439.ART , 0 , 0 , 0
+MAP-440.ART , 0 , 0 , 0
+MAP-441.ART , 0 , 0 , 0
+MAP-442.ART , 0 , 0 , 0
+MAP-443.ART , 0 , 0 , 0
+MAP-444.ART , 0 , 0 , 0
+MAP-445.ART , 0 , 0 , 0
+MAP-446.ART , 0 , 0 , 0
+MAP-447.ART , 0 , 0 , 0
+MAP-448.ART , 0 , 0 , 0
+MAP-449.ART , 0 , 0 , 0
+MAP-450.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-452.ART , 0 , 0 , 0
+MAP-453.ART , 0 , 0 , 0
+MAP-454.ART , 0 , 0 , 0
+MAP-455.ART , 0 , 0 , 0
+MAP-456.ART , 0 , 0 , 0
+MAP-457.ART , 0 , 0 , 0
+MAP-458.ART , 0 , 0 , 0
+MAP-459.ART , 0 , 0 , 0
+MAP-460.ART , 0 , 0 , 0
+MAP-461.ART , 0 , 0 , 0
+MAP-462.ART , 0 , 0 , 0
+MAP-463.ART , 0 , 0 , 0
+MAP-464.ART , 0 , 0 , 0
+MAP-465.ART , 0 , 0 , 0
+MAP-466.ART , 0 , 0 , 0
+MAP-467.ART , 0 , 0 , 0
+MAP-468.ART , 0 , 0 , 0
+MAP-469.ART , 0 , 0 , 0
+MAP-470.ART , 0 , 0 , 0
+MAP-471.ART , 0 , 0 , 0
+MAP-472.ART , 0 , 0 , 0
+MAP-473.ART , 0 , 0 , 0
+MAP-474.ART , 0 , 0 , 0
+MAP-475.ART , 0 , 0 , 0
+MAP-476.ART , 0 , 0 , 0
+MAP-477.ART , 0 , 0 , 0
+MAP-478.ART , 0 , 0 , 0
+MAP-479.ART , 0 , 0 , 0
+MAP-480.ART , 0 , 0 , 0
+MAP-481.ART , 0 , 0 , 0
+MAP-482.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-485.ART , 0 , 0 , 0
+MAP-486.ART , 0 , 0 , 0
+MAP-487.ART , 0 , 0 , 0
+MAP-488.ART , 0 , 0 , 0
+MAP-489.ART , 0 , 0 , 0
+MAP-490.ART , 0 , 0 , 0
+MAP-491.ART , 0 , 0 , 0
+MAP-492.ART , 0 , 0 , 0
+MAP-493.ART , 0 , 0 , 0
+MAP-494.ART , 0 , 0 , 0
+MAP-495.ART , 0 , 0 , 0
+MAP-496.ART , 0 , 0 , 0
+MAP-497.ART , 0 , 0 , 0
+MAP-498.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-503.ART , 0 , 0 , 0
+MAP-504.ART , 0 , 0 , 0
+MAP-505.ART , 0 , 0 , 0
+MAP-506.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-509.ART , 0 , 0 , 0
+MAP-510.ART , 0 , 0 , 0
+MAP-511.ART , 0 , 0 , 0
+MAP-512.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-515.ART , 0 , 0 , 0
+MAP-516.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-519.ART , 0 , 0 , 0
+MAP-520.ART , 0 , 0 , 0
+MAP-521.ART , 0 , 0 , 0
+MAP-522.ART , 0 , 0 , 0
+MAP-523.ART , 0 , 0 , 0
+MAP-524.ART , 0 , 0 , 0
+MAP-525.ART , 0 , 0 , 0
+MAP-526.ART , 0 , 0 , 0
+MAP-527.ART , 0 , 0 , 0
+MAP-528.ART , 0 , 0 , 0
+MAP-529.ART , 0 , 0 , 0
+MAP-530.ART , 0 , 0 , 0
+MAP-531.ART , 0 , 0 , 0
+MAP-532.ART , 0 , 0 , 0
+MAP-533.ART , 0 , 0 , 0
+MAP-534.ART , 0 , 0 , 0
+MAP-535.ART , 0 , 0 , 0
+MAP-536.ART , 0 , 0 , 0
+MAP-537.ART , 0 , 0 , 0
+MAP-538.ART , 0 , 0 , 0
+MAP-539.ART , 0 , 0 , 0
+BLANK.ART   , 99
+MAP-541.ART , 0 , 0 , 0
+MAP-542.ART , 0 , 0 , 0
+MAP-543.ART , 0 , 0 , 0
+MAP-544.ART , 0 , 0 , 0
+MAP-545.ART , 0 , 0 , 0
+MAP-546.ART , 0 , 0 , 0
+MAP-547.ART , 0 , 0 , 0
+MAP-548.ART , 0 , 0 , 0
+MAP-549.ART , 0 , 0 , 0
+MAP-550.ART , 0 , 0 , 0
+MAP-551.ART , 0 , 0 , 0
+MAP-552.ART , 0 , 0 , 0
+MAP-553.ART , 0 , 0 , 0
+MAP-554.ART , 0 , 0 , 0
+MAP-555.ART , 0 , 0 , 0
+MAP-556.ART , 0 , 0 , 0
+MAP-557.ART , 0 , 0 , 0
+MAP-558.ART , 0 , 0 , 0
+MAP-559.ART , 0 , 0 , 0
+MAP-560.ART , 0 , 0 , 0
+MAP-561.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-564.ART , 0 , 0 , 0
+MAP-565.ART , 0 , 0 , 0
+MAP-566.ART , 0 , 0 , 0
+MAP-567.ART , 0 , 0 , 0
+MAP-568.ART , 0 , 0 , 0
+MAP-569.ART , 0 , 0 , 0
+MAP-570.ART , 0 , 0 , 0
+MAP-571.ART , 0 , 0 , 0
+MAP-572.ART , 0 , 0 , 0
+MAP-573.ART , 0 , 0 , 0
+MAP-574.ART , 0 , 0 , 0
+MAP-575.ART , 0 , 0 , 0
+MAP-576.ART , 0 , 0 , 0
+MAP-577.ART , 0 , 0 , 0
+MAP-578.ART , 0 , 0 , 0
+MAP-579.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-583.ART , 0 , 0 , 0
+MAP-584.ART , 0 , 0 , 0
+MAP-585.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-589.ART , 0 , 0 , 0
+MAP-590.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-593.ART , 0 , 0 , 0
+MAP-594.ART , 0 , 0 , 0
+MAP-595.ART , 0 , 0 , 0
+MAP-596.ART , 0 , 0 , 0
+MAP-597.ART , 0 , 0 , 0
+MAP-598.ART , 0 , 0 , 0
+MAP-599.ART , 0 , 0 , 0
+MAP-600.ART , 0 , 0 , 0
+MAP-601.ART , 0 , 0 , 0
+MAP-602.ART , 0 , 0 , 0
+MAP-603.ART , 0 , 0 , 0
+MAP-604.ART , 0 , 0 , 0
+MAP-605.ART , 0 , 0 , 0
+MAP-606.ART , 0 , 0 , 0
+MAP-607.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-613.ART , 0 , 0 , 0
+MAP-614.ART , 0 , 0 , 0
+MAP-615.ART , 0 , 0 , 0
+MAP-616.ART , 0 , 0 , 0
+MAP-617.ART , 0 , 0 , 0
+MAP-618.ART , 0 , 0 , 0
+MAP-619.ART , 0 , 0 , 0
+MAP-620.ART , 0 , 0 , 0
+MAP-621.ART , 0 , 0 , 0
+MAP-622.ART , 0 , 0 , 0
+MAP-623.ART , 0 , 0 , 0
+MAP-624.ART , 0 , 0 , 0
+MAP-625.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-631.ART , 0 , 0 , 0
+MAP-632.ART , 0 , 0 , 0
+MAP-633.ART , 0 , 0 , 0
+MAP-634.ART , 0 , 0 , 0
+MAP-635.ART , 0 , 0 , 0
+MAP-636.ART , 0 , 0 , 0
+MAP-637.ART , 0 , 0 , 0
+MAP-638.ART , 0 , 0 , 0
+MAP-639.ART , 0 , 0 , 0
+MAP-640.ART , 0 , 0 , 0
+MAP-641.ART , 0 , 0 , 0
+MAP-642.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-649.ART , 0 , 0 , 0
+MAP-650.ART , 0 , 0 , 0
+MAP-651.ART , 0 , 0 , 0
+MAP-652.ART , 0 , 0 , 0
+MAP-653.ART , 0 , 0 , 0
+MAP-654.ART , 0 , 0 , 0
+MAP-655.ART , 0 , 0 , 0
+MAP-656.ART , 0 , 0 , 0
+MAP-657.ART , 0 , 0 , 0
+MAP-658.ART , 0 , 0 , 0
+MAP-659.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+MAP-667.ART , 0 , 0 , 0
+MAP-668.ART , 0 , 0 , 0
+MAP-669.ART , 0 , 0 , 0
+MAP-670.ART , 0 , 0 , 0
+MAP-671.ART , 0 , 0 , 0
+MAP-672.ART , 0 , 0 , 0
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99
+BLANK.ART   , 99

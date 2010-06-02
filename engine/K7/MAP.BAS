@@ -93,6 +93,18 @@ GET #1, , version
     AssignEnemyFrame e
   NEXT e
   '================================
+
+  '=======[ TELEPORT PLUGIN ]======
+  numportals = 0  ' clear portals stack
+  GET #1, , numportals
+  IF numportals > 32 THEN DebugLog "WARNING: Portals in map <" + file$ + ">:" + STR$(numenemies): numportals = 32
+  FOR p = 1 TO numportals
+    GET #1, , portal(p).x
+    GET #1, , portal(p).y
+    GET #1, , portal(p).destx
+    GET #1, , portal(p).desty
+  NEXT p
+  '================================
 CLOSE 1
 
 END SUB

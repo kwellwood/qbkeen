@@ -8,9 +8,8 @@ CONST enginever = 1
 CONST inmenu = 1, ingame = 2
 CONST lookup = 4, lookdown = 5
 CONST drawpage = 1, backdroppage = 2, menupage = 3, slopepage = 4
-CONST groundleft = 1, groundright = 2, groundup = 3, airleft = 4, airright = 5
-CONST airup = 6, airdown = 7
-CONST moving = 0, shooting = 1, switching = 2, dying = 3
+CONST moving = 0, shooting = 1, switching = 2, dying = 3, teleporting = 4
+CONST climbing = 5
 CONST running = 1, paused = 2
 
 DECLARE SUB AllocXMS ()
@@ -70,6 +69,7 @@ TYPE playertype
  action AS INTEGER      ' moving, shooting, climbing, flipping switch
  actiontime AS INTEGER  ' time left to complete action
  frozen AS INTEGER      ' cant move left or right
+ usingportal AS INTEGER ' if walking into a portal find destination x,y
 END TYPE
 
 COMMON SHARED player() AS playertype, scr(), file() AS STRING * 12

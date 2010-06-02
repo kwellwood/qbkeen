@@ -5,6 +5,10 @@ COMMON SHARED shotsframe&, shoteframe&, shotframedelay, shotxsize, shotysize
 COMMON SHARED shotexpsframe&, shotexpeframe&, shotexpframedelay, shotexpxsize
 COMMON SHARED shotexpysize, shotvelocity
 
+CONST groundleft = 1, groundright = 2, groundup = 3, airleft = 4, airright = 5
+CONST airup = 6, airdown = 7, poleleft = 8, poleright = 9, poleup = 10
+CONST poledown = 11
+
 DECLARE SUB DoShots ()
 DECLARE SUB DrawShots ()
 DECLARE SUB InitWeapons ()

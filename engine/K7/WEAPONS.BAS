@@ -124,6 +124,10 @@ SELECT CASE player(0).shootingframe
  CASE airright: framedataslot = 18
  CASE airup: framedataslot = 19
  CASE airdown: framedataslot = 20
+ CASE poleleft:
+ CASE poleright:
+ CASE poleup:
+ CASE poledown:
 END SELECT
 
 player(0).frame = pframe(framedataslot)
@@ -136,7 +140,13 @@ FUNCTION ShotCollide (s)
 
 sx = INT(shot(s).x / ts) + 1
 sy = INT(shot(s).y / ts) + 1
+sx2 = shot(s).x
+sy2 = shot(s).y
+
 IF TileType(Map&(sx, sy)) = 1 THEN ShotCollide = 1
+IF TileType(Map&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 0)
+IF TileType(MapFG&(sx, sy)) = 2 THEN ShotCollide = SlopeHeight(sx2, sy2, 1)
+
 
 END FUNCTION
 
@@ -189,6 +199,7 @@ FOR s = 1 TO 5
     player(0).reload = maxfps / 4
     player(0).action = shooting
     player(0).actiontime = maxfps / 5
+    IF player(0).onground THEN player(0).frozen = 1
     EXIT FOR
   END IF
 NEXT s

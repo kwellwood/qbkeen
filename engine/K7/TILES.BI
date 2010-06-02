@@ -7,10 +7,13 @@ DEFINT A-Z
 '2=slope
 '3=hazzard
 '4=switch
+'5=pole/ladder
 '8=reserved(slope in fg)
+'9=special: wall in foreground (passive if in background)
 
-'==ANM LENGTHS==
-'-1=overlay (put in foreground, but overlayed on background)
+'==TILE TAG 2==
+'0=no tag
+'1=draw as overlay on bg
 
 COMMON SHARED TileTypeHandle, TileType2Handle, AnmLengthHandle, AnmDelayHandle
 COMMON SHARED numtiles&, tileset$

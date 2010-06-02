@@ -42,7 +42,7 @@ END SUB
 SUB DrawHUD
 
 '=================[ CLIP POINTS ON PLAYER ]=================
-'DQBpset drawpage, player(0).x - camera(0).vx1, player(0).y - camera(0).vy1, 15
+DQBpset drawpage, player(0).x - camera(0).vx1, player(0).y - camera(0).vy1, 144
 FOR cp = 1 TO 10
   DQBpset drawpage, ClipPoint(cp).x - camera(0).vx1, ClipPoint(cp).y - camera(0).vy1, 15
 NEXT cp
@@ -59,8 +59,8 @@ DQBprint drawpage, "ActiveFoeStack(0):" + STR$(LEN(activefoestack(0))), 200, 52,
 DQBline drawpage, 198, 60, 318, 60, 15
 DQBprint drawpage, "Player(0).action:" + STR$(player(0).action), 200, 63, 15
 DQBprint drawpage, "Player(0).actiontime:" + STR$(player(0).actiontime), 200, 73, 15
-DQBprint drawpage, "Enemy(1).xv:" + STR$(enemy(1).xv), 200, 83, 15
-DQBprint drawpage, "enemy(1).x,y:" + STR$(enemy(1).x) + "," + STR$(enemy(1).y), 200, 93, 15
+DQBprint drawpage, "Player(0).x,y: (" + STR$(player(0).x) + "," + STR$(player(0).y) + ")", 200, 83, 15
+DQBprint drawpage, "Player(0).xv:" + STR$(player(0).xv), 200, 93, 15
 
 '=================[ ANIMATION TICKER ]===============
 DQBprint drawpage, "anmcounter:" + STR$(anmcounter), 1, 192, 15
@@ -159,6 +159,13 @@ IF DQBkey(59) THEN DrawHUD
 
 IF gamemode = inmenu THEN DrawMenu
 DQBcopyLayer drawpage, video
+
+END SUB
+
+SUB FocusCamera
+
+camera(0).x = player(0).x
+camera(0).y = player(0).y
 
 END SUB
 

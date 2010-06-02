@@ -9,14 +9,14 @@ DEFINT A-Z
 
 RANDOMIZE TIMER
 ON ERROR GOTO ErrorHandler
-a = DQBinit(4, maxsounds, 0): IF a THEN ErrorHandlerSub 99 + a
-a = InitPAKLib: IF a THEN ErrorHandlerSub 104
+A = DQBinit(4, maxsounds, 0): IF A THEN ErrorHandlerSub 99 + A
+A = InitPAKLib: IF A THEN ErrorHandlerSub 104
 AllocXMS
 
 '--------- Core Engine ---------
 DIM SHARED player(0) AS playertype, scr(32004), file(0) AS STRING * 12
-DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
-DIM SHARED pframe(21) AS LONG, fsize(21) AS intcoordinate
+DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, Pal(255) AS hues
+DIM SHARED pframe(37) AS LONG, fsize(37) AS intcoordinate
 
 '-------- Render System --------
 DIM SHARED camera(0) AS camtype
@@ -40,7 +40,10 @@ DIM SHARED enemy(100) AS enemytype, eframe(16) AS LONG
 DIM SHARED efsize(16) AS intcoordinate, activefoestack(0) AS STRING
 DIM SHARED EClipPoint(4) AS coordinate
 
-PRINT "Loading...";
+'------- Teleport System -------
+DIM SHARED portal(1 TO 32) AS portaltype, activeportalstack(0) AS STRING
+
+PRINT "Loading..."
 InitEngine
 
 '--plugins--
@@ -71,9 +74,9 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 7)."
+PRINT "Powered by K7 Engine technology (Build 8)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled April 9, 2001"
+PRINT "Compiled May 29, 2001"
 END
 
 '============================================================================
@@ -86,28 +89,28 @@ REM $STATIC
 SUB AllocXMS
 
 '===========[ Tiles System ]===========
-BiosXOpen 4, TileTypeHandle, a
-IF a THEN ErrorHandlerSub 105
-BiosXOpen 4, AnmLengthHandle, a
-IF a THEN ErrorHandlerSub 106
-BiosXOpen 4, AnmDelayHandle, a
-IF a THEN ErrorHandlerSub 107
-BiosXOpen 4, TileType2Handle, a
-IF a THEN ErrorHandlerSub a
+BiosXOpen 4, TileTypeHandle, A
+IF A THEN ErrorHandlerSub 105
+BiosXOpen 4, AnmLengthHandle, A
+IF A THEN ErrorHandlerSub 106
+BiosXOpen 4, AnmDelayHandle, A
+IF A THEN ErrorHandlerSub 107
+BiosXOpen 4, TileType2Handle, A
+IF A THEN ErrorHandlerSub A
 
 '=========[ Graphics System ]==========
-BiosXOpen 2048, ArtHandle, a
-IF a THEN ErrorHandlerSub 108
-BiosXOpen 8, ArtOffsetHandle, a
-IF a THEN ErrorHandlerSub 109
-BiosXOpen 8, ArtLengthHandle, a
-IF a THEN ErrorHandlerSub 110
+BiosXOpen 2048, ArtHandle, A
+IF A THEN ErrorHandlerSub 108
+BiosXOpen 8, ArtOffSetHandle, A
+IF A THEN ErrorHandlerSub 109
+BiosXOpen 8, ArtLengthHandle, A
+IF A THEN ErrorHandlerSub 110
 
 '============[ Map System ]============
-BiosXOpen 1024, MapHandle, a
-IF a THEN ErrorHandlerSub 111
-BiosXOpen 1024, MapFGHandle, a
-IF a THEN ErrorHandlerSub 112
+BiosXOpen 1024, MapHandle, A
+IF A THEN ErrorHandlerSub 111
+BiosXOpen 1024, MapFGHandle, A
+IF A THEN ErrorHandlerSub 112
 
 '=========[ SWITCHES PLUGIN ]==========
 BiosXOpen 512, SwitchTagHandle, ErrCode
@@ -125,7 +128,7 @@ BiosXClose AnmDelayHandle
 
 '=========[ Graphics System ]==========
 BiosXClose ArtHandle
-BiosXClose ArtOffsetHandle
+BiosXClose ArtOffSetHandle
 BiosXClose ArtLengthHandle
 
 '============[ Map System ]============
@@ -149,34 +152,45 @@ END SUB
 
 SUB DoInput
 
-player(0).aim = -1  ' dont aim up or down
+player(0).aim = -1   ' dont aim up or down
 
 SELECT CASE gamemode
  CASE ingame
   IF gameplay = running THEN
-    'IF DQBkey(30) THEN player(0).ammo = 50
-    IF DQBkey(keyright) THEN MovePlayer right
-    IF DQBkey(keyleft) THEN MovePlayer left
-    IF DQBkey(keyup) THEN player(0).aim = up: CheckSwitch
-    IF DQBkey(keydown) AND player(0).onground = 0 THEN player(0).aim = down
-    IF DQBkey(keyctrl) THEN MovePlayer up   ' (ie: jump)
+    IF DQBkey(KEYRIGHT) THEN MovePlayer right
+    IF DQBkey(KEYLEFT) THEN MovePlayer left
+    IF DQBkey(KEYUP) THEN
+      player(0).aim = up                   ' player wants to aim up
+      IF player(0).action = climbing THEN  ' climb up a pole
+        ClimbUp
+       ELSE
+        CheckSwitch               ' not climbing so check other stuff
+        CheckTeleport
+        CheckClimb
+      END IF
+    END IF
+    IF DQBkey(KEYDOWN) THEN
+      IF player(0).onground = 0 OR player(0).action = climbing THEN player(0).aim = down
+      IF player(0).action = climbing THEN ClimbDown
+    END IF
+    IF DQBkey(KEYCTRL) THEN MovePlayer up    ' (ie: jump)
 
     IF DQBkey(73) THEN camera(0).y = camera(0).y - 2
     IF DQBkey(81) THEN camera(0).y = camera(0).y + 2
-    IF DQBkey(keyspace) THEN SpawnPlayerShot
+    IF DQBkey(KEYSPACE) THEN SpawnPlayerShot
   END IF
  
   IF DQBkey(25) THEN  ' Pause - 'p'
     IF gameplay = running THEN gameplay = paused ELSE gameplay = running
     WHILE DQBkey(25): WEND
   END IF
-  IF DQBkey(keyesc) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .2
+  IF DQBkey(KEYESC) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .2
 
  CASE inmenu
-  IF DQBkey(keyesc) THEN HandleMenu keyesc
-  IF DQBkey(keyup) THEN HandleMenu keyup
-  IF DQBkey(keydown) THEN HandleMenu keydown
-  IF DQBkey(keyenter) THEN HandleMenu keyenter
+  IF DQBkey(KEYESC) THEN HandleMenu KEYESC
+  IF DQBkey(KEYUP) THEN HandleMenu KEYUP
+  IF DQBkey(KEYDOWN) THEN HandleMenu KEYDOWN
+  IF DQBkey(KEYENTER) THEN HandleMenu KEYENTER
 END SELECT
 
 END SUB
@@ -206,9 +220,9 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 7)."
+PRINT "Powered by K7 Engine technology (Build 8)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled April 9, 2001"
+PRINT "Compiled May 29, 2001"
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
@@ -246,33 +260,19 @@ SoundEnabled = 0
 
 OPEN "player.dat" FOR INPUT AS 1
   INPUT #1, player(0).adelay  ' animation speed
-  INPUT #1, pframe(0)
-  INPUT #1, fsize(0).x
-  INPUT #1, fsize(0).y
-  INPUT #1, pframe(1)
-  INPUT #1, fsize(1).x
-  INPUT #1, fsize(1).y
-  INPUT #1, pframe(2)
-  INPUT #1, pframe(3)
-  INPUT #1, fsize(3).x
-  INPUT #1, fsize(3).y
-  INPUT #1, pframe(4)
-  INPUT #1, fsize(4).x
-  INPUT #1, fsize(4).y
-  INPUT #1, pframe(5)
-  FOR f = 6 TO 22
+  FOR f = 0 TO 36
     INPUT #1, pframe(f)
     INPUT #1, fsize(f).x
     INPUT #1, fsize(f).y
   NEXT f
 CLOSE 1
 
-DEF SEG = VARSEG(pal(0))
+DEF SEG = VARSEG(Pal(0))
 BLOAD "palette.dat", 0
 DEF SEG
 
-a = DQBloadFont("font.dat")
-IF a THEN ErrorHandlerSub 125 + a
+A = DQBloadFont("font.dat")
+IF A THEN ErrorHandlerSub 125 + A
 
 DQBinstallKeyboard
 
@@ -306,7 +306,7 @@ SUB SetPalette
 OUT &H3C8, 0
 
 FOR i = 0 TO 255
-  OUT &H3C9, pal(i).red: OUT &H3C9, pal(i).grn: OUT &H3C9, pal(i).blu
+  OUT &H3C9, Pal(i).red: OUT &H3C9, Pal(i).grn: OUT &H3C9, Pal(i).blu
 NEXT
 
 END SUB

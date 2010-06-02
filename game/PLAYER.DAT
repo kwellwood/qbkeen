@@ -1,10 +1,10 @@
 1
 1 ,24,32
 2 ,24,32
-4
+4 , 0, 0
 6 ,24,32
 7 ,24,32
-4
+4 , 0, 0
 11,24,32
 12,24,32
 13,24,32
@@ -22,28 +22,56 @@
 34,32,32
 35,24,32
 23,24,32
+631,16,32
+5, 0 , 0
+17,26,32
+3, 0 , 0
+20,26,32
+3, 0 , 0
+642,26,32
+4, 0 , 0
+636,32,32
+637,32,40
+638,32,32
+639,32,32
+640,32,40
+641,32,32
 
 animation delay
-stand left
-walk left start
-walk left frames
-stand right
-walk right start
-walk right frames
-left jump up
-left jump apex
-left falling
-right jump up
-right jump apex
-right falling
-looking up
-looking down
-shoot walk left
-shoot walk right
-shoot up
-shoot jump left
-shoot jump right
-shoot jump up
-shoot jump down
-flip switch
-dying
+(0) stand left
+(1) walk left start
+(2) walk left frames
+(3) stand right
+(4) walk right start
+(5) walk right frames
+(6) left jump up
+(7) left jump apex
+(8) left falling
+(9) right jump up
+(10) right jump apex
+(11) right falling
+(12) looking up
+(13) looking down
+(14) shoot walk left
+(15) shoot walk right
+(16) shoot up
+(17) shoot jump left
+(18) shoot jump right
+(19) shoot jump up
+(20) shoot jump down
+(21) flip switch
+(22) dying
+(23) walking through door start
+(24) walk through door frames
+(25) climb up left
+(26) climb up left frames
+(27) climb up right
+(28) climb up right frames
+(29) climb down
+(30) climb down frames
+(31) shoot pole left
+(32) shoot pole left up
+(33) shoot pole left down
+(34) shoot pole right
+(35) shoot pole right up
+(36) shoot pole right down

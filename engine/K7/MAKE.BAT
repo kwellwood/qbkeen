@@ -16,6 +16,10 @@ echo RENDER.BAS...   (Render system)
 bc render.bas /e/x/o/t/c:512; > render.cmp
 echo MENU.BAS...     (Menu system)
 bc menu.bas /e/x/o/t/c:512; > menu.cmp
+echo SCORES.BAS...   (Scoreboard routines)
+bc scores.bas /e/x/o/t/c:512; > scores.cmp
+echo ITEMS.BAS...    (Items system)
+bc items.bas /e/x/o/t/c:512; > items.cmp
 echo PAKLIB.BAS...   (Archive routines)
 bc paklib.bas /e/x/o/t/c:512; > paklib.cmp
 
@@ -36,6 +40,10 @@ echo  +RENDER.OBJ...   (Render system)
 lib k7core.lib +render; > render.cmp
 echo  +MENU.OBJ...     (Menu system)
 lib k7core.lib +menu; > menu.cmp
+echo  +SCORES.OBJ...   (Scoreboard feature)
+lib k7core.lib +scores; > scores.cmp
+echo  +ITEMS.OBJ...    (Item system)
+lib k7core.lib +items; > items.cmp
 echo  +PAKLIB.OBJ...   (Archive routines)
 lib k7core.lib +paklib; > paklib.cmp
 
@@ -45,10 +53,6 @@ CALL CheckErr corelib.dat
 echo * Building Objects *
 echo K7.BAS...       (Main routines)
 bc k7.bas /e/x/o/t/c:512; > k7.cmp
-echo SCORES.BAS...   (Display scoreboard)
-bc scores.bas /e/x/o/t/c:512; > scores.cmp
-echo ITEMS.BAS...    (Player bonuses)
-bc items.bas /e/x/o/t/c:512; > items.cmp
 echo WEAPONS.BAS...  (Player weapons)
 bc weapons.bas /e/x/o/t/c:512; > weapons.cmp
 echo SWITCHES.BAS... (Switches)
@@ -57,10 +61,14 @@ echo ENEMIES.BAS...  (Enemy system)
 bc enemies.bas /e/x/o/t/c:512; > enemies.cmp
 echo SOUND.BAS...    (Sound system)
 bc sound.bas /e/x/o/t/c:512; > sound.cmp
+echo TELEPORT.BAS... (Player teleporting)
+bc teleport.bas /e/x/o/t/c:512; > teleport.cmp
+echo CLIMBING.BAS... (Climbing physics)
+bc climbing.bas /e/x/o/t/c:512; > climbing.cmp
 
 echo * Linking Objects *
 echo KEEN7.EXE...    (Main program)
-link /ex/noe k7 scores items weapons switches enemies sound,keen7,,dqb xms k7core paklib bcom45 brun45; >link.cmp
+link /ex/noe k7 weapons switches enemies sound teleport climbing,keen7,,dqb xms k7core paklib bcom45 brun45; >link.cmp
 
 echo * Checking For Errors *
 CALL CheckErr modules.dat

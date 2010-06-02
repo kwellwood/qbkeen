@@ -117,3 +117,24 @@ Changes since Build 6:
 - More new artwork
 - Foreground tiles can be superimposed on background tiles as a single
   background tile for objects like hills and houses, saving tile space.
+
+BUILD 8 (05-29-2001)
+   Here is the actual first game map from Commander Keen 4: Goodbye Galaxy,
+finally made possible with poles and teleporting doorways. I think the
+longest part of this build was doing all of the mapping for the underground
+area. Take it for granted when you walk by, but all those tiles took forever
+to get looking just right! Teleporting through doors is limited to within the
+level, so the underground area is actually still all on the same map. Another
+note about the poles: they are fully functional except that Keen can't shoot
+while holding onto a pole. That should be fixed in the next build. Also
+coming up soon will be the famous pogo stick, a new enemy, and hopefully I
+can fix that annoying falling bug while walking down a slope. To grab onto a
+pole or walk through a doorway, just press the up arrow key.
+
+Changes since Build 7:
+- Game map complete
+- Many new graphics
+- Teleport system for doorways
+- Shots collide with sloped tiles
+- Walls drawn in the foreground map layer
+- Player can climb poles

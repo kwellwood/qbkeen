@@ -13,4 +13,6 @@ DEFINT A-Z
 '$INCLUDE: 'weapons.bi'
 '$INCLUDE: 'switches.bi'
 '$INCLUDE: 'enemies.bi'
+'$INCLUDE: 'teleport.bi'
+'$INCLUDE: 'climbing.bi'
 

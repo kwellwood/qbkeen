@@ -34,7 +34,7 @@ IF player(0).yv >= 0 THEN
   mapx = INT(player(0).x / ts) + 1: mapy = INT((player(0).y + (player(0).ysize / 2)) / ts) + 1
   IF INT((player(0).y + (player(0).ysize / 2)) MOD ts) >= ts - 1 THEN   ' ts - 2 THEN
     mapx = INT(player(0).x / ts) + 1: mapy = INT((player(0).y + (player(0).ysize / 2)) / ts) + 2
-    IF TileType(Map&(mapx, mapy)) = 1 THEN
+    IF TileType(Map&(mapx, mapy)) = 1 OR TileType(MapFG&(mapx, mapy)) = 9 THEN
       player(0).onground = 1
       IF INT((player(0).y + (player(0).ysize / 2)) MOD ts) < ts - 1 THEN player(0).y = INT(player(0).y) + 1
      ELSE
@@ -84,6 +84,7 @@ FOR cp = 1 TO 8
    CASE 2: IF cp = 2 THEN HitSlope ClipPoint(cp).x, ClipPoint(cp).y, 0
    CASE 3: KillPlayer
    CASE 8: IF cp = 2 THEN HitSlope ClipPoint(cp).x, ClipPoint(cp).y, 1
+   CASE 9: HitWall cp, ClipPoint(cp).x, ClipPoint(cp).y
   END SELECT
 NEXT cp
 
@@ -92,6 +93,7 @@ END SUB
 SUB DoPhysics
 
 UpdateClipPoints
+IF player(0).action = climbing THEN EXIT SUB
 
 '=======[ GRAVITY ]=======
 IF player(0).onground = 0 THEN player(0).yv = player(0).yv + 1
@@ -154,6 +156,10 @@ SELECT CASE player(0).action
   SwitchingFrames
  CASE dying
   DyingFrames
+ CASE teleporting
+  TeleportingFrames
+ CASE climbing
+  ClimbingFrames
 END SELECT
 
 'pframe(0)  - stand left
@@ -190,9 +196,16 @@ END SUB
 
 FUNCTION HitPoint (p)
 
+'fg=Foreground Tag 1
+'bg=Background Tag 1
+
 mx = INT(ClipPoint(p).x / ts) + 1
 my = INT(ClipPoint(p).y / ts) + 1
-IF TileType(MapFG&(mx, my)) = 2 THEN HitPoint = 8 ELSE HitPoint = TileType(Map&(mx, my))
+fg = TileType(MapFG&(mx, my))
+bg = TileType(Map&(mx, my))
+IF fg = 2 THEN HitPoint = 8: EXIT FUNCTION   'slope in foreground
+IF fg = 9 THEN HitPoint = fg: EXIT FUNCTION  'wall in foreground
+HitPoint = bg
 
 END FUNCTION
 
@@ -215,8 +228,7 @@ END IF
 END SUB
 
 SUB HitWall (p, hx!, hy!)
-            
-
+           
 ' 3--1--4
 ' |     |
 ' 5     6
@@ -224,7 +236,6 @@ SUB HitWall (p, hx!, hy!)
 ' 7     8
 ' |     |
 ' 9--2-10
-
 
 side = -1
 
@@ -274,23 +285,38 @@ END IF
 
 END SUB
 
-SUB MovePlayer (D)
+SUB MovePlayer (d)
 
-SELECT CASE D
+SELECT CASE d
  CASE up
   IF player(0).frozen = 0 THEN
-    IF (player(0).yv < 0) OR (player(0).yv = 0 AND player(0).onground) THEN
-      IF player(0).canjump THEN player(0).yv = player(0).yv - 2
+    'IF player(0).action = climbing THEN player(0).action = moving
+    IF (player(0).yv < 0) OR (player(0).yv = 0 AND player(0).onground) OR (player(0).action = climbing) THEN
+      IF player(0).canjump THEN
+        player(0).yv = player(0).yv - 2
+        player(0).action = moving     ' stop actions like climbing
+      END IF
     END IF
   END IF
  CASE down: player(0).yv = player(0).yv + 2
- CASE left: IF player(0).frozen = 0 THEN player(0).xv = player(0).xv - 2: player(0).xdir = left
- CASE right: IF player(0).frozen = 0 THEN player(0).xv = player(0).xv + 2: player(0).xdir = right
+ CASE left
+  IF player(0).action = climbing THEN
+    player(0).xdir = left
+   ELSE
+    IF player(0).frozen = 0 THEN player(0).xv = player(0).xv - 2: player(0).xdir = left
+  END IF
+ CASE right
+  IF player(0).action = climbing THEN
+    player(0).xdir = right
+   ELSE
+    IF player(0).frozen = 0 THEN player(0).xv = player(0).xv + 2: player(0).xdir = right
+  END IF
+END SELECT
+
  'CASE lookup: camera(0).y = camera(0).y - 2: player(0).looking = -1
  'CASE lookdown
  ' camera(0).y = camera(0).y + 2
  ' IF player(0).looking <= 0 THEN player(0).looking = 1
-END SELECT
 
 END SUB
 
@@ -343,14 +369,17 @@ END SUB
 
 SUB PlayerState
 
-
 ' if a special action is happening, decrease time remaining
 IF player(0).actiontime THEN player(0).actiontime = player(0).actiontime - 1
   
 ' if player finished dying, quit the game
-IF player(0).action = dying AND player(0).actiontime <= 0 THEN gameplay = paused: gamemode = inmenu: player(0).actiontime = 1
-' otherwise resume walking
-IF player(0).actiontime = 0 THEN player(0).action = moving
+IF player(0).action = dying AND player(0).actiontime = 0 THEN gameplay = paused: gamemode = inmenu: player(0).actiontime = 1
+
+' if player finished teleporting, move him
+IF player(0).action = teleporting AND player(0).actiontime = 0 THEN TeleportPlayer
+
+' resume walking when finished an action
+IF player(0).actiontime = 0 AND player(0).action <> climbing THEN player(0).action = moving
 
 ' if player is moving, then he's never frozen. unfreeze.
 IF player(0).action = moving THEN player(0).frozen = 0
@@ -359,6 +388,7 @@ IF player(0).action = moving THEN player(0).frozen = 0
 DoPlayerFrame
 
 '========[ WEAPONS PLUGIN ]========
+' decrease reload wait time
 IF player(0).reload THEN player(0).reload = player(0).reload - 1
 
 END SUB

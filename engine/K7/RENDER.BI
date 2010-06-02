@@ -6,6 +6,7 @@ COMMON SHARED backgroundused
 DECLARE SUB DoCamera ()
 DECLARE SUB DrawHUD ()
 DECLARE SUB DrawScreen ()
+DECLARE SUB FocusCamera ()
 
 TYPE camtype
  x AS INTEGER

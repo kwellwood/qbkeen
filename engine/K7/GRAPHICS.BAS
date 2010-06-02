@@ -19,7 +19,7 @@ REM $STATIC
 SUB LoadArtFile (t&, f$)
 
 a = LoadFromPAK(f$, scrbuf)
-IF a THEN ErrorHandlerSub 134 + a
+IF a THEN DebugLog "FILE NOT FOUND: " + f$: ErrorHandlerSub 134 + a
 fsize& = PAKFileSize(f$)
 BiosXWrite ArtHandle, xmspos&, fsize&, VARSEG(scr(0)), VARPTR(scr(0))
 bitl(0) = xmspos&

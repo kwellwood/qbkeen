@@ -1,0 +1,16 @@
+
+                         History of Commander Keen 7
+                         ---------------------------
+Build 1 (09-??-2000):
+   This was the first build of the K7 engine and included no modications.
+There are no existing copies of this version, due to the fact that it was
+lost during development. Build 2 is the first real build of the K7 engine.
+
+Build 2 (10-18-2000):
+   The core foundation of the K7 engine is complete in this version and was
+converted into a level editor with minimal effort for making maps. Build 1
+of TED uses build 2 of the engine technology.
+
+Changes since Build 1:
+- clipping for the player
+- working menu system

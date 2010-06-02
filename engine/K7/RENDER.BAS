@@ -41,12 +41,6 @@ END SUB
 
 SUB DrawHUD
 
-'=================[ CLIP POINTS ON PLAYER ]=================
-DQBpset drawpage, player(0).x - camera(0).vx1, player(0).y - camera(0).vy1, 144
-FOR cp = 1 TO 10
-  DQBpset drawpage, ClipPoint(cp).x - camera(0).vx1, ClipPoint(cp).y - camera(0).vy1, 15
-NEXT cp
-
 '=================[ MISC TEXT INFO ]=================
 DQBprint drawpage, "Camera(0).v1: (" + STR$(camera(0).vx1) + "," + STR$(camera(0).vy1) + ")", 200, 0, 15
 DQBprint drawpage, "Camera(0).v2: (" + STR$(camera(0).vx2) + "," + STR$(camera(0).vy2) + ")", 200, 10, 15
@@ -57,31 +51,49 @@ totalshots = 0: FOR s = 1 TO 5: totalshots = totalshots + shot(s).active: NEXT s
 DQBprint drawpage, "ActiveShots:" + STR$(totalshots), 200, 42, 15
 DQBprint drawpage, "ActiveFoeStack(0):" + STR$(LEN(activefoestack(0))), 200, 52, 15
 DQBline drawpage, 198, 60, 318, 60, 15
-DQBprint drawpage, "Player(0).action:" + STR$(player(0).action), 200, 63, 15
-DQBprint drawpage, "Player(0).actiontime:" + STR$(player(0).actiontime), 200, 73, 15
-DQBprint drawpage, "Player(0).x,y: (" + STR$(player(0).x) + "," + STR$(player(0).y) + ")", 200, 83, 15
-DQBprint drawpage, "Player(0).xv:" + STR$(player(0).xv), 200, 93, 15
 
 '=================[ ANIMATION TICKER ]===============
 DQBprint drawpage, "anmcounter:" + STR$(anmcounter), 1, 192, 15
 
 END SUB
 
+SUB DrawPlayerHUD
+
+'=================[ CLIP POINTS ON PLAYER ]=================
+DQBpset drawpage, player(0).x - camera(0).vx1, player(0).y - camera(0).vy1, 144
+FOR cp = 1 TO 10
+  DQBpset drawpage, ClipPoint(cp).x - camera(0).vx1, ClipPoint(cp).y - camera(0).vy1, 15
+NEXT cp
+
+'=================[ PLAYER DATA TYPE ]=================
+SELECT CASE player(0).action
+ CASE moving: act$ = "move"
+ CASE shooting: act$ = "shoot"
+ CASE switching: act$ = "switch"
+ CASE dying: act$ = "die"
+ CASE teleporting: act$ = "teleport"
+ CASE climbing: act$ = "climb"
+END SELECT
+DQBprint drawpage, "Player(0).x,y:" + STR$(INT(player(0).x)) + "," + STR$(INT(player(0).y)), 2, 2, 15
+DQBprint drawpage, "Player(0).xv:" + STR$(INT(player(0).xv)), 2, 12, 15
+DQBprint drawpage, "Player(0).yv:" + STR$(INT(player(0).yv)), 2, 22, 15
+DQBprint drawpage, "Player(0).action: " + act$, 2, 32, 15
+DQBprint drawpage, "Player(0).actiontime:" + STR$(player(0).actiontime), 2, 42, 15
+DQBprint drawpage, "Player(0).frame:" + STR$(player(0).frame), 2, 52, 15
+DQBprint drawpage, "Player(0).onground:" + STR$(player(0).onground), 2, 62, 15
+DQBprint drawpage, "Player(0).onslope:" + STR$(player(0).onslope), 2, 72, 15
+DQBprint drawpage, "Player(0).canjump:" + STR$(player(0).canjump), 2, 82, 15
+DQBprint drawpage, "Player(0).shooting:" + STR$(player(0).shooting), 2, 92, 15
+DQBprint drawpage, "Player(0).reload:" + STR$(player(0).reload), 2, 102, 15
+DQBprint drawpage, "Player(0).aim:" + STR$(player(0).aim), 2, 112, 15
+DQBprint drawpage, "Player(0).frozen:" + STR$(player(0).frozen), 2, 122, 15
+DQBprint drawpage, "Player(0).usingportal:" + STR$(player(0).usingportal), 2, 132, 15
+
+END SUB
+
 SUB DrawScreen
 
-'=========[ BACKGROUND ]========
-IF backgroundused THEN
-  x = (camera(0).vx1 / 2) MOD 320
-  IF x = 0 THEN
-    DQBcopyLayer backdroppage, drawpage
-   ELSE
-    DQBget backdroppage, 0, 0, x - 1, 199, VARSEG(scr(0)), VARPTR(scr(0))
-    DQBput drawpage, 320 - x, 0, VARSEG(scr(0)), VARPTR(scr(0))
-    DQBget backdroppage, x, 0, 319, 199, VARSEG(scr(0)), VARPTR(scr(0))
-    DQBput drawpage, 0, 0, VARSEG(scr(0)), VARPTR(scr(0))
-  END IF
- ELSE DQBclearLayer drawpage
-END IF
+DQBclearLayer drawpage
 
 '=======[ TRANSLATE CAMERA ]=======
 minx = INT((camera(0).vx1 / ts) + 1): subx = camera(0).vx1 MOD ts
@@ -132,6 +144,7 @@ DrawEnemies
 px = player(0).x - camera(0).vx1 - (player(0).txsize / 2)
 py = player(0).y - camera(0).vy1 - (player(0).tysize / 2)
 PutSprite player(0).frame, px, py, drawpage
+DQBwait 1
 
 '========[ DRAW FOREGROUND ]========
 FOR y = miny TO maxy
@@ -140,7 +153,7 @@ FOR y = miny TO maxy
     py = (y - miny) * ts - suby
 
     t2& = MapFG&(x, y)
-    IF t2& AND TileType2(t2&) <> 1 THEN
+    IF t2& AND TileType2(t2&) <> 1 AND TileType2(t2&) <> 10 THEN
       al = AnmLength(t2&)
       IF al THEN
         ad = AnmDelay(t2&)
@@ -152,10 +165,9 @@ FOR y = miny TO maxy
 NEXT y
 
 '========[ SPRITE CLASSES ABOVE FOREGROUND ]========
-
-
-DrawScoreboard
+IF DQBkey(61) THEN DrawScoreboard
 IF DQBkey(59) THEN DrawHUD
+IF DQBkey(60) THEN DrawPlayerHUD
 
 IF gamemode = inmenu THEN DrawMenu
 DQBcopyLayer drawpage, video

@@ -9,14 +9,14 @@ DEFINT A-Z
 
 RANDOMIZE TIMER
 ON ERROR GOTO ErrorHandler
-A = DQBinit(4, maxsounds, 0): IF A THEN ErrorHandlerSub 99 + A
+A = DQBinit(3, maxsounds, 0): IF A THEN ErrorHandlerSub 99 + A
 A = InitPAKLib: IF A THEN ErrorHandlerSub 104
 AllocXMS
 
 '--------- Core Engine ---------
 DIM SHARED player(0) AS playertype, scr(32004), file(0) AS STRING * 12
-DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, Pal(255) AS hues
-DIM SHARED pframe(37) AS LONG, fsize(37) AS intcoordinate
+DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
+DIM SHARED pframe(40) AS LONG, fsize(40) AS intcoordinate
 
 '-------- Render System --------
 DIM SHARED camera(0) AS camtype
@@ -36,8 +36,8 @@ DIM SHARED shot(1 TO 5) AS shottype
 DIM SHARED switch(1 TO 25)
 
 '-------- Enemies System -------
-DIM SHARED enemy(100) AS enemytype, eframe(16) AS LONG
-DIM SHARED efsize(16) AS intcoordinate, activefoestack(0) AS STRING
+DIM SHARED enemy(100) AS enemytype, eframe(20) AS LONG
+DIM SHARED efsize(20) AS intcoordinate, activefoestack(0) AS STRING
 DIM SHARED EClipPoint(4) AS coordinate
 
 '------- Teleport System -------
@@ -57,7 +57,7 @@ InitSound
 
 '--core assets--
 LoadTiles
-LoadMap "keen7.map"
+LoadLevel
 '---------------
 
 PRINT "Ok"
@@ -74,9 +74,9 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 8)."
+PRINT "Powered by K7 Engine technology (Build 9)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled May 29, 2001"
+PRINT "Compiled July 13, 2001"
 END
 
 '============================================================================
@@ -96,7 +96,9 @@ IF A THEN ErrorHandlerSub 106
 BiosXOpen 4, AnmDelayHandle, A
 IF A THEN ErrorHandlerSub 107
 BiosXOpen 4, TileType2Handle, A
-IF A THEN ErrorHandlerSub A
+IF A THEN ErrorHandlerSub 114
+BiosXOpen 4, SlopeMaskHandle, A
+IF A THEN ErrorHandlerSub 115
 
 '=========[ Graphics System ]==========
 BiosXOpen 2048, ArtHandle, A
@@ -157,6 +159,7 @@ player(0).aim = -1   ' dont aim up or down
 SELECT CASE gamemode
  CASE ingame
   IF gameplay = running THEN
+    IF DQBkey(30) THEN player(0).ammo = 99
     IF DQBkey(KEYRIGHT) THEN MovePlayer right
     IF DQBkey(KEYLEFT) THEN MovePlayer left
     IF DQBkey(KEYUP) THEN
@@ -220,9 +223,9 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 8)."
+PRINT "Powered by K7 Engine technology (Build 9)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled May 29, 2001"
+PRINT "Compiled July 13, 2001"
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
@@ -251,23 +254,21 @@ OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, player(0).jumpheight
   INPUT #1, player(0).xsize
   INPUT #1, player(0).ysize
-  INPUT #1, player(0).txsize
-  INPUT #1, player(0).tysize
 CLOSE 1
-gamemode = ingame
-gameplay = running
+
+curlevel = 1
 SoundEnabled = 0
 
 OPEN "player.dat" FOR INPUT AS 1
   INPUT #1, player(0).adelay  ' animation speed
-  FOR f = 0 TO 36
+  FOR f = 0 TO 40
     INPUT #1, pframe(f)
     INPUT #1, fsize(f).x
     INPUT #1, fsize(f).y
   NEXT f
 CLOSE 1
 
-DEF SEG = VARSEG(Pal(0))
+DEF SEG = VARSEG(pal(0))
 BLOAD "palette.dat", 0
 DEF SEG
 
@@ -275,6 +276,42 @@ A = DQBloadFont("font.dat")
 IF A THEN ErrorHandlerSub 125 + A
 
 DQBinstallKeyboard
+
+END SUB
+
+SUB LoadLevel
+
+'====[ LOAD MAP ]====
+OPEN "levels.dat" FOR INPUT AS 1
+  INPUT #1, numlevels
+  IF curlevel > numlevels OR curlevel < 0 THEN
+    DebugLog "Level not in list:" + STR$(curlevel)
+    ErrorHandlerSub 129
+  END IF
+  FOR l = 1 TO numlevels
+    INPUT #1, mapfile$
+    INPUT #1, mapname$
+    IF l = curlevel THEN EXIT FOR
+  NEXT l
+CLOSE 1
+LoadMap mapfile$
+
+'====[ GAME STATE ]====
+gamemode = ingame
+gameplay = running
+
+'====[ PLAYER STATUS ]====
+player(0).onground = 0
+player(0).onslope = 0
+player(0).canjump = 0
+player(0).reload = 0
+player(0).shooting = 0
+player(0).shootingframe = 0
+player(0).aim = -1
+player(0).action = moving
+player(0).actiontime = 0
+player(0).frozen = 0
+player(0).usingportal = 0
 
 END SUB
 
@@ -301,12 +338,47 @@ LOOP UNTIL quitgame
 
 END SUB
 
+SUB NextLevel
+
+curlevel = curlevel + 1
+PutSprite 74, 49, 57, video
+
+OPEN "levels.dat" FOR INPUT AS 1
+  INPUT #1, numlevels
+  IF curlevel > numlevels OR curlevel < 0 THEN
+    DebugLog "Level not in list:" + STR$(curlevel)
+    ErrorHandlerSub 129
+  END IF
+  FOR l = 1 TO numlevels
+    INPUT #1, mapfile$
+    INPUT #1, mapname$
+    IF l = curlevel THEN EXIT FOR
+  NEXT l
+CLOSE 1
+IF DQBlen(mapname$) > 140 THEN
+  totallen = DQBlen(mapname$)
+  temp$ = mapname$: mapname$ = ""
+  'WHILE DQBlen(temp$) > totallen - 140 'DO
+  WHILE DQBlen(mapname$ + LEFT$(temp$, INSTR(temp$, " "))) <= 144
+    mapname$ = mapname$ + LEFT$(temp$, INSTR(temp$, " "))
+    temp$ = RIGHT$(temp$, LEN(temp$) - INSTR(temp$, " "))
+  WEND'LOOP UNTIL DQBlen(temp$) <= totallen - 140
+  mapname2$ = temp$
+END IF
+DQBprint drawpage, mapname$, 112, 78, 14
+IF mapname2$ > "" THEN DQBprint drawpage, mapname2$, 120, 88, 14
+
+LoadLevel
+SLEEP 1
+
+END SUB
+
 SUB SetPalette
 
 OUT &H3C8, 0
 
 FOR i = 0 TO 255
-  OUT &H3C9, Pal(i).red: OUT &H3C9, Pal(i).grn: OUT &H3C9, Pal(i).blu
+  OUT &H3C9, pal(i).red: OUT &H3C9, pal(i).grn: OUT &H3C9, pal(i).blu
 NEXT
 
 END SUB

@@ -28,14 +28,18 @@
 3, 0 , 0
 20,26,32
 3, 0 , 0
-642,26,32
+642,24,32
 4, 0 , 0
-636,32,32
+636,40,32
 637,32,40
 638,32,32
-639,32,32
+639,24,32
 640,32,40
 641,32,32
+657,24,32
+658,24,32
+659,24,32
+660,24,32
 
 animation delay
 (0) stand left
@@ -75,3 +79,7 @@ animation delay
 (34) shoot pole right
 (35) shoot pole right up
 (36) shoot pole right down
+(37) pogo left ground
+(38) pogo left air
+(39) pogo right ground
+(40) pogo right air

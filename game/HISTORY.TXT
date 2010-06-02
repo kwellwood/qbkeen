@@ -138,3 +138,30 @@ Changes since Build 7:
 - Shots collide with sloped tiles
 - Walls drawn in the foreground map layer
 - Player can climb poles
+
+BUILD 9 (07-13-2001)
+   One of the major bonuses of this build is the inclusion of an executable
+not requiring ems memory. About half of the people who try to play Keen are
+stopped by the Error 101 message about expanded memory. What that means is
+the engine can't access EMS memory for one reason or another. Windows ME
+doesn't support it at all (very frustrating) or the config.sys file may
+start up EMM386 with the NORAM option for windows 9x which will also disable
+EMS. If you are not using Windows ME, check your config.sys file otherwise
+run Keen with NOEMS.EXE. The memory was used for video paging, so there will
+be a very significant lack of graphical quality; but atleast it will still
+run. Sorry folks! In this new update I have added a new enemy (the bouncing
+mushroom) as well as the second level, and some bug fixes. The pogostick and
+Bounder enemy are coming soon.
+
+Changes since Build 8:
+- Player bounces at point of death
+- Shooting through enemies bug fixed
+- Shoot from poles
+- Bouncing mushroom enemy added
+- Ability to end level
+- New Game option enabled
+- Save and Load enabled
+- Slope and wall clipping fixed (mostly)
+- Limited number of lives
+- Loading screen with level names
+- Level 2 added

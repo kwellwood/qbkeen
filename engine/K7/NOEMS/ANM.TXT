@@ -1,0 +1,52 @@
+player.action
+  0=moving
+  1=shooting
+  2=switching 
+
+select case player.action
+ case moving
+  movingframes
+ case shooting
+  shootingframes
+ case switching
+  switchingframes
+end select
+
+SUB MovingFrames
+  if onground
+    if left
+      {if moving, else standing}
+     elseif right
+      {if moving, else standing}
+    end if
+   else
+    if left
+      {frame depends on vert speed}
+     elseif right
+      {frame depends on vert speed}
+    end if
+  end if
+END SUB
+
+SUB ShootingFrames
+  if onground
+    if aiming(up)
+      {shoot up}
+     else
+      if left {shoot left}
+      if right {shoot right}    
+    end if
+   else
+    if aiming
+      if aiming up {shoot up}
+      if aiming down {shoot down}
+     else
+      if left {shoot left}
+      if right {shoot right}
+    end if
+  end if
+END SUB
+
+SUB SwitchingFrames
+  {frame is anmcounter/delay+switchframe}
+END SUB

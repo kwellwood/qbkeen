@@ -15,6 +15,10 @@
 605,24,23
 606,24,23
 607,24,24
+620,32,32
+621,32,32
+622,32,32
+623,32,32
 
 slug left 1
 slug left 2
@@ -33,3 +37,7 @@ ball right 2
 ball up 1
 ball up 2
 ball die
+mushroom left 1
+mushroom left 2
+mushroom right 1
+mushroom right 2

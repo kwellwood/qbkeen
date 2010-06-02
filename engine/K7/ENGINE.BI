@@ -2,12 +2,12 @@ DEFINT A-Z
 '$DYNAMIC
 
 COMMON SHARED maxfps, ts, gamemode, realtimer!, anmcounter, gameplay
-COMMON SHARED quitgame
+COMMON SHARED quitgame, curlevel
 
-CONST enginever = 1
+CONST enginever = 8
 CONST inmenu = 1, ingame = 2
 CONST lookup = 4, lookdown = 5
-CONST drawpage = 1, backdroppage = 2, menupage = 3, slopepage = 4
+CONST drawpage = 1, backdroppage = 2, menupage = 3
 CONST moving = 0, shooting = 1, switching = 2, dying = 3, teleporting = 4
 CONST climbing = 5
 CONST running = 1, paused = 2
@@ -19,7 +19,9 @@ DECLARE SUB DoInput ()
 DECLARE SUB DoTimers ()
 DECLARE SUB ErrorHandlerSub (e)
 DECLARE SUB InitEngine ()
+DECLARE SUB LoadLevel ()
 DECLARE SUB MainLoop ()
+DECLARE SUB NextLevel ()
 DECLARE SUB SetPalette ()
 
 TYPE coordinate
@@ -59,17 +61,17 @@ TYPE playertype
  adelay AS INTEGER
  canjump AS INTEGER
  jumpheight AS SINGLE
- score AS LONG          ' scores.bi, items.bi
- ammo  AS INTEGER       ' scores.bi, weapon.bi
- lives AS INTEGER       ' scores.bi
- reload AS INTEGER      ' time to wait for reload
- shooting AS INTEGER    ' time to display shooting frame
- shootingframe AS LONG  ' shooting frame to show
- aim AS INTEGER         ' aiming to shoot up or down
- action AS INTEGER      ' moving, shooting, climbing, flipping switch
- actiontime AS INTEGER  ' time left to complete action
- frozen AS INTEGER      ' cant move left or right
- usingportal AS INTEGER ' if walking into a portal find destination x,y
+ score AS LONG            ' scores.bi, items.bi
+ ammo  AS INTEGER         ' scores.bi, weapon.bi
+ lives AS INTEGER         ' scores.bi
+ reload AS INTEGER        ' time to wait for reload
+ shooting AS INTEGER      ' time to display shooting frame
+ shootingframe AS LONG    ' shooting frame to show
+ aim AS INTEGER           ' aiming to shoot up or down
+ action AS INTEGER        ' moving, shooting, climbing, flipping switch
+ actiontime AS INTEGER    ' time left to complete action
+ frozen AS INTEGER        ' cant move left or right
+ usingportal AS INTEGER   ' if walking into a portal find destination x,y
 END TYPE
 
 COMMON SHARED player() AS playertype, scr(), file() AS STRING * 12

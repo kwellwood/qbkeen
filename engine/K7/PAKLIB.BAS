@@ -47,8 +47,9 @@ IF PakInitState <> 2 THEN
 END IF
 
 ' **** FIND FILE # ****
+filename$ = UCASE$(filename$)
 FOR f& = 1 TO numfiles&
-  IF RTRIM$(filename$) = RTRIM$(PAKFilename$(f&)) THEN filenum& = f&: EXIT FOR
+  IF RTRIM$(filename$) = UCASE$(RTRIM$(PAKFilename$(f&))) THEN filenum& = f&: EXIT FOR
 NEXT f&
 IF filenum& = 0 THEN LoadFromPAK = 1: EXIT FUNCTION
 

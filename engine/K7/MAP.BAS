@@ -12,7 +12,7 @@ ON ERROR GOTO ErrorHandler
 '============================================================================
 ErrorHandler:
 e = ERR
-ErrorHandlerSub 8
+ErrorHandlerSub 0
 RESUME NEXT
 
 REM $STATIC
@@ -27,7 +27,7 @@ OPEN file$ FOR BINARY AS 1
   GET #1, , file(0)
  
   a = LoadFromPAK(RTRIM$(file(0)), scrbuf)
-  IF a THEN ErrorHandlerSub 7
+  IF a THEN ErrorHandlerSub 0
   DQBput backdroppage, 0, 0, VARSEG(scr(0)), VARPTR(scr(0))
 
   FOR ry = 1 TO mapysize

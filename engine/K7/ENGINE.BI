@@ -1,7 +1,7 @@
 DEFINT A-Z
 '$DYNAMIC
 
-COMMON SHARED maxfps, ts
+COMMON SHARED maxfps, ts, gamemode, realtimer!, anmcounter
 COMMON SHARED quitgame
 
 CONST enginever = 1
@@ -12,9 +12,11 @@ CONST drawpage = 1, backdroppage = 2, menupage = 3, slopepage = 4
 DECLARE SUB AllocXMS ()
 DECLARE SUB DeallocXMS ()
 DECLARE SUB DoInput ()
+DECLARE SUB DoTimers ()
 DECLARE SUB ErrorHandlerSub (e)
 DECLARE SUB InitEngine ()
 DECLARE SUB MainLoop ()
+DECLARE SUB MovePlayer (d)
 DECLARE SUB SetPalette ()
 
 TYPE hues

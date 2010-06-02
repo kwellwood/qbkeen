@@ -42,7 +42,7 @@ OPEN "graphics.dat" FOR INPUT AS 1
     LoadArtFile t&, file$
 
     INPUT #1, tileprop
-    IF tileprop >= 0 THEN
+    IF tileprop <> 99 THEN
       SetTileType t&, tileprop
       IF tileprop = 3 THEN
         INPUT #1, sm&: SetSlopeMask t&, sm&
@@ -96,6 +96,7 @@ END FUNCTION
 
 FUNCTION TileType (t&)
 
+biti(0) = 0
 BiosXRead TileTypeHandle, t& * 2 - 2, 2, VARSEG(biti(0)), VARPTR(biti(0))
 TileType = biti(0)
 

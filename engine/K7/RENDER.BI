@@ -2,6 +2,7 @@ DEFINT A-Z
 '$DYNAMIC
 
 DECLARE SUB DoCamera ()
+DECLARE SUB DrawHUD ()
 DECLARE SUB DrawScreen ()
 
 TYPE camtype

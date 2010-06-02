@@ -21,6 +21,7 @@ DIM SHARED biti(0) AS INTEGER, bitl(0) AS LONG, pal(255) AS hues
 DIM SHARED camera(0) AS camtype
 
 InitEngine
+InitMenu
 LoadTiles
 LoadMap "test.map"
 
@@ -35,6 +36,9 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
+PRINT "Powered by K7 Engine technology (Build 2)."
+PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
+PRINT "Compiled October 18, 2000"
 END
 
 '============================================================================
@@ -90,16 +94,29 @@ END SUB
 
 SUB DoInput
 
-IF DQBkey(keyright) THEN player(0).x = player(0).x + 2
-IF DQBkey(keyleft) THEN player(0).x = player(0).x - 2
-IF DQBkey(keyup) THEN player(0).y = player(0).y - 2
-IF DQBkey(keydown) THEN player(0).y = player(0).y + 2
-IF DQBkey(keyesc) THEN quitgame = 1
+SELECT CASE gamemode
+ CASE ingame
+  IF DQBkey(keyright) THEN MovePlayer right
+  IF DQBkey(keyleft) THEN MovePlayer left
+  IF DQBkey(keyup) THEN MovePlayer up
+  IF DQBkey(keydown) THEN MovePlayer down
+  IF DQBkey(keyesc) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .1
+ CASE inmenu
+  IF DQBkey(keyesc) THEN HandleMenu keyesc
+  IF DQBkey(keyup) THEN HandleMenu keyup
+  IF DQBkey(keydown) THEN HandleMenu keydown
+  IF DQBkey(keyenter) THEN HandleMenu keyenter
+END SELECT
 
-IF player(0).x < 0 THEN player(0).x = 0
-IF player(0).y < 0 THEN player(0).y = 0
-IF player(0).x > (mapxsize * ts) - 1 THEN player(0).x = (mapxsize * ts) - 1
-IF player(0).y > (mapysize * ts) - 1 THEN player(0).y = (mapysize * ts) - 1
+END SUB
+
+SUB DoTimers
+
+IF TIMER - realtimer! > .1 THEN
+  anmcounter = anmcounter + 1
+  IF anmcounter > 840 THEN anmcounter = 0
+  realtimer! = TIMER
+END IF
 
 END SUB
 
@@ -107,6 +124,9 @@ SUB ErrorHandlerSub (e)
 
 DQBinitText
 SCREEN 0: WIDTH 80, 25
+PRINT "Powered by K7 Engine technology (Build 2)."
+PRINT "K7 Engine (c) Kevin Wellwood 2000": PRINT
+PRINT "Compiled October 18, 2000"
 
 PRINT "Error"; e
 
@@ -130,6 +150,7 @@ OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, player(0).xsize
   INPUT #1, player(0).ysize
 CLOSE 1
+gamemode = ingame
 
 DEF SEG = VARSEG(pal(0))
 BLOAD "palette.dat", 0
@@ -144,14 +165,28 @@ END SUB
 
 SUB MainLoop
 
+DQBsetFrameRate maxfps
+
 DO
-  'DoInput
-  'DoPhysics
-  'DoTimers
-  DoInput
-  DoCamera
-  DrawScreen
+  DoTimers
+  IF DQBframeReady THEN
+    DoInput
+    DoPhysics
+    DoCamera
+    DrawScreen
+  END IF
 LOOP UNTIL quitgame
+
+END SUB
+
+SUB MovePlayer (d)
+
+SELECT CASE d
+ CASE up: player(0).yv = player(0).yv - 2
+ CASE down: player(0).yv = player(0).yv + 2
+ CASE left: player(0).xv = player(0).xv - 2
+ CASE right: player(0).xv = player(0).xv + 2
+END SELECT
 
 END SUB
 

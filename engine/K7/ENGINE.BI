@@ -1,17 +1,17 @@
 DEFINT A-Z
 '$DYNAMIC
 
-COMMON SHARED maxfps, ts, gamemode, realtimer!, anmcounter
+COMMON SHARED maxfps, ts, gamemode, realtimer!, anmcounter, gameplay
 COMMON SHARED quitgame
 
 CONST enginever = 1
 CONST inmenu = 1, ingame = 2
-'CONST up = 1, down = 2, left = 3, right = 4
 CONST lookup = 4, lookdown = 5
 CONST drawpage = 1, backdroppage = 2, menupage = 3, slopepage = 4
 CONST groundleft = 1, groundright = 2, groundup = 3, airleft = 4, airright = 5
 CONST airup = 6, airdown = 7
-CONST moving = 0, shooting = 1, switching = 2
+CONST moving = 0, shooting = 1, switching = 2, dying = 3
+CONST running = 1, paused = 2
 
 DECLARE SUB AllocXMS ()
 DECLARE SUB DeallocXMS ()

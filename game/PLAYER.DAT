@@ -21,6 +21,7 @@
 33,32,48
 34,32,32
 35,24,32
+23,24,32
 
 animation delay
 stand left
@@ -45,3 +46,4 @@ shoot jump right
 shoot jump up
 shoot jump down
 flip switch
+dying

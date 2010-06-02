@@ -35,6 +35,10 @@ DIM SHARED shot(1 TO 5) AS shottype
 '------- Switches System -------
 DIM SHARED switch(1 TO 25)
 
+'-------- Enemies System -------
+DIM SHARED enemy(100) AS enemytype, eframe(16) AS LONG
+DIM SHARED efsize(16) AS intcoordinate, activefoestack(0) AS STRING
+
 PRINT "Loading...";
 InitEngine
 
@@ -43,6 +47,7 @@ InitMenu
 InitScoreboard
 InitItems
 InitWeapons
+InitEnemies
 InitSound
 '-----------
 
@@ -56,6 +61,7 @@ PRINT "Ok"
 DQBinitVGA: SCREEN 13
 SetPalette
 
+Intro
 MainLoop
 
 DQBinitText
@@ -64,9 +70,9 @@ DQBremoveKeyboard
 DeallocXMS
 ClosePAKLib
 DQBclose
-PRINT "Powered by K7 Engine technology (Build 5)."
+PRINT "Powered by K7 Engine technology (Build 6)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled January 7, 2001"
+PRINT "Compiled January 25, 2001"
 END
 
 '============================================================================
@@ -143,19 +149,25 @@ player(0).aim = -1  ' dont aim up or down
 
 SELECT CASE gamemode
  CASE ingame
-  IF DQBkey(30) THEN player(0).ammo = 50
-  IF DQBkey(keyright) THEN MovePlayer right
-  IF DQBkey(keyleft) THEN MovePlayer left
-  IF DQBkey(keyup) THEN player(0).aim = up: CheckSwitch
-  IF DQBkey(keydown) AND player(0).onground = 0 THEN player(0).aim = down
-  IF DQBkey(keyctrl) THEN MovePlayer up   ' (ie: jump)
-  IF DQBkey(keyesc) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .2
-  IF DQBkey(73) THEN camera(0).y = camera(0).y - 2
-  IF DQBkey(81) THEN camera(0).y = camera(0).y + 2
-  IF DQBkey(keyspace) THEN SpawnPlayerShot
+  IF gameplay = running THEN
+    'IF DQBkey(30) THEN player(0).ammo = 50
+    IF DQBkey(keyright) THEN MovePlayer right
+    IF DQBkey(keyleft) THEN MovePlayer left
+    IF DQBkey(keyup) THEN player(0).aim = up: CheckSwitch
+    IF DQBkey(keydown) AND player(0).onground = 0 THEN player(0).aim = down
+    IF DQBkey(keyctrl) THEN MovePlayer up   ' (ie: jump)
+
+    IF DQBkey(73) THEN camera(0).y = camera(0).y - 2
+    IF DQBkey(81) THEN camera(0).y = camera(0).y + 2
+    IF DQBkey(keyspace) THEN SpawnPlayerShot
+  END IF
  
-  'IF DQBkey(keydown) AND player(0).onground AND player(0).xv = 0 THEN MovePlayer lookdown ELSE player(0).looking = 0
-  'IF DQBkey(keyup) AND player(0).onground AND player(0).xv = 0 THEN MovePlayer lookup ELSE player(0).looking = 0
+  IF DQBkey(25) THEN  ' Pause - 'p'
+    IF gameplay = running THEN gameplay = paused ELSE gameplay = running
+    WHILE DQBkey(25): WEND
+  END IF
+  IF DQBkey(keyesc) AND TIMER >= menudelay! THEN gamemode = inmenu: menudelay! = TIMER + .2
+
  CASE inmenu
   IF DQBkey(keyesc) THEN HandleMenu keyesc
   IF DQBkey(keyup) THEN HandleMenu keyup
@@ -190,9 +202,9 @@ OPEN "errors.dat" FOR INPUT AS f
   LOOP UNTIL errfound OR EOF(f)
 CLOSE f
 
-PRINT "Powered by K7 Engine technology (Build 5)."
+PRINT "Powered by K7 Engine technology (Build 6)."
 PRINT "K7 Engine (c) Kevin Wellwood 2001": PRINT
-PRINT "Compiled January 7, 2001"
+PRINT "Compiled January 25, 2001"
 
 PRINT "Error (" + LTRIM$(STR$(e)) + "):"
 PRINT "* " + errtext$
@@ -225,6 +237,7 @@ OPEN "engine.dat" FOR INPUT AS 1
   INPUT #1, player(0).tysize
 CLOSE 1
 gamemode = ingame
+gameplay = running
 SoundEnabled = 0
 
 OPEN "player.dat" FOR INPUT AS 1
@@ -243,7 +256,7 @@ OPEN "player.dat" FOR INPUT AS 1
   INPUT #1, fsize(4).x
   INPUT #1, fsize(4).y
   INPUT #1, pframe(5)
-  FOR f = 6 TO 21
+  FOR f = 6 TO 22
     INPUT #1, pframe(f)
     INPUT #1, fsize(f).x
     INPUT #1, fsize(f).y
@@ -269,14 +282,15 @@ DO
   DoTimers
   IF DQBframeReady THEN
     DoInput
-    DoPhysics
-    CheckOnGround
-    CheckJumpHeight
-    DoSprites
-    DoItems
-    DoShots
-    PlayerState
-    DoCamera
+    IF gameplay = running THEN
+      DoPhysics
+      DoSprites
+      DoItems
+      DoShots
+      HandleEnemies
+      PlayerState
+      DoCamera
+    END IF
     DrawScreen
   END IF
 LOOP UNTIL quitgame

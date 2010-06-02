@@ -9,6 +9,8 @@ DECLARE SUB DoSprites ()
 DECLARE SUB DrawItems ()
 DECLARE SUB DrawSprites ()
 DECLARE SUB InitItems ()
+DECLARE FUNCTION TouchItem (i)
+DECLARE FUNCTION TouchSprite (s)
 
 TYPE itemclass
  x AS INTEGER
@@ -26,11 +28,14 @@ TYPE spriteclass
  x AS INTEGER
  y AS INTEGER
  frame AS LONG
+ sframe AS LONG
  eframe AS LONG
- delay AS INTEGER   ' ticks per frame
- ticks AS INTEGER   ' set to delay and decrease for next frame
+ delay AS INTEGER     ' ticks per frame
+ ticks AS INTEGER     ' set to delay and decrease for next frame
  xsize AS INTEGER
  ysize AS INTEGER
+ deadly AS INTEGER   ' kill player if touched
+ repeat AS INTEGER   ' dont kill sprite, loop animation
 END TYPE
 
 TYPE itemtypeclass

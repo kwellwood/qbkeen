@@ -18,6 +18,8 @@ RESUME NEXT
 REM $STATIC
 SUB DoCamera
 
+IF player(0).action = dying THEN EXIT SUB
+
 IF player(0).x - camera(0).x > 60 THEN camera(0).x = player(0).x - 60
 IF player(0).x - camera(0).x < -60 THEN camera(0).x = player(0).x + 60
 IF player(0).y - camera(0).y > 40 THEN camera(0).y = player(0).y - 40
@@ -53,9 +55,12 @@ DQBprint drawpage, "ActiveItemStack(0):" + STR$(LEN(activeitemstack(0))), 200, 2
 DQBprint drawpage, "ActiveSpriteStack(0):" + STR$(LEN(activespritestack(0))), 200, 32, 15
 totalshots = 0: FOR s = 1 TO 5: totalshots = totalshots + shot(s).active: NEXT s
 DQBprint drawpage, "ActiveShots:" + STR$(totalshots), 200, 42, 15
-DQBline drawpage, 198, 50, 318, 50, 15
-DQBprint drawpage, "Player(0).action:" + STR$(player(0).action), 200, 53, 15
-DQBprint drawpage, "Player(0).actiontime:" + STR$(player(0).actiontime), 200, 63, 15
+DQBprint drawpage, "ActiveFoeStack(0):" + STR$(LEN(activefoestack(0))), 200, 52, 15
+DQBline drawpage, 198, 60, 318, 60, 15
+DQBprint drawpage, "Player(0).action:" + STR$(player(0).action), 200, 63, 15
+DQBprint drawpage, "Player(0).actiontime:" + STR$(player(0).actiontime), 200, 73, 15
+DQBprint drawpage, "Enemy(1).xv:" + STR$(enemy(1).xv), 200, 83, 15
+DQBprint drawpage, "enemy(1).x,y:" + STR$(enemy(1).x) + "," + STR$(enemy(1).y), 200, 93, 15
 
 '=================[ ANIMATION TICKER ]===============
 DQBprint drawpage, "anmcounter:" + STR$(anmcounter), 1, 192, 15
@@ -108,6 +113,7 @@ NEXT y
 '=========[ DRAW SPRITES CLASSES ]========
 DrawShots
 DrawItems
+DrawEnemies
 
 '=========[ DRAW PLAYER ]=========
 px = player(0).x - camera(0).vx1 - (player(0).txsize / 2)

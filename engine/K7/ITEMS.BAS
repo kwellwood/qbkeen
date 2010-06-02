@@ -21,19 +21,8 @@ SUB DoItems
 FOR k = 1 TO LEN(activeitemstack(0))
   IF k > LEN(activeitemstack(0)) THEN EXIT FOR
   i = ASC(MID$(activeitemstack(0), k, 1))
- 
-  px1 = player(0).x - (player(0).txsize / 4): py1 = player(0).y - (player(0).tysize / 2)
-  px2 = player(0).x + (player(0).txsize / 4): py2 = player(0).y + (player(0).tysize / 2)
-  ix1 = item(i).x - (item(i).xsize / 2): iy1 = item(i).y - (item(i).ysize / 2)
-  ix2 = item(i).x + (item(i).xsize / 2): iy2 = item(i).y + (item(i).ysize / 2)
 
-  '--- is player on top of this item ---
-  IF ix1 >= px1 AND ix1 <= px2 AND iy1 >= py1 AND iy1 <= py2 THEN collectitem = 1
-  IF ix2 >= px1 AND ix2 <= px2 AND iy1 >= py1 AND iy1 <= py2 THEN collectitem = 1
-  IF ix1 >= px1 AND ix1 <= px2 AND iy2 >= py1 AND iy2 <= py2 THEN collectitem = 1
-  IF ix2 >= px1 AND ix2 <= px2 AND iy2 >= py1 AND iy2 <= py2 THEN collectitem = 1
-
-  IF collectitem = 1 THEN
+  IF TouchItem(i) THEN
     '--- award bonus' value ---
     player(0).score = player(0).score + bonus(item(i).id).points
     player(0).ammo = player(0).ammo + bonus(item(i).id).ammo
@@ -55,7 +44,7 @@ FOR k = 1 TO LEN(activeitemstack(0))
     END IF
    
     k = k - 1
-    collectitem = 0
+    collectItem = 0
   END IF
 NEXT k
 
@@ -66,18 +55,27 @@ SUB DoSprites
 FOR k = 1 TO LEN(activespritestack(0))
   IF k > LEN(activespritestack(0)) THEN EXIT FOR
   s = ASC(MID$(activespritestack(0), k, 1))
-
+  
+  '-- if this sprite is deadly --
+  IF sprite(s).deadly AND TouchSprite(s) THEN KillPlayer
+ 
+  '-- do animation --
   sprite(s).ticks = sprite(s).ticks - 1    ' advance animation ticks
   IF sprite(s).ticks = 0 THEN              '  next frame
     sprite(s).frame = sprite(s).frame + 1
     sprite(s).ticks = sprite(s).delay
   END IF
 
+  '-- animation done: kill or loop --
   IF sprite(s).frame > sprite(s).eframe THEN
-    '--- remove from active sprite stack ---
-    activespritestack(0) = LEFT$(activespritestack(0), k - 1) + RIGHT$(activespritestack(0), LEN(activespritestack(0)) - k)
-    unusedspritestack(0) = unusedspritestack(0) + CHR$(s)
-    k = k - 1
+    IF sprite(s).repeat = 0 THEN
+      '--- remove from active sprite stack ---
+      activespritestack(0) = LEFT$(activespritestack(0), k - 1) + RIGHT$(activespritestack(0), LEN(activespritestack(0)) - k)
+      unusedspritestack(0) = unusedspritestack(0) + CHR$(s)
+      k = k - 1
+     ELSE
+      sprite(s).frame = sprite(s).sframe
+    END IF
   END IF
 NEXT k
 
@@ -149,4 +147,33 @@ unusedspritestack(0) = ""
 FOR s = 1 TO 100: unusedspritestack(0) = unusedspritestack(0) + CHR$(s): NEXT s
 
 END SUB
+
+FUNCTION TouchItem (i)
+
+px1 = player(0).x - (player(0).txsize / 2): py1 = player(0).y - (player(0).tysize / 2)
+px2 = player(0).x + (player(0).txsize / 2): py2 = player(0).y + (player(0).tysize / 2)
+ix1 = item(i).x - (item(i).xsize / 2): iy1 = item(i).y - (item(i).ysize / 2)
+ix2 = item(i).x + (item(i).xsize / 2): iy2 = item(i).y + (item(i).ysize / 2)
+
+IF ix1 >= px1 AND ix1 <= px2 AND iy1 >= py1 AND iy1 <= py2 THEN TouchItem = 1
+IF ix2 >= px1 AND ix2 <= px2 AND iy1 >= py1 AND iy1 <= py2 THEN TouchItem = 1
+IF ix1 >= px1 AND ix1 <= px2 AND iy2 >= py1 AND iy2 <= py2 THEN TouchItem = 1
+IF ix2 >= px1 AND ix2 <= px2 AND iy2 >= py1 AND iy2 <= py2 THEN TouchItem = 1
+
+END FUNCTION
+
+FUNCTION TouchSprite (s)
+
+px1 = player(0).x - (player(0).txsize / 4): py1 = player(0).y - (player(0).tysize / 2)
+px2 = player(0).x + (player(0).txsize / 4): py2 = player(0).y + (player(0).tysize / 2)
+sx1 = sprite(s).x - (sprite(s).xsize / 2): sy1 = sprite(s).y - (sprite(s).ysize / 2)
+sx2 = sprite(s).x + (sprite(s).xsize / 2): sy2 = sprite(s).y + (sprite(s).ysize / 2)
+
+'--- is player touching this sprite? ---
+IF sx1 >= px1 AND sx1 <= px2 AND sy1 >= py1 AND sy1 <= py2 THEN TouchSprite = 1
+IF sx2 >= px1 AND sx2 <= px2 AND sy1 >= py1 AND sy1 <= py2 THEN TouchSprite = 1
+IF sx1 >= px1 AND sx1 <= px2 AND sy2 >= py1 AND sy2 <= py2 THEN TouchSprite = 1
+IF sx2 >= px1 AND sx2 <= px2 AND sy2 >= py1 AND sy2 <= py2 THEN TouchSprite = 1
+
+END FUNCTION
 

@@ -80,3 +80,19 @@ Changes since Build 4:
 - switches system complete
 - slight changes to HUD
 - ammo pickup items
+
+Build 6 (01-25-2001):
+   Waited a while to put the finishing touches on this one. No inclined
+slopes yet because I wanted to focus on getting atleast one enemy type in
+there first so it might have a little play value. Ammo cheat has been removed.
+Minor revisions of code have been made and its optimized in places where it
+was getting cluttered. Also, all items except the keys (not used yet) have
+been created and scattered around the map as a display. As a side note: the
+switch is for display purposes. There are no objects attached to it yet. When
+platforms come, they'll be able to be attached to switches.
+
+Changes since Build 5:
+- Title screen
+- Basic player death handling
+- Enemy system with the slug enemy!!
+- Full compliment of items from keen 4

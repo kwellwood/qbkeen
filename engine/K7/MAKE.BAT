@@ -4,6 +4,8 @@ echo Compiling...
 echo ------------------------------------------------------------------------
 
 echo * Building Core Objects *
+echo PLAYER.BAS...   (Player movement)
+bc player.bas /e/x/o/t/c:512; > player.cmp
 echo TILES.BAS...    (Tiles system)
 bc tiles.bas /e/x/o/t/c:512; > tiles.cmp
 echo MAP.BAS...      (Map system)
@@ -12,6 +14,8 @@ echo GRAPHICS.BAS... (Graphics system)
 bc graphics.bas /e/x/o/t/c:512; > graphics.cmp
 echo RENDER.BAS...   (Render system)
 bc render.bas /e/x/o/t/c:512; > render.cmp
+echo MENU.BAS...     (Menu system)
+bc menu.bas /e/x/o/t/c:512; > menu.cmp
 echo PAKLIB.BAS...   (Archive routines)
 bc paklib.bas /e/x/o/t/c:512; > paklib.cmp
 
@@ -20,6 +24,8 @@ CALL CheckErr coreobj.dat
 
 echo * Building Core Library *
 echo K7CORE.LIB:
+echo  +PLAYER.OBJ...   (Player movement)
+lib k7core.lib +player; > player.cmp
 echo  +TILES.OBJ...    (Tiles system)
 lib k7core.lib +tiles; > tiles.cmp
 echo  +MAP.OBJ...      (Map system)
@@ -28,6 +34,8 @@ echo  +GRAPHICS.OBJ... (Graphics system)
 lib k7core.lib +graphics; > graphics.cmp
 echo  +RENDER.OBJ...   (Render system)
 lib k7core.lib +render; > render.cmp
+echo  +MENU.OBJ...     (Menu system)
+lib k7core.lib +menu; > menu.cmp
 echo  +PAKLIB.OBJ...   (Archive routines)
 lib k7core.lib +paklib; > paklib.cmp
 
@@ -37,10 +45,6 @@ CALL CheckErr corelib.dat
 echo * Building Objects *
 echo K7.BAS...       (Main routines)
 bc k7.bas /e/x/o/t/c:512; > k7.cmp
-echo PHYSICS.BAS...  (Player movement)
-bc physics.bas /e/x/o/t/c:512; > physics.cmp
-echo MENU.BAS...     (Menu system)
-bc menu.bas /e/x/o/t/c:512; > menu.cmp
 echo SCORES.BAS...   (Display scoreboard)
 bc scores.bas /e/x/o/t/c:512; > scores.cmp
 echo ITEMS.BAS...    (Player bonuses)
@@ -49,12 +53,14 @@ echo WEAPONS.BAS...  (Player weapons)
 bc weapons.bas /e/x/o/t/c:512; > weapons.cmp
 echo SWITCHES.BAS... (Switches)
 bc switches.bas /e/x/o/t/c:512; > switches.cmp
+echo ENEMIES.BAS...  (Enemy system)
+bc enemies.bas /e/x/o/t/c:512; > enemies.cmp
 echo SOUND.BAS...    (Sound system)
 bc sound.bas /e/x/o/t/c:512; > sound.cmp
 
 echo * Linking Objects *
 echo KEEN7.EXE...    (Main program)
-link /ex/noe k7 physics menu scores items weapons switches sound,keen7,,dqb xms k7core paklib bcom45 brun45; > link.cmp
+link /ex/noe k7 scores items weapons switches enemies sound,keen7,,dqb xms k7core paklib bcom45 brun45; >link.cmp
 
 echo * Checking For Errors *
 CALL CheckErr modules.dat

@@ -55,7 +55,7 @@ GET #1, , version
 
   GET #1, , player(0).x: GET #1, , player(0).y
   camera(0).x = player(0).x: camera(0).y = player(0).y
-  player(0).xdir = right: player(0).action = moving
+  player(0).xdir = left: player(0).action = moving
 
   '========[ ITEMS PLUGIN ]========
   activeitemstack(0) = ""    'clear item stack
@@ -81,6 +81,18 @@ GET #1, , version
   NEXT i
   '================================
 
+  '=======[ ENEMIES PLUGIN ]=======
+  activefoestack(0) = ""    'clear enemy stack
+  GET #1, , numenemies
+  IF numenemies > 100 THEN DebugLog "WARNING: Enemies in map <" + file$ + ">:" + STR$(numenemies): numenemies = 100
+  FOR e = 1 TO numenemies
+    GET #1, , enemy(e).x
+    GET #1, , enemy(e).y
+    GET #1, , enemy(e).id
+    activefoestack(0) = activefoestack(0) + CHR$(e)
+    AssignEnemyFrame e
+  NEXT e
+  '================================
 CLOSE 1
 
 END SUB

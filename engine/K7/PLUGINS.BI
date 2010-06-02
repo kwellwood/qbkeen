@@ -1,7 +1,7 @@
 DEFINT A-Z
 '$DYNAMIC
 
-'$INCLUDE: 'physics.bi'
+'$INCLUDE: 'player.bi'
 '$INCLUDE: 'tiles.bi'
 '$INCLUDE: 'graphics.bi'
 '$INCLUDE: 'map.bi'
@@ -12,4 +12,5 @@ DEFINT A-Z
 '$INCLUDE: 'sound.bi'
 '$INCLUDE: 'weapons.bi'
 '$INCLUDE: 'switches.bi'
+'$INCLUDE: 'enemies.bi'
 

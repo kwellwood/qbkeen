@@ -46,7 +46,7 @@ OPEN tileset$ FOR INPUT AS 1
     INPUT #1, tileprop
     IF tileprop <> 99 THEN
       SetTileType t&, tileprop
-      IF tileprop = 3 THEN
+      IF tileprop = 2 THEN
         INPUT #1, sm&: SetSlopeMask t&, sm&
         SetAnmLength t&, 0
        ELSE

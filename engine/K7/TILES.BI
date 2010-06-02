@@ -1,6 +1,13 @@
 DEFINT A-Z
 '$DYNAMIC
 
+'==TILE TYPES==
+'0=passive
+'1=wall
+'2=slope
+'3=hazzard
+'4=switch
+
 COMMON SHARED TileTypeHandle, AnmLengthHandle, AnmDelayHandle
 COMMON SHARED numtiles&, tileset$
 

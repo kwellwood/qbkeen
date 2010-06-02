@@ -63,8 +63,10 @@ SELECT CASE k
   END SELECT
   menudelay! = TIMER + .1
  CASE keyesc
-  IF menu <> main THEN menu = main ELSE gamemode = ingame
-  menudelay! = TIMER + .2
+  IF player(0).action <> dying THEN
+    IF menu <> main THEN menu = main ELSE gamemode = ingame
+    menudelay! = TIMER + .2
+  END IF
 END SELECT
 
 END SUB
@@ -86,6 +88,14 @@ CLOSE 1
 
 menu = main
 menuopt = 1
+
+END SUB
+
+SUB Intro
+
+PutTile 75, 0, 0, video
+DO: LOOP UNTIL DQBkey(keyctrl) OR DQBkey(keyspace) OR DQBkey(keyenter) OR DQBkey(keyesc)
+
 
 END SUB
 

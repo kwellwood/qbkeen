@@ -22,10 +22,20 @@ FOR s = 1 TO 5
   IF shot(s).active THEN
     shot(s).x = shot(s).x + shot(s).xv
     shot(s).y = shot(s).y + shot(s).yv
+   
+    '--- map boundaries ---
     IF shot(s).x < 0 OR shot(s).x > mapxsize * ts THEN shot(s).active = 0
     IF shot(s).y < 0 OR shot(s).y > mapysize * ts THEN shot(s).active = 0
- 
+
+    '--- hit a wall ---
     IF ShotCollide(s) THEN KillShot s
+ 
+    '--- hit an enemy ---
+    e = ShotEnemy(s)
+    IF e THEN
+      KillEnemy e
+      KillShot s
+    END IF
   END IF
 NEXT s
 
@@ -128,12 +138,32 @@ sx = INT(shot(s).x / ts) + 1
 sy = INT(shot(s).y / ts) + 1
 IF TileType(Map&(sx, sy)) = 1 THEN ShotCollide = 1
 
-' collide into actors too
+END FUNCTION
+
+FUNCTION ShotEnemy (s)
+
+FOR k = 1 TO LEN(activefoestack(0))
+  IF k > LEN(activefoestack(0)) THEN EXIT FOR
+  e = ASC(MID$(activefoestack(0), k, 1))
+  IF enemy(e).status <> dead THEN
+    sx1 = shot(s).x - (shotxsize / 2): sy1 = shot(s).y - (shotysize / 2)
+    sx2 = shot(s).x + (shotxsize / 2): sy2 = shot(s).y + (shotysize / 2)
+    ex1 = enemy(e).x - (enemy(e).txsize / 2): ey1 = enemy(e).y - (enemy(e).tysize / 2)
+    ex2 = enemy(e).x + (enemy(e).txsize / 2): ey2 = enemy(e).y + (enemy(e).tysize / 2)
+    '--- is shot touching this enemy ---
+    IF ex1 >= sx1 AND ex1 <= sx2 AND ey1 >= sy1 AND ey1 <= sy2 THEN touchenemy = 1
+    IF ex2 >= sx1 AND ex2 <= sx2 AND ey1 >= sy1 AND ey1 <= sy2 THEN touchenemy = 1
+    IF ex1 >= sx1 AND ex1 <= sx2 AND ey2 >= sy1 AND ey2 <= sy2 THEN touchenemy = 1
+    IF ex2 >= sx1 AND ex2 <= sx2 AND ey2 >= sy1 AND ey2 <= sy2 THEN touchenemy = 1
+    IF touchenemy THEN ShotEnemy = e: EXIT FOR
+  END IF
+NEXT k
 
 END FUNCTION
 
 SUB SpawnPlayerShot
 
+IF player(0).frozen THEN EXIT SUB      'player not allowed to move
 IF player(0).reload <> 0 THEN EXIT SUB 'if already shot recently (wait reload)
 IF player(0).ammo = 0 THEN EXIT SUB       'no ammo?!
 
